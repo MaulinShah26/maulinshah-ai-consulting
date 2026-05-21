@@ -7,32 +7,14 @@ export function Footer() {
         <span>
           © {new Date().getFullYear()} {meta.author} · {meta.location}
         </span>
-        <span className="flex items-center gap-2">
-          <a
+        <span>
+          
             href={social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="text-accent hover:underline"
           >
             LinkedIn
-          </a>
-          <span aria-hidden>·</span>
-          <a
-            href={social.twitter}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-          >
-            X
-          </a>
-          <span aria-hidden>·</span>
-          <a
-            href={social.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-          >
-            GitHub
           </a>
         </span>
       </div>
