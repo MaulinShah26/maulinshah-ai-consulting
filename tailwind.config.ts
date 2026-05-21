@@ -39,13 +39,8 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       maxWidth: {
-        // Container width. Section headers, cards, timelines, diagrams fill this.
-        content: "1100px",
-        wide: "1100px",
-        // Prose width. Body paragraphs cap here so reading lines stay 70 to 85
-        // characters even when the container is wider. Editorial pattern:
-        // wide page, narrow prose, visual elements full width.
-        readable: "620px",
+        content: "880px",
+        wide: "880px",
       },
     },
   },

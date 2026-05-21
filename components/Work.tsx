@@ -113,7 +113,7 @@ export function Work() {
           <SectionHeader number={work.sectionNumber} label={work.sectionLabel} />
         </div>
         <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-4">{work.heading}</h2>
-        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6 max-w-prose">
+        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6">
           {work.intro}
         </p>
 

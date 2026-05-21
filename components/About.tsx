@@ -22,7 +22,7 @@ export function About() {
         {about.paragraphs.map((p, i) => (
           <p
             key={i}
-            className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-4 max-w-readable"
+            className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-4"
           >
             {p}
           </p>
