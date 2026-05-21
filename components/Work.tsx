@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   Activity,
   Bot,
+  Brain,
   Briefcase,
   Layers,
   ArrowUpRight,
@@ -17,13 +18,11 @@ import { SectionHeader } from "./SectionHeader";
 const ICONS: Record<string, LucideIcon> = {
   Activity,
   Bot,
+  Brain,
   Briefcase,
   Layers,
 };
 
-// Each variant carries explicit light + dark tokens so tags render
-// correctly in both themes. Without dark: variants, the light-tinted
-// backgrounds (blue-50 etc.) become illegible on the petrol-slate dark bg.
 const TAG_VARIANT_CLASSES: Record<string, string> = {
   blue:
     "bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-900",

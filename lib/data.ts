@@ -44,8 +44,6 @@ export const situation = {
   ],
 };
 
-// Approach is now ONLY the methodology arc, in prose. No phases array.
-// Engagement options are in their own section below.
 export const approach = {
   sectionNumber: "02",
   sectionLabel: "How I work",
@@ -57,7 +55,6 @@ export const approach = {
   ],
 };
 
-// New section: engagement options
 export const engagements = {
   sectionNumber: "03",
   sectionLabel: "Engagement options",
@@ -176,6 +173,20 @@ export const work: {
           status: "Supertails \u00b7 2024 to 2025",
           cta: "Read the case study",
           href: "/case-studies/food-replenishment",
+        },
+        {
+          title: "Adaptive Nudge Decision Engine (ANDE)",
+          description:
+            "A unified, six-layer decision system at Supertails. Moves the company from use-case campaigns to system-driven decisioning, with one nudge per customer per cycle.",
+          icon: "Brain",
+          tags: [
+            { label: "Decision systems" },
+            { label: "Platform architecture" },
+            { label: "Pet-tech" },
+          ],
+          status: "Supertails \u00b7 2025 \u00b7 In operationalization",
+          cta: "Read the case study",
+          href: "/case-studies/adaptive-nudge-decision-engine",
         },
       ],
     },
