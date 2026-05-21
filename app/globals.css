@@ -2,86 +2,104 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --bg: #ffffff;
-    --fg: #0a0a0a;
-    --muted: #52525b;
-    --rule: #e4e4e7;
-    --accent: #0f6e56;
-  }
+/* =====================================================================
+   Theme tokens
+   - Light theme: pale mint + deep ink + violet accent
+   - Dark theme: petrol slate + warm off-white + mustard accent
+   Values are stored as space-separated RGB triplets so Tailwind can
+   apply alpha modifiers (e.g. text-ink-500/50) via the
+   `rgb(var(--ink-500) / <alpha-value>)` pattern in tailwind.config.ts.
+   ===================================================================== */
 
-  html {
-    scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
+:root,
+:root.light {
+  /* Page surfaces */
+  --page: 232 240 236;      /* #E8F0EC pale mint */
+  --surface: 244 249 246;   /* #F4F9F6 card surface */
+  --subtle: 223 234 229;    /* #DFEAE5 subtle bg */
 
-  body {
-    background: var(--bg);
-    color: var(--fg);
-  }
+  /* Ink scale (low = close to bg, high = close to primary text) */
+  --ink-50: 244 249 246;    /* #F4F9F6 */
+  --ink-100: 223 234 229;   /* #DFEAE5 */
+  --ink-200: 205 221 214;   /* #CDDDD6 borders */
+  --ink-300: 181 199 192;   /* #B5C7C0 strong borders */
+  --ink-400: 117 134 128;   /* #758680 subtle text */
+  --ink-500: 79 99 93;      /* #4F635D muted text */
+  --ink-600: 61 78 72;      /* #3D4E48 */
+  --ink-700: 42 54 47;      /* #2A362F */
+  --ink-800: 31 42 36;      /* #1F2A24 */
+  --ink-900: 20 32 29;      /* #14201D primary ink */
+  --ink: 20 32 29;          /* alias for ink-900 */
 
-  /* Selection */
-  ::selection {
-    background: var(--accent);
-    color: #ffffff;
-  }
-
-  /* Reduce motion preference */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
+  /* Accent (violet) */
+  --accent: 91 63 190;      /* #5B3FBE */
+  --accent-soft: 224 217 247; /* #E0D9F7 */
 }
 
-@layer utilities {
-  /* Section reveal animation triggered by intersection observer */
-  .reveal {
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
-  }
+.dark {
+  /* Page surfaces */
+  --page: 15 30 34;         /* #0F1E22 petrol slate */
+  --surface: 20 40 45;      /* #14282D card surface */
+  --subtle: 26 50 58;       /* #1A323A subtle bg */
 
-  .reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* Ink scale inverts: low = close to dark bg, high = close to light text */
+  --ink-50: 20 40 45;       /* #14282D */
+  --ink-100: 26 50 58;      /* #1A323A */
+  --ink-200: 31 53 59;      /* #1F353B borders */
+  --ink-300: 42 66 72;      /* #2A4248 strong borders */
+  --ink-400: 110 128 132;   /* #6E8084 subtle text */
+  --ink-500: 149 164 164;   /* #95A4A4 muted text */
+  --ink-600: 176 188 188;   /* #B0BCBC */
+  --ink-700: 201 210 210;   /* #C9D2D2 */
+  --ink-800: 216 223 221;   /* #D8DFDD */
+  --ink-900: 226 234 232;   /* #E2EAE8 primary text */
+  --ink: 226 234 232;       /* alias for ink-900 */
 
-  /* Staggered children utility */
-  .reveal-child {
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .reveal.is-visible .reveal-child {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .reveal.is-visible .reveal-child:nth-child(1) {
-    transition-delay: 0.05s;
-  }
-  .reveal.is-visible .reveal-child:nth-child(2) {
-    transition-delay: 0.12s;
-  }
-  .reveal.is-visible .reveal-child:nth-child(3) {
-    transition-delay: 0.19s;
-  }
-  .reveal.is-visible .reveal-child:nth-child(4) {
-    transition-delay: 0.26s;
-  }
-  .reveal.is-visible .reveal-child:nth-child(5) {
-    transition-delay: 0.33s;
-  }
+  /* Accent (mustard) */
+  --accent: 217 180 80;     /* #D9B450 */
+  --accent-soft: 50 42 16;  /* dark mustard tint */
 }
+
+/* =====================================================================
+   Base styles
+   ===================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--page));
+  color: rgb(var(--ink));
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background-color: rgb(var(--accent) / 0.25);
+  color: rgb(var(--ink));
+}
+
+/* =====================================================================
+   Reveal animation (preserved from existing portfolio)
+   ===================================================================== */
+
+.reveal-child {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal.is-visible .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal.is-visible .reveal-child:nth-child(1) { transition-delay: 0ms; }
+.reveal.is-visible .reveal-child:nth-child(2) { transition-delay: 60ms; }
+.reveal.is-visible .reveal-child:nth-child(3) { transition-delay: 120ms; }
+.reveal.is-visible .reveal-child:nth-child(4) { transition-delay: 180ms; }
+.reveal.is-visible .reveal-child:nth-child(5) { transition-delay: 240ms; }
+.reveal.is-visible .reveal-child:nth-child(6) { transition-delay: 300ms; }
