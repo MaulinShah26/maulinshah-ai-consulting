@@ -13,7 +13,7 @@ function PhaseIcon({ name }: { name: string }) {
 
 export function Approach() {
   return (
-    <Reveal id="approach" className="py-10 px-6 border-b border-ink-200/70">
+    <Reveal id="approach" className="py-10 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={approach.sectionNumber} label={approach.sectionLabel} />

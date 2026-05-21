@@ -5,7 +5,7 @@ import { SectionHeader } from "./SectionHeader";
 
 export function Situation() {
   return (
-    <Reveal className="py-10 px-6 border-b border-ink-200/70">
+    <Reveal className="py-10 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={situation.sectionNumber} label={situation.sectionLabel} />

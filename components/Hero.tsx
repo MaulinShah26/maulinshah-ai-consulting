@@ -7,7 +7,7 @@ import { SectionHeader } from "./SectionHeader";
 
 export function Hero() {
   return (
-    <Reveal id="top" className="pt-14 pb-10 px-6 border-b border-ink-200/70">
+    <Reveal id="top" className="pt-14 pb-10 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader label={hero.eyebrow} />
