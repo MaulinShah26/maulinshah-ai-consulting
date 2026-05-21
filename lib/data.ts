@@ -176,14 +176,18 @@ export const work: {
       status: "In design",
     },
     {
-      title: "Case studies & teardowns",
+      title: "Food Replenishment Strategic Framework",
       description:
-        "Public Notion boards with data science and product case studies \u2014 the work, the trade-offs, and the calls I\u2019d make differently in hindsight.",
-      icon: "NotebookPen",
-      tags: [{ label: "Notion" }, { label: "Long-form" }],
-      status: "Updated regularly",
-      cta: "Read",
-      href: "https://ultra-sumac-6da.notion.site/2456a0aa23598093b61ec15b61126f51",
+        "A case study from my time at Supertails: designing a three-phase decisioning framework to predict when pet parents would run out of food, and timing the right nudge to land before they did.",
+      icon: "Layers",
+      tags: [
+        { label: "Retention ML" },
+        { label: "Decision systems" },
+        { label: "Pet-tech" },
+      ],
+      status: "Supertails \u00b7 2024\u20132025",
+      cta: "Read the case study",
+      href: "/case-studies/food-replenishment",
     },
   ],
 };
