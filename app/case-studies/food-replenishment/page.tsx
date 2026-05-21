@@ -5,7 +5,7 @@ import { ArrowLeft, ChevronDown } from "lucide-react";
 export const metadata: Metadata = {
   title: "Food Replenishment Strategic Framework · Maulin Shah",
   description:
-    "A case study from Supertails (EIR, 2024–2025): predicting when pet parents would run out of food, and timing the right nudge to land before they did. A three-phase decisioning framework.",
+    "A case study from Supertails (EIR, 2024 to 2025): predicting when pet parents would run out of food, and timing the right nudge to land before they did. A three-phase decisioning framework.",
 };
 
 export default function FoodReplenishmentPage() {
@@ -28,7 +28,7 @@ export default function FoodReplenishmentPage() {
             Food Replenishment Strategic Framework
           </h1>
           <div className="text-[13px] text-ink-500 mb-6">
-            Supertails · EIR · 2024–2025
+            Supertails · EIR · 2024 to 2025
           </div>
           <p className="text-[15px] md:text-[16px] text-ink-700 leading-[1.6] max-w-prose">
             Predicting when pet parents would run out of food, and timing the right nudge to land before they did.
@@ -42,17 +42,17 @@ export default function FoodReplenishmentPage() {
           <h2 className="text-[19px] font-medium text-ink mb-5">The situation</h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-4">
             <p>
-              In a category like pet food, retention isn&apos;t optional &mdash; it&apos;s the entire
+              In a category like pet food, retention isn&apos;t optional. It&apos;s the entire
               economics. A pet parent who refills consistently is significantly more valuable
               over time than one who lapses and comes back. Most consumer brands solve for this
-              with calendar-based reminders: <em>&ldquo;It&apos;s been thirty days, time to reorder.&rdquo;</em> But
-              that approach breaks the moment you look at the data.
+              with calendar-based reminders: <em>&ldquo;It&apos;s been thirty days, time to reorder.&rdquo;</em>{" "}
+              But that approach breaks the moment you look at the data.
             </p>
             <p>
               Dry food lasts longer than wet food. Large breeds eat differently than toy breeds.
               A first-time buyer with one purchase looks nothing like a regular customer with
-              twelve. And some customers signal intent directly &mdash; browsing the product they
-              just bought, viewing related items &mdash; long before any calendar reminder would
+              twelve. And some customers signal intent directly: browsing the product they
+              just bought, viewing related items, long before any calendar reminder would
               fire.
             </p>
             <p>
@@ -74,7 +74,7 @@ export default function FoodReplenishmentPage() {
               and outputs a date. In practice, that approach fails on the seams.
             </p>
             <p>
-              A model trained on repeat buyers cannot predict for first-time buyers &mdash; there&apos;s
+              A model trained on repeat buyers cannot predict for first-time buyers. There&apos;s
               no history to learn from. A model trained on universal feeding guidelines cannot
               capture the customer who buys multipacks for multiple pets. A model trained on
               either of those cannot react when a customer is actively browsing the SKU they
@@ -111,7 +111,7 @@ export default function FoodReplenishmentPage() {
                 </div>
                 <div className="text-[13px] font-medium text-ink mb-1">Hybrid Historical</div>
                 <div className="text-[11px] text-ink-600 leading-[1.5]">
-                  Repeat buyers with ≥2 orders. SKU + category cycles, confidence-scored.
+                  Repeat buyers with two or more orders. SKU and category cycles, confidence-scored.
                 </div>
               </div>
               <div className="border border-ink-200 rounded-md p-4">
@@ -120,8 +120,7 @@ export default function FoodReplenishmentPage() {
                 </div>
                 <div className="text-[13px] font-medium text-ink mb-1">Guideline-Based</div>
                 <div className="text-[11px] text-ink-600 leading-[1.5]">
-                  First-time buyers. Breed × life stage × subcategory → daily intake → coverage
-                  days.
+                  First-time buyers. Breed, life stage, and subcategory map to daily intake and coverage days.
                 </div>
               </div>
               <div className="border border-ink-200 rounded-md p-4">
@@ -130,7 +129,7 @@ export default function FoodReplenishmentPage() {
                 </div>
                 <div className="text-[13px] font-medium text-ink mb-1">Intent-Based</div>
                 <div className="text-[11px] text-ink-600 leading-[1.5]">
-                  Real-time browsing signals. PDP and category views ≥15 days post-purchase.
+                  Real-time browsing signals. PDP and category views fifteen or more days post-purchase.
                 </div>
               </div>
             </div>
@@ -142,7 +141,7 @@ export default function FoodReplenishmentPage() {
                 Unification
               </div>
               <div className="text-[14px] font-medium text-ink mb-1">
-                One nudge per customer × subcategory
+                One nudge per customer, per subcategory
               </div>
               <div className="text-[12px] text-ink-600">
                 Tie-breaking: Intent &gt; Historical &gt; Guideline
@@ -156,13 +155,13 @@ export default function FoodReplenishmentPage() {
       <section className="py-14 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">
-            Phase 1 &mdash; Hybrid historical model
+            Phase 1: hybrid historical model
           </h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-4">
             <p>
-              For repeat buyers &mdash; anyone with two or more orders &mdash; the historical signal
-              is the strongest one available. Phase 1 computes replenishment cycles at two
-              granularities: customer × SKU (most specific) and customer × subcategory (more
+              For repeat buyers (anyone with two or more orders), the historical signal is the
+              strongest one available. Phase 1 computes replenishment cycles at two
+              granularities: customer by SKU (most specific) and customer by subcategory (more
               robust when SKU data is sparse). The two are merged into a single hybrid
               prediction, weighted toward whichever signal is more reliable for that customer.
             </p>
@@ -170,9 +169,9 @@ export default function FoodReplenishmentPage() {
               The output is more than a date. Each prediction comes with a confidence score,
               computed from three components: order depth (more orders = more signal),
               stability (do their reorder cycles cluster tightly or scatter widely?), and
-              recency (are they still active?). Confidence flows downstream into nudge timing
-              &mdash; high-confidence predictions earn a single late nudge for precision;
-              lower-confidence predictions get an earlier soft touch followed by the precision
+              recency (are they still active?). Confidence flows downstream into nudge timing.
+              High-confidence predictions earn a single late nudge for precision.
+              Lower-confidence predictions get an earlier soft touch followed by the precision
               nudge if no order has landed.
             </p>
           </div>
@@ -183,23 +182,23 @@ export default function FoodReplenishmentPage() {
       <section className="py-14 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">
-            Phase 2 &mdash; Guideline-based model
+            Phase 2: guideline-based model
           </h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-4">
             <p>
               First-time buyers have no purchase history to learn from. Phase 2 substitutes
-              biology for behavior. Using a mapping of breed × life stage × subcategory to
+              biology for behavior. Using a mapping of breed, life stage, and subcategory to
               daily food intake, the framework calculates how many days a given pack size
               should cover. If a customer buys a 5kg bag of adult Labrador dry food, and the
-              guideline says an adult Lab consumes ~250g/day, then the pack covers roughly
-              twenty days. The predicted reorder date is order date + coverage days.
+              guideline says an adult Lab consumes around 250g per day, then the pack covers
+              roughly twenty days. The predicted reorder date is order date plus coverage days.
             </p>
             <p>
-              The model is honest about its limits &mdash; it&apos;s sensitive to the underlying
+              The model is honest about its limits. It&apos;s sensitive to the underlying
               guideline assumptions, handles multipacks imperfectly, and breaks down in
               multi-pet households where one bag is feeding three dogs. Coverage accuracy lands
-              at roughly 60% within a ±20-day window &mdash; much less precise than Phase 1, but
-              it covers a population Phase 1 cannot reach at all.
+              at roughly 60% within a 20-day window. Much less precise than Phase 1, but it
+              covers a population Phase 1 cannot reach at all.
             </p>
           </div>
         </div>
@@ -209,14 +208,14 @@ export default function FoodReplenishmentPage() {
       <section className="py-14 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">
-            Phase 3 &mdash; Intent-based model
+            Phase 3: intent-based model
           </h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-4">
             <p>
               The newest layer captures something neither historical patterns nor biological
               guidelines can: real-time intent. When a customer who bought wet food eighteen
-              days ago suddenly views that same product page &mdash; or browses other wet food
-              SKUs &mdash; they&apos;re signaling readiness. Often this is a re-engagement signal that
+              days ago suddenly views that same product page, or browses other wet food
+              SKUs, they&apos;re signaling readiness. Often this is a re-engagement signal that
               precedes the predicted reorder window by days.
             </p>
             <p>
@@ -224,8 +223,8 @@ export default function FoodReplenishmentPage() {
               purchase to avoid false positives from immediate post-purchase browsing. Viewing
               the same product page wins precedence over general category browsing. The nudge
               fires the next day and carries the specific product context forward into the
-              messaging &mdash; letting downstream creative speak directly to what the customer
-              was looking at.
+              messaging, letting downstream creative speak directly to what the customer was
+              looking at.
             </p>
           </div>
         </div>
@@ -245,11 +244,11 @@ export default function FoodReplenishmentPage() {
             </p>
             <p>
               The unification layer takes all candidate nudges across the three phases and
-              selects exactly one per customer × subcategory per day, using a clear tie-breaking
-              hierarchy: Intent (most current signal) beats Historical (most reliable signal)
-              beats Guideline (most coverage-broad signal). The output is a single prioritized
-              row in a downstream nudge table, carrying full context &mdash; the why, the what,
-              and the when, all in one row &mdash; for the messaging system to act on.
+              selects exactly one per customer, per subcategory, per day, using a clear
+              tie-breaking hierarchy: Intent (most current signal) beats Historical (most
+              reliable signal) beats Guideline (most coverage-broad signal). The output is a
+              single prioritized row in a downstream nudge table, carrying full context: the
+              why, the what, and the when, all in one row, for the messaging system to act on.
             </p>
           </div>
         </div>
@@ -263,8 +262,8 @@ export default function FoodReplenishmentPage() {
             <p>
               Phase 1 reached approximately 60% precision on Dry food predictions and 75% on
               Wet food, with the majority of predictions landing within a week of the actual
-              reorder date. This is the workhorse of the system &mdash; high-confidence,
-              high-volume, high-relevance.
+              reorder date. This is the workhorse of the system: high-confidence, high-volume,
+              high-relevance.
             </p>
             <p>
               Phase 2 covered the segment of first-time buyers previously unreachable by
@@ -273,15 +272,15 @@ export default function FoodReplenishmentPage() {
             </p>
             <p>
               Phase 3 added a layer of responsiveness that historical models systematically
-              cannot produce &mdash; capturing intent-driven readiness signals that would otherwise
+              cannot produce, capturing intent-driven readiness signals that would otherwise
               fire too late or not at all.
             </p>
             <p>
               The combined system shifted the internal question from{" "}
               <em>&ldquo;when should we remind everyone?&rdquo;</em> to{" "}
               <em>&ldquo;who has signaled they&apos;re ready, and what&apos;s the most relevant thing to
-              say to them today?&rdquo;</em> That shift &mdash; from broadcast cadence to per-customer
-              decisioning &mdash; is the part that compounds.
+              say to them today?&rdquo;</em> That shift, from broadcast cadence to per-customer
+              decisioning, is the part that compounds.
             </p>
           </div>
         </div>
@@ -293,9 +292,9 @@ export default function FoodReplenishmentPage() {
           <h2 className="text-[19px] font-medium text-ink mb-5">Reflections</h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-5">
             <p>
-              Customer bases are heterogeneous; decisioning frameworks should be too. The
-              instinct to find one perfect model is the wrong instinct for retention problems
-              &mdash; it forces a single algorithm to handle populations it wasn&apos;t designed for.
+              Customer bases are heterogeneous. Decisioning frameworks should be too. The
+              instinct to find one perfect model is the wrong instinct for retention problems.
+              It forces a single algorithm to handle populations it wasn&apos;t designed for.
             </p>
             <p>
               Confidence scoring matters as much as the prediction itself. A model that&apos;s 85%

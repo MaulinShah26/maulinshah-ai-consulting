@@ -1,23 +1,106 @@
-import * as Icons from "lucide-react";
-import { ArrowRight } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import {
+  Activity,
+  Bot,
+  Briefcase,
+  Layers,
+  ArrowUpRight,
+  type LucideIcon,
+} from "lucide-react";
 import { work } from "@/lib/data";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
-function WorkIcon({ name }: { name: string }) {
-  const Component = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; "aria-hidden"?: boolean }>>)[name];
-  if (!Component) return null;
-  return <Component size={16} aria-hidden />;
-}
-
-const pillVariants: Record<string, string> = {
-  blue: "bg-pill-blue-bg text-pill-blue-fg",
-  teal: "bg-pill-teal-bg text-pill-teal-fg",
-  purple: "bg-pill-purple-bg text-pill-purple-fg",
-  default: "bg-ink-100 text-ink-600",
+const ICONS: Record<string, LucideIcon> = {
+  Activity,
+  Bot,
+  Briefcase,
+  Layers,
 };
 
+const TAG_VARIANT_CLASSES: Record<string, string> = {
+  blue: "bg-blue-50 text-blue-700 border-blue-100",
+  teal: "bg-teal-50 text-teal-700 border-teal-100",
+  purple: "bg-purple-50 text-purple-700 border-purple-100",
+};
+
+type CardData = {
+  title: string;
+  description: string;
+  icon: string;
+  tags: Array<{ label: string; variant?: string }>;
+  status: string;
+  cta?: string;
+  href?: string;
+};
+
+function Card({ card }: { card: CardData }) {
+  const Icon = ICONS[card.icon];
+  const isInternal = card.href?.startsWith("/");
+
+  const inner = (
+    <div className="group border border-ink-200 rounded-md p-5 hover:border-ink-400 transition-colors h-full flex flex-col">
+      <div className="flex items-start justify-between mb-3">
+        {Icon && <Icon size={18} className="text-ink-600" aria-hidden />}
+        <span className="text-[10px] font-mono uppercase tracking-wider text-ink-500">
+          {card.status}
+        </span>
+      </div>
+      <h3 className="text-[15px] font-medium text-ink mb-2 group-hover:text-accent transition-colors">
+        {card.title}
+      </h3>
+      <p className="text-[13px] text-ink-600 leading-[1.65] mb-3 flex-1">
+        {card.description}
+      </p>
+      {card.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {card.tags.map((tag, i) => (
+            <span
+              key={i}
+              className={`text-[10px] px-2 py-0.5 rounded-md border ${
+                tag.variant
+                  ? TAG_VARIANT_CLASSES[tag.variant]
+                  : "bg-ink-50 text-ink-600 border-ink-100"
+              }`}
+            >
+              {tag.label}
+            </span>
+          ))}
+        </div>
+      )}
+      {card.cta && card.href && (
+        <div className="flex items-center gap-1 text-[12px] font-medium text-ink-700 group-hover:text-accent transition-colors mt-auto">
+          {card.cta}
+          <ArrowUpRight size={12} aria-hidden />
+        </div>
+      )}
+    </div>
+  );
+
+  if (card.href) {
+    if (isInternal) {
+      return (
+        <Link href={card.href} className="block h-full">
+          {inner}
+        </Link>
+      );
+    }
+    return (
+      <a href={card.href} target="_blank" rel="noopener noreferrer" className="block h-full">
+        {inner}
+      </a>
+    );
+  }
+  return <div className="h-full">{inner}</div>;
+}
+
 export function Work() {
+  const [activeTab, setActiveTab] = useState<"corporate" | "personal">("corporate");
+  const tabKeys: Array<"corporate" | "personal"> = ["corporate", "personal"];
+
   return (
     <Reveal id="work" className="py-14 px-6 border-b border-ink-200/70">
       <div className="max-w-content mx-auto">
@@ -29,61 +112,29 @@ export function Work() {
           {work.intro}
         </p>
 
-        <div className="reveal-child grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {work.cards.map((card, i) => {
-            const cardInner = (
-              <>
-                <div className="w-8 h-8 rounded-md bg-ink-100 text-ink flex items-center justify-center mb-3">
-                  <WorkIcon name={card.icon} />
-                </div>
-                <h3 className="text-[15px] font-medium text-ink mb-1.5">{card.title}</h3>
-                <p className="text-[13px] text-ink-600 leading-[1.7] mb-2.5">
-                  {card.description}
-                </p>
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {card.tags.map((tag, j) => {
-                    const variant = "variant" in tag ? tag.variant : "default";
-                    return (
-                      <span
-                        key={j}
-                        className={`inline-block text-[11px] px-2.5 py-0.5 rounded-md ${pillVariants[variant ?? "default"]}`}
-                      >
-                        {tag.label}
-                      </span>
-                    );
-                  })}
-                </div>
-                <div className="flex items-center justify-between text-[12px]">
-                  <span className="text-ink-400">{card.status}</span>
-                  {card.href && card.cta && (
-                    <span className="text-accent inline-flex items-center gap-1 group-hover:gap-1.5 transition-all">
-                      {card.cta}
-                      <ArrowRight size={12} aria-hidden />
-                    </span>
-                  )}
-                </div>
-              </>
-            );
+        {/* Tabs */}
+        <div className="reveal-child flex items-center gap-1 mb-6 border-b border-ink-200">
+          {tabKeys.map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2.5 text-[13px] font-medium transition-colors border-b-2 -mb-px ${
+                activeTab === tab
+                  ? "border-accent text-ink"
+                  : "border-transparent text-ink-500 hover:text-ink"
+              }`}
+            >
+              {work.tabs[tab].label}
+            </button>
+          ))}
+        </div>
 
-            return card.href ? (
-              <a
-                key={i}
-                href={card.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block bg-white border border-ink-200 rounded-lg p-5 hover:border-ink-400 transition-colors"
-              >
-                {cardInner}
-              </a>
-            ) : (
-              <div
-                key={i}
-                className="bg-white border border-ink-200 rounded-lg p-5"
-              >
-                {cardInner}
-              </div>
-            );
-          })}
+        {/* Cards */}
+        <div className="reveal-child grid grid-cols-1 md:grid-cols-2 gap-4">
+          {work.tabs[activeTab].cards.map((card, i) => (
+            <Card key={`${activeTab}-${i}`} card={card} />
+          ))}
         </div>
       </div>
     </Reveal>
