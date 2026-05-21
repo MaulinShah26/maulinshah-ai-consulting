@@ -1,4 +1,4 @@
-import { Mail, Linkedin } from "lucide-react";
+import { Calendar, Linkedin } from "lucide-react";
 import { contact, social } from "@/lib/data";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
@@ -11,17 +11,28 @@ export function Contact() {
           <SectionHeader number={contact.sectionNumber} label={contact.sectionLabel} />
         </div>
         <h2 className="reveal-child text-[19px] font-medium text-ink mb-4">{contact.heading}</h2>
-        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-5 max-w-prose">
+        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6 max-w-prose">
           {contact.body}
         </p>
-        <div className="reveal-child flex flex-wrap gap-2">
+        <div className="reveal-child flex flex-col items-start gap-4">
           <a
-            href={`mailto:${social.email}`}
+            href={social.calendly}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-ink text-white rounded-md text-[13px] font-medium hover:bg-ink-800 transition-colors"
           >
-            <Mail size={14} aria-hidden />
-            {contact.emailLabel}
+            <Calendar size={14} aria-hidden />
+            {contact.bookingLabel}
           </a>
+          <p className="text-[13.5px] text-ink-600 leading-[1.6]">
+            {contact.emailPrefix}{" "}
+            <a
+              href={`mailto:${social.email}`}
+              className="text-accent hover:underline"
+            >
+              {social.email}
+            </a>
+          </p>
           <a
             href={social.linkedin}
             target="_blank"
