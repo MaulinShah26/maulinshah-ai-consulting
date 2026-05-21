@@ -5,7 +5,7 @@ export const meta = {
   siteName: "Maulin Shah, Fractional AI Lead",
   defaultTitle: "Maulin Shah \u00b7 Fractional AI Lead",
   defaultDescription:
-    "I help founder-led startups turn 'we\u2019ll figure out the data later' into something they can act on, defend, and explain, embedded as the senior data and AI person they don\u2019t yet have.",
+    "I help startups turn 'we\u2019ll figure out the data later' into something they can act on, defend, and explain. The senior AI person they don\u2019t have on their team yet.",
   author: "Maulin Shah",
   location: "Ahmedabad, India",
 };
@@ -28,12 +28,14 @@ export const nav = [
   { label: "Contact", href: "#contact" },
 ];
 
+// Headline is split into two parts so the quoted phrase can render in
+// the accent color with italic serif treatment.
 export const hero = {
   eyebrow: "Fractional AI Lead",
-  headline:
-    'For startup founders who\u2019ve outgrown \u201Cwe\u2019ll figure out the data later.\u201D',
+  headlinePrefix: "For startup founders who\u2019ve outgrown",
+  headlineQuote: "\u201Cwe\u2019ll figure out the data later.\u201D",
   subhead:
-    "I help you turn that instinct into something you can act on, defend, and explain. The senior data and AI person you don\u2019t yet have on the team.",
+    "I help startups turn that instinct into something they can act on, defend, and explain. The senior AI person you don\u2019t have on your team yet.",
   primaryCta: { label: "Start a conversation", href: "#contact" },
   secondaryCta: { label: "See how I work", href: "#approach" },
 };

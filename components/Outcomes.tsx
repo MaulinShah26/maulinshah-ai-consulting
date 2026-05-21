@@ -15,7 +15,7 @@ export function Outcomes() {
   const positions = [0, 33.33, 66.66, 100];
 
   return (
-    <Reveal className="py-14 px-6 border-b border-ink-200/70">
+    <Reveal className="py-10 px-6 border-b border-ink-200/70">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={outcomes.sectionNumber} label={outcomes.sectionLabel} />
@@ -42,7 +42,7 @@ export function Outcomes() {
                 <span
                   className={`w-[18px] h-[18px] rounded-full ${
                     i === outcomes.milestones.length - 1
-                      ? "bg-white border-2 border-accent"
+                      ? "bg-page border-2 border-accent"
                       : "bg-accent"
                   }`}
                   aria-hidden="true"
@@ -63,7 +63,7 @@ export function Outcomes() {
               className="flex gap-4 items-start py-3.5 border-b border-ink-200 last:border-b-0"
             >
               <div className="flex items-center gap-2 w-[88px] flex-shrink-0 pt-0.5">
-                <span className="w-[22px] h-[22px] rounded-full bg-accent-50 text-accent flex items-center justify-center flex-shrink-0">
+                <span className="w-[22px] h-[22px] rounded-full bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">
                   <OutcomeIcon name={row.icon} />
                 </span>
                 <span className="text-[12px] font-medium text-ink">{row.month}</span>

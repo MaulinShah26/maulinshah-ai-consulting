@@ -8,19 +8,24 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  weight: ["400", "500"],
 });
 
+// Fraunces is loaded with explicit weights and both styles so that
+// italic 500 (used for the accent quote in the hero headline) is available.
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
-  axes: ["opsz"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {

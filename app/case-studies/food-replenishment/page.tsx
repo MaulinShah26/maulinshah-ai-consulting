@@ -37,7 +37,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 2: The situation */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">The situation</h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-4">
@@ -64,7 +64,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 3: The shape of the problem */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">The shape of the problem</h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-4">
@@ -91,7 +91,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 4: The architecture */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">
             The architecture: three phases, one decision
@@ -152,7 +152,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 5: Phase 1 */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">
             Phase 1: hybrid historical model
@@ -179,7 +179,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 6: Phase 2 */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">
             Phase 2: guideline-based model
@@ -205,7 +205,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 7: Phase 3 */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">
             Phase 3: intent-based model
@@ -231,7 +231,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 8: Unification */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">
             Unification: one nudge per customer
@@ -255,7 +255,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 9: Outcomes */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">Outcomes</h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-4">
@@ -287,7 +287,7 @@ export default function FoodReplenishmentPage() {
       </section>
 
       {/* Section 10: Reflections */}
-      <section className="py-14 px-6 border-b border-ink-200/70">
+      <section className="py-10 px-6 border-b border-ink-200/70">
         <div className="max-w-content mx-auto">
           <h2 className="text-[19px] font-medium text-ink mb-5">Reflections</h2>
           <div className="text-[14px] text-ink-700 leading-[1.75] max-w-prose space-y-5">

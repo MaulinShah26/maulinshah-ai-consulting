@@ -21,10 +21,16 @@ const ICONS: Record<string, LucideIcon> = {
   Layers,
 };
 
+// Each variant carries explicit light + dark tokens so tags render
+// correctly in both themes. Without dark: variants, the light-tinted
+// backgrounds (blue-50 etc.) become illegible on the petrol-slate dark bg.
 const TAG_VARIANT_CLASSES: Record<string, string> = {
-  blue: "bg-blue-50 text-blue-700 border-blue-100",
-  teal: "bg-teal-50 text-teal-700 border-teal-100",
-  purple: "bg-purple-50 text-purple-700 border-purple-100",
+  blue:
+    "bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-900",
+  teal:
+    "bg-teal-50 text-teal-700 border-teal-100 dark:bg-teal-950 dark:text-teal-300 dark:border-teal-900",
+  purple:
+    "bg-purple-50 text-purple-700 border-purple-100 dark:bg-purple-950 dark:text-purple-300 dark:border-purple-900",
 };
 
 type CardData = {
@@ -45,11 +51,11 @@ function Card({ card }: { card: CardData }) {
     <div className="group border border-ink-200 rounded-md p-5 hover:border-ink-400 transition-colors h-full flex flex-col">
       <div className="flex items-start justify-between mb-3">
         {Icon && <Icon size={18} className="text-ink-600" aria-hidden />}
-        <span className="text-[10px] font-mono uppercase tracking-wider text-ink-500">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-ink-500">
           {card.status}
         </span>
       </div>
-      <h3 className="text-[15px] font-medium text-ink mb-2 group-hover:text-accent transition-colors">
+      <h3 className="font-serif text-[17px] font-medium text-ink mb-2 group-hover:text-accent transition-colors">
         {card.title}
       </h3>
       <p className="text-[13px] text-ink-600 leading-[1.65] mb-3 flex-1">
@@ -102,17 +108,16 @@ export function Work() {
   const tabKeys: Array<"corporate" | "personal"> = ["corporate", "personal"];
 
   return (
-    <Reveal id="work" className="py-14 px-6 border-b border-ink-200/70">
+    <Reveal id="work" className="py-10 px-6 border-b border-ink-200/70">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={work.sectionNumber} label={work.sectionLabel} />
         </div>
-        <h2 className="reveal-child text-[19px] font-medium text-ink mb-4">{work.heading}</h2>
+        <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-4">{work.heading}</h2>
         <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6 max-w-prose">
           {work.intro}
         </p>
 
-        {/* Tabs */}
         <div className="reveal-child flex items-center gap-1 mb-6 border-b border-ink-200">
           {tabKeys.map((tab) => (
             <button
@@ -130,7 +135,6 @@ export function Work() {
           ))}
         </div>
 
-        {/* Cards */}
         <div className="reveal-child grid grid-cols-1 md:grid-cols-2 gap-4">
           {work.tabs[activeTab].cards.map((card, i) => (
             <Card key={`${activeTab}-${i}`} card={card} />

@@ -13,7 +13,7 @@ function PhaseIcon({ name }: { name: string }) {
 
 export function Approach() {
   return (
-    <Reveal id="approach" className="py-14 px-6 border-b border-ink-200/70">
+    <Reveal id="approach" className="py-10 px-6 border-b border-ink-200/70">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={approach.sectionNumber} label={approach.sectionLabel} />
@@ -36,7 +36,7 @@ export function Approach() {
           />
           {approach.phases.map((phase, i) => (
             <div key={i} className="relative flex gap-5 pb-7 last:pb-0">
-              <div className="relative z-10 flex-shrink-0 w-8 h-8 rounded-full bg-accent-50 text-accent flex items-center justify-center border-2 border-white">
+              <div className="relative z-10 flex-shrink-0 w-8 h-8 rounded-full bg-accent-soft text-accent flex items-center justify-center border-2 border-page">
                 <PhaseIcon name={phase.icon} />
               </div>
               <div className="pt-0.5">

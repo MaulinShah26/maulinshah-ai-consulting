@@ -24,7 +24,7 @@ export function Contact() {
   };
 
   return (
-    <Reveal id="contact" className="py-14 px-6 border-b border-ink-200/70">
+    <Reveal id="contact" className="py-10 px-6 border-b border-ink-200/70">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={contact.sectionNumber} label={contact.sectionLabel} />
@@ -38,7 +38,7 @@ export function Contact() {
             href={social.calendly}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-ink text-white rounded-md text-[13px] font-medium hover:bg-ink-800 transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-ink text-page rounded-md text-[13px] font-medium hover:bg-ink-800 transition-colors"
           >
             <Calendar size={14} aria-hidden />
             {contact.bookingLabel}

@@ -12,7 +12,7 @@ function MetricIcon({ name }: { name: string }) {
 
 export function About() {
   return (
-    <Reveal id="about" className="py-14 px-6 border-b border-ink-200/70">
+    <Reveal id="about" className="py-10 px-6 border-b border-ink-200/70">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={about.sectionNumber} label={about.sectionLabel} />
@@ -36,7 +36,7 @@ export function About() {
               key={i}
               className="bg-ink-50 rounded-md px-4 py-3.5 flex gap-3 items-start"
             >
-              <span className="w-8 h-8 rounded-md bg-accent-50 text-accent flex items-center justify-center flex-shrink-0">
+              <span className="w-8 h-8 rounded-md bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">
                 <MetricIcon name={m.icon} />
               </span>
               <div>
