@@ -39,12 +39,11 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       maxWidth: {
-        // Unified container width. 880px is the portfolio sweet spot: prose
-        // stays readable (~75-85 char lines), visual layouts (card grids,
-        // architecture diagrams) get enough room to breathe. Used site-wide.
-        content: "880px",
-        // Kept as an alias of content for backwards compatibility; same value.
-        wide: "880px",
+        // Unified container width at 1100px. Lets visual sections and prose
+        // both feel like they're using the screen on modern wide monitors,
+        // while staying within readable line lengths.
+        content: "1100px",
+        wide: "1100px",
       },
     },
   },
