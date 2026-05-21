@@ -1,3 +1,5 @@
+"use client";
+
 import { Calendar, Linkedin } from "lucide-react";
 import { contact, social } from "@/lib/data";
 import { Reveal } from "./Reveal";
@@ -21,7 +23,14 @@ function GmailIcon({ size = 14 }: { size?: number }) {
 }
 
 export function Contact() {
-  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${social.email}`;
+  // Build the Gmail compose URL at click time, not at render time.
+  // This keeps the email out of the static HTML so that browser
+  // extensions doing Cloudflare-style email obfuscation cannot
+  // replace it with "[email protected]" placeholder text.
+  const openGmail = () => {
+    const url = `https://mail.google.com/mail/?view=cm&fs=1&to=${social.email}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <Reveal id="contact" className="py-14 px-6 border-b border-ink-200/70">
@@ -43,15 +52,14 @@ export function Contact() {
             <Calendar size={14} aria-hidden />
             {contact.bookingLabel}
           </a>
-          <a
-            href={gmailComposeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={openGmail}
             className="inline-flex items-center gap-1.5 px-4 py-2.5 border border-ink-300 text-ink rounded-md text-[13px] font-medium hover:border-ink-500 hover:bg-ink-50 transition-colors"
           >
             <GmailIcon size={14} />
             {contact.emailLabel}
-          </a>
+          </button>
           <a
             href={social.linkedin}
             target="_blank"
