@@ -21,12 +21,6 @@ export const metadata: Metadata = {
     title: meta.defaultTitle,
     description: meta.defaultDescription,
   },
-  twitter: {
-    card: "summary_large_image",
-    title: meta.defaultTitle,
-    description: meta.defaultDescription,
-    creator: "@PLACEHOLDER",
-  },
   robots: {
     index: true,
     follow: true,
