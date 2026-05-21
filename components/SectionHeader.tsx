@@ -12,7 +12,7 @@ export function SectionHeader({ number, label, uppercase = true }: SectionHeader
           uppercase ? "uppercase" : ""
         }`}
       >
-        {number ? `${number} — ` : ""}
+        {number ? `${number} · ` : ""}
         {label}
       </span>
       <span className="flex-1 h-px bg-ink-200" aria-hidden="true" />
