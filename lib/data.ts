@@ -10,10 +10,6 @@ export const meta = {
   location: "Ahmedabad, India",
 };
 
-// Email is split into user and domain to avoid having a literal email string
-// in the source code. Some browser extensions and network filters scan for
-// email patterns and replace them with "[email protected]" placeholders.
-// Storing as parts means the email pattern only exists at runtime, briefly.
 export const social = {
   emailUser: "maulinshah1992",
   emailDomain: "gmail.com",
@@ -28,8 +24,6 @@ export const nav = [
   { label: "Contact", href: "#contact" },
 ];
 
-// Headline is split into two parts so the quoted phrase can render in
-// the accent color with italic serif treatment.
 export const hero = {
   eyebrow: "Fractional AI Lead",
   headlinePrefix: "For startup founders who\u2019ve outgrown",
@@ -50,44 +44,60 @@ export const situation = {
   ],
 };
 
+// Approach is now ONLY the methodology arc, in prose. No phases array.
+// Engagement options are in their own section below.
 export const approach = {
   sectionNumber: "02",
   sectionLabel: "How I work",
   heading: "Partnership, not handover",
   intro: [
-    "We pick one high-value AI or business problem, define the outcome together, and I come in as the senior data and AI brain on your team. I lead the roadmap, define the data and decision logic, work alongside your team on execution, and keep the work tied to business impact.",
-    "Engagements are structured for embedded ownership. Two to three concurrent clients, defined hour bands per month, three-month minimum.",
-  ],
-  phases: [
-    {
-      when: "Days 0 to 7",
-      title: "Listen and audit",
-      icon: "Headphones",
-      text: "I sit with you and your leadership to understand the business objective, where data lives today, how it\u2019s collected, and what your team actually trusts.",
-    },
-    {
-      when: "Days 8 to 15",
-      title: "Reality check",
-      icon: "ScanSearch",
-      text: "I surface the gap between what you think the data is telling you and what it actually is. This is usually where the first uncomfortable truths show up, and where the work earns its keep.",
-    },
-    {
-      when: "Days 16 to 30",
-      title: "Roadmap",
-      icon: "Route",
-      text: "We define scope together and produce a written data and AI roadmap: what to fix, what to build, what to use AI for, what isn\u2019t worth touching yet, and what isn\u2019t possible yet given your data.",
-    },
-    {
-      when: "Day 31 onwards",
-      title: "Embedded operator",
-      icon: "Wrench",
-      text: "I\u2019m the senior data and AI brain on your team. That means owning the roadmap, building dashboards, automation, and ML systems that earn their keep, sitting in on the calls that matter, and lifting your team\u2019s capability so they carry more of it themselves over time.",
-    },
+    "Every engagement is different in scope, depth, and what we\u2019re trying to crack. The shape of how I work tends to be similar regardless. This is the general arc, adjusted in intensity, emphasis, and timeline based on what the work needs.",
+    "I sit with you and your leadership first, to understand the business objective, where data lives today, how it\u2019s collected, and what your team actually trusts. From there I surface the gap between what you think the data is telling you and what it actually is. That\u2019s usually where the first uncomfortable truths show up, and where the work earns its keep.",
+    "Once the picture is honest, we define scope together and produce a written data and AI roadmap: what to fix, what to build, what to use AI for, what isn\u2019t worth touching yet, and what isn\u2019t possible yet given your data. Then I move into operator mode. I own the roadmap, build the dashboards, automation, and ML systems that earn their keep, sit in on the calls that matter, and lift your team\u2019s capability so they carry more of it themselves over time.",
   ],
 };
 
-export const outcomes = {
+// New section: engagement options
+export const engagements = {
   sectionNumber: "03",
+  sectionLabel: "Engagement options",
+  heading: "Three shapes of work",
+  intro:
+    "All engagements are hourly retainers billed monthly, with a three-month minimum. What varies is the shape of the work. Here are the three shapes I\u2019m built for.",
+  cards: [
+    {
+      title: "Fractional AI Lead",
+      icon: "Handshake",
+      bestFor:
+        "Founders who need a senior data and AI operator embedded on the team for a meaningful stretch of work \u2014 typically when there\u2019s no head of data or VP of AI yet, the work can\u2019t wait for the hire, and the team needs someone owning the roadmap from the inside.",
+      whatItCovers:
+        "End-to-end ownership of the AI and data agenda. Roadmap definition, decision-system design, ML and automation builds, dashboards, working alongside your team day-to-day, sitting in on the calls that matter, and building the team\u2019s capability so they carry more over time.",
+    },
+    {
+      title: "Strategic audit",
+      icon: "ScanSearch",
+      bestFor:
+        "Founders who want a clear-eyed read on the state of their data and AI before committing to a longer engagement. The right starting point when the team isn\u2019t yet sure what\u2019s broken, what\u2019s worth investing in, or what\u2019s actually possible given the data they have.",
+      whatItCovers:
+        "A focused diagnostic of the data, the tooling, the team, and the current roadmap. The deliverable is a written assessment that\u2019s honest about where you actually are and what the next two to three highest-leverage bets look like. Often this leads into a Fractional engagement. Sometimes it\u2019s the right place to stop.",
+    },
+    {
+      title: "Scoped build",
+      icon: "Wrench",
+      bestFor:
+        "Founders who know what they want built. The problem is defined, the outcome is clear, and what\u2019s needed is senior ownership of the architecture and the build itself \u2014 without taking over the team or stretching the timeline.",
+      whatItCovers:
+        "End-to-end ownership of one specific build. System design, the technical heavy lifting, integration with your team, deployment, and documentation. The deliverable is the thing working in production.",
+    },
+  ],
+  closingLine:
+    "All three are hourly, monthly retainers with a three-month minimum. Hours and scope are sized to the work. Happy to walk through what fits on a first call.",
+  ctaLabel: "Start a conversation",
+  ctaHref: "#contact",
+};
+
+export const outcomes = {
+  sectionNumber: "04",
   sectionLabel: "What changes for you",
   milestones: [
     { month: "Month 3", label: "Board-ready" },
@@ -144,7 +154,7 @@ export const work: {
     personal: WorkTab;
   };
 } = {
-  sectionNumber: "04",
+  sectionNumber: "05",
   sectionLabel: "Selected work",
   heading: "What I\u2019ve built, what I\u2019m building",
   intro:
@@ -213,7 +223,7 @@ export const work: {
 };
 
 export const about = {
-  sectionNumber: "05",
+  sectionNumber: "06",
   sectionLabel: "About",
   heading: "A short version",
   paragraphs: [
@@ -237,7 +247,7 @@ export const about = {
 };
 
 export const contact = {
-  sectionNumber: "06",
+  sectionNumber: "07",
   sectionLabel: "Get in touch",
   heading: "Let\u2019s see if there\u2019s a fit",
   body: "A first conversation is structured around your actual situation: what you\u2019re trying to crack, what data you\u2019re sitting on, what\u2019s been getting in the way. If we\u2019re not a fit, I\u2019ll tell you who is.",
