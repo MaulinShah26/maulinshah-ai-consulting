@@ -15,7 +15,7 @@ export function Outcomes() {
   const positions = [0, 33.33, 66.66, 100];
 
   return (
-    <Reveal className="py-10 px-6">
+    <Reveal className="py-6 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={outcomes.sectionNumber} label={outcomes.sectionLabel} />

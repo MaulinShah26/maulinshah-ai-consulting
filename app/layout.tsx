@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Inter, Spectral, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { meta } from "@/lib/data";
 import "./globals.css";
@@ -11,13 +11,14 @@ const inter = Inter({
   weight: ["400", "500"],
 });
 
-// Fraunces is loaded with explicit weights and both styles so that
-// italic 500 (used for the accent quote in the hero headline) is available.
-const fraunces = Fraunces({
+// Spectral replaces Fraunces. More readable at display sizes, less quirky
+// letterforms, still editorial. Loaded with normal + italic since italic 500
+// is used for the accent quote in the hero headline and for case study titles.
+const spectral = Spectral({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
 });
 
@@ -46,9 +47,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Runs before React hydrates. Reads the stored theme preference and applies
-// the correct class to <html> before first paint, preventing a flash of the
-// wrong theme on page load. Light is the default if no preference exists.
 const NO_FLASH_SCRIPT = `
   (function() {
     try {
@@ -68,7 +66,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${spectral.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <head>

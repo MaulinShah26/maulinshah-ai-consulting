@@ -3,16 +3,12 @@
 import { ArrowRight } from "lucide-react";
 import { hero } from "@/lib/data";
 import { Reveal } from "./Reveal";
-import { SectionHeader } from "./SectionHeader";
 
 export function Hero() {
   return (
-    <Reveal id="top" className="pt-14 pb-10 px-6">
+    <Reveal id="top" className="pt-10 pb-6 px-6">
       <div className="max-w-content mx-auto">
-        <div className="reveal-child">
-          <SectionHeader label={hero.eyebrow} />
-        </div>
-        <h1 className="reveal-child font-serif text-3xl sm:text-4xl md:text-[44px] font-medium leading-[1.18] tracking-tight text-ink max-w-[640px] mb-5">
+        <h1 className="reveal-child font-serif text-3xl sm:text-4xl md:text-[44px] font-medium leading-[1.15] tracking-tight text-ink max-w-[640px] mb-5">
           {hero.headlinePrefix}{" "}
           <span className="italic text-accent">{hero.headlineQuote}</span>
         </h1>

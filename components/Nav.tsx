@@ -10,19 +10,18 @@ export function Nav() {
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           aria-label={`${meta.author}, home`}
         >
-          {/* Geometric MS monogram */}
+          {/* Geometric MS monogram, sized to span both lines of the name+role block */}
           <span
-            className="w-[26px] h-[26px] border-[1.5px] border-accent rounded-md flex items-center justify-center text-accent text-[11px] font-medium font-sans tracking-tight flex-shrink-0"
+            className="w-[42px] h-[42px] border-[1.5px] border-accent rounded-md flex items-center justify-center text-accent text-[15px] font-medium font-sans tracking-tight flex-shrink-0"
             aria-hidden="true"
           >
             MS
           </span>
-          {/* Name + role line */}
           <span className="flex flex-col leading-none">
-            <span className="text-[15px] font-medium text-ink leading-tight">
+            <span className="text-[16px] font-medium text-ink leading-tight">
               {meta.author}
             </span>
-            <span className="text-[9px] font-mono uppercase tracking-[1.5px] text-ink-500 mt-1 leading-none">
+            <span className="text-[10px] font-mono uppercase tracking-[1.5px] text-ink-500 mt-1.5 leading-none">
               {hero.eyebrow}
             </span>
           </span>
