@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Calendar, Linkedin } from "lucide-react";
 import { contact, social } from "@/lib/data";
 import { Reveal } from "./Reveal";
@@ -23,13 +24,26 @@ function GmailIcon({ size = 14 }: { size?: number }) {
 }
 
 export function Contact() {
-  // Build the Gmail compose URL at click time, not at render time.
-  // This keeps the email out of the static HTML so that browser
-  // extensions doing Cloudflare-style email obfuscation cannot
-  // replace it with "[email protected]" placeholder text.
-  const openGmail = () => {
-    const url = `https://mail.google.com/mail/?view=cm&fs=1&to=${social.email}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const openGmail = async () => {
+    // Try to copy the email to the clipboard as a fallback for users whose
+    // browser extensions (Cloudflare-style email obfuscation, aggressive
+    // privacy filters) strip emails from window.open URLs.
+    try {
+      await navigator.clipboard.writeText(social.email);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2500);
+    } catch (e) {
+      // Clipboard API not available; that is fine, we still open Gmail
+    }
+
+    // Open Gmail compose with the email in the URL. Works for most users.
+    window.open(
+      `https://mail.google.com/mail/?view=cm&fs=1&to=${social.email}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
   return (
@@ -58,7 +72,7 @@ export function Contact() {
             className="inline-flex items-center gap-1.5 px-4 py-2.5 border border-ink-300 text-ink rounded-md text-[13px] font-medium hover:border-ink-500 hover:bg-ink-50 transition-colors"
           >
             <GmailIcon size={14} />
-            {contact.emailLabel}
+            {emailCopied ? "\u2713 Email copied \u2014 paste in To:" : contact.emailLabel}
           </button>
           <a
             href={social.linkedin}
