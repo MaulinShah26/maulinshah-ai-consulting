@@ -214,6 +214,5 @@ export const contact = {
   body: "A first conversation is structured around your actual situation \u2014 what you\u2019re trying to crack, what data you\u2019re sitting on, what\u2019s been getting in the way. If we\u2019re not a fit, I\u2019ll tell you who is.",
   bookingLabel: "Book a meeting",
   emailLabel: "Email me",
-  emailPrefix: "or email me at",
   linkedinLabel: "Connect on LinkedIn",
 };
