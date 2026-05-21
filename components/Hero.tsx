@@ -12,7 +12,7 @@ export function Hero() {
           {hero.headlinePrefix}{" "}
           <span className="italic text-accent">{hero.headlineQuote}</span>
         </h1>
-        <p className="reveal-child text-base text-ink-600 leading-relaxed max-w-prose mb-7">
+        <p className="reveal-child text-base text-ink-600 leading-relaxed mb-7">
           {hero.subhead}
         </p>
         <div className="reveal-child flex flex-wrap gap-2">

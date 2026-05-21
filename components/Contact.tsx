@@ -30,7 +30,7 @@ export function Contact() {
           <SectionHeader number={contact.sectionNumber} label={contact.sectionLabel} />
         </div>
         <h2 className="reveal-child text-[19px] font-medium text-ink mb-4">{contact.heading}</h2>
-        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6 max-w-prose">
+        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6">
           {contact.body}
         </p>
         <div className="reveal-child flex flex-wrap items-center gap-2">

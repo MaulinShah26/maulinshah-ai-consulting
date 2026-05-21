@@ -13,7 +13,7 @@ export function Situation() {
         {situation.paragraphs.map((p, i) => (
           <p
             key={i}
-            className="reveal-child text-[14.5px] text-ink-600 leading-[1.75] mb-4 max-w-prose"
+            className="reveal-child text-[14.5px] text-ink-600 leading-[1.75] mb-4"
           >
             {inlineEm(p)}
           </p>
