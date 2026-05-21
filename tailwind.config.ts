@@ -39,11 +39,13 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       maxWidth: {
-        // Unified container width at 1100px. Lets visual sections and prose
-        // both feel like they're using the screen on modern wide monitors,
-        // while staying within readable line lengths.
+        // Container width. Section headers, cards, timelines, diagrams fill this.
         content: "1100px",
         wide: "1100px",
+        // Prose width. Body paragraphs cap here so reading lines stay 70 to 85
+        // characters even when the container is wider. Editorial pattern:
+        // wide page, narrow prose, visual elements full width.
+        readable: "620px",
       },
     },
   },

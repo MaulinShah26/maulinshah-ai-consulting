@@ -15,7 +15,7 @@ export function Approach() {
         {approach.intro.map((p, i) => (
           <p
             key={i}
-            className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-4 last:mb-0"
+            className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-4 max-w-readable last:mb-0"
           >
             {p}
           </p>

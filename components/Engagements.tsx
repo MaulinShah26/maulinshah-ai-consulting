@@ -26,7 +26,7 @@ export function Engagements() {
         <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-4">
           {engagements.heading}
         </h2>
-        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-7">
+        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-7 max-w-readable">
           {engagements.intro}
         </p>
 
