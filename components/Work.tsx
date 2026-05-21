@@ -66,7 +66,7 @@ export function Work() {
             );
 
             return card.href ? (
-              
+              <a
                 key={i}
                 href={card.href}
                 target="_blank"

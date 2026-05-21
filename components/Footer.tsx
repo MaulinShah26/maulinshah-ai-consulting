@@ -8,7 +8,7 @@ export function Footer() {
           © {new Date().getFullYear()} {meta.author} · {meta.location}
         </span>
         <span>
-          
+          <a
             href={social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
