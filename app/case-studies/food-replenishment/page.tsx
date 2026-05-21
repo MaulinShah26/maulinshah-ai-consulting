@@ -21,7 +21,7 @@ export default function FoodReplenishmentPage() {
     <main>
       {/* Hero */}
       <section className="pt-12 pb-8 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <Link
             href="/#work"
             className="inline-flex items-center gap-1.5 text-[12px] text-ink-500 hover:text-ink mb-8 transition-colors"
@@ -46,7 +46,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: The situation */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">The situation</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-4">
             Pet food retention isn&apos;t optional. It&apos;s the entire economics. A pet parent who refills consistently is significantly more valuable over time than one who lapses and comes back. Most consumer brands solve for this with calendar-based reminders. Thirty days, you nudge. That approach breaks the moment you look at the data.
@@ -59,7 +59,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: Shape of the problem */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">The shape of the problem</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-5">
             The temptation when faced with a &ldquo;predict when X happens&rdquo; problem is to chase one perfect model. In practice, that approach fails on the seams. The customer base isn&apos;t one population. It&apos;s three.
@@ -92,7 +92,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: Architecture */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">The architecture</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-7">
             Three phases. Each serves one of the populations above. All three feed one unified selector that picks the single most relevant nudge per customer per subcategory.
@@ -163,7 +163,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: Phase 1 */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[18px] font-medium text-ink mb-5 flex items-center gap-2">
             <History size={16} className="text-accent" aria-hidden />
             Phase 1: hybrid historical
@@ -179,7 +179,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: Phase 2 */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[18px] font-medium text-ink mb-5 flex items-center gap-2">
             <Scale size={16} className="text-accent" aria-hidden />
             Phase 2: guideline-based
@@ -195,7 +195,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: Phase 3 */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[18px] font-medium text-ink mb-5 flex items-center gap-2">
             <MousePointer2 size={16} className="text-accent" aria-hidden />
             Phase 3: intent-based
@@ -211,7 +211,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: Unification (with before/after visual) */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">Unification: one nudge per customer</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-6">
             Three independent models without coordination would mean three potential nudges per customer, each promoting something different. The unification layer enforces a clear hierarchy and outputs a single prioritized row per customer per day.
@@ -268,7 +268,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: Outcomes (with metric strip) */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">Outcomes</h2>
 
           {/* Metric strip */}
@@ -298,7 +298,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Section: Reflections */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">Reflections</h2>
 
           <div className="space-y-4">
@@ -326,7 +326,7 @@ export default function FoodReplenishmentPage() {
 
       {/* Bottom navigation */}
       <section className="py-8 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <Link
             href="/#work"
             className="inline-flex items-center gap-1.5 text-[13px] text-ink-500 hover:text-ink transition-colors"

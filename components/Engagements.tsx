@@ -16,7 +16,7 @@ function EngagementIcon({ name }: { name: string }) {
 export function Engagements() {
   return (
     <Reveal id="engagements" className="py-6 px-6">
-      <div className="max-w-content mx-auto">
+      <div className="max-w-wide mx-auto">
         <div className="reveal-child">
           <SectionHeader
             number={engagements.sectionNumber}
@@ -30,25 +30,25 @@ export function Engagements() {
           {engagements.intro}
         </p>
 
-        {/* Three vertically stacked cards */}
-        <div className="reveal-child space-y-4 mb-7">
+        {/* 3-column grid at desktop, single column on mobile */}
+        <div className="reveal-child grid grid-cols-1 md:grid-cols-3 gap-4 mb-7">
           {engagements.cards.map((card, i) => (
             <div
               key={i}
-              className="border border-ink-200 rounded-md p-5"
+              className="border border-ink-200 rounded-md p-5 flex flex-col"
             >
-              <div className="flex items-center gap-2.5 mb-3">
+              <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-ink-200">
                 <EngagementIcon name={card.icon} />
-                <h3 className="font-serif text-[17px] font-medium text-ink">
+                <h3 className="font-serif text-[16px] font-medium text-ink">
                   {card.title}
                 </h3>
               </div>
 
-              <div className="mb-3">
+              <div className="mb-4">
                 <div className="font-mono text-[10px] uppercase tracking-wider text-accent mb-1.5">
                   Best for
                 </div>
-                <p className="text-[13.5px] text-ink-700 leading-[1.7]">
+                <p className="text-[13px] text-ink-700 leading-[1.7]">
                   {card.bestFor}
                 </p>
               </div>
@@ -57,7 +57,7 @@ export function Engagements() {
                 <div className="font-mono text-[10px] uppercase tracking-wider text-accent mb-1.5">
                   What it covers
                 </div>
-                <p className="text-[13.5px] text-ink-700 leading-[1.7]">
+                <p className="text-[13px] text-ink-700 leading-[1.7]">
                   {card.whatItCovers}
                 </p>
               </div>
@@ -65,7 +65,6 @@ export function Engagements() {
           ))}
         </div>
 
-        {/* Closing line + CTA */}
         <div className="reveal-child max-w-prose">
           <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-4">
             {engagements.closingLine}

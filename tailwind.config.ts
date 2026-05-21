@@ -10,12 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Page surfaces (theme-aware)
         page: "rgb(var(--page) / <alpha-value>)",
         surface: "rgb(var(--surface) / <alpha-value>)",
         subtle: "rgb(var(--subtle) / <alpha-value>)",
 
-        // Ink scale: text/borders, lower number = closer to background
         ink: {
           DEFAULT: "rgb(var(--ink) / <alpha-value>)",
           50: "rgb(var(--ink-50) / <alpha-value>)",
@@ -30,7 +28,6 @@ const config: Config = {
           900: "rgb(var(--ink-900) / <alpha-value>)",
         },
 
-        // Accent (violet in light, mustard in dark)
         accent: {
           DEFAULT: "rgb(var(--accent) / <alpha-value>)",
           soft: "rgb(var(--accent-soft) / <alpha-value>)",
@@ -42,7 +39,12 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       maxWidth: {
+        // Reading width — body prose, hero, narrative sections
         content: "720px",
+        // Wide layout width — for sections with visual layouts (card grids,
+        // timelines, architecture diagrams). Lets visual layouts breathe
+        // without compromising prose readability elsewhere.
+        wide: "960px",
       },
     },
   },

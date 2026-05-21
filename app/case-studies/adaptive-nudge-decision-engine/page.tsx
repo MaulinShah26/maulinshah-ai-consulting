@@ -22,7 +22,7 @@ export default function AndePage() {
     <main>
       {/* Hero */}
       <section className="pt-12 pb-8 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <Link
             href="/#work"
             className="inline-flex items-center gap-1.5 text-[12px] text-ink-500 hover:text-ink mb-8 transition-colors"
@@ -47,7 +47,7 @@ export default function AndePage() {
 
       {/* Section: The situation */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">The situation</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-4">
             Every customer objective at Supertails ran as its own campaign. ATC nudges had their list, their copy, their cadence. Replenishment had a different list, different copy, different cadence. Cross-sell, reactivation, checkout recovery, new-to-platform: each one its own workflow, each one rebuilt every time something changed.
@@ -63,7 +63,7 @@ export default function AndePage() {
 
       {/* Section: The strategic bet */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">The strategic bet</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-4">
             Rather than build more campaigns, hire more people to run them, or buy another tool that promised to orchestrate the chaos, the bet was structural: design a single decision layer underneath every objective.
@@ -76,7 +76,7 @@ export default function AndePage() {
 
       {/* Section: The architecture (the visual centerpiece) */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">The six-layer architecture</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-7">
             ANDE is structured as six layers, each answering a single question. Customer data and signals flow in at the top. A single nudge per customer per cycle flows out the bottom, with every decision logged and feeding the next batch.
@@ -188,7 +188,7 @@ export default function AndePage() {
 
       {/* Section: Three design decisions */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">Three design decisions that shape the system</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-6">
             Not every choice. The three that mattered most.
@@ -227,7 +227,7 @@ export default function AndePage() {
 
       {/* Section: What this is built to do */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">What this is built to do</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-6">
             The framework was designed against specific success measures. These are the projected improvements ANDE is built to deliver &mdash; the measures the system was architected to move, not yet shipped outcomes.
@@ -289,7 +289,7 @@ export default function AndePage() {
 
       {/* Section: Status */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">Status</h2>
           <p className="text-[14px] text-ink-700 leading-[1.75] max-w-prose mb-4">
             ANDE has been adopted by Supertails as the operational direction for nudge decisioning. The framework is designed, the architecture is documented, and the rollout is in flight &mdash; moving the company from campaign-by-campaign workflows to system-driven cycles, one layer at a time.
@@ -302,7 +302,7 @@ export default function AndePage() {
 
       {/* Section: Reflections */}
       <section className="py-6 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <h2 className="font-serif text-[19px] font-medium text-ink mb-5">Reflections</h2>
 
           <div className="space-y-4">
@@ -330,7 +330,7 @@ export default function AndePage() {
 
       {/* Bottom navigation */}
       <section className="py-8 px-6">
-        <div className="max-w-content mx-auto">
+        <div className="max-w-wide mx-auto">
           <Link
             href="/#work"
             className="inline-flex items-center gap-1.5 text-[13px] text-ink-500 hover:text-ink transition-colors"

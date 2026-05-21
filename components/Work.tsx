@@ -108,7 +108,7 @@ export function Work() {
 
   return (
     <Reveal id="work" className="py-6 px-6">
-      <div className="max-w-content mx-auto">
+      <div className="max-w-wide mx-auto">
         <div className="reveal-child">
           <SectionHeader number={work.sectionNumber} label={work.sectionLabel} />
         </div>
