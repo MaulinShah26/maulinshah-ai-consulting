@@ -1,213 +1,91 @@
-// All site content lives here so you can edit copy without touching components.
-// Replace placeholder values marked with PLACEHOLDER comments before deploying.
+import * as Icons from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { work } from "@/lib/data";
+import { Reveal } from "./Reveal";
+import { SectionHeader } from "./SectionHeader";
 
-export const meta = {
-  // PLACEHOLDER: replace with your final domain when set
-  siteUrl: "https://maulinshah.com",
-  siteName: "Maulin Shah — Fractional AI Lead",
-  defaultTitle: "Maulin Shah · Fractional AI Lead",
-  defaultDescription:
-    "I help founder-led startups turn 'we'll figure out the data later' into something they can act on, defend, and explain — embedded as the senior data and AI person they don't yet have.",
-  author: "Maulin Shah",
-  location: "Ahmedabad, India",
+function WorkIcon({ name }: { name: string }) {
+  const Component = (Icons as unknown as Record<string, React.ComponentType<{ size?: number; "aria-hidden"?: boolean }>>)[name];
+  if (!Component) return null;
+  return <Component size={16} aria-hidden />;
+}
+
+const pillVariants: Record<string, string> = {
+  blue: "bg-pill-blue-bg text-pill-blue-fg",
+  teal: "bg-pill-teal-bg text-pill-teal-fg",
+  purple: "bg-pill-purple-bg text-pill-purple-fg",
+  default: "bg-ink-100 text-ink-600",
 };
 
-export const social = {
-  // PLACEHOLDER: replace with real URLs before deploying
-  email: "[email protected]",
-  linkedin: "https://www.linkedin.com/in/PLACEHOLDER",
-  twitter: "https://x.com/PLACEHOLDER",
-  github: "https://github.com/PLACEHOLDER",
-};
+export function Work() {
+  return (
+    <Reveal id="work" className="py-14 px-6 border-b border-ink-200/70">
+      <div className="max-w-content mx-auto">
+        <div className="reveal-child">
+          <SectionHeader number={work.sectionNumber} label={work.sectionLabel} />
+        </div>
+        <h2 className="reveal-child text-[19px] font-medium text-ink mb-4">{work.heading}</h2>
+        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6 max-w-prose">
+          {work.intro}
+        </p>
 
-export const nav = [
-  { label: "Approach", href: "#approach" },
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
+        <div className="reveal-child grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {work.cards.map((card, i) => {
+            const cardInner = (
+              <>
+                <div className="w-8 h-8 rounded-md bg-ink-100 text-ink flex items-center justify-center mb-3">
+                  <WorkIcon name={card.icon} />
+                </div>
+                <h3 className="text-[15px] font-medium text-ink mb-1.5">{card.title}</h3>
+                <p className="text-[13px] text-ink-600 leading-[1.7] mb-2.5">
+                  {card.description}
+                </p>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {card.tags.map((tag, j) => {
+                    const variant = "variant" in tag ? tag.variant : "default";
+                    return (
+                      <span
+                        key={j}
+                        className={`inline-block text-[11px] px-2.5 py-0.5 rounded-md ${pillVariants[variant ?? "default"]}`}
+                      >
+                        {tag.label}
+                      </span>
+                    );
+                  })}
+                </div>
+                <div className="flex items-center justify-between text-[12px]">
+                  <span className="text-ink-400">{card.status}</span>
+                  {card.href && card.cta && (
+                    <span className="text-accent inline-flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                      {card.cta}
+                      <ArrowRight size={12} aria-hidden />
+                    </span>
+                  )}
+                </div>
+              </>
+            );
 
-export const hero = {
-  eyebrow: "Fractional AI Lead",
-  headline:
-    'For startup founders who\u2019ve outgrown \u201Cwe\u2019ll figure out the data later.\u201D',
-  subhead:
-    "I help you turn that instinct into something you can act on, defend, and explain \u2014 embedded as the senior data and AI person you don\u2019t yet have on the team.",
-  primaryCta: { label: "Start a conversation", href: "#contact" },
-  secondaryCta: { label: "See how I work", href: "#approach" },
-};
-
-export const situation = {
-  sectionNumber: "01",
-  sectionLabel: "The situation I see most",
-  paragraphs: [
-    "Most funded startup founders I meet are in the same spot. The business is growing 2x, 3x. Data is piling up across teams. They\u2019ve decided AI should be doing more for them. They want to build the next thing, hit the next growth lever, present clearer numbers to the board.",
-    "But when asked _how_ \u2014 how the data will hold up, what AI will be built where, how they\u2019ll know it\u2019s working \u2014 they don\u2019t have answers. The team doesn\u2019t have someone who can deal with it. Even when something gets built, no one in the room is confident enough to say it\u2019s correct.",
-    "So the plan stays in _\u201Cwe\u2019ll figure it out when we get to it\u201D_ mode, and the next phase of growth keeps getting deferred.",
-  ],
-};
-
-export const approach = {
-  sectionNumber: "02",
-  sectionLabel: "How I work",
-  heading: "Partnership, not handover",
-  intro: [
-    "We pick one high-value AI or business problem, define the outcome together, and I come in as the senior data and AI brain on your team. I lead the roadmap, define the data and decision logic, work alongside your team on execution, and keep the work tied to business impact.",
-    "Engagements are structured for embedded ownership. Two to three concurrent clients, defined hour bands per month, three-month minimum.",
-  ],
-  phases: [
-    {
-      when: "Days 0\u20137",
-      title: "Listen and audit",
-      icon: "Headphones",
-      text: "I sit with you and your leadership to understand the business objective, where data lives today, how it\u2019s collected, and what your team actually trusts.",
-    },
-    {
-      when: "Days 8\u201315",
-      title: "Reality check",
-      icon: "ScanSearch",
-      text: "I surface the gap between what you think the data is telling you and what it actually is. This is usually where the first uncomfortable truths show up \u2014 and where the work earns its keep.",
-    },
-    {
-      when: "Days 16\u201330",
-      title: "Roadmap",
-      icon: "Route",
-      text: "We define scope together and produce a written data and AI roadmap \u2014 what to fix, what to build, what to use AI for, what isn\u2019t worth touching yet, and what isn\u2019t possible yet given your data.",
-    },
-    {
-      when: "Day 31 onwards",
-      title: "Embedded operator",
-      icon: "Wrench",
-      text: "I\u2019m the senior data and AI brain on your team \u2014 owning the roadmap, building dashboards, automation, and ML systems that earn their keep, sitting in on the calls that matter, and lifting your team\u2019s capability so they carry more of it themselves over time.",
-    },
-  ],
-};
-
-export const outcomes = {
-  sectionNumber: "03",
-  sectionLabel: "What changes for you",
-  milestones: [
-    { month: "Month 3", label: "Board-ready" },
-    { month: "Month 6", label: "Systems running" },
-    { month: "Month 9", label: "Team fluent" },
-    { month: "Month 12", label: "You take it from here" },
-  ],
-  rows: [
-    {
-      month: "Month 3",
-      icon: "Presentation",
-      text: "You walk into board meetings with a single source of truth, can answer investor questions on the spot without scrambling, and have a written roadmap that tells the team what\u2019s worth building and what isn\u2019t.",
-    },
-    {
-      month: "Month 6",
-      icon: "Zap",
-      text: "AI and automation systems are earning measurable hours back per week. Leadership makes decisions from the same set of numbers. The conversation shifts from _\u201Cis the data right?\u201D_ to _\u201Cwhat should we do about it?\u201D_",
-    },
-    {
-      month: "Month 9",
-      icon: "Users",
-      text: "The team operates from data confidently enough that _\u201Cwe\u2019ll figure it out later\u201D_ has stopped being something anyone says.",
-    },
-    {
-      month: "Month 12",
-      icon: "Target",
-      text: "You have the clarity to keep going with or without me in the seat \u2014 which is the goal.",
-    },
-  ],
-};
-
-export const work = {
-  sectionNumber: "04",
-  sectionLabel: "Selected work",
-  heading: "What I\u2019m building right now",
-  intro:
-    "Most consulting sites show finished deliverables. I\u2019d rather show you how I think \u2014 so these are the products I\u2019m actively building, where the reasoning is on display.",
-  cards: [
-    {
-      title: "Nerdy Cricket",
-      description:
-        "A web app for the geeky cricket fan \u2014 the layer of insight Cricbuzz, ESPNcricinfo, and Fancode don\u2019t go to. Built solo with AI agents.",
-      icon: "Activity",
-      tags: [
-        { label: "Sports analytics", variant: "blue" },
-        { label: "Live data", variant: "blue" },
-      ],
-      status: "In active development",
-      cta: "Visit",
-      // PLACEHOLDER: replace with real URL
-      href: "https://PLACEHOLDER-nerdy-cricket-url",
-    },
-    {
-      title: "AI-Trading-Copilot",
-      description:
-        "A multi-agent system surfacing daily trading and investing opportunities in one click. Agents handle scanning, screening, and signal-building end to end.",
-      icon: "Bot",
-      tags: [
-        { label: "Agent orchestration", variant: "teal" },
-        { label: "Markets", variant: "teal" },
-      ],
-      status: "In active development",
-      cta: "Visit",
-      // PLACEHOLDER: replace with real URL
-      href: "https://PLACEHOLDER-trading-copilot-url",
-    },
-    {
-      title: "AI-JobImpact Assessment",
-      description:
-        "A diagnostic tool that helps professionals understand how AI is likely to reshape their specific role. Built for clarity, not fear-mongering.",
-      icon: "Briefcase",
-      tags: [
-        { label: "Career strategy", variant: "purple" },
-        { label: "AI literacy", variant: "purple" },
-      ],
-      status: "Live",
-      cta: "Try it",
-      // PLACEHOLDER: replace with real URL
-      href: "https://PLACEHOLDER-job-impact-url",
-    },
-    {
-      title: "Case studies & teardowns",
-      description:
-        "Public Notion boards with data science and product case studies \u2014 the work, the trade-offs, and the calls I\u2019d make differently in hindsight.",
-      icon: "NotebookPen",
-      tags: [{ label: "Notion" }, { label: "Long-form" }],
-      status: "Updated regularly",
-      cta: "Read",
-      // PLACEHOLDER: replace with real URL
-      href: "https://PLACEHOLDER-case-studies-url",
-    },
-  ],
-};
-
-export const about = {
-  sectionNumber: "05",
-  sectionLabel: "About",
-  heading: "A short version",
-  paragraphs: [
-    "I\u2019ve spent the last decade as the only person in the room who could see the full shape of the data problem. System administrator at SAC-ISRO. Analytics consulting on forecasting and predictive maintenance for an oil and gas major in Malaysia. Senior data scientist at a sports-tech startup for five years \u2014 built the data infrastructure from scratch, then product features and ML models on top of it. EIR in pet-tech at Supertails, where I built a replenishment framework and a cross-channel personalization system across on-app and off-app touchpoints.",
-    "I left full-time roles to do this work as a partner to founders, on my own terms. Based in Ahmedabad. Working with founders across India remotely; happy to travel when the work calls for it.",
-  ],
-  metrics: [
-    { value: "10+ yrs", label: "Across data and AI roles", icon: "CalendarRange" },
-    {
-      value: "5 industries",
-      label: "Sports-tech, pet-tech, oil & gas, space-tech, consulting",
-      icon: "Factory",
-    },
-    { value: "3 products", label: "Live and in active development", icon: "Package" },
-  ],
-  quote:
-    "My work isn\u2019t done when the model ships. It\u2019s done when you can stand in front of your board and explain it as if you built it yourself.",
-  languagesLabel: "Working languages",
-  languages:
-    "English, Hindi, and Gujarati for client work. Working Marathi for informal conversation. Some Spanish.",
-};
-
-export const contact = {
-  sectionNumber: "06",
-  sectionLabel: "Get in touch",
-  heading: "Let\u2019s see if there\u2019s a fit",
-  body: "A first conversation is structured around your actual situation \u2014 what you\u2019re trying to crack, what data you\u2019re sitting on, what\u2019s been getting in the way. If we\u2019re not a fit, I\u2019ll tell you who is.",
-  emailLabel: "Email me",
-  linkedinLabel: "Connect on LinkedIn",
-};
+            return card.href ? (
+              
+                key={i}
+                href={card.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block bg-white border border-ink-200 rounded-lg p-5 hover:border-ink-400 transition-colors"
+              >
+                {cardInner}
+              </a>
+            ) : (
+              <div
+                key={i}
+                className="bg-white border border-ink-200 rounded-lg p-5"
+              >
+                {cardInner}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </Reveal>
+  );
+}
