@@ -10,8 +10,13 @@ export const meta = {
   location: "Ahmedabad, India",
 };
 
+// Email is split into user and domain to avoid having a literal email string
+// in the source code. Some browser extensions and network filters scan for
+// email patterns and replace them with "[email protected]" placeholders.
+// Storing as parts means the email pattern only exists at runtime, briefly.
 export const social = {
-  email: "[email protected]",
+  emailUser: "maulinshah1992",
+  emailDomain: "gmail.com",
   linkedin: "https://www.linkedin.com/in/maulinshah92",
   calendly: "https://calendly.com/maulinshah1992/30min",
 };
@@ -213,6 +218,7 @@ export const contact = {
   heading: "Let\u2019s see if there\u2019s a fit",
   body: "A first conversation is structured around your actual situation \u2014 what you\u2019re trying to crack, what data you\u2019re sitting on, what\u2019s been getting in the way. If we\u2019re not a fit, I\u2019ll tell you who is.",
   bookingLabel: "Book a meeting",
-  emailLabel: "Email me",
+  emailLabel: "Copy email",
+  emailCopiedLabel: "\u2713 Copied \u2014 paste anywhere",
   linkedinLabel: "Connect on LinkedIn",
 };
