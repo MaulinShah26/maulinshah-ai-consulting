@@ -20,7 +20,7 @@ export const social = {
 export const nav = [
   { label: "Approach", href: "#approach" },
   { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
+  { label: "Journey", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -188,6 +188,20 @@ export const work: {
           cta: "Read the case study",
           href: "/case-studies/adaptive-nudge-decision-engine",
         },
+        {
+          title: "Customer Retention Probability Score",
+          description:
+            "A hybrid ML model scoring every Supertails customer\u2019s 30-day repurchase probability. Two-stage architecture (CatBoost precision + MLP recall), 25+ engineered features, refreshed daily to production. ROC AUC 98.6%, ~60% lift on test conversion.",
+          icon: "Target",
+          tags: [
+            { label: "Retention ML" },
+            { label: "Production model" },
+            { label: "Pet-tech" },
+          ],
+          status: "Supertails \u00b7 2025 \u00b7 Live in production",
+          cta: "Read the case study",
+          href: "/case-studies/customer-retention-probability",
+        },
       ],
     },
     personal: {
@@ -238,7 +252,7 @@ export const work: {
 // Each entry: year range, title (company), subtitle (role), tags (5 short concepts).
 export const about = {
   sectionNumber: "06",
-  sectionLabel: "About",
+  sectionLabel: "My Journey",
   heading: "A short version",
   journey: [
     {
