@@ -8,44 +8,36 @@ import {
   CheckCircle2,
   AlertCircle,
   TrendingUp,
+  ChevronDown,
 } from "lucide-react";
 
 export const metadata = {
   title: "Customer Retention Probability Score · Maulin Shah",
   description:
-    "A hybrid ML model scoring every Supertails customer's 30-day repurchase probability. Two-stage architecture, 25+ engineered features, ROC AUC 98.6%, ~60% lift on test conversion. Refreshed daily to production.",
+    "A hybrid ML system at Supertails scoring every customer’s 30-day repurchase probability. Two-stage CatBoost + MLP architecture, refreshed daily, ~60% lift on test conversion.",
 };
 
 const features = [
   {
     group: "Purchase behavior",
-    items: ["no_of_orders_placed", "aov", "recency_days", "avg_order_duration"],
+    body: "Order frequency, recency, average order value, average gap between orders.",
   },
   {
-    group: "Engagement",
-    items: ["weekly_lness", "monthly_lness", "longest_streak"],
+    group: "Engagement signals",
+    body: "Platform activity windows, longest engagement streaks, session patterns.",
   },
   {
-    group: "Communication",
-    items: ["whatsapp_campaigns", "comms_interaction_rate", "comm_segment"],
+    group: "Communication interaction",
+    body: "Campaign exposure, response rates, channel preferences, comms recency.",
   },
   {
     group: "Customer status",
-    items: ["customer_value_segment", "RFM_Score"],
-  },
-  {
-    group: "Delivery experience",
-    items: ["delivery_experience_label"],
+    body: "RFM score, value segment, delivery experience history.",
   },
   {
     group: "Engineered momentum signals",
-    items: [
-      "order_velocity_30_60_ratio",
-      "order_velocity_60_90_ratio",
-      "is_momentum_up",
-      "is_lost_momentum",
-      "recency_score",
-    ],
+    body: "Velocity ratios (30/60 and 60/90 day windows), trend flags, weighted recency score.",
+    highlight: true,
   },
 ];
 
@@ -60,13 +52,13 @@ const metrics = [
 const activation = [
   {
     label: "Likely to purchase",
-    condition: "Score ≥ 70 OR (RFM > 431 AND comms_interaction_rate > 60)",
+    condition: "Score ≥ 70, or strong recent engagement",
     objective: "Convert with minimal effort",
     primaryChannel: "WhatsApp",
-    secondaryChannel: "Push notification, Email",
-    cap: "1\u20132x / week",
+    secondaryChannel: "Push, Email",
+    cap: "1–2x / week",
     tactic:
-      "Subtle nudges, loyalty perks. No discount unless affinity tag indicates price sensitivity.",
+      "Subtle nudges, loyalty perks. No discount unless prior signal indicates price sensitivity.",
     tone: "accent" as const,
   },
   {
@@ -74,21 +66,20 @@ const activation = [
     condition: "Middle band — neither high nor low",
     objective: "Nudge based on intent",
     primaryChannel: "Email",
-    secondaryChannel: "Push notification, In-app",
-    cap: "2\u20133x / week",
+    secondaryChannel: "Push, In-app",
+    cap: "2–3x / week",
     tactic:
       "Best offers in preferred categories. Urgency framing. Dynamic personalization.",
     tone: "neutral" as const,
   },
   {
     label: "Unlikely to purchase",
-    condition: "Score < 25 OR (RFM < 333 AND comms_interaction_rate < 25)",
+    condition: "Score < 25, or weak engagement signals",
     objective: "Re-engage or learn intent",
-    primaryChannel: "Push notification, In-app",
+    primaryChannel: "Push, In-app",
     secondaryChannel: "Email (if opted in)",
     cap: "1x / week",
-    tactic:
-      "Win-back offers. Feedback surveys. Personalized content to recapture attention.",
+    tactic: "Win-back offers. Feedback surveys. Content to recapture attention.",
     tone: "muted" as const,
   },
 ];
@@ -124,9 +115,9 @@ export default function CustomerRetentionProbabilityPage() {
           Customer Retention Probability Score
         </h1>
         <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
-          A hybrid ML system that scores every customer's 30-day repurchase
-          likelihood, refreshes daily, and routes the right intervention into the
-          right channel — WhatsApp, email, push notifications.
+          A hybrid ML system that scores every customer’s 30-day repurchase
+          likelihood, refreshes daily, and routes the right intervention into
+          the right channel — WhatsApp, email, push notifications.
         </p>
         <div className="flex flex-wrap gap-2">
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
@@ -137,9 +128,6 @@ export default function CustomerRetentionProbabilityPage() {
           </span>
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
             Retention activation
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            BigQuery
           </span>
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
             SHAP interpretability
@@ -157,25 +145,19 @@ export default function CustomerRetentionProbabilityPage() {
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
-            Supertails was growing fast — more customers, more SKUs, more
-            channels per customer journey. The CRM and retention teams were
-            running campaigns the way they always had: rule-based segments,
-            calendar-driven blasts, the same offers going to everyone in a
-            cohort.
+            Supertails was running campaigns the way most growing companies do
+            — rule-based segments, calendar-driven blasts, the same offers
+            going to everyone in a cohort. The result was predictable.
+            High-intent customers got discounts they didn’t need (margin loss).
+            Lapsed customers got irrelevant nudges (wasted spend).
           </p>
           <p>
-            The result was predictable. High-intent customers were getting
-            discounts they didn't need, eating margin. Lapsed customers were
-            getting irrelevant nudges. The team had open rates and click rates
-            but no answer to a basic question:
+            The team had open rates and click rates. What it didn’t have was an
+            answer to the question that actually mattered:
           </p>
           <p className="border-l-2 border-accent pl-4 italic text-ink-800">
             Who is actually likely to come back in the next 30 days, and who
-            isn't?
-          </p>
-          <p>
-            Without that answer, every campaign was spray-and-pray with a margin
-            tax.
+            isn’t?
           </p>
         </div>
       </section>
@@ -186,41 +168,40 @@ export default function CustomerRetentionProbabilityPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="02" label="The bet" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          A score and a label per customer, refreshed daily, routed to the right
-          channel
+          A score and a label per customer, refreshed daily, routed to the
+          right channel
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-6">
           <p>
-            Build a model that scores every customer on their 30-day repurchase
-            probability. Output a number AND a label (Likely / Might / Unlikely
-            to Purchase). Refresh it daily. Route it into the activation
-            channels so the right customers got the right intervention.
+            Build a model that scores every customer on their 30-day
+            repurchase probability. Output a number AND a label (Likely /
+            Might / Unlikely). Refresh daily. Route into activation channels
+            so the right customer gets the right intervention.
           </p>
           <p>
-            The model had four non-negotiable constraints. The combination of
-            high recall AND high precision is the hard part — most models
-            optimize one at the expense of the other. The architecture had to
-            be designed around that tension.
+            Four non-negotiable constraints. High recall AND high precision is
+            the hard part — most models optimize one at the expense of the
+            other.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <ConstraintCard
-            icon={<Target size={16} />}
+            icon={<Target size={16} aria-hidden />}
             title="High AUC"
             body="The model has to actually work. Predictions need to track reality."
           />
           <ConstraintCard
-            icon={<TrendingUp size={16} />}
+            icon={<TrendingUp size={16} aria-hidden />}
             title="High recall"
-            body="Don't miss customers who would have converted if engaged."
+            body="Don’t miss customers who would have converted if engaged."
           />
           <ConstraintCard
-            icon={<CheckCircle2 size={16} />}
+            icon={<CheckCircle2 size={16} aria-hidden />}
             title="High precision"
-            body="Don't waste campaign budget on customers who won't."
+            body="Don’t waste campaign budget on customers who won’t convert."
           />
           <ConstraintCard
-            icon={<Sparkles size={16} />}
+            icon={<Sparkles size={16} aria-hidden />}
             title="Interpretable"
             body="Marketing needs to trust it. CRM needs to actuate it. SHAP for every score."
           />
@@ -237,58 +218,52 @@ export default function CustomerRetentionProbabilityPage() {
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
           <p>
-            The model is a deliberate hybrid of two classifiers with opposing
-            tunings, blended into a single probability score. CatBoost alone was
-            too conservative (high precision, low recall). MLP alone was too
-            aggressive (high recall, low precision). The weighted blend captures
-            the best of both.
+            A deliberate hybrid of two classifiers with opposing tunings,
+            blended into a single probability score. CatBoost alone was too
+            conservative. MLP alone was too aggressive. The weighted blend
+            captures the best of both.
           </p>
         </div>
 
         {/* Pipeline diagram */}
         <div className="my-10">
-          {/* Stage 1 + Stage 2 boxes */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ModelBox
               stage="Stage 1"
               name="CatBoost Classifier"
               tuning="Precision-tuned"
               weight="65%"
-              details="RandomizedSearchCV, 20 iterations, 3-fold CV. Handles structured tabular signals with strong defaults. Catches the clearest \u2018will convert' customers."
+              details="Strong tabular learner. Catches the clearest ‘will convert’ customers."
             />
             <ModelBox
               stage="Stage 2"
               name="MLP Classifier"
               tuning="Recall-tuned"
               weight="35%"
-              details="2 hidden layers (128, 64). alpha=0.0005, early stopping, max_iter=500. Catches non-linear patterns that CatBoost misses."
+              details="Catches the non-linear patterns CatBoost misses. Reaches the harder converts."
             />
           </div>
 
-          {/* Connector down to Hybrid */}
           <div className="flex justify-center my-4" aria-hidden>
             <div className="w-px h-10 bg-ink-300" />
           </div>
 
-          {/* Hybrid score box */}
           <div className="border-2 border-accent rounded-md p-5 text-center bg-accent-soft">
             <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent font-medium mb-2">
               Weighted hybrid
             </div>
             <div className="font-serif text-[20px] font-medium text-ink mb-1">
-              retention_probability_30d
+              30-day retention probability
             </div>
             <div className="text-[12px] text-ink-600 font-mono">
               0.65 × CatBoost score + 0.35 × MLP score
             </div>
           </div>
 
-          {/* Connector down to labels */}
           <div className="flex justify-center my-4" aria-hidden>
             <div className="w-px h-10 bg-ink-300" />
           </div>
 
-          {/* Label outputs */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <LabelTile
               label="Likely to purchase"
@@ -307,18 +282,6 @@ export default function CustomerRetentionProbabilityPage() {
             />
           </div>
         </div>
-
-        <div className="bg-ink-50 border-l-2 border-accent rounded-r-md p-4 mt-8">
-          <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium mb-2">
-            Design discipline
-          </div>
-          <p className="text-[14px] text-ink-700 leading-[1.65]">
-            SMOTE (synthetic minority oversampling) was applied to training data
-            only — never to the validation hold-out. Synthetic data leaking
-            into validation inflates metrics dangerously. The hold-out had to be
-            the real distribution. Holding that line was non-negotiable.
-          </p>
-        </div>
       </section>
 
       <hr className="border-ink-200" />
@@ -327,23 +290,20 @@ export default function CustomerRetentionProbabilityPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="04" label="Features that matter" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          25+ features across five behavioral categories, plus the engineered
-          momentum signals that did the work
+          Standard RFM, plus the engineered momentum signals that did the work
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
           <p>
-            Most retention models look at the same surface features: recency,
-            frequency, monetary value. Useful, but they conflate two very
-            different customers — the one who lapsed last month
-            (recoverable) and the one who lapsed eight months ago (probably
-            gone). Both look identical to a basic RFM model.
+            Most retention models stop at RFM (recency, frequency, monetary
+            value). Useful, but RFM conflates two very different customers —
+            the one who lapsed last month (recoverable) and the one who lapsed
+            eight months ago (probably gone). Both look identical.
           </p>
           <p>
-            The engineered momentum signals were the unlock. Order velocity
-            ratios (30/60 and 60/90 day windows) and trend flags
-            (is_momentum_up, is_lost_momentum) separated those two customer
-            types decisively. That single feature class probably moved the
-            model 5\u201310 points on recall.
+            The unlock was a set of engineered momentum signals — velocity
+            ratios and trend flags that distinguish recoverable customers
+            from long-gone ones. That single feature class likely moved the
+            model 5–10 points on recall.
           </p>
         </div>
 
@@ -352,39 +312,20 @@ export default function CustomerRetentionProbabilityPage() {
             <div
               key={i}
               className={`bg-surface border-[0.5px] rounded-md p-4 ${
-                g.group === "Engineered momentum signals"
-                  ? "border-accent"
-                  : "border-ink-200"
+                g.highlight ? "border-accent" : "border-ink-200"
               }`}
             >
               <div
                 className={`font-mono text-[10px] uppercase tracking-wider font-medium mb-2 ${
-                  g.group === "Engineered momentum signals"
-                    ? "text-accent"
-                    : "text-ink-500"
+                  g.highlight ? "text-accent" : "text-ink-500"
                 }`}
               >
                 {g.group}
               </div>
-              <ul className="space-y-1">
-                {g.items.map((item, j) => (
-                  <li
-                    key={j}
-                    className="font-mono text-[11.5px] text-ink-700"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <p className="text-[13px] text-ink-700 leading-[1.6]">{g.body}</p>
             </div>
           ))}
         </div>
-
-        <p className="text-[13px] text-ink-500 leading-[1.65] mt-6">
-          Features were preprocessed with StandardScaler (numeric) and
-          OneHotEncoder (categorical), extracted from BigQuery and assembled
-          into a single training table refreshed daily.
-        </p>
       </section>
 
       <hr className="border-ink-200" />
@@ -393,7 +334,7 @@ export default function CustomerRetentionProbabilityPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="05" label="Performance" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          What the hybrid actually delivered (Aug 2025)
+          What the hybrid delivered
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 my-8">
@@ -414,19 +355,15 @@ export default function CustomerRetentionProbabilityPage() {
 
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
-            The Hybrid Eval threshold was set at ≥ 65, calibrated through
-            a threshold sensitivity analysis: precision, recall, and F1
-            computed at every probability cutoff from 0.3 to 0.9. That cutoff
-            is tunable by business teams — raise it to spend less budget
-            at higher precision, lower it to extend reach at lower precision.
-            The model gives the dial. The business decides where to set it.
+            The threshold is tunable by business teams — raise it to spend less
+            budget at higher precision, lower it to extend reach at lower
+            precision. The model gives the dial. The business decides where to
+            set it.
           </p>
           <p>
-            The ~60% lift on test conversion (Jul 2025) is the number that
-            mattered most to leadership. Lift compares the conversion of
-            customers the model said would purchase against a baseline
-            cohort. It's the practical answer to: “if we listen to
-            this model, do we make more money?”
+            The ~60% lift mattered most to leadership. It’s the practical
+            answer to: “if we listen to this model, do we make more money?” —
+            yes, by about 60%.
           </p>
         </div>
       </section>
@@ -442,12 +379,9 @@ export default function CustomerRetentionProbabilityPage() {
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
           <p>
-            Every customer is mapped to one of three labels. Each label gets a
-            different objective, channel, frequency cap, and tactical
-            playbook. Channel choice isn't arbitrary — it's part
-            of the activation strategy. High-intent customers need less
-            friction (WhatsApp = personal), middle customers need rich content
-            (Email = explanatory), low-engagement customers need passive
+            Channel choice isn’t arbitrary. High-intent customers need less
+            friction (WhatsApp = personal). Middle customers need rich content
+            (Email = explanatory). Low-engagement customers need passive
             presence (Push = lightweight).
           </p>
         </div>
@@ -459,11 +393,10 @@ export default function CustomerRetentionProbabilityPage() {
         </div>
 
         <p className="text-[13px] text-ink-500 leading-[1.65] mt-6">
-          Cross-personalization rules layer on top: top_category /
-          brand_loyalty drives SKU choice, discount_affinity_tag gates discount
-          eligibility, delivery_experience_label suppresses offers to customers
-          with bad delivery experience, comms_interaction_rate optimizes
-          channel mix per customer.
+          Cross-personalization rules layer on top: brand affinity drives SKU
+          choice, discount sensitivity gates discount eligibility, delivery
+          experience suppresses offers to customers with bad delivery history,
+          and engagement rate optimizes channel mix per customer.
         </p>
       </section>
 
@@ -477,29 +410,29 @@ export default function CustomerRetentionProbabilityPage() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-6">
           <ProductionCard
-            icon={<Layers size={16} />}
-            title="Daily refresh to BigQuery"
-            body="central_analytical_datasets.customer_retention_score_production with WRITE_TRUNCATE strategy for clean daily replacement."
+            icon={<Layers size={16} aria-hidden />}
+            title="Daily refresh"
+            body="The score refreshes every night and lands in BigQuery as a clean replacement of the prior day’s table. A single, current source of truth."
           />
           <ProductionCard
-            icon={<Sparkles size={16} />}
-            title="SHAP-based interpretability"
-            body="Feature importance plots generated per run. Top drivers: recency_score, comms_interaction_rate, avg_order_duration, order_velocity_30_60_ratio, RFM_Score."
+            icon={<Sparkles size={16} aria-hidden />}
+            title="SHAP interpretability"
+            body="Feature importance plots generated per run, showing which signals drove each segment’s predictions. Builds stakeholder trust beyond ‘the model says so.’"
           />
           <ProductionCard
-            icon={<Cpu size={16} />}
+            icon={<Cpu size={16} aria-hidden />}
             title="Multi-channel activation"
-            body="Scores actuated via WhatsApp, Email, Push Notifications with channel prioritization and frequency caps per segment."
+            body="Scores actuated via WhatsApp, Email, Push with channel prioritization and frequency caps per segment."
           />
           <ProductionCard
-            icon={<Target size={16} />}
+            icon={<Target size={16} aria-hidden />}
             title="Cross-team usage"
             body="CRM uses it for campaign targeting. Product for in-app nudges. Retention for A/B tests on win-back. Data for lift tracking vs baseline cohorts."
           />
         </div>
         <p className="text-[14px] text-ink-600 leading-[1.65] mt-2">
-          Each customer's score is good for 30 days (prediction_valid_till).
-          Daily refresh keeps the picture current as behavior changes.
+          Each customer’s score is valid for 30 days. Daily refresh keeps the
+          picture current as behavior changes.
         </p>
       </section>
 
@@ -509,44 +442,127 @@ export default function CustomerRetentionProbabilityPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="08" label="Reflections" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-8">
-          What worked, what was hard, what's next
+          What worked, what was hard, what’s next
         </h2>
 
         <div className="space-y-8">
           <ReflectionBlock
             title="What worked"
-            icon={<CheckCircle2 size={16} />}
-            tone="success"
+            icon={<CheckCircle2 size={16} aria-hidden />}
             items={[
-              "The hybrid architecture (CatBoost + MLP) was the architectural win — pure precision OR pure recall wasn't enough. The blend was.",
-              "Momentum signals separated recoverable customers from gone. That single feature class probably moved the model 5\u201310 points on recall.",
-              "Combining the model score with business logic (RFM + comms_interaction_rate) gave stakeholders an explanation they trusted, beyond \u2018the model says so.'",
-              "Daily scoring pipeline integrated cleanly into existing CRM. The handoff was smooth because the table contract was simple.",
+              "The hybrid architecture (CatBoost + MLP) was the architectural win — pure precision OR pure recall wasn’t enough. The blend was.",
+              "Momentum signals separated recoverable customers from gone ones. That single feature class probably moved the model 5–10 points on recall.",
+              "Combining the model score with business logic gave stakeholders an explanation they trusted, beyond ‘the model says so.’",
             ]}
           />
           <ReflectionBlock
             title="What was hard"
-            icon={<AlertCircle size={16} />}
+            icon={<AlertCircle size={16} aria-hidden />}
             tone="warning"
             items={[
-              "Label leakage. Some features (recency_days, customer_status) had to be carefully addressed — they were predictive because they encoded the answer.",
-              "SMOTE discipline. Synthetic oversampling on training boosts metrics. Apply it to validation and you're fooling yourself.",
-              "Communication interaction data was partially sparse — needed robust imputation and fallback logic.",
-              "Stakeholder education. \u2018Model precision' and \u2018campaign conversion' aren't the same thing. Bridging that with interpretability plots and threshold tuning conversations took time.",
+              "Label leakage. A few features were predictive because they encoded the answer in disguise. Catching those took careful audit.",
+              "Validation discipline. Synthetic oversampling on training boosts metrics; let it leak into validation and you’re fooling yourself.",
+              "Stakeholder education. ‘Model precision’ and ‘campaign conversion’ aren’t the same thing. Bridging that took time.",
             ]}
           />
           <ReflectionBlock
-            title="What's next"
-            icon={<Sparkles size={16} />}
-            tone="accent"
+            title="What’s next"
+            icon={<Sparkles size={16} aria-hidden />}
             items={[
               "Uplift modeling to measure the causal impact of campaigns, not just predicted likelihood.",
-              "Real-time scoring for recent behavior (cart abandonment, in-session nudges) layered on top of the daily score.",
+              "Real-time scoring for recent behavior (cart abandonment, in-session nudges) layered on top of daily scoring.",
               "Channel optimization — best day/time/channel per user, on top of the likelihood score.",
               "Quarterly threshold recalibration based on observed lift and churn.",
             ]}
           />
         </div>
+      </section>
+
+      {/* Technical detail (collapsible) */}
+      <section className="max-w-content mx-auto px-6 pb-12">
+        <details className="group bg-surface border-[0.5px] border-ink-200 rounded-md">
+          <summary className="cursor-pointer list-none px-5 py-4 flex items-center justify-between hover:bg-ink-50 transition-colors">
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium mb-0.5">
+                For depth
+              </div>
+              <div className="font-serif text-[16px] font-medium text-ink">
+                Technical detail
+              </div>
+            </div>
+            <ChevronDown
+              size={18}
+              className="text-ink-500 group-open:rotate-180 transition-transform"
+              aria-hidden
+            />
+          </summary>
+
+          <div className="px-5 pb-5 pt-3 space-y-6 border-t border-ink-100">
+            <TechBlock title="Model architecture">
+              <p>
+                <strong>Stage 1 (CatBoost)</strong> — tuned via
+                RandomizedSearchCV over 20 iterations with 3-fold
+                cross-validation. Hyperparameter search across iteration count,
+                learning rate, tree depth, L2 regularization, and border count.
+              </p>
+              <p>
+                <strong>Stage 2 (MLP)</strong> — 2 hidden layers (128, 64).
+                alpha=0.0005, early stopping enabled, max_iter=500. Trained on
+                SMOTE-resampled training data, validated on the real
+                (non-synthetic) hold-out set.
+              </p>
+              <p>
+                <strong>Hybrid blend</strong> — final score = 0.65 × CatBoost
+                probability + 0.35 × MLP probability. The 65/35 split was
+                calibrated against the validation set.
+              </p>
+            </TechBlock>
+
+            <TechBlock title="Validation discipline">
+              <p>
+                SMOTE (synthetic minority oversampling) was applied only to
+                training data, never to the validation hold-out. Synthetic
+                samples leaking into validation inflate metrics dangerously;
+                the hold-out had to be the real distribution.
+              </p>
+              <p>
+                Threshold sensitivity analysis: precision, recall, and F1
+                computed at every probability cutoff from 0.3 to 0.9. The ≥65
+                threshold for the “Likely” label was selected from this
+                analysis based on the business’s budget vs. reach trade-off.
+              </p>
+            </TechBlock>
+
+            <TechBlock title="Feature engineering">
+              <p>
+                25+ features extracted from BigQuery. Preprocessing:
+                StandardScaler for numeric features, OneHotEncoder for
+                categorical features.
+              </p>
+              <p>
+                Engineered momentum signals included velocity ratios across
+                30-day, 60-day, and 90-day windows; binary trend flags
+                (momentum-up, lost-momentum); and a weighted recency score
+                aggregating engagement across multiple timeframes.
+              </p>
+            </TechBlock>
+
+            <TechBlock title="Deployment">
+              <p>
+                The scoring pipeline runs nightly and writes to a production
+                table in BigQuery using WRITE_TRUNCATE for clean daily
+                replacement. The output table includes the hybrid score, the
+                customer label, last_model_run_date, and prediction_valid_till
+                (30-day horizon).
+              </p>
+              <p>
+                Activation systems (CRM, push notification platforms, email)
+                read from this single production table. SHAP-based feature
+                importance is generated per run for interpretability.
+              </p>
+            </TechBlock>
+          </div>
+        </details>
       </section>
 
       <hr className="border-ink-200" />
@@ -737,18 +753,16 @@ function ProductionCard({
 function ReflectionBlock({
   title,
   icon,
-  tone,
+  tone = "accent",
   items,
 }: {
   title: string;
   icon: React.ReactNode;
-  tone: "success" | "warning" | "accent";
+  tone?: "accent" | "warning";
   items: string[];
 }) {
   const toneClasses =
-    tone === "success"
-      ? "border-l-accent bg-accent-soft/40"
-      : tone === "warning"
+    tone === "warning"
       ? "border-l-ink-400 bg-ink-50"
       : "border-l-accent bg-accent-soft/40";
   const iconBg =
@@ -777,6 +791,25 @@ function ReflectionBlock({
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function TechBlock({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium mb-2">
+        {title}
+      </div>
+      <div className="space-y-2 text-[13px] text-ink-700 leading-[1.65]">
+        {children}
+      </div>
     </div>
   );
 }
