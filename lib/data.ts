@@ -233,13 +233,73 @@ export const work: {
   },
 };
 
+// About section uses a journey timeline with tags-only cards.
+// Desktop: horizontal alternating timeline. Mobile: vertical stacked timeline.
+// Each entry: year range, title (company), subtitle (role), tags (5 short concepts).
 export const about = {
   sectionNumber: "06",
   sectionLabel: "About",
   heading: "A short version",
-  paragraphs: [
-    "I\u2019ve spent the last decade as the only person in the room who could see the full shape of the data problem. System administrator at SAC-ISRO. Analytics consulting on forecasting and predictive maintenance for an oil and gas major in Malaysia. Senior data scientist at a sports-tech startup for five years, building the data infrastructure from scratch, then product features and ML models on top of it. EIR in pet-tech at Supertails, where I built a replenishment framework and a cross-channel personalization system across on-app and off-app touchpoints.",
-    "I left full-time roles to do this work as a partner to founders, on my own terms. Based in Ahmedabad. Working with founders across India remotely. Happy to travel when the work calls for it.",
+  journey: [
+    {
+      years: "2014\u20132016",
+      title: "SAC-ISRO",
+      subtitle: "FMS Engineer",
+      tags: [
+        "Linux Administration",
+        "System Optimization",
+        "Data Reporting",
+        "Satellite Data Operations",
+      ],
+    },
+    {
+      years: "2016\u20132018",
+      title: "Lericon Informatics",
+      subtitle: "Analytics Consultant",
+      tags: [
+        "Client Consulting",
+        "Predictive Modeling",
+        "Time Series Forecasting",
+        "BI Dashboards",
+        "Process Automation",
+      ],
+    },
+    {
+      years: "2019\u20132024",
+      title: "CricHeroes",
+      subtitle: "Senior Data Scientist",
+      tags: [
+        "Data Infrastructure",
+        "ML Models",
+        "Generative AI",
+        "Data & AI Roadmap",
+        "Team Leadership",
+      ],
+    },
+    {
+      years: "2025\u20132026",
+      title: "Supertails",
+      subtitle: "EIR, Data & AI Initiatives",
+      tags: [
+        "Customer Retention Modelling",
+        "Replenishment Frameworks",
+        "AI/Data Strategy",
+        "Data Democratization",
+        "Data Modelling",
+      ],
+    },
+    {
+      years: "2026 \u2192",
+      title: "Fractional AI Lead",
+      subtitle: "Independent practice",
+      tags: [
+        "Embedded Leadership",
+        "Decision Systems",
+        "Founder Partnerships",
+        "Strategic Audits",
+        "AI Roadmaps",
+      ],
+    },
   ],
   metrics: [
     { value: "10+ yrs", label: "Across data and AI roles", icon: "CalendarRange" },
