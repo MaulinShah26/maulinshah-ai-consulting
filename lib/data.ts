@@ -3,9 +3,9 @@
 export const meta = {
   siteUrl: "https://maulinshah.vercel.app",
   siteName: "Maulin Shah, Fractional AI Lead",
-  defaultTitle: "Maulin Shah \u00b7 Fractional AI Lead",
+  defaultTitle: "Maulin Shah · Fractional AI Lead",
   defaultDescription:
-    "I help startups turn 'we\u2019ll figure out the data later' into something they can act on, defend, and explain. The senior AI person they don\u2019t have on their team yet.",
+    "I help startups turn 'we’ll figure out the data later' into something they can act on, defend, and explain. The senior AI person they don’t have on their team yet.",
   author: "Maulin Shah",
   location: "Ahmedabad, India",
 };
@@ -26,10 +26,10 @@ export const nav = [
 
 export const hero = {
   eyebrow: "Fractional AI Lead",
-  headlinePrefix: "For startup founders who\u2019ve outgrown",
-  headlineQuote: "\u201Cwe\u2019ll figure out the data later.\u201D",
+  headlinePrefix: "For startup founders who’ve outgrown",
+  headlineQuote: "“we’ll figure out the data later.”",
   subhead:
-    "I help startups turn that instinct into something they can act on, defend, and explain. The senior AI person you don\u2019t have on your team yet.",
+    "I help startups turn that instinct into something they can act on, defend, and explain. The senior AI person you don’t have on your team yet.",
   primaryCta: { label: "Start a conversation", href: "#contact" },
   secondaryCta: { label: "See how I work", href: "#approach" },
 };
@@ -38,9 +38,9 @@ export const situation = {
   sectionNumber: "01",
   sectionLabel: "The situation I see most",
   paragraphs: [
-    "Most funded startup founders I meet are in the same spot. The business is growing 2x, 3x. Data is piling up across teams. They\u2019ve decided AI should be doing more for them. They want to build the next thing, hit the next growth lever, present clearer numbers to the board.",
-    "But the how isn\u2019t clear: how the data holds up, what AI gets built where, how they\u2019ll know it\u2019s working. They don\u2019t have answers. The team doesn\u2019t have someone who can deal with it. Even when something gets built, no one in the room is confident enough to say it\u2019s correct.",
-    "So the plan stays in _\u201Cwe\u2019ll figure it out when we get to it\u201D_ mode, and the next phase of growth keeps getting deferred.",
+    "Most funded startup founders I meet are in the same spot. The business is growing 2x, 3x. Data is piling up across teams. They’ve decided AI should be doing more for them. They want to build the next thing, hit the next growth lever, present clearer numbers to the board.",
+    "But the how isn’t clear: how the data holds up, what AI gets built where, how they’ll know it’s working. They don’t have answers. The team doesn’t have someone who can deal with it. Even when something gets built, no one in the room is confident enough to say it’s correct.",
+    "So the plan stays in _“we’ll figure it out when we get to it”_ mode, and the next phase of growth keeps getting deferred.",
   ],
 };
 
@@ -49,9 +49,9 @@ export const approach = {
   sectionLabel: "How I work",
   heading: "Partnership, not handover",
   intro: [
-    "Every engagement is different in scope, depth, and what we\u2019re trying to crack. The shape of how I work tends to be similar regardless. This is the general arc, adjusted in intensity, emphasis, and timeline based on what the work needs.",
-    "I sit with you and your leadership first, to understand the business objective, where data lives today, how it\u2019s collected, and what your team actually trusts. From there I surface the gap between what you think the data is telling you and what it actually is. That\u2019s usually where the first uncomfortable truths show up, and where the work earns its keep.",
-    "Once the picture is honest, we define scope together and produce a written data and AI roadmap: what to fix, what to build, what to use AI for, what isn\u2019t worth touching yet, and what isn\u2019t possible yet given your data. Then I move into operator mode. I own the roadmap, build the dashboards, automation, and ML systems that earn their keep, sit in on the calls that matter, and lift your team\u2019s capability so they carry more of it themselves over time.",
+    "Every engagement is different in scope, depth, and what we’re trying to crack. The shape of how I work tends to be similar regardless. This is the general arc, adjusted in intensity, emphasis, and timeline based on what the work needs.",
+    "I sit with you and your leadership first, to understand the business objective, where data lives today, how it’s collected, and what your team actually trusts. From there I surface the gap between what you think the data is telling you and what it actually is. That’s usually where the first uncomfortable truths show up, and where the work earns its keep.",
+    "Once the picture is honest, we define scope together and produce a written data and AI roadmap: what to fix, what to build, what to use AI for, what isn’t worth touching yet, and what isn’t possible yet given your data. Then I move into operator mode. I own the roadmap, build the dashboards, automation, and ML systems that earn their keep, sit in on the calls that matter, and lift your team’s capability so they carry more of it themselves over time.",
   ],
 };
 
@@ -60,29 +60,29 @@ export const engagements = {
   sectionLabel: "Engagement options",
   heading: "Three shapes of work",
   intro:
-    "All engagements are hourly retainers billed monthly, with a three-month minimum. What varies is the shape of the work. Here are the three shapes I\u2019m built for.",
+    "All engagements are hourly retainers billed monthly, with a three-month minimum. What varies is the shape of the work. Here are the three shapes I’m built for.",
   cards: [
     {
       title: "Fractional AI Lead",
       icon: "Handshake",
       bestFor:
-        "Founders who need a senior data and AI operator embedded on the team for a meaningful stretch of work \u2014 typically when there\u2019s no head of data or VP of AI yet, the work can\u2019t wait for the hire, and the team needs someone owning the roadmap from the inside.",
+        "Founders who need a senior data and AI operator embedded on the team for a meaningful stretch of work — typically when there’s no head of data or VP of AI yet, the work can’t wait for the hire, and the team needs someone owning the roadmap from the inside.",
       whatItCovers:
-        "End-to-end ownership of the AI and data agenda. Roadmap definition, decision-system design, ML and automation builds, dashboards, working alongside your team day-to-day, sitting in on the calls that matter, and building the team\u2019s capability so they carry more over time.",
+        "End-to-end ownership of the AI and data agenda. Roadmap definition, decision-system design, ML and automation builds, dashboards, working alongside your team day-to-day, sitting in on the calls that matter, and building the team’s capability so they carry more over time.",
     },
     {
       title: "Strategic audit",
       icon: "ScanSearch",
       bestFor:
-        "Founders who want a clear-eyed read on the state of their data and AI before committing to a longer engagement. The right starting point when the team isn\u2019t yet sure what\u2019s broken, what\u2019s worth investing in, or what\u2019s actually possible given the data they have.",
+        "Founders who want a clear-eyed read on the state of their data and AI before committing to a longer engagement. The right starting point when the team isn’t yet sure what’s broken, what’s worth investing in, or what’s actually possible given the data they have.",
       whatItCovers:
-        "A focused diagnostic of the data, the tooling, the team, and the current roadmap. The deliverable is a written assessment that\u2019s honest about where you actually are and what the next two to three highest-leverage bets look like. Often this leads into a Fractional engagement. Sometimes it\u2019s the right place to stop.",
+        "A focused diagnostic of the data, the tooling, the team, and the current roadmap. The deliverable is a written assessment that’s honest about where you actually are and what the next two to three highest-leverage bets look like. Often this leads into a Fractional engagement. Sometimes it’s the right place to stop.",
     },
     {
       title: "Scoped build",
       icon: "Wrench",
       bestFor:
-        "Founders who know what they want built. The problem is defined, the outcome is clear, and what\u2019s needed is senior ownership of the architecture and the build itself \u2014 without taking over the team or stretching the timeline.",
+        "Founders who know what they want built. The problem is defined, the outcome is clear, and what’s needed is senior ownership of the architecture and the build itself — without taking over the team or stretching the timeline.",
       whatItCovers:
         "End-to-end ownership of one specific build. System design, the technical heavy lifting, integration with your team, deployment, and documentation. The deliverable is the thing working in production.",
     },
@@ -106,22 +106,22 @@ export const outcomes = {
     {
       month: "Month 3",
       icon: "Presentation",
-      text: "You walk into board meetings with a single source of truth, can answer investor questions on the spot without scrambling, and have a written roadmap that tells the team what\u2019s worth building and what isn\u2019t.",
+      text: "You walk into board meetings with a single source of truth, can answer investor questions on the spot without scrambling, and have a written roadmap that tells the team what’s worth building and what isn’t.",
     },
     {
       month: "Month 6",
       icon: "Zap",
-      text: "AI and automation systems are earning measurable hours back per week. Leadership makes decisions from the same set of numbers. The conversation shifts from _\u201Cis the data right?\u201D_ to _\u201Cwhat should we do about it?\u201D_",
+      text: "AI and automation systems are earning measurable hours back per week. Leadership makes decisions from the same set of numbers. The conversation shifts from _“is the data right?”_ to _“what should we do about it?”_",
     },
     {
       month: "Month 9",
       icon: "Users",
-      text: "The team operates from data confidently enough that _\u201Cwe\u2019ll figure it out later\u201D_ has stopped being something anyone says.",
+      text: "The team operates from data confidently enough that _“we’ll figure it out later”_ has stopped being something anyone says.",
     },
     {
       month: "Month 12",
       icon: "Target",
-      text: "You have the clarity to keep going with or without me in the seat. That\u2019s the goal.",
+      text: "You have the clarity to keep going with or without me in the seat. That’s the goal.",
     },
   ],
 };
@@ -153,7 +153,7 @@ export const work: {
 } = {
   sectionNumber: "05",
   sectionLabel: "Selected work",
-  heading: "What I\u2019ve built, what I\u2019m building",
+  heading: "What I’ve built, what I’m building",
   intro:
     "Corporate work is where the thinking gets pressure-tested by real business stakes. Personal projects are where I experiment with the tools I want to bring into client work. Both lines feed each other.",
   tabs: {
@@ -170,7 +170,7 @@ export const work: {
             { label: "Decision systems" },
             { label: "Pet-tech" },
           ],
-          status: "Supertails \u00b7 2024 to 2025",
+          status: "Supertails · 2024 to 2025",
           cta: "Read the case study",
           href: "/case-studies/food-replenishment",
         },
@@ -184,23 +184,37 @@ export const work: {
             { label: "Platform architecture" },
             { label: "Pet-tech" },
           ],
-          status: "Supertails \u00b7 2025 \u00b7 In operationalization",
+          status: "Supertails · 2025 · In operationalization",
           cta: "Read the case study",
           href: "/case-studies/adaptive-nudge-decision-engine",
         },
         {
           title: "Customer Retention Probability Score",
           description:
-            "A hybrid ML model scoring every Supertails customer\u2019s 30-day repurchase probability. Two-stage architecture (CatBoost precision + MLP recall), 25+ engineered features, refreshed daily to production. ROC AUC 98.6%, ~60% lift on test conversion.",
+            "A hybrid ML model scoring every Supertails customer’s 30-day repurchase probability. Two-stage architecture (CatBoost precision + MLP recall), 25+ engineered features, refreshed daily to production. ROC AUC 98.6%, ~60% lift on test conversion.",
           icon: "Target",
           tags: [
             { label: "Retention ML" },
             { label: "Production model" },
             { label: "Pet-tech" },
           ],
-          status: "Supertails \u00b7 2025 \u00b7 Live in production",
+          status: "Supertails · 2025 · Live in production",
           cta: "Read the case study",
           href: "/case-studies/customer-retention-probability",
+        },
+        {
+          title: "Customer Affinity Modelling",
+          description:
+            "A multi-level scoring system at Supertails that quantifies what every customer cares about — across pet types, categories, sub-categories, and brands. Weights all behavioral signals by intent, decays old behavior, normalizes scores at each level. Live in BigQuery feeding personalization, segmentation, and cross-sell.",
+          icon: "Compass",
+          tags: [
+            { label: "Behavioral scoring" },
+            { label: "Personalization layer" },
+            { label: "Pet-tech" },
+          ],
+          status: "Supertails · 2025 · Live in production",
+          cta: "Read the case study",
+          href: "/case-studies/customer-affinity-modelling",
         },
       ],
     },
@@ -210,7 +224,7 @@ export const work: {
         {
           title: "Nerdy Cricket",
           description:
-            "A web app for the geeky cricket fan. The layer of insight Cricbuzz, ESPNcricinfo, and Fancode don\u2019t go to. Built solo with AI agents.",
+            "A web app for the geeky cricket fan. The layer of insight Cricbuzz, ESPNcricinfo, and Fancode don’t go to. Built solo with AI agents.",
           icon: "Activity",
           tags: [
             { label: "Sports analytics", variant: "blue" },
@@ -256,7 +270,7 @@ export const about = {
   heading: "A short version",
   journey: [
     {
-      years: "2014\u20132016",
+      years: "2014–2016",
       title: "SAC-ISRO",
       subtitle: "FMS Engineer",
       tags: [
@@ -267,7 +281,7 @@ export const about = {
       ],
     },
     {
-      years: "2016\u20132018",
+      years: "2016–2018",
       title: "Lericon Informatics",
       subtitle: "Analytics Consultant",
       tags: [
@@ -279,7 +293,7 @@ export const about = {
       ],
     },
     {
-      years: "2019\u20132024",
+      years: "2019–2024",
       title: "CricHeroes",
       subtitle: "Senior Data Scientist",
       tags: [
@@ -291,7 +305,7 @@ export const about = {
       ],
     },
     {
-      years: "2025\u20132026",
+      years: "2025–2026",
       title: "Supertails",
       subtitle: "EIR, Data & AI Initiatives",
       tags: [
@@ -303,7 +317,7 @@ export const about = {
       ],
     },
     {
-      years: "2026 \u2192",
+      years: "2026 →",
       title: "Fractional AI Lead",
       subtitle: "Independent practice",
       tags: [
@@ -325,7 +339,7 @@ export const about = {
     { value: "3 products", label: "Live and in active development", icon: "Package" },
   ],
   quote:
-    "My work isn\u2019t done when the model ships. It\u2019s done when you can stand in front of your board and explain it as if you built it yourself.",
+    "My work isn’t done when the model ships. It’s done when you can stand in front of your board and explain it as if you built it yourself.",
   languagesLabel: "Working languages",
   languages:
     "English, Hindi, and Gujarati for client work. Working Marathi for informal conversation. Some Spanish.",
@@ -334,10 +348,10 @@ export const about = {
 export const contact = {
   sectionNumber: "07",
   sectionLabel: "Get in touch",
-  heading: "Let\u2019s see if there\u2019s a fit",
-  body: "A first conversation is structured around your actual situation: what you\u2019re trying to crack, what data you\u2019re sitting on, what\u2019s been getting in the way. If we\u2019re not a fit, I\u2019ll tell you who is.",
+  heading: "Let’s see if there’s a fit",
+  body: "A first conversation is structured around your actual situation: what you’re trying to crack, what data you’re sitting on, what’s been getting in the way. If we’re not a fit, I’ll tell you who is.",
   bookingLabel: "Book a meeting",
   emailLabel: "Copy email",
-  emailCopiedLabel: "\u2713 Copied! Paste anywhere",
+  emailCopiedLabel: "✓ Copied! Paste anywhere",
   linkedinLabel: "Connect on LinkedIn",
 };
