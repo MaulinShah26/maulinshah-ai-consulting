@@ -230,6 +230,20 @@ export const work: {
           cta: "Read the case study",
           href: "/case-studies/batters-bowlers-tag",
         },
+        {
+          title: "AI Commentary at CricHeroes",
+          description:
+            "A unified GenAI vision to bring the international cricket experience — pre-match, live ball-by-ball, and post-match — to grassroots cricketers. Three pilots evaluated in 2024 across OpenAI + ElevenLabs. Live commentary delivered 15% engagement uplift but surfaced LLM repetition limits. Pre/post voice shows were killed on cost economics (~₹50–60 lakh/month projected). The case study is about evaluating GenAI bets across cost, quality, and value.",
+          icon: "Headphones",
+          tags: [
+            { label: "GenAI evaluation" },
+            { label: "Cost-benefit analysis" },
+            { label: "Sports-tech" },
+          ],
+          status: "CricHeroes · 2024 · Three pilots evaluated",
+          cta: "Read the case study",
+          href: "/case-studies/ai-cricket-commentary",
+        },
       ],
     },
     personal: {
