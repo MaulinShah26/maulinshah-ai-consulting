@@ -22,7 +22,7 @@ export function Outcomes() {
         </div>
 
         {/* Progression bar */}
-        <div className="reveal-child relative mt-3 mb-7 max-w-[580px] py-7">
+        <div className="reveal-child relative mt-3 mb-7 py-7">
           {/* Rail line */}
           <div
             className="absolute left-2 right-2 top-1/2 -translate-y-1/2 h-0.5 bg-accent"
