@@ -61,9 +61,6 @@ export function About() {
         <div className="reveal-child">
           <SectionHeader number={about.sectionNumber} label={about.sectionLabel} />
         </div>
-        <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-6">
-          {about.heading}
-        </h2>
 
         {/* DESKTOP: horizontal alternating journey timeline */}
         <div className="reveal-child hidden md:block py-6">
@@ -137,28 +134,6 @@ export function About() {
         </div>
 
         <hr className="border-ink-200 my-6" />
-
-        {/* Metrics */}
-        <div className="reveal-child grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {about.metrics.map((m, i) => (
-            <div
-              key={i}
-              className="bg-ink-50 rounded-md px-4 py-3.5 flex gap-3 items-start"
-            >
-              <span className="w-8 h-8 rounded-md bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">
-                <MetricIcon name={m.icon} />
-              </span>
-              <div>
-                <span className="block text-[18px] font-medium text-ink leading-tight">
-                  {m.value}
-                </span>
-                <span className="block text-[12px] text-ink-500 leading-snug mt-1">
-                  {m.label}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
 
         {/* Quote */}
         <blockquote className="reveal-child mt-8 mb-2 border-l-2 border-accent pl-4 py-1 italic text-[16px] text-ink leading-[1.55]">
