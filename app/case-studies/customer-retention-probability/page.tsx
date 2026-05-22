@@ -11,9 +11,9 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Customer Retention Probability Score \u00b7 Maulin Shah",
+  title: "Customer Retention Probability Score · Maulin Shah",
   description:
-    "A hybrid ML model scoring every Supertails customer\u2019s 30-day repurchase probability. Two-stage architecture, 25+ engineered features, ROC AUC 98.6%, ~60% lift on test conversion. Refreshed daily to production.",
+    "A hybrid ML model scoring every Supertails customer's 30-day repurchase probability. Two-stage architecture, 25+ engineered features, ROC AUC 98.6%, ~60% lift on test conversion. Refreshed daily to production.",
 };
 
 const features = [
@@ -60,7 +60,7 @@ const metrics = [
 const activation = [
   {
     label: "Likely to purchase",
-    condition: "Score \u2265 70 OR (RFM > 431 AND comms_interaction_rate > 60)",
+    condition: "Score ≥ 70 OR (RFM > 431 AND comms_interaction_rate > 60)",
     objective: "Convert with minimal effort",
     primaryChannel: "WhatsApp",
     secondaryChannel: "Push notification, Email",
@@ -71,7 +71,7 @@ const activation = [
   },
   {
     label: "Might purchase",
-    condition: "Middle band \u2014 neither high nor low",
+    condition: "Middle band — neither high nor low",
     objective: "Nudge based on intent",
     primaryChannel: "Email",
     secondaryChannel: "Push notification, In-app",
@@ -96,7 +96,7 @@ const activation = [
 function SectionEyebrow({ number, label }: { number: string; label: string }) {
   return (
     <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-accent font-medium mb-3">
-      {number} \u00b7 {label}
+      {number} · {label}
     </div>
   );
 }
@@ -118,15 +118,15 @@ export default function CustomerRetentionProbabilityPage() {
       {/* Hero */}
       <header className="max-w-content mx-auto px-6 pt-6 pb-10">
         <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent font-medium mb-4">
-          Supertails \u00b7 2025 \u00b7 Live in production
+          Supertails · 2025 · Live in production
         </div>
         <h1 className="font-serif text-[36px] md:text-[44px] font-medium text-ink leading-[1.1] mb-5">
           Customer Retention Probability Score
         </h1>
         <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
-          A hybrid ML system that scores every customer\u2019s 30-day repurchase
+          A hybrid ML system that scores every customer's 30-day repurchase
           likelihood, refreshes daily, and routes the right intervention into the
-          right channel \u2014 WhatsApp, email, push notifications.
+          right channel — WhatsApp, email, push notifications.
         </p>
         <div className="flex flex-wrap gap-2">
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
@@ -157,7 +157,7 @@ export default function CustomerRetentionProbabilityPage() {
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
-            Supertails was growing fast \u2014 more customers, more SKUs, more
+            Supertails was growing fast — more customers, more SKUs, more
             channels per customer journey. The CRM and retention teams were
             running campaigns the way they always had: rule-based segments,
             calendar-driven blasts, the same offers going to everyone in a
@@ -165,13 +165,13 @@ export default function CustomerRetentionProbabilityPage() {
           </p>
           <p>
             The result was predictable. High-intent customers were getting
-            discounts they didn\u2019t need, eating margin. Lapsed customers were
+            discounts they didn't need, eating margin. Lapsed customers were
             getting irrelevant nudges. The team had open rates and click rates
             but no answer to a basic question:
           </p>
           <p className="border-l-2 border-accent pl-4 italic text-ink-800">
             Who is actually likely to come back in the next 30 days, and who
-            isn\u2019t?
+            isn't?
           </p>
           <p>
             Without that answer, every campaign was spray-and-pray with a margin
@@ -198,7 +198,7 @@ export default function CustomerRetentionProbabilityPage() {
           </p>
           <p>
             The model had four non-negotiable constraints. The combination of
-            high recall AND high precision is the hard part \u2014 most models
+            high recall AND high precision is the hard part — most models
             optimize one at the expense of the other. The architecture had to
             be designed around that tension.
           </p>
@@ -212,12 +212,12 @@ export default function CustomerRetentionProbabilityPage() {
           <ConstraintCard
             icon={<TrendingUp size={16} />}
             title="High recall"
-            body="Don\u2019t miss customers who would have converted if engaged."
+            body="Don't miss customers who would have converted if engaged."
           />
           <ConstraintCard
             icon={<CheckCircle2 size={16} />}
             title="High precision"
-            body="Don\u2019t waste campaign budget on customers who won\u2019t."
+            body="Don't waste campaign budget on customers who won't."
           />
           <ConstraintCard
             icon={<Sparkles size={16} />}
@@ -254,7 +254,7 @@ export default function CustomerRetentionProbabilityPage() {
               name="CatBoost Classifier"
               tuning="Precision-tuned"
               weight="65%"
-              details="RandomizedSearchCV, 20 iterations, 3-fold CV. Handles structured tabular signals with strong defaults. Catches the clearest \u2018will convert\u2019 customers."
+              details="RandomizedSearchCV, 20 iterations, 3-fold CV. Handles structured tabular signals with strong defaults. Catches the clearest \u2018will convert' customers."
             />
             <ModelBox
               stage="Stage 2"
@@ -279,7 +279,7 @@ export default function CustomerRetentionProbabilityPage() {
               retention_probability_30d
             </div>
             <div className="text-[12px] text-ink-600 font-mono">
-              0.65 \u00d7 CatBoost score + 0.35 \u00d7 MLP score
+              0.65 × CatBoost score + 0.35 × MLP score
             </div>
           </div>
 
@@ -292,7 +292,7 @@ export default function CustomerRetentionProbabilityPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <LabelTile
               label="Likely to purchase"
-              condition="Score \u2265 70"
+              condition="Score ≥ 70"
               tone="accent"
             />
             <LabelTile
@@ -314,7 +314,7 @@ export default function CustomerRetentionProbabilityPage() {
           </div>
           <p className="text-[14px] text-ink-700 leading-[1.65]">
             SMOTE (synthetic minority oversampling) was applied to training data
-            only \u2014 never to the validation hold-out. Synthetic data leaking
+            only — never to the validation hold-out. Synthetic data leaking
             into validation inflates metrics dangerously. The hold-out had to be
             the real distribution. Holding that line was non-negotiable.
           </p>
@@ -334,7 +334,7 @@ export default function CustomerRetentionProbabilityPage() {
           <p>
             Most retention models look at the same surface features: recency,
             frequency, monetary value. Useful, but they conflate two very
-            different customers \u2014 the one who lapsed last month
+            different customers — the one who lapsed last month
             (recoverable) and the one who lapsed eight months ago (probably
             gone). Both look identical to a basic RFM model.
           </p>
@@ -414,10 +414,10 @@ export default function CustomerRetentionProbabilityPage() {
 
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
-            The Hybrid Eval threshold was set at \u2265 65, calibrated through
+            The Hybrid Eval threshold was set at ≥ 65, calibrated through
             a threshold sensitivity analysis: precision, recall, and F1
             computed at every probability cutoff from 0.3 to 0.9. That cutoff
-            is tunable by business teams \u2014 raise it to spend less budget
+            is tunable by business teams — raise it to spend less budget
             at higher precision, lower it to extend reach at lower precision.
             The model gives the dial. The business decides where to set it.
           </p>
@@ -425,8 +425,8 @@ export default function CustomerRetentionProbabilityPage() {
             The ~60% lift on test conversion (Jul 2025) is the number that
             mattered most to leadership. Lift compares the conversion of
             customers the model said would purchase against a baseline
-            cohort. It\u2019s the practical answer to: \u201Cif we listen to
-            this model, do we make more money?\u201D
+            cohort. It's the practical answer to: “if we listen to
+            this model, do we make more money?”
           </p>
         </div>
       </section>
@@ -444,7 +444,7 @@ export default function CustomerRetentionProbabilityPage() {
           <p>
             Every customer is mapped to one of three labels. Each label gets a
             different objective, channel, frequency cap, and tactical
-            playbook. Channel choice isn\u2019t arbitrary \u2014 it\u2019s part
+            playbook. Channel choice isn't arbitrary — it's part
             of the activation strategy. High-intent customers need less
             friction (WhatsApp = personal), middle customers need rich content
             (Email = explanatory), low-engagement customers need passive
@@ -498,7 +498,7 @@ export default function CustomerRetentionProbabilityPage() {
           />
         </div>
         <p className="text-[14px] text-ink-600 leading-[1.65] mt-2">
-          Each customer\u2019s score is good for 30 days (prediction_valid_till).
+          Each customer's score is good for 30 days (prediction_valid_till).
           Daily refresh keeps the picture current as behavior changes.
         </p>
       </section>
@@ -509,7 +509,7 @@ export default function CustomerRetentionProbabilityPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="08" label="Reflections" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-8">
-          What worked, what was hard, what\u2019s next
+          What worked, what was hard, what's next
         </h2>
 
         <div className="space-y-8">
@@ -518,9 +518,9 @@ export default function CustomerRetentionProbabilityPage() {
             icon={<CheckCircle2 size={16} />}
             tone="success"
             items={[
-              "The hybrid architecture (CatBoost + MLP) was the architectural win \u2014 pure precision OR pure recall wasn\u2019t enough. The blend was.",
+              "The hybrid architecture (CatBoost + MLP) was the architectural win — pure precision OR pure recall wasn't enough. The blend was.",
               "Momentum signals separated recoverable customers from gone. That single feature class probably moved the model 5\u201310 points on recall.",
-              "Combining the model score with business logic (RFM + comms_interaction_rate) gave stakeholders an explanation they trusted, beyond \u2018the model says so.\u2019",
+              "Combining the model score with business logic (RFM + comms_interaction_rate) gave stakeholders an explanation they trusted, beyond \u2018the model says so.'",
               "Daily scoring pipeline integrated cleanly into existing CRM. The handoff was smooth because the table contract was simple.",
             ]}
           />
@@ -529,20 +529,20 @@ export default function CustomerRetentionProbabilityPage() {
             icon={<AlertCircle size={16} />}
             tone="warning"
             items={[
-              "Label leakage. Some features (recency_days, customer_status) had to be carefully addressed \u2014 they were predictive because they encoded the answer.",
-              "SMOTE discipline. Synthetic oversampling on training boosts metrics. Apply it to validation and you\u2019re fooling yourself.",
-              "Communication interaction data was partially sparse \u2014 needed robust imputation and fallback logic.",
-              "Stakeholder education. \u2018Model precision\u2019 and \u2018campaign conversion\u2019 aren\u2019t the same thing. Bridging that with interpretability plots and threshold tuning conversations took time.",
+              "Label leakage. Some features (recency_days, customer_status) had to be carefully addressed — they were predictive because they encoded the answer.",
+              "SMOTE discipline. Synthetic oversampling on training boosts metrics. Apply it to validation and you're fooling yourself.",
+              "Communication interaction data was partially sparse — needed robust imputation and fallback logic.",
+              "Stakeholder education. \u2018Model precision' and \u2018campaign conversion' aren't the same thing. Bridging that with interpretability plots and threshold tuning conversations took time.",
             ]}
           />
           <ReflectionBlock
-            title="What\u2019s next"
+            title="What's next"
             icon={<Sparkles size={16} />}
             tone="accent"
             items={[
               "Uplift modeling to measure the causal impact of campaigns, not just predicted likelihood.",
               "Real-time scoring for recent behavior (cart abandonment, in-session nudges) layered on top of the daily score.",
-              "Channel optimization \u2014 best day/time/channel per user, on top of the likelihood score.",
+              "Channel optimization — best day/time/channel per user, on top of the likelihood score.",
               "Quarterly threshold recalibration based on observed lift and churn.",
             ]}
           />
@@ -771,7 +771,7 @@ function ReflectionBlock({
         {items.map((item, i) => (
           <li
             key={i}
-            className="text-[14px] text-ink-700 leading-[1.65] pl-4 relative before:content-['\u2014'] before:absolute before:left-0 before:text-ink-400"
+            className="text-[14px] text-ink-700 leading-[1.65] pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-ink-400"
           >
             {item}
           </li>
