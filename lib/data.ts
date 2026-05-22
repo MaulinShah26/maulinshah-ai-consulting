@@ -216,6 +216,20 @@ export const work: {
           cta: "Read the case study",
           href: "/case-studies/customer-affinity-modelling",
         },
+        {
+          title: "Batters & Bowlers Tag",
+          description:
+            "An ML clustering system at CricHeroes that classified grassroots cricketers into five batting archetypes (Steady, Classicist, Accumulator, Hard Hitter, Destroyer). Rolled out to millions of players. Became the language a community uses to talk about itself — and the basis for a personalized merchandise line. Still one of the platform’s most impactful features.",
+          icon: "Trophy",
+          tags: [
+            { label: "Clustering ML" },
+            { label: "Player profiling" },
+            { label: "Sports-tech" },
+          ],
+          status: "CricHeroes · Launched 2022 · Live in production",
+          cta: "Read the case study",
+          href: "/case-studies/batters-bowlers-tag",
+        },
       ],
     },
     personal: {
