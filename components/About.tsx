@@ -51,7 +51,7 @@ export function About() {
           ))}
         </div>
 
-        <blockquote className="reveal-child mt-8 mb-2 max-w-[540px] border-l-2 border-accent pl-4 py-1 italic text-[16px] text-ink leading-[1.55]">
+        <blockquote className="reveal-child mt-8 mb-2 border-l-2 border-accent pl-4 py-1 italic text-[16px] text-ink leading-[1.55]">
           {`\u201C${about.quote}\u201D`}
         </blockquote>
 
