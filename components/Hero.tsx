@@ -8,7 +8,7 @@ export function Hero() {
   return (
     <Reveal id="top" className="pt-10 pb-6 px-6">
       <div className="max-w-content mx-auto">
-        <h1 className="reveal-child font-serif text-3xl sm:text-4xl md:text-[44px] font-medium leading-[1.15] tracking-tight text-ink max-w-[580px] mb-5">
+        <h1 className="reveal-child font-serif text-3xl sm:text-4xl md:text-[44px] font-medium leading-[1.15] tracking-tight text-ink mb-5">
           {hero.headlinePrefix}{" "}
           <span className="italic text-accent">{hero.headlineQuote}</span>
         </h1>
