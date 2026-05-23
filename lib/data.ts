@@ -250,17 +250,18 @@ export const work: {
       label: "Personal projects",
       cards: [
         {
-          title: "Nerdy Cricket",
+          title: "NerdyCricket",
           description:
-            "A web app for the geeky cricket fan. The layer of insight Cricbuzz, ESPNcricinfo, and Fancode don’t go to. Built solo with AI agents.",
+            "A data-driven IPL analytics and engagement platform built solo. Bloomberg-for-cricket dressed up as Wordle-for-cricket — proprietary analytical signals across 18 years of ball-by-ball data, delivered through five daily puzzle games scored into a single Cricket IQ. Live at nerdycricket.com.",
           icon: "Activity",
           tags: [
-            { label: "Sports analytics", variant: "blue" },
-            { label: "Live data", variant: "blue" },
+            { label: "Solo build", variant: "blue" },
+            { label: "AI agents", variant: "blue" },
+            { label: "Live in production", variant: "blue" },
           ],
-          status: "Live",
-          cta: "Visit",
-          href: "https://nerdycricket.com",
+          status: "Live at nerdycricket.com · IPL 2026 season",
+          cta: "Read the case study",
+          href: "/case-studies/nerdycricket",
         },
         {
           title: "AI-Trading-Copilot",
