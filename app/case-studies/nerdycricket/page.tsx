@@ -3,49 +3,44 @@ import {
   ArrowLeft,
   ExternalLink,
   Activity,
-  Sparkles,
-  Database,
-  Cpu,
-  Layers,
-  Trophy,
   Brain,
+  Trophy,
   TrendingUp,
+  Swords,
   ChevronDown,
 } from "lucide-react";
 
 export const metadata = {
   title: "NerdyCricket · Maulin Shah",
   description:
-    "A data-driven IPL analytics and engagement platform built solo. Proprietary signals over 18 years of ball-by-ball data, delivered as a daily ritual. Live at nerdycricket.com.",
+    "An IPL platform for cricket fans who want depth, not just scores. Five daily puzzles plus analytics that mainstream cricket apps don't publish. Live at nerdycricket.com.",
 };
-
-const stats = [
-  { value: "1,226", label: "IPL matches" },
-  { value: "788", label: "Player profiles" },
-  { value: "92", label: "All-time leaderboards" },
-  { value: "29,500+", label: "Batter-bowler rivalry pairs" },
-];
 
 const features = [
   {
     icon: <Brain size={18} aria-hidden />,
-    title: "Five daily puzzles, one Cricket IQ",
-    body: "Guess the Player, Guess the Match, Guess the Team, Mystery Stat, and Trivia. All five contribute to a single composite Cricket IQ — Wordle-for-cricket as a daily ritual.",
+    title: "Cricket IQ + five daily puzzles",
+    body: "Guess the Player, Guess the Match, Guess the Team, Mystery Stat, and Trivia. All five contribute to one composite Cricket IQ. Wordle-style daily ritual, scaled to 18 years of IPL data.",
   },
   {
     icon: <Activity size={18} aria-hidden />,
     title: "Ball-by-ball Momentum Map",
-    body: "A 17-event momentum engine narrating how match control changed delivery by delivery across 1,217 matches. Not a black-box win probability — cricket-language explanations.",
+    body: "A 17-event momentum engine narrating how match control changed delivery by delivery across 1,217 matches. Cricket-language explanations, not black-box win probability.",
   },
   {
     icon: <Trophy size={18} aria-hidden />,
     title: "Records Room and Hall of Fame",
-    body: "92 all-time IPL leaderboards across 20 categories. Hall of Fame with live D:H:M:S tenure timers on 10 marquee records, plus the full lineage of every previous holder.",
+    body: "92 all-time IPL leaderboards across 20 categories. Hall of Fame with live D:H:M:S tenure timers on 10 marquee records, plus full lineage of every previous holder.",
   },
   {
     icon: <TrendingUp size={18} aria-hidden />,
     title: "Cap Race Simulator",
-    body: "Probabilistic forecasting of the Orange and Purple Caps using quantile regression and Monte Carlo over 10,000 simulated seasons. 90% top-3 accuracy by match 50. Reports honest uncertainty, not confident guesses.",
+    body: "Probabilistic forecasting of the Orange and Purple Caps using quantile regression and Monte Carlo over 10,000 simulated seasons. 90% top-3 accuracy by match 50. Honest uncertainty, not confident guesses.",
+  },
+  {
+    icon: <Swords size={18} aria-hidden />,
+    title: "Rivalry Index",
+    body: "29,500+ batter-vs-bowler career matchups labelled with dominance, intensity, and confidence tier. The kind of data Cricviz publishes for broadcasters, surfaced on a free consumer product.",
   },
 ];
 
@@ -80,9 +75,9 @@ export default function NerdyCricketPage() {
           NerdyCricket
         </h1>
         <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
-          A data-driven IPL analytics and engagement platform built solo.
-          Bloomberg-for-cricket dressed up as Wordle-for-cricket — proprietary
-          analytical signals delivered through a daily-ritual product.
+          An IPL platform for cricket fans who already know the game well.
+          Daily puzzles plus analytics you won&apos;t find on Cricbuzz,
+          ESPNcricinfo, or Fancode.
         </p>
         <div className="flex flex-wrap gap-2 mb-8">
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
@@ -114,161 +109,22 @@ export default function NerdyCricketPage() {
 
       <hr className="border-ink-200" />
 
-      {/* 01 What it is */}
+      {/* 01 What's on the platform — unique features upfront */}
       <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="01" label="What it is" />
+        <SectionEyebrow number="01" label="What's on the platform" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          The platform for the thinking cricket fan
+          Things you won&apos;t find on mainstream cricket apps
         </h2>
-        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
-          <p>
-            India has 500M+ cricket fans. The existing fan stack is binary:
-            read scores (Cricbuzz, ESPNcricinfo) or gamble on outcomes
-            (Dream11, MPL). The middle space — where cricket{" "}
-            <em>knowledge</em> is the currency, not money — has no dedicated
-            home.
-          </p>
-          <p>NerdyCricket occupies that space. It sits on two layers:</p>
-        </div>
+        <p className="text-[15px] text-ink-700 leading-[1.7] mb-8">
+          Cricbuzz reports the game. ESPNcricinfo archives it. Dream11 lets you
+          gamble on it. The middle space, where cricket knowledge is the
+          currency rather than money, had no dedicated home. These are the
+          features built for that space. All of them run on top of 18 years of
+          ball-by-ball IPL data, converted into derived signals no other
+          cricket app publishes.
+        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="bg-surface border-[0.5px] border-ink-200 rounded-md p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-8 h-8 rounded bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">
-                <Database size={16} aria-hidden />
-              </span>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium">
-                Layer 01
-              </div>
-            </div>
-            <div className="font-serif text-[16px] font-medium text-ink leading-tight mb-2">
-              A proprietary analytics layer
-            </div>
-            <p className="text-[13px] text-ink-600 leading-[1.6]">
-              18 years of IPL ball-by-ball data converted into derived
-              signals: a rivalry index across 29,500+ batter-bowler pairs,
-              ball-by-ball match pressure, a 17-event momentum engine, and a
-              probabilistic cap-race forecasting model.
-            </p>
-          </div>
-
-          <div className="bg-surface border-[0.5px] border-ink-200 rounded-md p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-8 h-8 rounded bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">
-                <Sparkles size={16} aria-hidden />
-              </span>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium">
-                Layer 02
-              </div>
-            </div>
-            <div className="font-serif text-[16px] font-medium text-ink leading-tight mb-2">
-              A daily engagement loop
-            </div>
-            <p className="text-[13px] text-ink-600 leading-[1.6]">
-              Five distinct puzzle games — Guess the Player, Guess the Match,
-              Guess the Team, Mystery Stat, Trivia — scored into a single
-              Cricket IQ. Wordle-for-cricket as a daily ritual.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <hr className="border-ink-200" />
-
-      {/* 02 Why now */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="02" label="Why now" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          Three things converged in 2025
-        </h2>
-
-        <div className="space-y-4">
-          <ReasonBlock
-            number="01"
-            title="The RMG window is closing in India"
-            body="Real-money fantasy is increasingly regulated, taxed at 28% GST on entry fees, and brand-incompatible. Knowledge-play occupies the same audience without the regulatory or PR exposure — open to under-18s too, which is half the IPL audience."
-          />
-          <ReasonBlock
-            number="02"
-            title="AI agents finally make solo builds at this complexity feasible"
-            body="Three years ago, building a platform with daily ML refresh, ball-by-ball pressure modeling, and bot-prerendered SEO for 2,000+ URLs needed a team. With AI agents acting as backend, frontend, and strategy collaborators, the same surface area is now solo-shippable."
-          />
-          <ReasonBlock
-            number="03"
-            title="IPL is structurally getting bigger every year"
-            body="Every season adds matches, players, records, rivalries to the database. The SEO surface area grows with the sport itself — no CAC reset. The asset compounds with time, not against it."
-          />
-        </div>
-      </section>
-
-      <hr className="border-ink-200" />
-
-      {/* 03 How it's being built */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="03" label="How it's being built" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          One founder, three AI agents, strict operating discipline
-        </h2>
-        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
-          <p>
-            Built solo with three parallel Claude chats acting as Backend,
-            Frontend, and Strategy collaborators. The chats don't share
-            context automatically — I manually bridge them with structured
-            handover briefs. Each chat stays focused on its surface area, and
-            I act as the integrator. Sequential, validated, one-thing-at-a-time
-            delivery — the same operating discipline I bring into a
-            Fractional engagement.
-          </p>
-          <p>
-            The stack: <strong>FastAPI + React 19</strong> on{" "}
-            <strong>GCP Cloud Run</strong>.{" "}
-            <strong>BigQuery</strong> as the single source of truth for
-            cricket data. <strong>MongoDB Atlas</strong> for user state. An{" "}
-            <strong>n8n daily pipeline</strong> runs ~21 sequential steps,
-            refreshing the analytics layer every night at 3 AM IST.{" "}
-            <strong>Cricsheet</strong> as the raw ball-by-ball data source.{" "}
-            <strong>Anthropic API</strong> for match anecdote generation.
-          </p>
-          <p>
-            The operating model is itself a demonstration: one person,
-            sophisticated infrastructure, daily ML refresh, bot-prerendered
-            SEO across 2,000+ URLs — at a burn rate structurally lower than
-            any funded competitor in the space.
-          </p>
-        </div>
-      </section>
-
-      <hr className="border-ink-200" />
-
-      {/* 04 See it live */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="04" label="See it live" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          Currently shipping
-        </h2>
-
-        {/* Headline stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
-          {stats.map((s, i) => (
-            <div
-              key={i}
-              className="bg-surface border-[0.5px] border-ink-200 rounded-md p-4 text-center"
-            >
-              <div className="font-serif text-[24px] md:text-[26px] font-medium text-ink leading-tight mb-1">
-                {s.value}
-              </div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-ink-500 leading-tight">
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Feature highlights */}
-        <h3 className="font-serif text-[18px] font-medium text-ink mb-4">
-          What's there to play with
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
           {features.map((f, i) => (
             <div
               key={i}
@@ -288,26 +144,75 @@ export default function NerdyCricketPage() {
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Big CTA */}
-        <div className="bg-accent-soft border-[0.5px] border-accent rounded-md p-6 text-center">
-          <p className="text-[15px] text-ink-800 leading-[1.6] mb-4">
-            The product is live and shipping daily. Go play.
+      <hr className="border-ink-200" />
+
+      {/* 02 Why now */}
+      <section className="max-w-content mx-auto px-6 py-12">
+        <SectionEyebrow number="02" label="Why now" />
+        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
+          Three things converged in 2025
+        </h2>
+
+        <div className="space-y-4">
+          <ReasonBlock
+            number="01"
+            title="The RMG window is closing in India"
+            body="Real-money fantasy is increasingly regulated, taxed at 28% GST on entry fees, and brand-incompatible. Knowledge-play occupies the same audience without the regulatory or PR exposure. It is also open to under-18s, which is half the IPL audience."
+          />
+          <ReasonBlock
+            number="02"
+            title="AI agents finally make solo builds at this complexity feasible"
+            body="Three years ago, building a platform with daily ML refresh, ball-by-ball pressure modeling, and bot-prerendered SEO for 2,000+ URLs needed a team. With AI agents acting as backend, frontend, and strategy collaborators, the same surface area is now solo-shippable."
+          />
+          <ReasonBlock
+            number="03"
+            title="IPL is structurally getting bigger every year"
+            body="Every season adds matches, players, records, rivalries to the database. The SEO surface area grows with the sport itself, with no CAC reset. The asset compounds with time, not against it."
+          />
+        </div>
+      </section>
+
+      <hr className="border-ink-200" />
+
+      {/* 03 How it's being built */}
+      <section className="max-w-content mx-auto px-6 py-12">
+        <SectionEyebrow number="03" label="How it's being built" />
+        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
+          One founder, three AI agents, strict operating discipline
+        </h2>
+        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
+          <p>
+            Built solo with three parallel Claude chats acting as Backend,
+            Frontend, and Strategy collaborators. The chats don&apos;t share
+            context automatically. I manually bridge them with structured
+            handover briefs. Each chat stays focused on its surface area, and
+            I act as the integrator. Sequential, validated, one thing at a
+            time. The same operating discipline I bring into a Fractional
+            engagement.
           </p>
-          <a
-            href="https://nerdycricket.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-ink text-page font-medium text-[14px] px-6 py-3 rounded hover:bg-accent hover:text-page transition-colors"
-          >
-            Visit nerdycricket.com
-            <ExternalLink size={14} aria-hidden />
-          </a>
+          <p>
+            The stack: <strong>FastAPI + React 19</strong> on{" "}
+            <strong>GCP Cloud Run</strong>.{" "}
+            <strong>BigQuery</strong> as the single source of truth for
+            cricket data. <strong>MongoDB Atlas</strong> for user state. An{" "}
+            <strong>n8n daily pipeline</strong> runs ~21 sequential steps,
+            refreshing the analytics layer every night at 3 AM IST.{" "}
+            <strong>Cricsheet</strong> as the raw ball-by-ball data source.{" "}
+            <strong>Anthropic API</strong> for match anecdote generation.
+          </p>
+          <p>
+            The operating model is itself a demonstration. One person,
+            sophisticated infrastructure, daily ML refresh, bot-prerendered
+            SEO across 2,000+ URLs, all at a burn rate structurally lower than
+            any funded competitor in the space.
+          </p>
         </div>
       </section>
 
       {/* Technical detail (collapsible) */}
-      <section className="max-w-content mx-auto px-6 pb-12">
+      <section className="max-w-content mx-auto px-6 py-12">
         <details className="group bg-surface border-[0.5px] border-ink-200 rounded-md">
           <summary className="cursor-pointer list-none px-5 py-4 flex items-center justify-between hover:bg-ink-50 transition-colors">
             <div>
@@ -355,9 +260,9 @@ export default function NerdyCricketPage() {
               </p>
               <p>
                 <strong>Rivalry Index</strong>: 29,500+ batter-vs-bowler
-                career matchups, labelled with dominance (Dominant / Neutral
-                / Struggles), intensity (Fierce / Developing / Emerging),
-                and confidence tier.
+                career matchups, labelled with dominance (Dominant /
+                Neutral / Struggles), intensity (Fierce / Developing /
+                Emerging), and confidence tier.
               </p>
               <p>
                 <strong>Match Pressure Series</strong>: ball-by-ball
@@ -365,20 +270,20 @@ export default function NerdyCricketPage() {
               </p>
               <p>
                 <strong>Momentum Engine</strong>: 17 distinct event types
-                (WICKET_SWING, BOUNDARY_RELEASE, COLLAPSE_TRIGGER, CHASE_FLIP,
-                DEATH_OVERS_SURGE, KEY_PLAYER_MOMENT, FALSE_MOMENTUM, etc.)
-                across 12,146 momentum events in the corpus. Per-match
-                player role classifier (Finisher / Key Bowler / Death
-                Specialist / Part-time Bowler) so context modifiers fire
-                correctly.
+                (WICKET_SWING, BOUNDARY_RELEASE, COLLAPSE_TRIGGER,
+                CHASE_FLIP, DEATH_OVERS_SURGE, KEY_PLAYER_MOMENT,
+                FALSE_MOMENTUM, etc.) across 12,146 momentum events in the
+                corpus. Per-match player role classifier (Finisher / Key
+                Bowler / Death Specialist / Part-time Bowler) so context
+                modifiers fire correctly.
               </p>
               <p>
                 <strong>Cap Race Simulator</strong>: quantile regression
-                with linear inductive bias (LightGBM tested and rejected for
-                overfitting historical priors), plus Monte Carlo over 10,000
-                simulated seasons. Variance-aware sampling using each
-                player's coefficient_of_variation. Hit rates measured as
-                top-3, not top-1, by design.
+                with linear inductive bias (LightGBM tested and rejected
+                for overfitting historical priors), plus Monte Carlo over
+                10,000 simulated seasons. Variance-aware sampling using
+                each player&apos;s coefficient_of_variation. Hit rates
+                measured as top-3, not top-1, by design.
               </p>
             </TechBlock>
 
@@ -409,12 +314,12 @@ export default function NerdyCricketPage() {
               <p>
                 Organic search is the primary distribution strategy.{" "}
                 <strong>2,151+ URLs</strong> in the sitemap (788 players +
-                1,193+ matches + 134 records + 12 static + Simulator). Every
-                player, match, record, and sub-leaderboard is its own URL
-                with genuinely unique content — Bot pre-rendering across all
-                URL patterns ensures Googlebot receives full HTML with
-                appropriate JSON-LD (Person, SportsEvent, ItemList,
-                BreadcrumbList, WebApplication).
+                1,193+ matches + 134 records + 12 static + Simulator).
+                Every player, match, record, and sub-leaderboard is its
+                own URL with genuinely unique content. Bot pre-rendering
+                across all URL patterns ensures Googlebot receives full
+                HTML with appropriate JSON-LD (Person, SportsEvent,
+                ItemList, BreadcrumbList, WebApplication).
               </p>
               <p>
                 The SEO surface area grows automatically as IPL itself
@@ -426,52 +331,55 @@ export default function NerdyCricketPage() {
             <TechBlock title="Solo + AI operating model">
               <p>
                 Three parallel Claude chats act as Backend, Frontend, and
-                Strategy collaborators. They don't share context
+                Strategy collaborators. They don&apos;t share context
                 automatically; I manually bridge them with structured
                 handover briefs that have become durable documentation in
                 themselves.
               </p>
               <p>
-                Working principles: sequential fully-validated delivery (one
-                thing at a time, spot-checked, then committed); explicit
-                stopping recommendations from agents (never assume next
-                step); no direct VM access from chats (code lands via ZIP
-                file or inline python3 patch, I run it); pre-deploy gates
-                mandatory for every push touching JSX (fragment balance
-                check, lucide-react import check).
+                Working principles: sequential fully-validated delivery
+                (one thing at a time, spot-checked, then committed);
+                explicit stopping recommendations from agents (never
+                assume next step); no direct VM access from chats (code
+                lands via ZIP file or inline python3 patch, I run it);
+                pre-deploy gates mandatory for every push touching JSX
+                (fragment balance check, lucide-react import check).
               </p>
               <p>
                 The 3-chat structure enforces context boundaries that
                 prevent any one chat from sprawling. Each chat stays
-                focused. Handover briefs become durable documentation. The
-                founder is the integrator, which is also the constraint —
-                but a constraint with explicit operating discipline around
-                it.
+                focused. Handover briefs become durable documentation.
+                The founder is the integrator, which is also the
+                constraint. But a constraint with explicit operating
+                discipline around it.
               </p>
             </TechBlock>
 
             <TechBlock title="What's deliberately out of scope">
               <p>
-                <strong>Real-money gaming features</strong> — Indian RMG
+                <strong>Real-money gaming features</strong>: Indian RMG
                 regulation makes this commercially unattractive and
                 brand-incompatible.
               </p>
               <p>
-                <strong>Fantasy affiliate revenue</strong> — same RMG
+                <strong>Fantasy affiliate revenue</strong>: same RMG
                 constraint.
               </p>
               <p>
-                <strong>International cricket, WPL, domestic T20 in the
-                data pipeline</strong> — IPL focus is the wedge.
+                <strong>
+                  International cricket, WPL, domestic T20 in the data
+                  pipeline
+                </strong>
+                : IPL focus is the wedge.
               </p>
               <p>
-                <strong>Paid subscription tiers</strong> — the platform's
-                positioning is open access; subscriptions would conflict
-                with the daily-ritual mechanic.
+                <strong>Paid subscription tiers</strong>: the
+                platform&apos;s positioning is open access; subscriptions
+                would conflict with the daily-ritual mechanic.
               </p>
               <p>
-                <strong>Live in-match momentum updates</strong> — post-match
-                only by design in v1.
+                <strong>Live in-match momentum updates</strong>:
+                post-match only by design in v1.
               </p>
             </TechBlock>
           </div>
