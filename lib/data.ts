@@ -88,7 +88,7 @@ export const engagements = {
     },
   ],
   closingLine:
-    "**All three are hourly, monthly retainers with a three-month minimum. Hours and scope are sized to the work. Happy to walk through what fits on a first call.**",
+    "All three are hourly, monthly retainers with a three-month minimum. Hours and scope are sized to the work. Happy to walk through what fits on a first call.",
   ctaLabel: "Start a conversation",
   ctaHref: "#contact",
 };

@@ -66,7 +66,7 @@ export function Engagements() {
         </div>
 
         <div className="reveal-child">
-          <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-4">
+          <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-4 font-bold">
             {engagements.closingLine}
           </p>
           <a
