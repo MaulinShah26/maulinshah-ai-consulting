@@ -148,8 +148,8 @@ export default function AITradingCopilotPage() {
             What retail actually needs is the institutional decision desk
             (market scanning, signal analysis, formal risk framework, audit
             trail) at retail capital levels. That gap is what GenAI and
-            multi-agent systems suddenly make solvable by a single founder.
-            AI Trading Copilot is built for that gap.
+            multi-agent systems suddenly make solvable by a single solo
+            builder. AI Trading Copilot is built for that gap.
           </p>
         </div>
       </section>
@@ -198,7 +198,8 @@ export default function AITradingCopilotPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="03" label="How it's being built" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          One founder, AI agents as collaborators, strict operating discipline
+          Built solo, with AI agents as collaborators and strict operating
+          discipline
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
@@ -221,11 +222,7 @@ export default function AITradingCopilotPage() {
             for broker integration.
           </p>
           <p>
-            Operating cost is approximately ₹3,500 per month per single-user
-            instance. One person, institutional-grade infrastructure, fully
-            audited multi-agent decisioning, at a burn rate orders of
-            magnitude below what a funded competitor would carry. The
-            project is currently in active paper-trading with limited
+            The project is currently in active paper-trading with limited
             access. Live demos available on request given the live market
             signals involved.
           </p>
@@ -341,7 +338,8 @@ export default function AITradingCopilotPage() {
                 lands via ZIP file or inline patch, run manually on the VM.
                 Sequential fully-validated delivery, with pre-deploy gates
                 mandatory on every push. The operating model itself is the
-                discipline that makes a multi-agent trading desk solo-buildable.
+                discipline that makes a multi-agent trading desk
+                solo-buildable.
               </p>
             </TechBlock>
           </div>
