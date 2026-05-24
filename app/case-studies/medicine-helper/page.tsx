@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   ArrowLeft,
-  ExternalLink,
   Camera,
   ShieldCheck,
   Gauge,
@@ -81,7 +80,7 @@ export default function MedicineHelperPage() {
       {/* Hero */}
       <header className="max-w-content mx-auto px-6 pt-6 pb-10">
         <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent font-medium mb-4">
-          Personal project · In active development · Play Store prep in progress
+          Personal project · In active development · Beta testing
         </div>
         <h1 className="font-serif text-[36px] md:text-[44px] font-medium text-ink leading-[1.1] mb-5">
           Medicine Helper
@@ -94,30 +93,15 @@ export default function MedicineHelperPage() {
         </p>
         <div className="flex flex-wrap gap-2 mb-8">
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Camera-First OCR
+            Medicine Recognizer
           </span>
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Curated Knowledge Base
+            OCR Analysis
           </span>
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Safety Scoring
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Privacy-First Architecture
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Mobile-Native
+            Alternative Medicine
           </span>
         </div>
-        <a
-          href="https://medicine-helper-2.preview.emergentagent.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-ink text-page font-medium text-[14px] px-5 py-3 rounded hover:bg-accent transition-colors"
-        >
-          Try the live preview
-          <ExternalLink size={14} aria-hidden />
-        </a>
       </header>
 
       <hr className="border-ink-200" />
@@ -126,17 +110,16 @@ export default function MedicineHelperPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="01" label="Why I built this" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          Medicine information shouldn&apos;t feel like reading a legal
-          document
+          Built for the medicine in your house
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
-            Medicine labels are dense, intimidating, and most people
-            don&apos;t read them. The information is there. The format
-            isn&apos;t. A patient holding a strip of tablets can&apos;t
-            quickly answer the questions that actually matter: is this safe,
-            what are the side effects, who made it, is there a better
-            alternative.
+            In Indian households we have a lot of medicine lying around and
+            we don&apos;t always know what each one is for. Sometimes we
+            can&apos;t find the medicine that was prescribed and we need an
+            alternative that is safer, has the exact same drug, and is
+            either at the same price or cheaper. This is where Medicine
+            Helper comes in. It tells you exactly what you need to know.
           </p>
           <p>
             I first built this as a Custom GPT to validate the concept.
