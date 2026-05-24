@@ -8,6 +8,13 @@ import {
   GitBranch,
   Lock,
   Repeat,
+  Cpu,
+  Newspaper,
+  Eye,
+  Bell,
+  Activity,
+  Clock,
+  FileText,
   ChevronDown,
 } from "lucide-react";
 
@@ -52,6 +59,51 @@ const features = [
     icon: <Repeat size={18} aria-hidden />,
     title: "The system grades itself",
     body: "A Self-Diagnosis Agent runs every Sunday, comparing predicted win probability against actual outcomes by setup type. Calibration drift gets flagged. Scoring weights get recalibrated monthly using the latest 30 to 60 days of outcomes. An Adversarial Bear agent interrogates every long pick for the strongest opposing argument, logged for post-trade review. The system isn't static. It updates itself based on what worked and what didn't.",
+  },
+];
+
+const workflow = [
+  {
+    icon: <Cpu size={16} aria-hidden />,
+    time: "08:30 IST",
+    title: "Morning pipeline runs",
+    body: "The eight-agent pipeline kicks off before market open. Approximately 144 stocks scanned. Sentiment, regime, signals, strategy fit, risk gates, all in around 2.5 minutes. Output is a ranked list of trade candidates with full decision cards attached.",
+  },
+  {
+    icon: <Newspaper size={16} aria-hidden />,
+    time: "08:45 IST",
+    title: "Sentiment briefing delivered",
+    body: "A 14-field structured summary of market mood, sector strength, and key risks lands in-app and via push notification. Designed for a 60-second read before the day starts.",
+  },
+  {
+    icon: <Eye size={16} aria-hidden />,
+    time: "09:00 to 09:05 IST",
+    title: "Picks surface for review",
+    body: "Top 3 to 5 trade candidates arrive. Each one carries entry price, stop, three target levels, position size, expected value, win probability with confidence intervals, and a narrative explaining why this stock, this strategy, now. Investor reviews and approves.",
+  },
+  {
+    icon: <Bell size={16} aria-hidden />,
+    time: "09:15 IST",
+    title: "Markets open, intraday scanner activates",
+    body: "For Balanced and High-Risk profiles, the intraday scanner cycles every 15 minutes. Conservative profile stays out of intraday entirely by design.",
+  },
+  {
+    icon: <Activity size={16} aria-hidden />,
+    time: "09:15 to 15:30 IST",
+    title: "Live position monitoring",
+    body: "All open positions continuously evaluated against targets and stops. Laddered exits (T1, T2, T3) fire automatically when each target is hit, with stop-loss ratcheting as the position moves in favor. The kill switch is always one action away.",
+  },
+  {
+    icon: <Clock size={16} aria-hidden />,
+    time: "15:20 IST",
+    title: "Intraday positions force-close",
+    body: "Intraday positions close regardless of P&L if neither target nor stop has been hit. Swing positions hold overnight to fight another day.",
+  },
+  {
+    icon: <FileText size={16} aria-hidden />,
+    time: "19:30 IST",
+    title: "End-of-day report",
+    body: "Positions opened. Positions closed. P&L by trade. Calibration deltas measuring predicted win probability against actual outcomes. Lessons logged into the learning system for next day's recalibration.",
   },
 ];
 
@@ -194,9 +246,54 @@ export default function AITradingCopilotPage() {
 
       <hr className="border-ink-200" />
 
-      {/* 03 How it's being built */}
+      {/* 03 Daily workflow */}
       <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="03" label="How it's being built" />
+        <SectionEyebrow number="03" label="Daily workflow" />
+        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
+          From 08:30 to 19:30 IST, every trading day
+        </h2>
+        <p className="text-[15px] text-ink-700 leading-[1.7] mb-10">
+          The system has a fixed daily rhythm. The investor&apos;s share of
+          it is roughly 5 to 10 minutes of review and approval; the rest
+          runs in the background. Here is what happens between market open
+          and market close on a normal day.
+        </p>
+
+        <div className="space-y-0">
+          {workflow.map((step, i) => (
+            <WorkflowStep
+              key={i}
+              icon={step.icon}
+              time={step.time}
+              title={step.title}
+              body={step.body}
+              isLast={i === workflow.length - 1}
+            />
+          ))}
+        </div>
+
+        {/* Weekly note */}
+        <div className="mt-8 bg-surface border-[0.5px] border-ink-200 border-l-2 border-l-accent rounded-r-md p-5">
+          <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium mb-2">
+            Every Sunday · 18:00 IST
+          </div>
+          <div className="font-serif text-[15px] font-medium text-ink leading-tight mb-2">
+            Weekly self-diagnosis
+          </div>
+          <p className="text-[13px] text-ink-600 leading-[1.6]">
+            Setup-type performance compared against predicted win
+            probability. Calibration drift alerts. Recommended parameter
+            changes for the week ahead. The system audits itself before
+            anyone else has to.
+          </p>
+        </div>
+      </section>
+
+      <hr className="border-ink-200" />
+
+      {/* 04 How it's being built */}
+      <section className="max-w-content mx-auto px-6 py-12">
+        <SectionEyebrow number="04" label="How it's being built" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
           Built solo, with AI agents as collaborators and strict operating
           discipline
@@ -271,29 +368,6 @@ export default function AITradingCopilotPage() {
               </p>
             </TechBlock>
 
-            <TechBlock title="Daily workflow">
-              <p>
-                The morning pipeline runs at 08:30 IST every trading day. A
-                Market Sentiment Agent runs first, followed by the eight
-                primary agents in sequence (Market Intelligence, Technical
-                Analysis, Fundamental Analysis, Strategy Selection, Trade
-                Ranking, Risk Management, Execution, Review). Several
-                supporting agents (Adversarial Bear, Self-Diagnosis,
-                Calibration Watchdog) layer on top. The full morning pipeline
-                completes in approximately 2.5 minutes.
-              </p>
-              <p>
-                Market sentiment briefing is delivered at 08:45. Long-term
-                and medium-term picks land between 09:00 and 09:05. Markets
-                open at 09:15, intraday scanner activates for Balanced and
-                High-Risk profiles, and live position monitoring runs
-                throughout the session. Intraday positions force-close by
-                15:20; swing positions hold overnight. End-of-day report
-                lands at 19:30 IST with P&L, calibration deltas, and trades
-                executed. A weekly Self-Diagnosis report runs every Sunday.
-              </p>
-            </TechBlock>
-
             <TechBlock title="Data sources and broker integration">
               <p>
                 Primary live data from AngelOne SmartAPI. Fallback from Yahoo
@@ -363,6 +437,40 @@ export default function AITradingCopilotPage() {
 }
 
 /* ---------- Sub-components ---------- */
+
+function WorkflowStep({
+  icon,
+  time,
+  title,
+  body,
+  isLast,
+}: {
+  icon: React.ReactNode;
+  time: string;
+  title: string;
+  body: string;
+  isLast: boolean;
+}) {
+  return (
+    <div className="flex gap-4">
+      <div className="flex flex-col items-center flex-shrink-0">
+        <div className="w-9 h-9 rounded-full bg-accent-soft text-accent flex items-center justify-center border-[0.5px] border-accent/30">
+          {icon}
+        </div>
+        {!isLast && <div className="w-px flex-1 bg-ink-200 mt-2 mb-1" />}
+      </div>
+      <div className={`flex-1 ${isLast ? "pb-0" : "pb-6"}`}>
+        <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium mb-1">
+          {time}
+        </div>
+        <h3 className="font-serif text-[16px] font-medium text-ink leading-tight mb-2">
+          {title}
+        </h3>
+        <p className="text-[13.5px] text-ink-600 leading-[1.6]">{body}</p>
+      </div>
+    </div>
+  );
+}
 
 function TechBlock({
   title,
