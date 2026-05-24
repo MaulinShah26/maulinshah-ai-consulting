@@ -148,7 +148,16 @@ export function About() {
             <Languages size={14} className="text-accent" aria-hidden />
             {about.languagesLabel}
           </h3>
-          <p className="text-[14px] text-ink-600 leading-[1.75]">{about.languages}</p>
+          <div className="flex flex-wrap gap-2">
+        {about.languages.map((lang) => (
+          <span
+            key={lang}
+            className="inline-block bg-surface text-ink-700 font-mono text-[11px] font-medium px-3 py-1.5 rounded border-[0.5px] border-ink-200"
+          >
+            {lang}
+          </span>
+        ))}
+      </div>
         </div>
       </div>
     </Reveal>

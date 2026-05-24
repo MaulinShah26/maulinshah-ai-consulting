@@ -88,7 +88,7 @@ export const engagements = {
     },
   ],
   closingLine:
-    "All three are hourly, monthly retainers with a three-month minimum. Hours and scope are sized to the work. Happy to walk through what fits on a first call.",
+    "**All three are hourly, monthly retainers with a three-month minimum. Hours and scope are sized to the work. Happy to walk through what fits on a first call.**",
   ctaLabel: "Start a conversation",
   ctaHref: "#contact",
 };
@@ -373,8 +373,7 @@ export const about = {
   quote:
     "My work isn’t done when the model ships. It’s done when you can stand in front of your board and explain it as if you built it yourself.",
   languagesLabel: "Working languages",
-  languages:
-    "English, Hindi, and Gujarati for client work. Working Marathi for informal conversation. Some Spanish.",
+  languages: ["English", "Hindi", "Gujarati"],
 };
 
 export const contact = {
