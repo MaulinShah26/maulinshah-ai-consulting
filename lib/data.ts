@@ -264,15 +264,18 @@ export const work: {
           href: "/case-studies/nerdycricket",
         },
         {
-          title: "AI-Trading-Copilot",
+          title: "AI Trading Copilot",
           description:
-            "A multi-agent system that scans, screens, and surfaces daily trading and investing opportunities in one click. Built as a personal tool. Demos available on request given the live market signals involved.",
+            "A personal AI trading desk for retail investors on Indian equities. The investor sets three things (budget, timeline, risk appetite). An eight-agent pipeline handles market scanning, signal analysis, strategy selection, risk management, and execution. Built solo. Currently in paper-trading mode with demos available on request.",
           icon: "Bot",
           tags: [
-            { label: "Agent orchestration", variant: "teal" },
+            { label: "Multi-Agent Pipeline", variant: "teal" },
+            { label: "Decision Engine", variant: "teal" },
             { label: "Markets", variant: "teal" },
           ],
-          status: "In active development",
+          status: "In active development · Limited access",
+          cta: "Read the case study",
+          href: "/case-studies/ai-trading-copilot",
         },
         {
           title: "AI-JobImpact Assessment",
