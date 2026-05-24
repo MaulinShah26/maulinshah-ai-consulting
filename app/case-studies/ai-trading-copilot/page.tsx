@@ -610,25 +610,6 @@ export default function AITradingCopilotPage() {
                 restarts.
               </p>
             </TechBlock>
-
-            <TechBlock title="Solo + AI operating model">
-              <p>
-                Built solo with three parallel Claude chats acting as
-                Backend, Frontend, and Strategy collaborators. The chats
-                don&apos;t share context automatically; I bridge them with
-                structured handover briefs that have become durable
-                documentation in themselves.
-              </p>
-              <p>
-                Each chat stays focused on its surface area, which prevents
-                any one chat from sprawling. I act as the integrator. Code
-                lands via ZIP file or inline patch, run manually on the VM.
-                Sequential fully-validated delivery, with pre-deploy gates
-                mandatory on every push. The operating model itself is the
-                discipline that makes a multi-agent trading desk
-                solo-buildable.
-              </p>
-            </TechBlock>
           </div>
         </details>
       </section>
