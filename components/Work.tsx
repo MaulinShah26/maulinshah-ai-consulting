@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   Activity,
+  Apple,
   Bot,
   Brain,
   Briefcase,
@@ -18,6 +19,7 @@ import { SectionHeader } from "./SectionHeader";
 
 const ICONS: Record<string, LucideIcon> = {
   Activity,
+  Apple,
   Bot,
   Brain,
   Briefcase,

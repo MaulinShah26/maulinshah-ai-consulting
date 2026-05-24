@@ -278,6 +278,20 @@ export const work: {
           href: "/case-studies/medicine-helper",
         },
         {
+          title: "Packaged Food Label Analyzer",
+          description:
+            "A Custom GPT that decodes packaged food labels into a clear health read, calibrated to age, BMI, dietary preferences, and health conditions. Personalized scoring, ingredient decoding, portion recommendations, and healthier alternatives. Live in OpenAI's GPT marketplace.",
+          icon: "Apple",
+          tags: [
+            { label: "Custom GPT", variant: "teal" },
+            { label: "Personalized Nutrition", variant: "teal" },
+            { label: "Healthcare", variant: "teal" },
+          ],
+          status: "Live · OpenAI GPT marketplace",
+          cta: "Read the case study",
+          href: "/case-studies/packaged-food-label-analyzer",
+        },
+        {
           title: "AI Trading Copilot",
           description:
             "A personal AI trading desk for retail investors on Indian equities. The investor sets three things (budget, timeline, risk appetite). An eight-agent pipeline handles market scanning, signal analysis, strategy selection, risk management, and execution. Built solo. Currently in paper-trading mode with demos available on request.",
