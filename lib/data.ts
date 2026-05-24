@@ -264,6 +264,20 @@ export const work: {
           href: "/case-studies/nerdycricket",
         },
         {
+          title: "Medicine Helper",
+          description:
+            "A medicine label scanner built as a native mobile app. Camera-first scanning, curated knowledge base grounding the LLM, safety scoring, side effects, and alternatives. Built solo. In active development with Play Store prep in progress.",
+          icon: "Pill",
+          tags: [
+            { label: "Camera-First OCR", variant: "teal" },
+            { label: "Mobile-Native", variant: "teal" },
+            { label: "Healthcare", variant: "teal" },
+          ],
+          status: "In active development · Play Store prep",
+          cta: "Read the case study",
+          href: "/case-studies/medicine-helper",
+        },
+        {
           title: "AI Trading Copilot",
           description:
             "A personal AI trading desk for retail investors on Indian equities. The investor sets three things (budget, timeline, risk appetite). An eight-agent pipeline handles market scanning, signal analysis, strategy selection, risk management, and execution. Built solo. Currently in paper-trading mode with demos available on request.",

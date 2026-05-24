@@ -8,6 +8,7 @@ import {
   Brain,
   Briefcase,
   Layers,
+  Pill,
   ArrowUpRight,
   type LucideIcon,
 } from "lucide-react";
@@ -21,6 +22,7 @@ const ICONS: Record<string, LucideIcon> = {
   Brain,
   Briefcase,
   Layers,
+  Pill,
 };
 
 const TAG_VARIANT_CLASSES: Record<string, string> = {
