@@ -60,7 +60,7 @@ export const engagements = {
   sectionLabel: "Engagement options",
   heading: "Three shapes of work",
   intro:
-    "All engagements are hourly retainers billed monthly, with a three-month minimum. What varies is the shape of the work. Here are the three shapes I’m built for.",
+    "The Fractional engagement is a monthly retainer with a 3-month minimum. The Strategic Audit and Scoped Build are fixed-price projects with defined deliverables and timelines. Pricing is shared on the first call once we've scoped the work.",
   cards: [
     {
       title: "Fractional AI Lead",
