@@ -306,12 +306,19 @@ export const work: {
           href: "/case-studies/ai-trading-copilot",
         },
         {
-          title: "AI-JobImpact Assessment",
+          title: "AI Job Impact Assessor",
           description:
-            "A diagnostic tool being built for professionals to understand how AI is likely to reshape their specific role. Designed for clarity, not fear-mongering.",
+            "A career clarity tool for the AI era. Built solo, calibrated against a 15-role expert benchmark. Decomposes your role into tasks, scores each against 2026 AI capability movement, and tells you what to stop, what to invest in, and what kind of professional to become. In closed beta.",
           icon: "Briefcase",
           tags: [
             { label: "Career strategy", variant: "purple" },
+            { label: "AI literacy", variant: "purple" },
+            { label: "Calibrated diagnostic", variant: "purple" },
+          ],
+          status: "In closed beta · Limited access",
+          cta: "Read the case study",
+          href: "/case-studies/ai-job-impact-assessor",
+        },
             { label: "AI literacy", variant: "purple" },
           ],
           status: "In design",
