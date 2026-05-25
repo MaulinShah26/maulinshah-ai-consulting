@@ -59,8 +59,7 @@ export const engagements = {
   sectionNumber: "03",
   sectionLabel: "Engagement options",
   heading: "Three shapes of work",
-  intro:
-    "All engagements are hourly retainers billed monthly, with a three-month minimum. What varies is the shape of the work. Here are the three shapes I'm built for.",
+  intro: "",
   cards: [
     {
       title: "Fractional AI Lead",
