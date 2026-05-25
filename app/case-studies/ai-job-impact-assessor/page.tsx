@@ -9,9 +9,6 @@ import {
   AlertTriangle,
   Compass,
   Sparkles,
-  Signal,
-  Wifi,
-  Battery,
   ChevronDown,
 } from "lucide-react";
 
@@ -59,15 +56,24 @@ const features = [
   },
 ];
 
-const accountantTasks = [
-  { task: "Bookkeeping & reconciliation", risk: 82, band: "Very High", tone: "very-high" as const },
-  { task: "Routine financial reporting", risk: 70, band: "High", tone: "high" as const },
-  { task: "Tax filing support", risk: 58, band: "Moderate", tone: "moderate" as const },
-  { task: "Compliance judgment", risk: 32, band: "Low", tone: "low" as const },
-  { task: "Business advisory", risk: 22, band: "Low", tone: "low" as const },
-];
-
-const moreRoles = [
+const roleReports = [
+  {
+    role: "Accountant",
+    industry: "Finance \u00b7 Mid-level corporate",
+    band: "Amplify",
+    bandTone: "amplify" as const,
+    overall: 44,
+    framing:
+      "AI is taking the easy part of your work. Bookkeeping, reconciliation, and routine reports are being automated. Interpretation, compliance judgment, and advisory work are growing in proportion.",
+    meaning: "AI makes you more valuable at what you already do best.",
+    tasks: [
+      { task: "Bookkeeping & reconciliation", risk: 82, tone: "very-high" as const },
+      { task: "Routine financial reporting", risk: 70, tone: "high" as const },
+      { task: "Tax filing support", risk: 58, tone: "moderate" as const },
+      { task: "Compliance judgment", risk: 32, tone: "low" as const },
+      { task: "Business advisory", risk: 22, tone: "low" as const },
+    ],
+  },
   {
     role: "Junior Engineer",
     industry: "Software \u00b7 Mid-IC",
@@ -76,6 +82,7 @@ const moreRoles = [
     overall: 46,
     framing:
       "AI handles execution. Your judgment in system design is what compounds.",
+    meaning: "AI takes over execution; you focus on design and judgment.",
     tasks: [
       { task: "Writing boilerplate code", risk: 78, tone: "very-high" as const },
       { task: "Routine bug fixing", risk: 62, tone: "high" as const },
@@ -92,6 +99,7 @@ const moreRoles = [
     overall: 58,
     framing:
       "The work continues. The wage premium collapses. Move into strategy and brand judgment.",
+    meaning: "The work continues; the premium for it doesn't.",
     tasks: [
       { task: "Routine content drafting", risk: 78, tone: "very-high" as const },
       { task: "On-page SEO optimization", risk: 70, tone: "high" as const },
@@ -108,6 +116,7 @@ const moreRoles = [
     overall: 46,
     framing:
       "Your pattern-matching shifts to AI. Your clinical correlation becomes the role.",
+    meaning: "The character of the role is changing shape.",
     tasks: [
       { task: "Pattern detection in scans", risk: 75, tone: "very-high" as const },
       { task: "Routine image triage", risk: 68, tone: "high" as const },
@@ -124,6 +133,7 @@ const moreRoles = [
     overall: 71,
     framing:
       "AI does the work end-to-end. The path forward is exception handling or adjacent skills.",
+    meaning: "AI does this work end-to-end; move into supervision or adjacent skills.",
     tasks: [
       { task: "Manual data input", risk: 92, tone: "very-high" as const },
       { task: "Document scanning & sorting", risk: 88, tone: "very-high" as const },
@@ -273,33 +283,20 @@ export default function AIJobImpactAssessorPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="03" label="What an actual report looks like" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          Accountant. The score is evidence, not the headline.
+          Five sample reports across five outcome bands
         </h2>
         <p className="text-[15px] text-ink-700 leading-[1.7] mb-8">
-          This is what the product actually produces for a mid-level
-          corporate accountant. The framing comes first. The task
+          One report per outcome band. The framing comes first. The task
           breakdown shows where the analysis comes from. The band at the
-          bottom tells you where the role is heading.
+          bottom tells you where the role is heading. The product&apos;s
+          value is the consistency of the framework across roles, not the
+          specific numbers for any one role.
         </p>
 
-        <AccountantReport />
-
-        {/* Mobile mockup with four more role reports across the other bands */}
-        <div className="mt-14">
-          <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-3">
-            Across the bands
-          </div>
-          <h3 className="font-serif text-[20px] md:text-[22px] font-medium text-ink leading-tight mb-3">
-            Four more roles, decomposed
-          </h3>
-          <p className="text-[14.5px] text-ink-700 leading-[1.65] mb-8">
-            The same task decomposition, applied to four more roles in the
-            other four outcome bands. Together with the Accountant
-            (Amplify) shown above, this covers all five outcome bands. The
-            product&apos;s value is the consistency of the framework
-            across roles, not the specific numbers for any one role.
-          </p>
-          <MobileRoleReports />
+        <div className="space-y-6">
+          {roleReports.map((r, i) => (
+            <RoleReportCard key={i} report={r} />
+          ))}
         </div>
       </section>
 
@@ -478,32 +475,46 @@ function TechBlock({
   );
 }
 
-function AccountantReport() {
+const BAND_BADGE_STYLES: Record<string, string> = {
+  amplify: "bg-green-100 text-green-800 border-green-300",
+  assist: "bg-blue-100 text-blue-800 border-blue-300",
+  commoditize: "bg-orange-100 text-orange-800 border-orange-300",
+  transform: "bg-purple-100 text-purple-800 border-purple-300",
+  replace: "bg-red-100 text-red-800 border-red-300",
+};
+
+function RoleReportCard({ report }: { report: typeof roleReports[number] }) {
+  const badgeClasses = BAND_BADGE_STYLES[report.bandTone];
+
   return (
     <div className="bg-white border-[0.5px] border-ink-200 rounded-lg overflow-hidden shadow-sm">
-      {/* Header */}
-      <div className="bg-ink-50/40 border-b border-ink-100 p-5">
-        <div className="font-mono text-[10px] uppercase tracking-wider text-ink-500 font-medium mb-1">
-          Role · Accountant, mid-level corporate
+      {/* Header strip */}
+      <div className="bg-ink-50/40 border-b border-ink-100 px-5 py-4 flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="font-serif text-[18px] font-medium text-ink leading-tight mb-0.5">
+            {report.role}
+          </div>
+          <div className="font-mono text-[10.5px] uppercase tracking-wider text-ink-500">
+            {report.industry}
+          </div>
         </div>
-        <div className="font-mono text-[10px] uppercase tracking-wider text-ink-500">
-          Industry: Finance · Seniority: Mid · Sample report
-        </div>
+        <span
+          className={`flex-shrink-0 inline-block font-mono text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded border-[0.5px] ${badgeClasses}`}
+        >
+          {report.band}
+        </span>
       </div>
 
       {/* Body */}
-      <div className="p-5 space-y-6">
+      <div className="p-5 space-y-5">
         {/* Framing callout */}
         <div className="bg-accent-soft border-[0.5px] border-accent/30 border-l-2 border-l-accent rounded-r p-4">
           <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-accent font-medium mb-2">
             <Sparkles size={12} aria-hidden />
             The framing
           </div>
-          <p className="text-[14px] text-ink leading-[1.6] font-serif italic">
-            &ldquo;AI is taking the easy part of your work. Bookkeeping,
-            reconciliation, and routine reports are being automated.
-            Interpretation, compliance judgment, and advisory work are
-            growing in proportion.&rdquo;
+          <p className="text-[13.5px] text-ink leading-[1.6] font-serif italic">
+            &ldquo;{report.framing}&rdquo;
           </p>
         </div>
 
@@ -513,28 +524,35 @@ function AccountantReport() {
             Task breakdown · by AI exposure
           </div>
           <div className="space-y-2">
-            {accountantTasks.map((t, i) => (
-              <TaskRow key={i} task={t.task} risk={t.risk} band={t.band} tone={t.tone} />
+            {report.tasks.map((t, i) => (
+              <TaskRow
+                key={i}
+                task={t.task}
+                risk={t.risk}
+                tone={t.tone}
+              />
             ))}
           </div>
         </div>
 
-        {/* Overall band footer */}
+        {/* Overall footer */}
         <div className="bg-ink-50/60 border-[0.5px] border-ink-200 rounded p-4 grid grid-cols-2 md:grid-cols-3 gap-4 items-center">
           <div>
             <div className="font-mono text-[9px] uppercase tracking-wider text-ink-500 font-medium mb-1">
-              Overall AI replaceability
+              Overall AI exposure
             </div>
             <div className="font-serif text-[24px] font-medium text-ink leading-none">
-              44%
+              {report.overall}%
             </div>
           </div>
           <div>
             <div className="font-mono text-[9px] uppercase tracking-wider text-ink-500 font-medium mb-1">
               Outcome band
             </div>
-            <span className="inline-block font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded bg-green-100 text-green-800 border-[0.5px] border-green-300">
-              Amplify
+            <span
+              className={`inline-block font-mono text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded border-[0.5px] ${badgeClasses}`}
+            >
+              {report.band}
             </span>
           </div>
           <div className="col-span-2 md:col-span-1">
@@ -542,7 +560,7 @@ function AccountantReport() {
               What it means
             </div>
             <p className="text-[12px] text-ink-700 leading-[1.5]">
-              AI makes you more valuable at what you already do best.
+              {report.meaning}
             </p>
           </div>
         </div>
@@ -554,12 +572,10 @@ function AccountantReport() {
 function TaskRow({
   task,
   risk,
-  band,
   tone,
 }: {
   task: string;
   risk: number;
-  band: string;
   tone: "very-high" | "high" | "moderate" | "low";
 }) {
   const toneStyles = {
@@ -567,21 +583,25 @@ function TaskRow({
       bar: "bg-red-500",
       text: "text-red-700",
       badge: "bg-red-50 text-red-700 border-red-200",
+      label: "Very High",
     },
     high: {
       bar: "bg-orange-500",
       text: "text-orange-700",
       badge: "bg-orange-50 text-orange-700 border-orange-200",
+      label: "High",
     },
     moderate: {
       bar: "bg-amber-500",
       text: "text-amber-700",
       badge: "bg-amber-50 text-amber-700 border-amber-200",
+      label: "Moderate",
     },
     low: {
       bar: "bg-green-500",
       text: "text-green-700",
       badge: "bg-green-50 text-green-700 border-green-200",
+      label: "Low",
     },
   };
   const s = toneStyles[tone];
@@ -606,126 +626,9 @@ function TaskRow({
         <span
           className={`inline-block font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border-[0.5px] ${s.badge}`}
         >
-          {band}
+          {s.label}
         </span>
       </div>
-    </div>
-  );
-}
-
-/* ---------- Mobile mockup: four more role reports ---------- */
-
-function MobileRoleReports() {
-  return (
-    <div className="flex justify-center">
-      <div className="w-full max-w-[360px] bg-white border-[0.5px] border-ink-300 rounded-[2rem] overflow-hidden shadow-lg">
-        {/* Status bar */}
-        <div className="bg-ink-50/60 border-b border-ink-100 flex items-center justify-between px-6 py-2.5">
-          <span className="font-mono text-[11px] font-semibold text-ink">
-            09:07
-          </span>
-          <span className="flex items-center gap-1.5 text-ink-600">
-            <Signal size={11} aria-hidden />
-            <Wifi size={11} aria-hidden />
-            <Battery size={12} aria-hidden />
-          </span>
-        </div>
-
-        <div className="p-4 space-y-3">
-          {/* App header */}
-          <div className="flex items-baseline justify-between mb-1">
-            <h4 className="font-serif text-[18px] font-medium text-ink leading-tight">
-              More role analyses
-            </h4>
-            <span className="font-mono text-[10px] text-ink-500">
-              Across bands
-            </span>
-          </div>
-
-          {moreRoles.map((r, i) => (
-            <MiniRoleCard key={i} role={r} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MiniRoleCard({ role }: { role: typeof moreRoles[number] }) {
-  const bandStyles: Record<string, string> = {
-    assist: "bg-blue-50 text-blue-700 border-blue-200",
-    commoditize: "bg-orange-50 text-orange-700 border-orange-200",
-    transform: "bg-purple-50 text-purple-700 border-purple-200",
-    replace: "bg-red-50 text-red-700 border-red-200",
-  };
-  const badgeClasses = bandStyles[role.bandTone];
-
-  return (
-    <div className="bg-white border-[0.5px] border-ink-200 rounded p-3">
-      <div className="flex items-center justify-between mb-1">
-        <span className="font-serif text-[13px] font-medium text-ink leading-tight">
-          {role.role}
-        </span>
-        <span
-          className={`font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border-[0.5px] ${badgeClasses}`}
-        >
-          {role.band}
-        </span>
-      </div>
-      <div className="text-[10.5px] text-ink-500 mb-2">{role.industry}</div>
-      <p className="font-serif italic text-[11px] text-ink-700 leading-[1.5] mb-2.5 border-l-2 border-l-accent/40 pl-2">
-        &ldquo;{role.framing}&rdquo;
-      </p>
-      <div className="space-y-1.5 mb-2">
-        {role.tasks.map((t, i) => (
-          <MiniTaskRow key={i} task={t} />
-        ))}
-      </div>
-      <div className="flex items-center justify-between pt-2 border-t border-ink-100">
-        <span className="font-mono text-[9px] uppercase tracking-wider text-ink-500">
-          Overall AI exposure
-        </span>
-        <span className="font-mono text-[12px] font-semibold text-ink">
-          {role.overall}%
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function MiniTaskRow({
-  task,
-}: {
-  task: {
-    task: string;
-    risk: number;
-    tone: "very-high" | "high" | "moderate" | "low";
-  };
-}) {
-  const toneStyles = {
-    "very-high": { bar: "bg-red-500", text: "text-red-700" },
-    high: { bar: "bg-orange-500", text: "text-orange-700" },
-    moderate: { bar: "bg-amber-500", text: "text-amber-700" },
-    low: { bar: "bg-green-500", text: "text-green-700" },
-  };
-  const s = toneStyles[task.tone];
-
-  return (
-    <div className="grid grid-cols-12 gap-1.5 items-center">
-      <span className="col-span-7 text-[10.5px] text-ink-700 leading-tight">
-        {task.task}
-      </span>
-      <div className="col-span-3 relative h-1.5 rounded-full bg-ink-100 overflow-hidden">
-        <div
-          className={`absolute top-0 left-0 h-full ${s.bar} rounded-full`}
-          style={{ width: `${task.risk}%` }}
-        />
-      </div>
-      <span
-        className={`col-span-2 font-mono text-[10px] font-semibold ${s.text} text-right`}
-      >
-        {task.risk}%
-      </span>
     </div>
   );
 }
