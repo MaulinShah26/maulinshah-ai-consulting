@@ -9,6 +9,9 @@ import {
   AlertTriangle,
   Compass,
   Sparkles,
+  Signal,
+  Wifi,
+  Battery,
   ChevronDown,
 } from "lucide-react";
 
@@ -62,6 +65,73 @@ const accountantTasks = [
   { task: "Tax filing support", risk: 58, band: "Moderate", tone: "moderate" as const },
   { task: "Compliance judgment", risk: 32, band: "Low", tone: "low" as const },
   { task: "Business advisory", risk: 22, band: "Low", tone: "low" as const },
+];
+
+const moreRoles = [
+  {
+    role: "Junior Engineer",
+    industry: "Software \u00b7 Mid-IC",
+    band: "Assist",
+    bandTone: "assist" as const,
+    overall: 46,
+    framing:
+      "AI handles execution. Your judgment in system design is what compounds.",
+    tasks: [
+      { task: "Writing boilerplate code", risk: 78, tone: "very-high" as const },
+      { task: "Routine bug fixing", risk: 62, tone: "high" as const },
+      { task: "Code review", risk: 48, tone: "moderate" as const },
+      { task: "System design", risk: 25, tone: "low" as const },
+      { task: "Architecture decisions", risk: 18, tone: "low" as const },
+    ],
+  },
+  {
+    role: "SEO Writer",
+    industry: "Marketing \u00b7 Mid-level",
+    band: "Commoditize",
+    bandTone: "commoditize" as const,
+    overall: 58,
+    framing:
+      "The work continues. The wage premium collapses. Move into strategy and brand judgment.",
+    tasks: [
+      { task: "Routine content drafting", risk: 78, tone: "very-high" as const },
+      { task: "On-page SEO optimization", risk: 70, tone: "high" as const },
+      { task: "Keyword research", risk: 65, tone: "high" as const },
+      { task: "Content strategy", risk: 45, tone: "moderate" as const },
+      { task: "Brand voice judgment", risk: 30, tone: "low" as const },
+    ],
+  },
+  {
+    role: "Radiologist",
+    industry: "Healthcare \u00b7 Senior",
+    band: "Transform",
+    bandTone: "transform" as const,
+    overall: 46,
+    framing:
+      "Your pattern-matching shifts to AI. Your clinical correlation becomes the role.",
+    tasks: [
+      { task: "Pattern detection in scans", risk: 75, tone: "very-high" as const },
+      { task: "Routine image triage", risk: 68, tone: "high" as const },
+      { task: "Multi-modal clinical correlation", risk: 42, tone: "moderate" as const },
+      { task: "Complex case reasoning", risk: 28, tone: "low" as const },
+      { task: "Patient consultation", risk: 18, tone: "low" as const },
+    ],
+  },
+  {
+    role: "Data Entry Specialist",
+    industry: "Operations \u00b7 Junior",
+    band: "Replace",
+    bandTone: "replace" as const,
+    overall: 71,
+    framing:
+      "AI does the work end-to-end. The path forward is exception handling or adjacent skills.",
+    tasks: [
+      { task: "Manual data input", risk: 92, tone: "very-high" as const },
+      { task: "Document scanning & sorting", risk: 88, tone: "very-high" as const },
+      { task: "Routine validation", risk: 80, tone: "very-high" as const },
+      { task: "Exception handling", risk: 55, tone: "moderate" as const },
+      { task: "Quality oversight", risk: 42, tone: "moderate" as const },
+    ],
+  },
 ];
 
 function SectionEyebrow({ number, label }: { number: string; label: string }) {
@@ -213,6 +283,24 @@ export default function AIJobImpactAssessorPage() {
         </p>
 
         <AccountantReport />
+
+        {/* Mobile mockup with four more role reports across the other bands */}
+        <div className="mt-14">
+          <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-3">
+            Across the bands
+          </div>
+          <h3 className="font-serif text-[20px] md:text-[22px] font-medium text-ink leading-tight mb-3">
+            Four more roles, decomposed
+          </h3>
+          <p className="text-[14.5px] text-ink-700 leading-[1.65] mb-8">
+            The same task decomposition, applied to four more roles in the
+            other four outcome bands. Together with the Accountant
+            (Amplify) shown above, this covers all five outcome bands. The
+            product&apos;s value is the consistency of the framework
+            across roles, not the specific numbers for any one role.
+          </p>
+          <MobileRoleReports />
+        </div>
       </section>
 
       <hr className="border-ink-200" />
@@ -521,6 +609,123 @@ function TaskRow({
           {band}
         </span>
       </div>
+    </div>
+  );
+}
+
+/* ---------- Mobile mockup: four more role reports ---------- */
+
+function MobileRoleReports() {
+  return (
+    <div className="flex justify-center">
+      <div className="w-full max-w-[360px] bg-white border-[0.5px] border-ink-300 rounded-[2rem] overflow-hidden shadow-lg">
+        {/* Status bar */}
+        <div className="bg-ink-50/60 border-b border-ink-100 flex items-center justify-between px-6 py-2.5">
+          <span className="font-mono text-[11px] font-semibold text-ink">
+            09:07
+          </span>
+          <span className="flex items-center gap-1.5 text-ink-600">
+            <Signal size={11} aria-hidden />
+            <Wifi size={11} aria-hidden />
+            <Battery size={12} aria-hidden />
+          </span>
+        </div>
+
+        <div className="p-4 space-y-3">
+          {/* App header */}
+          <div className="flex items-baseline justify-between mb-1">
+            <h4 className="font-serif text-[18px] font-medium text-ink leading-tight">
+              More role analyses
+            </h4>
+            <span className="font-mono text-[10px] text-ink-500">
+              Across bands
+            </span>
+          </div>
+
+          {moreRoles.map((r, i) => (
+            <MiniRoleCard key={i} role={r} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MiniRoleCard({ role }: { role: typeof moreRoles[number] }) {
+  const bandStyles: Record<string, string> = {
+    assist: "bg-blue-50 text-blue-700 border-blue-200",
+    commoditize: "bg-orange-50 text-orange-700 border-orange-200",
+    transform: "bg-purple-50 text-purple-700 border-purple-200",
+    replace: "bg-red-50 text-red-700 border-red-200",
+  };
+  const badgeClasses = bandStyles[role.bandTone];
+
+  return (
+    <div className="bg-white border-[0.5px] border-ink-200 rounded p-3">
+      <div className="flex items-center justify-between mb-1">
+        <span className="font-serif text-[13px] font-medium text-ink leading-tight">
+          {role.role}
+        </span>
+        <span
+          className={`font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border-[0.5px] ${badgeClasses}`}
+        >
+          {role.band}
+        </span>
+      </div>
+      <div className="text-[10.5px] text-ink-500 mb-2">{role.industry}</div>
+      <p className="font-serif italic text-[11px] text-ink-700 leading-[1.5] mb-2.5 border-l-2 border-l-accent/40 pl-2">
+        &ldquo;{role.framing}&rdquo;
+      </p>
+      <div className="space-y-1.5 mb-2">
+        {role.tasks.map((t, i) => (
+          <MiniTaskRow key={i} task={t} />
+        ))}
+      </div>
+      <div className="flex items-center justify-between pt-2 border-t border-ink-100">
+        <span className="font-mono text-[9px] uppercase tracking-wider text-ink-500">
+          Overall AI exposure
+        </span>
+        <span className="font-mono text-[12px] font-semibold text-ink">
+          {role.overall}%
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function MiniTaskRow({
+  task,
+}: {
+  task: {
+    task: string;
+    risk: number;
+    tone: "very-high" | "high" | "moderate" | "low";
+  };
+}) {
+  const toneStyles = {
+    "very-high": { bar: "bg-red-500", text: "text-red-700" },
+    high: { bar: "bg-orange-500", text: "text-orange-700" },
+    moderate: { bar: "bg-amber-500", text: "text-amber-700" },
+    low: { bar: "bg-green-500", text: "text-green-700" },
+  };
+  const s = toneStyles[task.tone];
+
+  return (
+    <div className="grid grid-cols-12 gap-1.5 items-center">
+      <span className="col-span-7 text-[10.5px] text-ink-700 leading-tight">
+        {task.task}
+      </span>
+      <div className="col-span-3 relative h-1.5 rounded-full bg-ink-100 overflow-hidden">
+        <div
+          className={`absolute top-0 left-0 h-full ${s.bar} rounded-full`}
+          style={{ width: `${task.risk}%` }}
+        />
+      </div>
+      <span
+        className={`col-span-2 font-mono text-[10px] font-semibold ${s.text} text-right`}
+      >
+        {task.risk}%
+      </span>
     </div>
   );
 }
