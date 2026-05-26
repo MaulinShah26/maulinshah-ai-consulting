@@ -70,7 +70,7 @@ export function Engagements() {
             {engagements.closingLine}
           </p>
         {engagements.workingSetupLine && (
-          <p className="text-[13px] text-ink-500 italic leading-[1.6] mt-3">
+          <p className="text-[13px] text-ink-500 italic leading-[1.6] mt-3 mb-5">
             {engagements.workingSetupLine}
           </p>
         )}
