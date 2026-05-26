@@ -69,6 +69,11 @@ export function Engagements() {
           <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-4 font-bold">
             {engagements.closingLine}
           </p>
+        {engagements.workingSetupLine && (
+          <p className="text-[13px] text-ink-500 italic leading-[1.6] mt-3">
+            {engagements.workingSetupLine}
+          </p>
+        )}
           <a
             href={engagements.ctaHref}
             className="inline-flex items-center gap-1.5 text-[13px] font-medium text-accent hover:text-ink transition-colors"
