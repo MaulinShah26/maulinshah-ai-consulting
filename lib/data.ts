@@ -88,6 +88,8 @@ export const engagements = {
   ],
   closingLine:
     "The Fractional engagement is a monthly retainer with a 3-month minimum. The Strategic Audit and Scoped Build are fixed-price projects with defined deliverables and timelines. Pricing is shared on the first call once we've scoped the work.",
+  workingSetupLine:
+    "I work remotely by default, with a hybrid setup for clients who need it. Happy to travel for kickoffs, key reviews, or any conversation that needs to happen in person.",
   ctaLabel: "Start a conversation",
   ctaHref: "#contact",
 };
