@@ -49,10 +49,11 @@ export const approach = {
   sectionLabel: "How I work",
   heading: "What the work looks like",
   intro: [
-    "Every engagement is different. The shape of how I work stays similar. Here’s the general arc, adjusted in intensity and timeline based on what the work needs.",
+    "Every engagement is different. The shape of how I work stays similar.",
     "I sit with you and your leadership first. The goal is to understand the business objective, where data lives today, how it’s collected, and what your team actually trusts. From there I surface the gap between what you think the data is telling you and what it actually is. That’s usually where the first uncomfortable truths show up.",
     "Once the picture is honest, we define scope together. The output is a written data and AI roadmap. What to fix. What to build. What to use AI for. What isn’t worth touching yet, and what isn’t possible yet given your data.",
     "Then I move into operator mode. I own the roadmap, build the dashboards and ML systems that earn their keep, sit in on the calls that matter. The team also gets better at this work while I’m there, so they own more of it over time.",
+    "That’s the general arc. It shifts based on what the work needs.",
   ],
 };
 
