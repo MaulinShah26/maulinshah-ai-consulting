@@ -60,7 +60,7 @@ export const approach = {
 export const engagements = {
   sectionNumber: "03",
   sectionLabel: "Engagement options",
-  heading: "Three shapes of work",
+  heading: "Three ways to work together",
   intro: "",
   cards: [
     {
