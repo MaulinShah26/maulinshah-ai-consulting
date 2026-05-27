@@ -15,7 +15,7 @@ function EngagementIcon({ name }: { name: string }) {
 
 export function Engagements() {
   return (
-    <Reveal id="engagements" className="py-6 px-6">
+    <Reveal id="engagements" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader

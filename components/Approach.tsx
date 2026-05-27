@@ -4,7 +4,7 @@ import { SectionHeader } from "./SectionHeader";
 
 export function Approach() {
   return (
-    <Reveal id="approach" className="py-6 px-6">
+    <Reveal id="approach" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={approach.sectionNumber} label={approach.sectionLabel} />

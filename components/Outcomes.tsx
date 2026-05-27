@@ -15,14 +15,14 @@ export function Outcomes() {
   const positions = [0, 33.33, 66.66, 100];
 
   return (
-    <Reveal className="py-6 px-6">
+    <Reveal className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={outcomes.sectionNumber} label={outcomes.sectionLabel} />
         </div>
 
         {/* Progression bar */}
-        <div className="reveal-child relative mt-3 mb-7 py-7">
+        <div className="reveal-child relative mt-2 mb-3 py-4">
           {/* Rail line */}
           <div
             className="absolute left-2 right-2 top-1/2 -translate-y-1/2 h-0.5 bg-accent"

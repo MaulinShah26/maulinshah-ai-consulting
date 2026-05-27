@@ -24,7 +24,7 @@ export function Contact() {
   };
 
   return (
-    <Reveal id="contact" className="py-6 px-6">
+    <Reveal id="contact" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader number={contact.sectionNumber} label={contact.sectionLabel} />
