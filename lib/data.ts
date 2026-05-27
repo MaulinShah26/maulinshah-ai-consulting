@@ -99,30 +99,34 @@ export const engagements = {
 export const outcomes = {
   sectionNumber: "04",
   sectionLabel: "What changes for you",
-  milestones: [
-    { month: "Month 3", label: "Board-ready" },
-    { month: "Month 6", label: "Systems running" },
-    { month: "Month 9", label: "Team fluent" },
-    { month: "Month 12", label: "You take it from here" },
-  ],
   rows: [
     {
+      month: "Month 1",
+      label: "Diagnosis",
+      icon: "ScanSearch",
+      text: "Discovery is done. You have a written roadmap. The first uncomfortable truths are on the table. The team knows what to build first and what to leave alone.",
+    },
+    {
       month: "Month 3",
-      icon: "Presentation",
-      text: "You walk into board meetings with a single source of truth. You can answer investor questions on the spot. There’s a written roadmap that tells the team what’s worth building and what isn’t.",
+      label: "Numbers you can trust",
+      icon: "ShieldCheck",
+      text: "You walk into high-stakes meetings with a single source of truth. You can answer investor questions on the spot. Leadership decides from the same set of numbers, not three competing spreadsheets.",
     },
     {
       month: "Month 6",
+      label: "Systems running",
       icon: "Zap",
       text: "AI and automation systems are earning measurable hours back per week. Leadership makes decisions from the same set of numbers. The conversation shifts from _“is the data right?”_ to _“what should we do about it?”_",
     },
     {
       month: "Month 9",
+      label: "Team fluent",
       icon: "Users",
       text: "The team operates from data confidently enough that _“we’ll figure it out later”_ has stopped being something anyone says.",
     },
     {
       month: "Month 12",
+      label: "You take it from here",
       icon: "Target",
       text: "You have the clarity to keep going with or without me in the seat. That’s the goal.",
     },
