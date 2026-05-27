@@ -7,16 +7,6 @@ export function Footer() {
         <span>
           © {new Date().getFullYear()} {meta.author} · {meta.location}
         </span>
-        <span>
-          <a
-            href={social.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-          >
-            LinkedIn
-          </a>
-        </span>
       </div>
     </footer>
   );

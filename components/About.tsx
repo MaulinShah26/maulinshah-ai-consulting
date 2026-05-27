@@ -134,31 +134,6 @@ export function About() {
         </div>
 
         <hr className="border-ink-200 my-6" />
-
-        {/* Quote */}
-        <blockquote className="reveal-child mt-8 mb-2 border-l-2 border-accent pl-4 py-1 italic text-[16px] text-ink leading-[1.55]">
-          {`\u201C${about.quote}\u201D`}
-        </blockquote>
-
-        <hr className="border-ink-200 my-6" />
-
-        {/* Working languages */}
-        <div className="reveal-child">
-          <h3 className="text-[14px] font-medium text-ink mb-1.5 flex items-center gap-1.5">
-            <Languages size={14} className="text-accent" aria-hidden />
-            {about.languagesLabel}
-          </h3>
-          <div className="flex flex-wrap gap-2">
-        {about.languages.map((lang) => (
-          <span
-            key={lang}
-            className="inline-block bg-surface text-ink-700 font-mono text-[11px] font-medium px-3 py-1.5 rounded border-[0.5px] border-ink-200"
-          >
-            {lang}
-          </span>
-        ))}
-      </div>
-        </div>
       </div>
     </Reveal>
   );

@@ -402,10 +402,6 @@ export const about = {
     },
     { value: "3 products", label: "Live and in active development", icon: "Package" },
   ],
-  quote:
-    "My work isn’t done when the model ships. It’s done when you can stand in front of your board and explain it as if you built it yourself.",
-  languagesLabel: "Working languages",
-  languages: ["English", "Hindi", "Gujarati"],
 };
 
 export const contact = {

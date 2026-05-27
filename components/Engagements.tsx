@@ -66,11 +66,11 @@ export function Engagements() {
         </div>
 
         <div className="reveal-child">
-          <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-4 font-bold">
+          <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-4">
             {engagements.closingLine}
           </p>
         {engagements.workingSetupLine && (
-          <p className="text-[13px] text-ink-500 italic leading-[1.6] mt-3 mb-5">
+          <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-5">
             {engagements.workingSetupLine}
           </p>
         )}
