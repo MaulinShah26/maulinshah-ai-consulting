@@ -40,7 +40,7 @@ export const experience = {
     {
       name: "CricHeroes",
       url: "https://cricheroes.com",
-      logo: "/logos/cricheroes.jpg",
+      logo: "/logos/cricheroes.png",
     },
     {
       name: "Supertails",
