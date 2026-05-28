@@ -34,101 +34,13 @@ export const hero = {
   secondaryCta: { label: "See how I work", href: "#approach" },
 };
 
-export const experience = {
-  label: "Built data & AI at",
-  firms: [
-    {
-      name: "CricHeroes",
-      url: "https://cricheroes.com",
-      logo: "/logos/cricheroes.jpg",
-    },
-    {
-      name: "Supertails",
-      url: "https://supertails.com",
-      logo: "/logos/supertails.jpg",
-    },
-  ],
-  metrics: [
-    { kind: "count" as const, value: 10, suffix: "+", label: "years across data and AI" },
-    { kind: "count" as const, value: 5, suffix: "",  label: "industries worked across" },
-    { kind: "arrow" as const, from: "0", to: "1", label: "data & AI built from scratch at multiple startups" },
-    { kind: "count" as const, value: 5, suffix: "+", label: "production systems shipped" },
-  ],
-};
-
 export const situation = {
   sectionNumber: "01",
   sectionLabel: "The situation I see most",
-  intro:
-    "Most funded startups look the same on top. What decides the outcome sits one layer below.",
-
-  surface: {
-    title: "On the surface",
-    subtitle: "what every founder is chasing",
-    chips: [
-      "Grow faster",
-      "New markets",
-      "New products",
-      "Use AI well",
-      "Steady growth",
-      "The next raise",
-    ],
-  },
-
-  depth: {
-    title: "Underneath",
-    subtitle: "the questions that actually decide it",
-    chips: [
-      "What\u2019s actually working?",
-      "Where should the money go?",
-      "What should AI do?",
-      "What data can we trust?",
-      "Who owns the decisions?",
-      "How do we know it worked?",
-    ],
-  },
-
-  splitCaption: "Same questions. Two very different outcomes.",
-
-  outcomes: {
-    missed: {
-      badge: "If they get missed",
-      chips: [
-        "Dashboards",
-        "AI demos",
-        "Random experiments",
-        "Disconnected teams",
-        "Hiring that doesn\u2019t help",
-        "Growth no one can explain",
-      ],
-      punch: "Lots of work, not much progress.",
-    },
-    solved: {
-      badge: "If they get solved",
-      chips: [
-        "Clear priorities",
-        "Decisions you can repeat",
-        "AI doing real work",
-        "Money spent well",
-        "Growth you can measure",
-        "A clearer head",
-      ],
-      punch: "Now the work actually adds up.",
-    },
-  },
-
-  // Core line is split into three parts so the middle phrase can be wrapped
-  // in the accent highlight without HTML in the data file.
-  coreBefore: "Funded startups don\u2019t lack ambition. They lack the",
-  coreHighlight: "operating logic",
-  coreAfter: "that turns ambition into repeatable growth.",
-
-  // Detail prose uses _underscore_ markdown for the emphasized closing lines.
-  detailParagraphs: [
-    "Right after funding, the goals are obvious. Grow faster, open new markets, launch new products, improve margins, actually use AI, make growth steady instead of lucky, build the team, get ready for the next raise. Everyone can see this part.",
-    "The hard part sits underneath. What\u2019s actually working? Where should the money go next? Which good decisions should we be able to repeat on purpose? Which numbers can we trust? What should AI handle, and what should stay with people? Who connects the big plan to the day-to-day work? And how do we even know if any of it worked? Usually, no one owns these questions.",
-    "Skip them, and the company just gets busier, not better. More dashboards, more meetings, more half-finished experiments, more AI demos, more hiring, more tools that don\u2019t talk to each other. Everyone moves fast, but not in the same direction. _Lots of work, not much progress._",
-    "Answer them, and things start to click. Priorities get clear. People make better calls. AI plugs into real work instead of living in a demo. Data leads to action, not just another report. What works once can be done again on purpose. Money goes where it actually counts. _The work finally starts to add up._",
+  paragraphs: [
+    "Most funded startup founders I meet are in the same spot. The business is growing 2x, 3x. Data is piling up across teams. They’ve decided AI should be doing more for them. They want to build the next thing, hit the next growth lever, present clearer numbers to the board.",
+    "But the how isn’t clear: how the data holds up, what AI gets built where, how they’ll know it’s working. They don’t have answers. The team doesn’t have someone who can deal with it. Even when something gets built, no one in the room is confident enough to say it’s correct.",
+    "So the plan stays in _“we’ll figure it out when we get to it”_ mode, and the next phase of growth keeps getting deferred.",
   ],
 };
 
