@@ -125,13 +125,6 @@ export const situation = {
   coreHighlight: "operating logic",
   coreAfter: "that turns ambition into repeatable growth.",
 
-  // Detail prose uses _underscore_ markdown for the emphasized closing lines.
-  detailParagraphs: [
-    "Right after funding, the goals are obvious. Grow faster, open new markets, launch new products, improve margins, actually use AI, make growth steady instead of lucky, build the team, get ready for the next raise. Everyone can see this part.",
-    "The hard part is underneath. What’s actually working? Where should the money go next? Which good decisions should we be able to repeat on purpose? Which numbers can we trust? What should AI handle, and what should stay with people? Who connects the big plan to the day-to-day work? And how do we even know if any of it worked? Usually, no one owns these questions.",
-    "Skip them, and the company just gets busier, not better. More dashboards, more meetings, more half-finished experiments, more AI demos, more hiring, more tools that don’t talk to each other. Everyone moves fast, but not in the same direction. _Lots of work, not much progress._",
-    "Answer them, and things start to click. Priorities get clear. People make better calls. AI plugs into real work instead of living in a demo. Data leads to action, not just another report. What works once can be done again on purpose. Money goes where it actually counts. _You start seeing real progress._",
-  ],
 };
 
 export const approach = {

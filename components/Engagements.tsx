@@ -4,9 +4,9 @@ import { SectionHeader } from "./SectionHeader";
 
 export function Engagements() {
   return (
-    <Reveal id="engagements" className="py-3 px-6">
+    <Reveal id="engagements" className="py-2 px-6">
       <div className="max-w-content mx-auto">
-        <div className="reveal-child mb-5">
+        <div className="reveal-child mb-4">
           <SectionHeader
             number={engagements.sectionNumber}
             label={engagements.sectionLabel}

@@ -10,13 +10,12 @@ import {
 } from "react";
 import { ChevronDown } from "lucide-react";
 import { situation } from "@/lib/data";
-import { inlineEm } from "@/lib/inlineEm";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
 export function Situation() {
   return (
-    <Reveal id="situation" className="py-3 px-6">
+    <Reveal id="situation" className="py-2 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader
@@ -25,7 +24,7 @@ export function Situation() {
           />
         </div>
 
-        <p className="reveal-child text-[15px] text-ink-600 leading-[1.55] mb-4">
+        <p className="reveal-child text-[15px] text-ink-600 leading-[1.55] mb-3">
           {situation.intro}
         </p>
 
@@ -33,7 +32,7 @@ export function Situation() {
           <Strata />
         </div>
 
-        <div className="reveal-child flex justify-center my-4">
+        <div className="reveal-child flex justify-center my-3">
           <span className="font-serif italic text-[15px] text-ink-500 text-center">
             {situation.splitCaption}
           </span>
@@ -44,30 +43,12 @@ export function Situation() {
           <ForkStack />
         </div>
 
-        <p className="reveal-child mt-5 font-serif text-[clamp(20px,2.8vw,28px)] leading-[1.42] text-ink font-medium">
+        <p className="reveal-child mt-4 font-serif text-[clamp(20px,2.8vw,28px)] leading-[1.42] text-ink font-medium">
           {situation.coreBefore}{" "}
           <span className="italic accent-mark">{situation.coreHighlight}</span>{" "}
           {situation.coreAfter}
         </p>
 
-        <details className="reveal-child mt-7 group">
-          <summary className="cursor-pointer list-none font-mono text-[11px] uppercase tracking-[1.3px] text-ink-500 hover:text-ink inline-flex items-center gap-2">
-            Read the full picture
-            <ChevronDown
-              size={14}
-              aria-hidden="true"
-              className="transition-transform duration-200 group-open:rotate-180"
-            />
-          </summary>
-          {situation.detailParagraphs.map((p, i) => (
-            <p
-              key={i}
-              className="text-[14.5px] text-ink-600 leading-[1.75] mt-3.5"
-            >
-              {inlineEm(p)}
-            </p>
-          ))}
-        </details>
       </div>
     </Reveal>
   );
