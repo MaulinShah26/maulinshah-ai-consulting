@@ -79,7 +79,7 @@ export const situation = {
     title: "Underneath",
     subtitle: "the questions that actually decide it",
     chips: [
-      "What’s actually working?",
+      "What\u2019s actually working?",
       "Where should the money go?",
       "What should AI do?",
       "What data can we trust?",
@@ -98,7 +98,7 @@ export const situation = {
         "AI demos",
         "Random experiments",
         "Disconnected teams",
-        "Hiring that doesn’t help",
+        "Hiring that doesn\u2019t help",
         "Growth no one can explain",
       ],
       punch: "Lots of work, not much progress.",
@@ -119,15 +119,15 @@ export const situation = {
 
   // Core line is split into three parts so the middle phrase can be wrapped
   // in the accent highlight without HTML in the data file.
-  coreBefore: "Funded startups don’t lack ambition. They lack the",
+  coreBefore: "Funded startups don\u2019t lack ambition. They lack the",
   coreHighlight: "operating logic",
   coreAfter: "that turns ambition into repeatable growth.",
 
   // Detail prose uses _underscore_ markdown for the emphasized closing lines.
   detailParagraphs: [
     "Right after funding, the goals are obvious. Grow faster, open new markets, launch new products, improve margins, actually use AI, make growth steady instead of lucky, build the team, get ready for the next raise. Everyone can see this part.",
-    "The hard part sits underneath. What’s actually working? Where should the money go next? Which good decisions should we be able to repeat on purpose? Which numbers can we trust? What should AI handle, and what should stay with people? Who connects the big plan to the day-to-day work? And how do we even know if any of it worked? Usually, no one owns these questions.",
-    "Skip them, and the company just gets busier, not better. More dashboards, more meetings, more half-finished experiments, more AI demos, more hiring, more tools that don’t talk to each other. Everyone moves fast, but not in the same direction. _Lots of work, not much progress._",
+    "The hard part sits underneath. What\u2019s actually working? Where should the money go next? Which good decisions should we be able to repeat on purpose? Which numbers can we trust? What should AI handle, and what should stay with people? Who connects the big plan to the day-to-day work? And how do we even know if any of it worked? Usually, no one owns these questions.",
+    "Skip them, and the company just gets busier, not better. More dashboards, more meetings, more half-finished experiments, more AI demos, more hiring, more tools that don\u2019t talk to each other. Everyone moves fast, but not in the same direction. _Lots of work, not much progress._",
     "Answer them, and things start to click. Priorities get clear. People make better calls. AI plugs into real work instead of living in a demo. Data leads to action, not just another report. What works once can be done again on purpose. Money goes where it actually counts. _The work finally starts to add up._",
   ],
 };
@@ -136,25 +136,13 @@ export const approach = {
   sectionNumber: "02",
   sectionLabel: "How I work",
   heading: "What the work looks like",
-  sub: "Every engagement is different. The shape stays similar.",
-  steps: [
-    {
-      num: "01",
-      title: "Diagnose",
-      body: "Sit with you and your leadership. Understand the data, the team, what’s trusted. Surface the gaps between what you think the data is telling you and what it actually is.",
-    },
-    {
-      num: "02",
-      title: "Roadmap",
-      body: "Define scope together. Write down what to fix, what to build, what to use AI for, what isn’t worth touching yet, what isn’t possible yet.",
-    },
-    {
-      num: "03",
-      title: "Operate",
-      body: "Own the work end-to-end. Build the dashboards and ML systems that earn their keep. Sit in on the calls that matter. The team learns alongside and owns more of it over time.",
-    },
+  intro: [
+    "Every engagement is different. The shape of how I work stays similar.",
+    "I sit with you and your leadership first. The goal is to understand the business objective, where data lives today, how it’s collected, and what your team actually trusts. From there I surface the gap between what you think the data is telling you and what it actually is. That’s usually where the first uncomfortable truths show up.",
+    "Once the picture is honest, we define scope together. The output is a written data and AI roadmap. What to fix. What to build. What to use AI for. What isn’t worth touching yet, and what isn’t possible yet given your data.",
+    "Then I move into operator mode. I own the roadmap, build the dashboards and ML systems that earn their keep, sit in on the calls that matter. The team also gets better at this work while I’m there, so they own more of it over time.",
+    "That’s the general arc. It shifts based on what the work needs.",
   ],
-  caveat: "Shape stays similar. Details shift with what the work needs.",
 };
 
 export const engagements = {

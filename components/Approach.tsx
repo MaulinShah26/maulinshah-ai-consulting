@@ -7,19 +7,37 @@ export function Approach() {
     <Reveal id="approach" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
-          <SectionHeader number={approach.sectionNumber} label={approach.sectionLabel} />
+          <SectionHeader
+            number={approach.sectionNumber}
+            label={approach.sectionLabel}
+          />
         </div>
-        <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-4">
+
+        <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-1.5">
           {approach.heading}
         </h2>
-        {approach.intro.map((p, i) => (
-          <p
-            key={i}
-            className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-4 last:mb-0"
-          >
-            {p}
-          </p>
-        ))}
+        <p className="reveal-child text-[14px] text-ink-600 leading-[1.6] mb-9">
+          {approach.sub}
+        </p>
+
+        <div className="reveal-child approach-flow">
+          <div className="approach-flow-track" aria-hidden="true" />
+          {approach.steps.map((step) => (
+            <div key={step.num} className="approach-step">
+              <span className="approach-step-num">{step.num}</span>
+              <h3 className="approach-step-title font-serif text-[18px] font-semibold text-ink leading-tight tracking-tight mb-2.5">
+                {step.title}
+              </h3>
+              <p className="text-[13.5px] text-ink-600 leading-[1.65]">
+                {step.body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p className="reveal-child mt-9 text-center font-serif italic text-[15px] text-ink-500">
+          {approach.caveat}
+        </p>
       </div>
     </Reveal>
   );
