@@ -35,6 +35,9 @@ export function Approach() {
           ))}
         </div>
 
+        <p className="reveal-child mt-9 text-center font-serif italic text-[15px] text-ink-500">
+          {approach.caveat}
+        </p>
       </div>
     </Reveal>
   );

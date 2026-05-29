@@ -136,7 +136,7 @@ export const approach = {
   sectionNumber: "02",
   sectionLabel: "How I work",
   heading: "What the work looks like",
-  sub: "Every engagement is different. The approach stays similar.",
+  sub: "Every engagement is different. The shape stays similar.",
   steps: [
     {
       num: "01",
@@ -154,6 +154,7 @@ export const approach = {
       body: "Own the work end-to-end. Build the dashboards and ML systems that earn their keep. Sit in on the calls that matter. The team learns alongside and owns more of it over time.",
     },
   ],
+  caveat: "Shape stays similar. Details shift with what the work needs.",
 };
 
 export const engagements = {
@@ -198,37 +199,38 @@ export const engagements = {
 export const outcomes = {
   sectionNumber: "04",
   sectionLabel: "What changes for you",
-  intro:
-    "When the work is doing its job, here’s the sequence you reach. Time to get there varies.",
-  states: [
+  rows: [
     {
-      num: "01",
-      title: "Diagnosis is honest",
-      body: "You have a roadmap. The team knows what to fix first.",
+      month: "Month 1",
+      label: "Diagnosis",
+      icon: "ScanSearch",
+      text: "Discovery is done. You have a written roadmap. The first uncomfortable truths are on the table. The team knows what to build first and what to leave alone.",
     },
     {
-      num: "02",
-      title: "Decisions run on one set of numbers",
-      body: "Leadership runs on a single source of truth.",
+      month: "Month 3",
+      label: "Numbers you can trust",
+      icon: "ShieldCheck",
+      text: "You walk into high-stakes meetings with a single source of truth. You can answer investor questions on the spot. Leadership decides from the same set of numbers, not three competing spreadsheets.",
     },
     {
-      num: "03",
-      title: "Systems earn their keep",
-      body: "Hours saved each week. Better questions get asked.",
+      month: "Month 6",
+      label: "Systems running",
+      icon: "Zap",
+      text: "AI and automation systems are earning measurable hours back per week. Leadership makes decisions from the same set of numbers. The conversation shifts from _“is the data right?”_ to _“what should we do about it?”_",
     },
     {
-      num: "04",
-      title: "The team is fluent",
-      body: "“We’ll figure it out later” isn’t said anymore.",
+      month: "Month 9",
+      label: "Team fluent",
+      icon: "Users",
+      text: "The team operates from data confidently enough that _“we’ll figure it out later”_ has stopped being something anyone says.",
     },
     {
-      num: "05",
-      title: "You don’t need me anymore",
-      body: "You can run this on your own. That’s the goal.",
+      month: "Month 12",
+      label: "You take it from here",
+      icon: "Target",
+      text: "You have the clarity to keep going with or without me in the seat. That’s the goal.",
     },
   ],
-  condition:
-    "How fast you reach each one depends on the data you start with, what your team can absorb, and how seriously you act on what we find. Six weeks for some companies. Six months for others. Both are normal.",
 };
 
 type WorkCard = {
