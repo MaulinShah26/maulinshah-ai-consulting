@@ -157,16 +157,13 @@ body {
   50%      { transform: translateY(1.5px); }
 }
 
-/* Before/After: both sides blurred at rest; drag the handle to focus either side.
-   Blur is applied inline via JS for real-time response during drag. CSS gives a
-   short transition so jumps (click-to-position, auto-demo settle) feel smooth. */
+/* Before/After: two-column grid, solved side blurred until scroll-into-view */
 .ba {
-  user-select: none;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
 }
 .ba-missed {
   background: rgb(var(--ink-100));
-  transition: filter 120ms linear;
-  will-change: filter;
 }
 .ba-solved {
   background: linear-gradient(
@@ -174,29 +171,16 @@ body {
     rgb(var(--accent-soft) / 0.6),
     rgb(var(--surface) / 0.95)
   );
-  transition: filter 120ms linear;
-  will-change: filter;
+  filter: blur(10px);
+  opacity: 0.75;
+  transition: filter 1.1s ease-out, opacity 1.1s ease-out;
 }
-
-/* Draggable focus handle */
-.ba-handle {
-  background: rgb(var(--surface));
-  box-shadow: 0 3px 12px rgb(var(--ink) / 0.16);
-  pointer-events: none;
+.ba.is-revealed .ba-solved {
+  filter: blur(0);
+  opacity: 1;
 }
-.ba-handle::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px solid rgb(var(--accent));
-  opacity: 0;
-  animation: ba-handle-pulse 2.6s ease-out infinite;
-  pointer-events: none;
-}
-@keyframes ba-handle-pulse {
-  0%        { opacity: 0.45; transform: scale(0.85); }
-  70%, 100% { opacity: 0;    transform: scale(1.25); }
+.ba-divider {
+  background: rgb(var(--ink-200));
 }
 
 /* Mobile fallback for the slider: two stacked cards */
@@ -241,16 +225,18 @@ body {
   }
 }
 
-/* Reduced motion: kill decorative animations */
+/* Reduced motion: kill decorative animations + skip blur */
 @media (prefers-reduced-motion: reduce) {
-  .strata.is-closed .strata-pill-cap,
-  .ba-handle::after {
+  .strata.is-closed .strata-pill-cap {
     animation: none;
   }
   .strata-collapse,
-  .strata-pill-chev,
-  .ba-solved,
-  .ba-missed {
+  .strata-pill-chev {
+    transition: none;
+  }
+  .ba-solved {
+    filter: none;
+    opacity: 1;
     transition: none;
   }
 }

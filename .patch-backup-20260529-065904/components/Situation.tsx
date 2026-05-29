@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type PointerEvent as ReactPointerEvent,
-  type KeyboardEvent as ReactKeyboardEvent,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { situation } from "@/lib/data";
 import { inlineEm } from "@/lib/inlineEm";
@@ -220,174 +213,40 @@ function ChipRow({
 
 function BeforeAfter() {
   const reduceMotion = useReducedMotion();
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const solvedRef = useRef<HTMLDivElement>(null);
-  const missedRef = useRef<HTMLDivElement>(null);
-  const handleRef = useRef<HTMLDivElement>(null);
-  const posRef = useRef(50);
-  const draggingRef = useRef(false);
-  const touchedRef = useRef(false);
-  const demoedRef = useRef(false);
+  const baRef = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
 
-  /**
-   * Blur math: both sides start moderately blurred at slider center (pos 50).
-   * Drag right -> right side de-blurs, left side blurs more.
-   * Drag left  -> mirror.
-   * At pos=50 both at MAX_BLUR/2. At extremes: one at 0, other at MAX_BLUR.
-   */
-  const apply = useCallback((p: number) => {
-    const MAX_BLUR = 14;
-    const clamped = Math.max(2, Math.min(98, p));
-    posRef.current = clamped;
-    if (solvedRef.current) {
-      const leftBlur = (MAX_BLUR * clamped) / 100;
-      solvedRef.current.style.filter = `blur(${leftBlur.toFixed(2)}px)`;
-    }
-    if (missedRef.current) {
-      const rightBlur = (MAX_BLUR * (100 - clamped)) / 100;
-      missedRef.current.style.filter = `blur(${rightBlur.toFixed(2)}px)`;
-    }
-    if (handleRef.current) {
-      handleRef.current.style.left = `${clamped}%`;
-    }
-    if (sliderRef.current) {
-      sliderRef.current.setAttribute(
-        "aria-valuenow",
-        String(Math.round(clamped))
-      );
-    }
-  }, []);
-
-  const fromX = useCallback(
-    (clientX: number) => {
-      const r = sliderRef.current?.getBoundingClientRect();
-      if (!r) return;
-      apply(((clientX - r.left) / r.width) * 100);
-    },
-    [apply]
-  );
-
-  // Initialise to centre on mount so both sides are blurred from the start
   useEffect(() => {
-    apply(50);
-  }, [apply]);
-
-  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-    draggingRef.current = true;
-    touchedRef.current = true;
-    try {
-      sliderRef.current?.setPointerCapture(e.pointerId);
-    } catch {
-      /* ignore */
+    if (reduceMotion) {
+      setRevealed(true);
+      return;
     }
-    fromX(e.clientX);
-  };
-  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (draggingRef.current) fromX(e.clientX);
-  };
-  const onPointerUp = () => {
-    draggingRef.current = false;
-  };
-
-  const onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowLeft") {
-      touchedRef.current = true;
-      apply(posRef.current - 4);
-      e.preventDefault();
-    } else if (e.key === "ArrowRight") {
-      touchedRef.current = true;
-      apply(posRef.current + 4);
-      e.preventDefault();
-    } else if (e.key === "Home") {
-      touchedRef.current = true;
-      apply(0);
-      e.preventDefault();
-    } else if (e.key === "End") {
-      touchedRef.current = true;
-      apply(100);
-      e.preventDefault();
-    }
-  };
-
-  // Auto-demo on first scroll-into-view: sweep right (focus missed), left (focus solved), centre.
-  useEffect(() => {
-    if (reduceMotion) return;
-    const el = sliderRef.current;
+    const el = baRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (
-            entry.isIntersecting &&
-            !demoedRef.current &&
-            !touchedRef.current
-          ) {
-            demoedRef.current = true;
-            runDemo();
+          if (entry.isIntersecting) {
+            window.setTimeout(() => setRevealed(true), 250);
             io.disconnect();
           }
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.35 }
     );
     io.observe(el);
     return () => io.disconnect();
-
-    function runDemo() {
-      const seq = [
-        { dur: 700, to: 85 },
-        { dur: 900, to: 15 },
-        { dur: 750, to: 50 },
-      ];
-      let i = 0;
-      const run = () => {
-        if (i >= seq.length || touchedRef.current) return;
-        const startPos = posRef.current;
-        const target = seq[i].to;
-        const dur = seq[i].dur;
-        let t0: number | null = null;
-        const step = (ts: number) => {
-          if (touchedRef.current) return;
-          if (t0 === null) t0 = ts;
-          const k = Math.min((ts - t0) / dur, 1);
-          const eased =
-            k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-          apply(startPos + (target - startPos) * eased);
-          if (k < 1) {
-            requestAnimationFrame(step);
-          } else {
-            i++;
-            window.setTimeout(run, 180);
-          }
-        };
-        requestAnimationFrame(step);
-      };
-      window.setTimeout(run, 600);
-    }
-  }, [reduceMotion, apply]);
+  }, [reduceMotion]);
 
   return (
     <div
-      ref={sliderRef}
-      role="slider"
-      tabIndex={0}
-      aria-label="Drag to focus on either side"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={50}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerUp}
-      onKeyDown={onKeyDown}
-      className="ba relative w-full min-h-[340px] rounded-2xl overflow-hidden border border-ink-200 select-none cursor-ew-resize"
-      style={{ touchAction: "pan-y" }}
+      ref={baRef}
+      className={`ba relative w-full min-h-[340px] rounded-2xl overflow-hidden border border-ink-200 ${
+        revealed ? "is-revealed" : ""
+      }`}
     >
-      {/* SOLVED — fills left half, blurred per slider position */}
-      <div
-        ref={solvedRef}
-        className="ba-solved absolute left-0 top-0 bottom-0 w-1/2 px-6 py-7 flex flex-col justify-center items-start gap-4"
-      >
+      {/* SOLVED — left half, blurred until scroll-into-view */}
+      <div className="ba-solved px-6 py-7 flex flex-col justify-center items-start gap-4">
         <span className="font-mono text-[11px] uppercase tracking-[1.2px] px-3 py-1.5 rounded-full bg-accent text-white">
           {situation.outcomes.solved.badge}
         </span>
@@ -406,11 +265,11 @@ function BeforeAfter() {
         </p>
       </div>
 
-      {/* MISSED — fills right half, blurred per slider position */}
-      <div
-        ref={missedRef}
-        className="ba-missed absolute left-1/2 top-0 bottom-0 w-1/2 px-6 py-7 flex flex-col justify-center items-end gap-4 text-right"
-      >
+      {/* Static vertical divider */}
+      <div className="ba-divider" aria-hidden="true" />
+
+      {/* MISSED — right half, always visible */}
+      <div className="ba-missed px-6 py-7 flex flex-col justify-center items-end gap-4 text-right">
         <span className="font-mono text-[11px] uppercase tracking-[1.2px] px-3 py-1.5 rounded-full bg-surface border border-ink-300 text-ink-500">
           {situation.outcomes.missed.badge}
         </span>
@@ -427,30 +286,6 @@ function BeforeAfter() {
         <p className="font-serif text-[16px] leading-snug font-medium text-ink-500">
           {situation.outcomes.missed.punch}
         </p>
-      </div>
-
-      {/* Draggable handle — sits on top, moves with slider position */}
-      <div
-        ref={handleRef}
-        className="ba-handle-wrap absolute top-0 bottom-0 z-[4] pointer-events-none"
-        style={{ left: "50%" }}
-        aria-hidden="true"
-      >
-        <span className="ba-handle absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-[46px] h-[46px] rounded-full border border-ink-200 flex items-center justify-center text-ink">
-          <svg
-            viewBox="0 0 24 24"
-            width="22"
-            height="22"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="10 7 6 12 10 17" />
-            <polyline points="14 7 18 12 14 17" />
-          </svg>
-        </span>
       </div>
     </div>
   );
