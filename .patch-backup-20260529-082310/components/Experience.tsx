@@ -27,7 +27,7 @@ export function Experience() {
   }, []);
 
   return (
-    <Reveal id="experience" className="pt-2 pb-5 px-6">
+    <Reveal id="experience" className="pt-2 pb-8 px-6">
       <div className="max-w-content mx-auto">
         <div
           ref={cardRef}

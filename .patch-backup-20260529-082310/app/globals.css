@@ -108,21 +108,21 @@ body {
    Section-specific styles (Hero quote highlight, Strata, Slider, Proof)
    ===================================================================== */
 
-/* Accent highlight bar behind italic phrases (Hero quote, Situation core line).
-   Uses a linear-gradient background + box-decoration-break so wrapped text
-   gets a clean highlight on each line fragment — no stray pseudo-element artifacts. */
+/* Accent highlight bar behind italic phrases (Hero quote, Situation core line) */
 .accent-mark {
-  background-image: linear-gradient(
-    180deg,
-    transparent 0,
-    transparent 62%,
-    rgb(var(--accent-soft)) 62%,
-    rgb(var(--accent-soft)) 90%,
-    transparent 90%
-  );
-  padding: 0 0.08em;
-  -webkit-box-decoration-break: clone;
-          box-decoration-break: clone;
+  position: relative;
+  display: inline;
+}
+.accent-mark::after {
+  content: "";
+  position: absolute;
+  left: -0.1em;
+  right: -0.1em;
+  bottom: 0.12em;
+  height: 0.34em;
+  background: rgb(var(--accent-soft));
+  z-index: -1;
+  border-radius: 2px;
 }
 
 /* Strata: depth tint + collapse transition + chevron rotation + idle nudge */

@@ -1,4 +1,5 @@
 import * as Icons from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { engagements } from "@/lib/data";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
@@ -14,16 +15,16 @@ function EngagementIcon({ name }: { name: string }) {
 
 export function Engagements() {
   return (
-    <Reveal id="engagements" className="py-3 px-6">
+    <Reveal id="engagements" className="py-4 px-6">
       <div className="max-w-content mx-auto">
-        <div className="reveal-child mb-5">
+        <div className="reveal-child mb-7">
           <SectionHeader
             number={engagements.sectionNumber}
             label={engagements.sectionLabel}
           />
         </div>
         {/* 3-column grid at desktop, single column on mobile */}
-        <div className="reveal-child grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+        <div className="reveal-child grid grid-cols-1 md:grid-cols-3 gap-4 mb-7">
           {engagements.cards.map((card, i) => (
             <div
               key={i}
@@ -61,11 +62,18 @@ export function Engagements() {
           <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-4">
             {engagements.closingLine}
           </p>
-          {engagements.workingSetupLine && (
-            <p className="text-[13.5px] text-ink-600 leading-[1.7]">
-              {engagements.workingSetupLine}
-            </p>
-          )}
+        {engagements.workingSetupLine && (
+          <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-5">
+            {engagements.workingSetupLine}
+          </p>
+        )}
+          <a
+            href={engagements.ctaHref}
+            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-accent hover:text-ink transition-colors"
+          >
+            {engagements.ctaLabel}
+            <ArrowRight size={13} aria-hidden />
+          </a>
         </div>
       </div>
     </Reveal>

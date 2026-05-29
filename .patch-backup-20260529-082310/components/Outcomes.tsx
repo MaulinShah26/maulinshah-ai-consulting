@@ -4,9 +4,9 @@ import { SectionHeader } from "./SectionHeader";
 
 export function Outcomes() {
   return (
-    <Reveal id="outcomes" className="py-3 px-6">
+    <Reveal id="outcomes" className="py-4 px-6">
       <div className="max-w-content mx-auto">
-        <div className="reveal-child mb-5">
+        <div className="reveal-child mb-8">
           <SectionHeader
             number={outcomes.sectionNumber}
             label={outcomes.sectionLabel}
@@ -27,7 +27,7 @@ export function Outcomes() {
           ))}
         </div>
 
-        <p className="reveal-child outcomes-condition mt-5">
+        <p className="reveal-child outcomes-condition mt-8">
           {outcomes.condition}
         </p>
       </div>

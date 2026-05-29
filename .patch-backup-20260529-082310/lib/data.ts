@@ -51,7 +51,7 @@ export const experience = {
   metrics: [
     { kind: "count" as const, value: 10, suffix: "+", label: "years across data and AI" },
     { kind: "count" as const, value: 5, suffix: "",  label: "industries worked across" },
-    { kind: "arrow" as const, from: "0", to: "1", label: "data & AI driven features built from scratch at multiple startups" },
+    { kind: "arrow" as const, from: "0", to: "1", label: "data & AI built from scratch at multiple startups" },
     { kind: "count" as const, value: 5, suffix: "+", label: "production systems shipped" },
   ],
 };
@@ -115,7 +115,7 @@ export const situation = {
         "Growth you can measure",
         "A clearer head",
       ],
-      punch: "The work actually pays off.",
+      punch: "Now the work actually adds up.",
     },
   },
 
@@ -190,6 +190,8 @@ export const engagements = {
     "The Fractional engagement is a monthly retainer with a 3-month minimum. The Strategic Audit and Scoped Build are fixed-price projects with defined deliverables and timelines. I share pricing on the first call once we’ve scoped the work.",
   workingSetupLine:
     "I work remotely by default. Hybrid if you need it. Will travel for kickoffs, key reviews, or anything else that needs to happen in person.",
+  ctaLabel: "Start a conversation",
+  ctaHref: "#contact",
 };
 
 export const outcomes = {

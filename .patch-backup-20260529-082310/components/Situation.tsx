@@ -16,7 +16,7 @@ import { SectionHeader } from "./SectionHeader";
 
 export function Situation() {
   return (
-    <Reveal id="situation" className="py-3 px-6">
+    <Reveal id="situation" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader
@@ -25,7 +25,7 @@ export function Situation() {
           />
         </div>
 
-        <p className="reveal-child text-[15px] text-ink-600 leading-[1.55] mb-4">
+        <p className="reveal-child text-[15px] text-ink-600 leading-[1.55] mb-6">
           {situation.intro}
         </p>
 
@@ -33,7 +33,7 @@ export function Situation() {
           <Strata />
         </div>
 
-        <div className="reveal-child flex justify-center my-4">
+        <div className="reveal-child flex justify-center my-5">
           <span className="font-serif italic text-[15px] text-ink-500 text-center">
             {situation.splitCaption}
           </span>
@@ -44,13 +44,13 @@ export function Situation() {
           <ForkStack />
         </div>
 
-        <p className="reveal-child mt-5 font-serif text-[clamp(20px,2.8vw,28px)] leading-[1.42] text-ink font-medium">
+        <p className="reveal-child mt-7 font-serif text-[clamp(20px,2.8vw,28px)] leading-[1.42] text-ink font-medium">
           {situation.coreBefore}{" "}
           <span className="italic accent-mark">{situation.coreHighlight}</span>{" "}
           {situation.coreAfter}
         </p>
 
-        <details className="reveal-child mt-5 border-t border-ink-200 pt-5 group">
+        <details className="reveal-child mt-7 border-t border-ink-200 pt-5 group">
           <summary className="cursor-pointer list-none font-mono text-[11px] uppercase tracking-[1.3px] text-ink-500 hover:text-ink inline-flex items-center gap-2">
             Read the full picture
             <ChevronDown
@@ -78,11 +78,34 @@ export function Situation() {
    ============================================================ */
 
 function Strata() {
-  // Starts closed; the bobbing pill is the only indicator users can open it.
-  const [closed, setClosed] = useState(true);
+  const reduceMotion = useReducedMotion();
+  const [closed, setClosed] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const el = containerRef.current;
+    if (!el) return;
+    let armed = false;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !armed) {
+            armed = true;
+            window.setTimeout(() => setClosed(true), 1200);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduceMotion]);
 
   return (
     <div
+      ref={containerRef}
       className={`strata rounded-2xl border border-ink-200 overflow-hidden ${
         closed ? "is-closed" : ""
       }`}
