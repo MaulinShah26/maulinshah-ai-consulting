@@ -85,8 +85,6 @@ export const situation = {
       "What should AI take over?",
       "Which numbers can we trust?",
       "How do we know it worked?",
-      "What was agreed to build but never got built?",
-      "Where is the team actually stuck?",
     ],
   },
 
@@ -137,7 +135,8 @@ export const situation = {
 export const approach = {
   sectionNumber: "02",
   sectionLabel: "How I work",
-  closing: "Every engagement is different. The approach stays similar.",
+  heading: "What the work looks like",
+  sub: "Every engagement is different. The approach stays similar.",
   steps: [
     {
       num: "01",
@@ -160,6 +159,8 @@ export const approach = {
 export const engagements = {
   sectionNumber: "03",
   sectionLabel: "Engagement options",
+  heading: "Three ways to work together",
+  intro: "",
   cards: [
     {
       title: "Fractional AI Lead",
@@ -197,6 +198,8 @@ export const engagements = {
 export const outcomes = {
   sectionNumber: "04",
   sectionLabel: "What changes for you",
+  intro:
+    "When the work is doing its job, here’s the sequence you reach. Time to get there varies.",
   states: [
     {
       num: "01",

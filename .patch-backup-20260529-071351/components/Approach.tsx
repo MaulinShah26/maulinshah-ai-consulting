@@ -6,12 +6,19 @@ export function Approach() {
   return (
     <Reveal id="approach" className="py-4 px-6">
       <div className="max-w-content mx-auto">
-        <div className="reveal-child mb-9">
+        <div className="reveal-child">
           <SectionHeader
             number={approach.sectionNumber}
             label={approach.sectionLabel}
           />
         </div>
+
+        <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-1.5">
+          {approach.heading}
+        </h2>
+        <p className="reveal-child text-[14px] text-ink-600 leading-[1.6] mb-9">
+          {approach.sub}
+        </p>
 
         <div className="reveal-child approach-flow">
           <div className="approach-flow-track" aria-hidden="true" />
@@ -28,9 +35,6 @@ export function Approach() {
           ))}
         </div>
 
-        <p className="reveal-child mt-9 text-[14px] text-ink-500 leading-[1.6]">
-          {approach.closing}
-        </p>
       </div>
     </Reveal>
   );

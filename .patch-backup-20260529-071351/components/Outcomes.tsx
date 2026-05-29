@@ -6,12 +6,16 @@ export function Outcomes() {
   return (
     <Reveal id="outcomes" className="py-4 px-6">
       <div className="max-w-content mx-auto">
-        <div className="reveal-child mb-8">
+        <div className="reveal-child">
           <SectionHeader
             number={outcomes.sectionNumber}
             label={outcomes.sectionLabel}
           />
         </div>
+
+        <p className="reveal-child text-[14.5px] text-ink-600 leading-[1.6] mb-8">
+          {outcomes.intro}
+        </p>
 
         <div className="reveal-child outcomes-flow">
           {outcomes.states.map((state) => (

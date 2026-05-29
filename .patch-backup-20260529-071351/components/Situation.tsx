@@ -239,13 +239,12 @@ function BeforeAfter() {
     const MAX_BLUR = 14;
     const clamped = Math.max(2, Math.min(98, p));
     posRef.current = clamped;
-    // Inverted: drag right -> LEFT (solved) becomes clear, RIGHT (missed) blurs.
     if (solvedRef.current) {
-      const leftBlur = (MAX_BLUR * (100 - clamped)) / 100;
+      const leftBlur = (MAX_BLUR * clamped) / 100;
       solvedRef.current.style.filter = `blur(${leftBlur.toFixed(2)}px)`;
     }
     if (missedRef.current) {
-      const rightBlur = (MAX_BLUR * clamped) / 100;
+      const rightBlur = (MAX_BLUR * (100 - clamped)) / 100;
       missedRef.current.style.filter = `blur(${rightBlur.toFixed(2)}px)`;
     }
     if (handleRef.current) {

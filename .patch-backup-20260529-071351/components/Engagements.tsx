@@ -17,12 +17,19 @@ export function Engagements() {
   return (
     <Reveal id="engagements" className="py-4 px-6">
       <div className="max-w-content mx-auto">
-        <div className="reveal-child mb-7">
+        <div className="reveal-child">
           <SectionHeader
             number={engagements.sectionNumber}
             label={engagements.sectionLabel}
           />
         </div>
+        <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-4">
+          {engagements.heading}
+        </h2>
+        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-7">
+          {engagements.intro}
+        </p>
+
         {/* 3-column grid at desktop, single column on mobile */}
         <div className="reveal-child grid grid-cols-1 md:grid-cols-3 gap-4 mb-7">
           {engagements.cards.map((card, i) => (
