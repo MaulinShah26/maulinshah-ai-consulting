@@ -156,7 +156,7 @@ export const engagements = {
     {
       quote: "I need a senior data and AI person on my team, but I can’t hire one yet.",
       title: "Fractional AI Lead",
-      meta: "~10 hrs/wk · 3-mo min, then monthly",
+      meta: "~10 hrs/week - 3 months minimum - Monthly Retainer",
       tagline: "A senior data and AI lead on your team, running the roadmap from inside.",
       walkaway: "a clear roadmap, working systems live, and a team that runs more of it on their own over time.",
     },
