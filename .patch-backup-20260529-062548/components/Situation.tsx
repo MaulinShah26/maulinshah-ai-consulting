@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import { ChevronDown } from "lucide-react";
 import { situation } from "@/lib/data";
 import { inlineEm } from "@/lib/inlineEm";
@@ -213,84 +220,208 @@ function ChipRow({
 
 function BeforeAfter() {
   const reduceMotion = useReducedMotion();
-  const baRef = useRef<HTMLDivElement>(null);
-  const [revealed, setRevealed] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const solvedRef = useRef<HTMLDivElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef(50);
+  const draggingRef = useRef(false);
+  const touchedRef = useRef(false);
+  const demoedRef = useRef(false);
+
+  const apply = useCallback((p: number) => {
+    const clamped = Math.max(3, Math.min(97, p));
+    posRef.current = clamped;
+    if (solvedRef.current) {
+      solvedRef.current.style.clipPath = `inset(0 ${100 - clamped}% 0 0)`;
+    }
+    if (dividerRef.current) {
+      dividerRef.current.style.left = `${clamped}%`;
+    }
+    if (sliderRef.current) {
+      sliderRef.current.setAttribute(
+        "aria-valuenow",
+        String(Math.round(clamped))
+      );
+    }
+  }, []);
+
+  const fromX = useCallback(
+    (clientX: number) => {
+      const r = sliderRef.current?.getBoundingClientRect();
+      if (!r) return;
+      apply(((clientX - r.left) / r.width) * 100);
+    },
+    [apply]
+  );
 
   useEffect(() => {
-    if (reduceMotion) {
-      setRevealed(true);
-      return;
+    apply(50);
+  }, [apply]);
+
+  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    draggingRef.current = true;
+    touchedRef.current = true;
+    try {
+      sliderRef.current?.setPointerCapture(e.pointerId);
+    } catch {
+      /* ignore */
     }
-    const el = baRef.current;
+    fromX(e.clientX);
+  };
+  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (draggingRef.current) fromX(e.clientX);
+  };
+  const onPointerUp = () => {
+    draggingRef.current = false;
+  };
+
+  const onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "ArrowLeft") {
+      touchedRef.current = true;
+      apply(posRef.current - 4);
+      e.preventDefault();
+    } else if (e.key === "ArrowRight") {
+      touchedRef.current = true;
+      apply(posRef.current + 4);
+      e.preventDefault();
+    } else if (e.key === "Home") {
+      touchedRef.current = true;
+      apply(0);
+      e.preventDefault();
+    } else if (e.key === "End") {
+      touchedRef.current = true;
+      apply(100);
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const el = sliderRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            window.setTimeout(() => setRevealed(true), 250);
+          if (
+            entry.isIntersecting &&
+            !demoedRef.current &&
+            !touchedRef.current
+          ) {
+            demoedRef.current = true;
+            runDemo();
             io.disconnect();
           }
         });
       },
-      { threshold: 0.35 }
+      { threshold: 0.4 }
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [reduceMotion]);
+
+    function runDemo() {
+      const seq = [
+        { dur: 650, to: 90 },
+        { dur: 850, to: 12 },
+        { dur: 800, to: 50 },
+      ];
+      let i = 0;
+      const run = () => {
+        if (i >= seq.length || touchedRef.current) return;
+        const startPos = posRef.current;
+        const target = seq[i].to;
+        const dur = seq[i].dur;
+        let t0: number | null = null;
+        const step = (ts: number) => {
+          if (touchedRef.current) return;
+          if (t0 === null) t0 = ts;
+          const k = Math.min((ts - t0) / dur, 1);
+          const eased =
+            k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          apply(startPos + (target - startPos) * eased);
+          if (k < 1) {
+            requestAnimationFrame(step);
+          } else {
+            i++;
+            window.setTimeout(run, 140);
+          }
+        };
+        requestAnimationFrame(step);
+      };
+      window.setTimeout(run, 500);
+    }
+  }, [reduceMotion, apply]);
 
   return (
     <div
-      ref={baRef}
-      className={`ba relative w-full min-h-[340px] rounded-2xl overflow-hidden border border-ink-200 ${
-        revealed ? "is-revealed" : ""
-      }`}
+      ref={sliderRef}
+      role="slider"
+      tabIndex={0}
+      aria-label="Drag to compare the two outcomes"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={50}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+      onKeyDown={onKeyDown}
+      className="ba relative w-full h-[340px] rounded-2xl overflow-hidden border border-ink-200 select-none cursor-ew-resize"
+      style={{ touchAction: "pan-y" }}
     >
-      {/* SOLVED — left half, blurred until scroll-into-view */}
-      <div className="ba-solved px-6 py-7 flex flex-col justify-center items-start gap-4">
-        <span className="font-mono text-[11px] uppercase tracking-[1.2px] px-3 py-1.5 rounded-full bg-accent text-white">
-          {situation.outcomes.solved.badge}
-        </span>
-        <div className="flex flex-wrap gap-2">
-          {situation.outcomes.solved.chips.map((c) => (
-            <span
-              key={c}
-              className="text-[14px] px-4 py-2 rounded-full leading-tight border border-accent-soft bg-surface/70 text-ink-700"
-            >
-              {c}
-            </span>
-          ))}
-        </div>
-        <p className="font-serif text-[16px] leading-snug font-medium text-ink">
-          {situation.outcomes.solved.punch}
-        </p>
-      </div>
-
-      {/* Static vertical divider */}
-      <div className="ba-divider" aria-hidden="true" />
-
-      {/* MISSED — right half, always visible */}
-      <div className="ba-missed px-6 py-7 flex flex-col justify-center items-end gap-4 text-right">
-        <span className="font-mono text-[11px] uppercase tracking-[1.2px] px-3 py-1.5 rounded-full bg-surface border border-ink-300 text-ink-500">
+      <div className="ba-missed absolute inset-0">
+        <span className="absolute top-3.5 right-4 z-[3] font-mono text-[10px] uppercase tracking-[1.2px] px-2.5 py-1 rounded-full bg-surface border border-ink-300 text-ink-500">
           {situation.outcomes.missed.badge}
         </span>
-        <div className="flex flex-wrap gap-2 justify-end">
-          {situation.outcomes.missed.chips.map((c) => (
-            <span
-              key={c}
-              className="text-[14px] px-4 py-2 rounded-full leading-tight border border-dashed border-ink-300 bg-transparent text-ink-400"
-            >
-              {c}
-            </span>
-          ))}
+        <div className="absolute top-0 bottom-0 right-0 w-1/2 flex flex-col justify-center items-end text-right gap-3.5 px-6 py-5">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-ink-500" aria-hidden="true">
+            <polyline points="2 12 6 12 9 5 13 19 16 12 22 12" />
+          </svg>
+          <div className="flex flex-wrap gap-2 justify-end">
+            {situation.outcomes.missed.chips.map((c) => (
+              <span key={c} className="text-[13px] px-3 py-1.5 rounded-full leading-tight border border-dashed border-ink-300 bg-transparent text-ink-400">
+                {c}
+              </span>
+            ))}
+          </div>
+          <p className="font-serif text-[15px] leading-snug font-medium text-ink-500 mt-0.5">
+            {situation.outcomes.missed.punch}
+          </p>
         </div>
-        <p className="font-serif text-[16px] leading-snug font-medium text-ink-500">
-          {situation.outcomes.missed.punch}
-        </p>
+      </div>
+
+      <div ref={solvedRef} className="ba-solved absolute inset-0" style={{ clipPath: "inset(0 50% 0 0)" }}>
+        <span className="absolute top-3.5 left-4 z-[3] font-mono text-[10px] uppercase tracking-[1.2px] px-2.5 py-1 rounded-full bg-accent text-white">
+          {situation.outcomes.solved.badge}
+        </span>
+        <div className="absolute top-0 bottom-0 left-0 w-1/2 flex flex-col justify-center items-start text-left gap-3.5 px-6 py-5">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ba-solved-spark text-accent" aria-hidden="true">
+            <polyline points="3 17 9 11 13 15 21 7" />
+            <polyline points="15 7 21 7 21 13" />
+          </svg>
+          <div className="flex flex-wrap gap-2">
+            {situation.outcomes.solved.chips.map((c) => (
+              <span key={c} className="text-[13px] px-3 py-1.5 rounded-full leading-tight border border-accent-soft bg-surface/70 text-ink-700">
+                {c}
+              </span>
+            ))}
+          </div>
+          <p className="font-serif text-[15px] leading-snug font-medium text-ink mt-0.5">
+            {situation.outcomes.solved.punch}
+          </p>
+        </div>
+      </div>
+
+      <div ref={dividerRef} className="ba-divider absolute top-0 bottom-0 w-0.5 z-[4]" style={{ left: "50%" }} aria-hidden="true">
+        <span className="ba-handle absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[46px] h-[46px] rounded-full border border-ink-200 flex items-center justify-center text-ink cursor-ew-resize">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="10 7 6 12 10 17" />
+            <polyline points="14 7 18 12 14 17" />
+          </svg>
+        </span>
       </div>
     </div>
   );
 }
-
 
 function ForkStack() {
   return (

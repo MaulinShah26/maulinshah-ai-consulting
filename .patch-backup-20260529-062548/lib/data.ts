@@ -151,7 +151,7 @@ export const approach = {
     {
       num: "03",
       title: "Operate",
-      body: "Own the work end-to-end. Build the systems that earn their keep. Sit in on the calls that matter. The team learns alongside and owns more of it over time.",
+      body: "Own the work end-to-end. Build the dashboards and ML systems that earn their keep. Sit in on the calls that matter. The team learns alongside and owns more of it over time.",
     },
   ],
 };
