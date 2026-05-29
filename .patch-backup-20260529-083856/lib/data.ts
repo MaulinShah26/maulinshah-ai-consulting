@@ -60,7 +60,7 @@ export const situation = {
   sectionNumber: "01",
   sectionLabel: "The situation I see most",
   intro:
-    "Most funded startups look similar from the outside. What actually decides who wins is one layer deeper.",
+    "Most funded startups look the same on top. What decides the outcome sits one layer below.",
 
   surface: {
     title: "On the surface",
@@ -81,12 +81,12 @@ export const situation = {
     chips: [
       "What is actually driving growth?",
       "Where is money leaking?",
-      "Which decisions need better logic?",
+      "Which decisions are stuck in people’s heads?",
       "What should AI take over?",
       "Which numbers can we trust?",
-      "Do we know our customers well enough to grow?",
+      "How do we know it worked?",
       "What was agreed to build but never got built?",
-      "Will our current approach scale?",
+      "Where is the team actually stuck?",
     ],
   },
 
@@ -128,9 +128,9 @@ export const situation = {
   // Detail prose uses _underscore_ markdown for the emphasized closing lines.
   detailParagraphs: [
     "Right after funding, the goals are obvious. Grow faster, open new markets, launch new products, improve margins, actually use AI, make growth steady instead of lucky, build the team, get ready for the next raise. Everyone can see this part.",
-    "The hard part is underneath. What’s actually working? Where should the money go next? Which good decisions should we be able to repeat on purpose? Which numbers can we trust? What should AI handle, and what should stay with people? Who connects the big plan to the day-to-day work? And how do we even know if any of it worked? Usually, no one owns these questions.",
+    "The hard part sits underneath. What’s actually working? Where should the money go next? Which good decisions should we be able to repeat on purpose? Which numbers can we trust? What should AI handle, and what should stay with people? Who connects the big plan to the day-to-day work? And how do we even know if any of it worked? Usually, no one owns these questions.",
     "Skip them, and the company just gets busier, not better. More dashboards, more meetings, more half-finished experiments, more AI demos, more hiring, more tools that don’t talk to each other. Everyone moves fast, but not in the same direction. _Lots of work, not much progress._",
-    "Answer them, and things start to click. Priorities get clear. People make better calls. AI plugs into real work instead of living in a demo. Data leads to action, not just another report. What works once can be done again on purpose. Money goes where it actually counts. _You start seeing real progress._",
+    "Answer them, and things start to click. Priorities get clear. People make better calls. AI plugs into real work instead of living in a demo. Data leads to action, not just another report. What works once can be done again on purpose. Money goes where it actually counts. _The work finally starts to add up._",
   ],
 };
 
@@ -152,7 +152,7 @@ export const approach = {
     {
       num: "03",
       title: "Operate",
-      body: "Own the work end-to-end. Build the systems that actually deliver. Join the key calls. The team learns alongside and owns more of it over time.",
+      body: "Own the work end-to-end. Build the systems that earn their keep. Sit in on the calls that matter. The team learns alongside and owns more of it over time.",
     },
   ],
 };
@@ -167,7 +167,7 @@ export const engagements = {
       bestFor:
         "You need a senior data and AI person on the team but can’t hire one yet. The work can’t wait. You need someone owning the roadmap from inside, not advising from outside.",
       whatItCovers:
-        "I run the data and AI work end-to-end. Roadmap, decision systems, ML, automation. I work with your team day-to-day and join the key calls. The team gets better at this while I’m there, so they own more of it after.",
+        "I run the data and AI work end-to-end. Roadmap, decision systems, ML and automation builds, dashboards. I work with your team day-to-day and sit in on the calls that matter. The team gets better at this while I’m there, so they own more of it after.",
     },
     {
       title: "Strategic audit",
@@ -208,12 +208,12 @@ export const outcomes = {
     },
     {
       num: "03",
-      title: "Systems actually deliver",
-      body: "Hours saved each week. You start asking better questions.",
+      title: "Systems earn their keep",
+      body: "Hours saved each week. Better questions get asked.",
     },
     {
       num: "04",
-      title: "The team owns it now",
+      title: "The team is fluent",
       body: "“We’ll figure it out later” isn’t said anymore.",
     },
     {
@@ -255,7 +255,7 @@ export const work: {
   sectionLabel: "Selected work",
   heading: "What I’ve built, what I’m building",
   intro:
-    "Corporate work is where ideas get tested against real business pressure. Personal projects are where I try the tools I want to bring into client work. Both make each other better.",
+    "Corporate work is where the thinking gets pressure-tested by real business stakes. Personal projects are where I try the tools I want to bring into client work. Both make each other better.",
   tabs: {
     corporate: {
       label: "Corporate work",
@@ -478,7 +478,7 @@ export const contact = {
   sectionNumber: "07",
   sectionLabel: "Get in touch",
   heading: "Let’s see if there’s a fit",
-  body: "A first call is about your situation. What you’re trying to figure out, what data you actually have, what’s been getting in the way. If we’re not a fit, I’ll tell you who is.",
+  body: "A first call is about your situation. What you’re trying to crack, what data you’re sitting on, what’s been getting in the way. If we’re not a fit, I’ll tell you who is.",
   bookingLabel: "Book a meeting",
   emailLabel: "Copy email",
   emailCopiedLabel: "✓ Copied! Paste anywhere",
