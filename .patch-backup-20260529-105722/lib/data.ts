@@ -51,7 +51,7 @@ export const experience = {
   metrics: [
     { kind: "count" as const, value: 10, suffix: "+", label: "years across data and AI" },
     { kind: "count" as const, value: 5, suffix: "",  label: "industries worked across" },
-    { kind: "arrow" as const, from: "0", to: "1", label: "data & AI built from scratch at multiple startups" },
+    { kind: "arrow" as const, from: "0", to: "1", label: "data & AI driven features built from scratch at multiple startups" },
     { kind: "count" as const, value: 5, suffix: "+", label: "production systems shipped" },
   ],
 };
@@ -60,7 +60,7 @@ export const situation = {
   sectionNumber: "01",
   sectionLabel: "The situation I see most",
   intro:
-    "Most funded startups look the same on top. What decides the outcome sits one layer below.",
+    "Most funded startups look similar from the outside. What actually decides who wins is one layer deeper.",
 
   surface: {
     title: "On the surface",
@@ -81,12 +81,12 @@ export const situation = {
     chips: [
       "What is actually driving growth?",
       "Where is money leaking?",
-      "Which decisions are stuck in people’s heads?",
+      "Which decisions need better logic?",
       "What should AI take over?",
       "Which numbers can we trust?",
-      "How do we know it worked?",
+      "Do we know our customers well enough to grow?",
       "What was agreed to build but never got built?",
-      "Where is the team actually stuck?",
+      "Will our current approach scale?",
     ],
   },
 
@@ -115,7 +115,7 @@ export const situation = {
         "Growth you can measure",
         "A clearer head",
       ],
-      punch: "Now the work actually adds up.",
+      punch: "The work actually pays off.",
     },
   },
 
@@ -128,9 +128,9 @@ export const situation = {
   // Detail prose uses _underscore_ markdown for the emphasized closing lines.
   detailParagraphs: [
     "Right after funding, the goals are obvious. Grow faster, open new markets, launch new products, improve margins, actually use AI, make growth steady instead of lucky, build the team, get ready for the next raise. Everyone can see this part.",
-    "The hard part sits underneath. What’s actually working? Where should the money go next? Which good decisions should we be able to repeat on purpose? Which numbers can we trust? What should AI handle, and what should stay with people? Who connects the big plan to the day-to-day work? And how do we even know if any of it worked? Usually, no one owns these questions.",
+    "The hard part is underneath. What’s actually working? Where should the money go next? Which good decisions should we be able to repeat on purpose? Which numbers can we trust? What should AI handle, and what should stay with people? Who connects the big plan to the day-to-day work? And how do we even know if any of it worked? Usually, no one owns these questions.",
     "Skip them, and the company just gets busier, not better. More dashboards, more meetings, more half-finished experiments, more AI demos, more hiring, more tools that don’t talk to each other. Everyone moves fast, but not in the same direction. _Lots of work, not much progress._",
-    "Answer them, and things start to click. Priorities get clear. People make better calls. AI plugs into real work instead of living in a demo. Data leads to action, not just another report. What works once can be done again on purpose. Money goes where it actually counts. _The work finally starts to add up._",
+    "Answer them, and things start to click. Priorities get clear. People make better calls. AI plugs into real work instead of living in a demo. Data leads to action, not just another report. What works once can be done again on purpose. Money goes where it actually counts. _You start seeing real progress._",
   ],
 };
 
@@ -152,7 +152,7 @@ export const approach = {
     {
       num: "03",
       title: "Operate",
-      body: "Own the work end-to-end. Build the systems that earn their keep. Sit in on the calls that matter. The team learns alongside and owns more of it over time.",
+      body: "Own the work end-to-end. Build the systems that actually deliver. Join the key calls. The team learns alongside and owns more of it over time.",
     },
   ],
 };
@@ -162,36 +162,27 @@ export const engagements = {
   sectionLabel: "Engagement options",
   cards: [
     {
+      quote: "I need a senior data and AI person on my team, but I can’t hire one yet.",
       title: "Fractional AI Lead",
-      icon: "Handshake",
-      bestFor:
-        "You need a senior data and AI person on the team but can’t hire one yet. The work can’t wait. You need someone owning the roadmap from inside, not advising from outside.",
-      whatItCovers:
-        "I run the data and AI work end-to-end. Roadmap, decision systems, ML and automation builds, dashboards. I work with your team day-to-day and sit in on the calls that matter. The team gets better at this while I’m there, so they own more of it after.",
+      meta: "~10 hrs/wk · 3-mo min, then monthly",
+      tagline: "A senior data and AI lead on your team, running the roadmap from inside.",
+      walkaway: "a clear roadmap, working systems live, and a team that runs more of it on their own over time.",
     },
     {
-      title: "Strategic audit",
-      icon: "ScanSearch",
-      bestFor:
-        "You want an honest read on where your data and AI stand before committing to a longer engagement. The team isn’t sure yet what’s broken, what to fix first, or what’s even possible with the data you have.",
-      whatItCovers:
-        "A focused diagnostic of the data, the tooling, the team, and the current roadmap. The deliverable is a written assessment. Honest about where you are now and the 2-3 most useful things to fix or build next. Sometimes this leads into a Fractional engagement. Sometimes it’s the right place to stop.",
+      quote: "I want to know where my data and AI actually stand before going deeper.",
+      title: "Strategic Audit",
+      meta: "2–3 weeks · Fixed scope · ~10–12 hrs/wk",
+      tagline: "An honest check on your data and AI, with a written report at the end.",
+      walkaway: "a written report on the 2–3 most useful things to do next, plus one 90-minute call with leadership.",
     },
     {
-      title: "Scoped build",
-      icon: "Wrench",
-      bestFor:
-        "You know what you want built. The problem is defined, the outcome is clear. What’s missing is senior ownership of the architecture and the build itself, without taking over the team or stretching the timeline.",
-      whatItCovers:
-        "I own one specific build, end-to-end. System design, the technical heavy lifting, integration with your team, deployment, documentation. The deliverable is the thing working in production.",
+      quote: "I know what to build. I need someone senior to own the design and the build.",
+      title: "Scoped Build",
+      meta: "Timeline shaped to scope · ~15–25 hrs/wk",
+      tagline: "I own one specific build from start to finish, until it’s live.",
+      walkaway: "what you wanted, built and live. Or a full system, with your team trained to run it.",
     },
   ],
-  closingLine:
-    "The Fractional engagement is a monthly retainer with a 3-month minimum. The Strategic Audit and Scoped Build are fixed-price projects with defined deliverables and timelines. I share pricing on the first call once we’ve scoped the work.",
-  workingSetupLine:
-    "I work remotely by default. Hybrid if you need it. Will travel for kickoffs, key reviews, or anything else that needs to happen in person.",
-  ctaLabel: "Start a conversation",
-  ctaHref: "#contact",
 };
 
 export const outcomes = {
@@ -210,12 +201,12 @@ export const outcomes = {
     },
     {
       num: "03",
-      title: "Systems earn their keep",
-      body: "Hours saved each week. Better questions get asked.",
+      title: "Systems actually deliver",
+      body: "Hours saved each week. You start asking better questions.",
     },
     {
       num: "04",
-      title: "The team is fluent",
+      title: "The team owns it now",
       body: "“We’ll figure it out later” isn’t said anymore.",
     },
     {
@@ -257,7 +248,7 @@ export const work: {
   sectionLabel: "Selected work",
   heading: "What I’ve built, what I’m building",
   intro:
-    "Corporate work is where the thinking gets pressure-tested by real business stakes. Personal projects are where I try the tools I want to bring into client work. Both make each other better.",
+    "Corporate work is where ideas get tested against real business pressure. Personal projects are where I try the tools I want to bring into client work. Both make each other better.",
   tabs: {
     corporate: {
       label: "Corporate work",
@@ -480,7 +471,7 @@ export const contact = {
   sectionNumber: "07",
   sectionLabel: "Get in touch",
   heading: "Let’s see if there’s a fit",
-  body: "A first call is about your situation. What you’re trying to crack, what data you’re sitting on, what’s been getting in the way. If we’re not a fit, I’ll tell you who is.",
+  body: "A first call is about your situation. What you’re trying to figure out, what data you actually have, what’s been getting in the way. If we’re not a fit, I’ll tell you who is.",
   bookingLabel: "Book a meeting",
   emailLabel: "Copy email",
   emailCopiedLabel: "✓ Copied! Paste anywhere",

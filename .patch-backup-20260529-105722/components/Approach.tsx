@@ -4,9 +4,9 @@ import { SectionHeader } from "./SectionHeader";
 
 export function Approach() {
   return (
-    <Reveal id="approach" className="py-4 px-6">
+    <Reveal id="approach" className="py-3 px-6">
       <div className="max-w-content mx-auto">
-        <div className="reveal-child mb-9">
+        <div className="reveal-child mb-6">
           <SectionHeader
             number={approach.sectionNumber}
             label={approach.sectionLabel}
@@ -28,7 +28,7 @@ export function Approach() {
           ))}
         </div>
 
-        <p className="reveal-child mt-9 text-[14px] text-ink-500 leading-[1.6]">
+        <p className="reveal-child mt-6 text-[14px] text-ink-500 leading-[1.6]">
           {approach.closing}
         </p>
       </div>
