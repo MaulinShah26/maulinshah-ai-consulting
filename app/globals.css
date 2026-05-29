@@ -467,7 +467,9 @@ body {
 /* Engagements: quote/answer rows — bold serif quote on the left, accent arrow,
    compact answer column on the right. Hairline borders separate rows, no cards. */
 .engagement-rows {
-  border-top: 1px solid rgb(var(--ink-200));
+  /* No top/bottom border on the container; rules sit BETWEEN rows only,
+     so the section blends with the SectionHeader above and the next section
+     below instead of creating doubled-up horizontal lines. */
 }
 .engagement-row {
   display: grid;
@@ -475,7 +477,9 @@ body {
   gap: 28px;
   align-items: center;
   padding: 28px 0;
-  border-bottom: 1px solid rgb(var(--ink-200));
+}
+.engagement-row + .engagement-row {
+  border-top: 1px solid rgb(var(--ink-200));
 }
 .engagement-quote {
   font-family: "Spectral", Georgia, serif;
