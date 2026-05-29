@@ -381,11 +381,11 @@ body {
   gap: 7px;
 }
 .engagement-row-head {
+  /* Stack label above meta — same visual shape regardless of meta length */
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
 }
 .engagement-label {
   font-family: "JetBrains Mono", ui-monospace, monospace;
@@ -434,9 +434,5 @@ body {
   .engagement-quote {
     font-size: 16px;
   }
-  .engagement-row-head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
+
 }

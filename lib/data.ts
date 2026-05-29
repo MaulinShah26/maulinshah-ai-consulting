@@ -163,14 +163,14 @@ export const engagements = {
     {
       quote: "I want to know where my data and AI actually stand before going deeper.",
       title: "Strategic Audit",
-      meta: "2–3 weeks · Fixed scope · ~10–12 hrs/wk",
+      meta: "~10-12 hrs/week - 2-3 weeks - Fixed scope",
       tagline: "An honest check on your data and AI, with a written report at the end.",
       walkaway: "a written report on the 2–3 most useful things to do next, plus one 90-minute call with leadership.",
     },
     {
       quote: "I know what to build. I need someone senior to own the design and the build.",
       title: "Scoped Build",
-      meta: "Timeline shaped to scope · ~15–25 hrs/wk",
+      meta: "~15-25 hrs/week - Timeline shaped to scope",
       tagline: "I own one specific build from start to finish, until it’s live.",
       walkaway: "what you wanted, built and live. Or a full system, with your team trained to run it.",
     },
