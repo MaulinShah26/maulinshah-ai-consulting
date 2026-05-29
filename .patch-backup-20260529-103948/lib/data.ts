@@ -162,27 +162,34 @@ export const engagements = {
   sectionLabel: "Engagement options",
   cards: [
     {
-      quote: "I need a senior data and AI person on my team, but I can’t hire one yet.",
       title: "Fractional AI Lead",
-      meta: "~10 hrs/wk · 3-mo min, then monthly",
-      tagline: "A senior data and AI lead on your team, running the roadmap from inside.",
-      walkaway: "a clear roadmap, working systems live, and a team that runs more of it on their own over time.",
+      icon: "Handshake",
+      bestFor:
+        "You need a senior data and AI person on the team but can’t hire one yet. The work can’t wait. You need someone owning the roadmap from inside, not advising from outside.",
+      whatItCovers:
+        "I run the data and AI work end-to-end. Roadmap, decision systems, ML, automation. I work with your team day-to-day and join the key calls. The team gets better at this while I’m there, so they own more of it after.",
     },
     {
-      quote: "I want to know where my data and AI actually stand before going deeper.",
-      title: "Strategic Audit",
-      meta: "2–3 weeks · Fixed scope · ~10–12 hrs/wk",
-      tagline: "An honest check on your data and AI, with a written report at the end.",
-      walkaway: "a written report on the 2–3 most useful things to do next, plus one 90-minute call with leadership.",
+      title: "Strategic audit",
+      icon: "ScanSearch",
+      bestFor:
+        "You want an honest read on where your data and AI stand before committing to a longer engagement. The team isn’t sure yet what’s broken, what to fix first, or what’s even possible with the data you have.",
+      whatItCovers:
+        "A focused diagnostic of the data, the tooling, the team, and the current roadmap. The deliverable is a written assessment. Honest about where you are now and the 2-3 most useful things to fix or build next. Sometimes this leads into a Fractional engagement. Sometimes it’s the right place to stop.",
     },
     {
-      quote: "I know what to build. I need someone senior to own the design and the build.",
-      title: "Scoped Build",
-      meta: "Timeline shaped to scope · ~15–25 hrs/wk",
-      tagline: "I own one specific build from start to finish, until it’s live.",
-      walkaway: "what you wanted, built and live. Or a full system, with your team trained to run it.",
+      title: "Scoped build",
+      icon: "Wrench",
+      bestFor:
+        "You know what you want built. The problem is defined, the outcome is clear. What’s missing is senior ownership of the architecture and the build itself, without taking over the team or stretching the timeline.",
+      whatItCovers:
+        "I own one specific build, end-to-end. System design, the technical heavy lifting, integration with your team, deployment, documentation. The deliverable is the thing working in production.",
     },
   ],
+  closingLine:
+    "The Fractional engagement is a monthly retainer with a 3-month minimum. The Strategic Audit and Scoped Build are fixed-price projects with defined deliverables and timelines. I share pricing on the first call once we’ve scoped the work.",
+  workingSetupLine:
+    "I work remotely by default. Hybrid if you need it. Will travel for kickoffs, key reviews, or anything else that needs to happen in person.",
 };
 
 export const outcomes = {

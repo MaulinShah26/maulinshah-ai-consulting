@@ -1,16 +1,6 @@
-import * as Icons from "lucide-react";
 import { engagements } from "@/lib/data";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
-
-function EngagementIcon({ name }: { name: string }) {
-  const Component = (Icons as unknown as Record<
-    string,
-    React.ComponentType<{ size?: number; className?: string; "aria-hidden"?: boolean }>
-  >)[name];
-  if (!Component) return null;
-  return <Component size={18} className="text-accent" aria-hidden />;
-}
 
 export function Engagements() {
   return (
@@ -22,50 +12,41 @@ export function Engagements() {
             label={engagements.sectionLabel}
           />
         </div>
-        {/* 3-column grid at desktop, single column on mobile */}
-        <div className="reveal-child grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+
+        <div className="engagement-rows reveal-child">
           {engagements.cards.map((card, i) => (
-            <div
-              key={i}
-              className="border border-ink-200 rounded-md p-5 flex flex-col"
-            >
-              <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-ink-200">
-                <EngagementIcon name={card.icon} />
-                <h3 className="font-serif text-[16px] font-medium text-ink">
-                  {card.title}
-                </h3>
-              </div>
-
-              <div className="mb-4">
-                <div className="font-mono text-[10px] uppercase tracking-wider text-accent mb-1.5">
-                  Best for
+            <div key={i} className="engagement-row">
+              <p className="engagement-quote">&ldquo;{card.quote}&rdquo;</p>
+              <svg
+                className="engagement-arrow"
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="13 6 19 12 13 18" />
+              </svg>
+              <div className="engagement-answer">
+                <div className="engagement-row-head">
+                  <span className="engagement-label">{card.title}</span>
+                  <span className="engagement-meta">{card.meta}</span>
                 </div>
-                <p className="text-[13px] text-ink-700 leading-[1.7]">
-                  {card.bestFor}
-                </p>
-              </div>
-
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-wider text-accent mb-1.5">
-                  What it covers
-                </div>
-                <p className="text-[13px] text-ink-700 leading-[1.7]">
-                  {card.whatItCovers}
+                <p className="engagement-tagline">{card.tagline}</p>
+                <p className="engagement-walkaway">
+                  <span className="engagement-walkaway-lbl">
+                    You walk away with:
+                  </span>{" "}
+                  {card.walkaway}
                 </p>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="reveal-child">
-          <p className="text-[13.5px] text-ink-600 leading-[1.7] mb-4">
-            {engagements.closingLine}
-          </p>
-          {engagements.workingSetupLine && (
-            <p className="text-[13.5px] text-ink-600 leading-[1.7]">
-              {engagements.workingSetupLine}
-            </p>
-          )}
         </div>
       </div>
     </Reveal>
