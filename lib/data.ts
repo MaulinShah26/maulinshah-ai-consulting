@@ -130,7 +130,6 @@ export const situation = {
 export const approach = {
   sectionNumber: "02",
   sectionLabel: "How I work",
-  closing: "Every engagement is different. The approach stays similar.",
   steps: [
     {
       num: "01",

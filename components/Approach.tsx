@@ -14,7 +14,6 @@ export function Approach() {
         </div>
 
         <div className="reveal-child approach-flow">
-          <div className="approach-flow-track" aria-hidden="true" />
           {approach.steps.map((step) => (
             <div key={step.num} className="approach-step">
               <span className="approach-step-num">{step.num}</span>
@@ -28,9 +27,6 @@ export function Approach() {
           ))}
         </div>
 
-        <p className="reveal-child mt-5 text-[14px] text-ink-500 leading-[1.6]">
-          {approach.closing}
-        </p>
       </div>
     </Reveal>
   );
