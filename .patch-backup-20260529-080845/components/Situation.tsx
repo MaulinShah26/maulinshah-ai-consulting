@@ -128,7 +128,7 @@ function Strata() {
       >
         <span className="flex-1 h-px bg-ink-200" aria-hidden="true" />
         <span className="strata-pill font-mono text-[9.5px] uppercase tracking-[1.3px] text-accent inline-flex items-center gap-2 whitespace-nowrap pl-3 pr-1.5 py-1 rounded-full bg-surface border border-accent-soft">
-          <span>{closed ? "see what’s underneath" : "hide"}</span>
+          <span>{closed ? "see what\u2019s underneath" : "hide"}</span>
           <span
             className="strata-pill-cap w-[18px] h-[18px] rounded-full bg-accent text-white inline-flex items-center justify-center flex-shrink-0"
             aria-hidden="true"
@@ -223,35 +223,33 @@ function BeforeAfter() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const solvedRef = useRef<HTMLDivElement>(null);
   const missedRef = useRef<HTMLDivElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLDivElement>(null);
   const posRef = useRef(50);
   const draggingRef = useRef(false);
   const touchedRef = useRef(false);
   const demoedRef = useRef(false);
 
   /**
-   * Classic before/after slider: missed is the base layer; solved is overlaid
-   * and clipped from the right. As slider moves right, solved’s clip narrows
-   * \u2192 more solved visible \u2192 missed shrinks behind it.
+   * Blur math: both sides start moderately blurred at slider center (pos 50).
+   * Drag right -> right side de-blurs, left side blurs more.
+   * Drag left  -> mirror.
+   * At pos=50 both at MAX_BLUR/2. At extremes: one at 0, other at MAX_BLUR.
    */
   const apply = useCallback((p: number) => {
     const MAX_BLUR = 14;
     const clamped = Math.max(2, Math.min(98, p));
     posRef.current = clamped;
+    // Inverted: drag right -> LEFT (solved) becomes clear, RIGHT (missed) blurs.
     if (solvedRef.current) {
-      // Clip-path: as slider moves right, solved expands (less clipped)
-      solvedRef.current.style.clipPath = `inset(0 ${(100 - clamped).toFixed(2)}% 0 0)`;
-      // Blur: solved sharpens as it expands, blurs as it shrinks
-      const solvedBlur = (MAX_BLUR * (100 - clamped)) / 100;
-      solvedRef.current.style.filter = `blur(${solvedBlur.toFixed(2)}px)`;
+      const leftBlur = (MAX_BLUR * (100 - clamped)) / 100;
+      solvedRef.current.style.filter = `blur(${leftBlur.toFixed(2)}px)`;
     }
     if (missedRef.current) {
-      // Blur: missed sharpens as it expands (slider left), blurs as it gets covered (slider right)
-      const missedBlur = (MAX_BLUR * clamped) / 100;
-      missedRef.current.style.filter = `blur(${missedBlur.toFixed(2)}px)`;
+      const rightBlur = (MAX_BLUR * clamped) / 100;
+      missedRef.current.style.filter = `blur(${rightBlur.toFixed(2)}px)`;
     }
-    if (dividerRef.current) {
-      dividerRef.current.style.left = `${clamped}%`;
+    if (handleRef.current) {
+      handleRef.current.style.left = `${clamped}%`;
     }
     if (sliderRef.current) {
       sliderRef.current.setAttribute(
@@ -270,6 +268,7 @@ function BeforeAfter() {
     [apply]
   );
 
+  // Initialise to centre on mount so both sides are blurred from the start
   useEffect(() => {
     apply(50);
   }, [apply]);
@@ -311,7 +310,7 @@ function BeforeAfter() {
     }
   };
 
-  // Auto-demo: sweep right (reveal solved), left (reveal missed), settle centre
+  // Auto-demo on first scroll-into-view: sweep right (focus missed), left (focus solved), centre.
   useEffect(() => {
     if (reduceMotion) return;
     const el = sliderRef.current;
@@ -337,9 +336,9 @@ function BeforeAfter() {
 
     function runDemo() {
       const seq = [
-        { dur: 750, to: 88 },
-        { dur: 950, to: 12 },
-        { dur: 800, to: 50 },
+        { dur: 700, to: 85 },
+        { dur: 900, to: 15 },
+        { dur: 750, to: 50 },
       ];
       let i = 0;
       const run = () => {
@@ -373,7 +372,7 @@ function BeforeAfter() {
       ref={sliderRef}
       role="slider"
       tabIndex={0}
-      aria-label="Drag to compare the two outcomes"
+      aria-label="Drag to focus on either side"
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={50}
@@ -385,62 +384,60 @@ function BeforeAfter() {
       className="ba relative w-full min-h-[340px] rounded-2xl overflow-hidden border border-ink-200 select-none cursor-ew-resize"
       style={{ touchAction: "pan-y" }}
     >
-      {/* MISSED — base layer, content lives in the right half */}
-      <div ref={missedRef} className="ba-missed absolute inset-0">
-        <span className="absolute top-3.5 right-4 z-[3] font-mono text-[11px] uppercase tracking-[1.2px] px-3 py-1.5 rounded-full bg-surface border border-ink-300 text-ink-500">
-          {situation.outcomes.missed.badge}
-        </span>
-        <div className="absolute top-0 bottom-0 right-0 w-1/2 flex flex-col justify-center items-end text-right gap-4 px-6 py-5">
-          <div className="flex flex-wrap gap-2 justify-end">
-            {situation.outcomes.missed.chips.map((c) => (
-              <span
-                key={c}
-                className="text-[14px] px-4 py-2 rounded-full leading-tight border border-dashed border-ink-300 bg-transparent text-ink-400"
-              >
-                {c}
-              </span>
-            ))}
-          </div>
-          <p className="font-serif text-[16px] leading-snug font-medium text-ink-500">
-            {situation.outcomes.missed.punch}
-          </p>
-        </div>
-      </div>
-
-      {/* SOLVED — overlay layer clipped from right; content lives in the left half */}
+      {/* SOLVED — fills left half, blurred per slider position */}
       <div
         ref={solvedRef}
-        className="ba-solved absolute inset-0"
-        style={{ clipPath: "inset(0 50% 0 0)" }}
+        className="ba-solved absolute left-0 top-0 bottom-0 w-1/2 px-6 py-7 flex flex-col justify-center items-start gap-4"
       >
-        <span className="absolute top-3.5 left-4 z-[3] font-mono text-[11px] uppercase tracking-[1.2px] px-3 py-1.5 rounded-full bg-accent text-white">
+        <span className="font-mono text-[11px] uppercase tracking-[1.2px] px-3 py-1.5 rounded-full bg-accent text-white">
           {situation.outcomes.solved.badge}
         </span>
-        <div className="absolute top-0 bottom-0 left-0 w-1/2 flex flex-col justify-center items-start text-left gap-4 px-6 py-5">
-          <div className="flex flex-wrap gap-2">
-            {situation.outcomes.solved.chips.map((c) => (
-              <span
-                key={c}
-                className="text-[14px] px-4 py-2 rounded-full leading-tight border border-accent-soft bg-surface/70 text-ink-700"
-              >
-                {c}
-              </span>
-            ))}
-          </div>
-          <p className="font-serif text-[16px] leading-snug font-medium text-ink">
-            {situation.outcomes.solved.punch}
-          </p>
+        <div className="flex flex-wrap gap-2">
+          {situation.outcomes.solved.chips.map((c) => (
+            <span
+              key={c}
+              className="text-[14px] px-4 py-2 rounded-full leading-tight border border-accent-soft bg-surface/70 text-ink-700"
+            >
+              {c}
+            </span>
+          ))}
         </div>
+        <p className="font-serif text-[16px] leading-snug font-medium text-ink">
+          {situation.outcomes.solved.punch}
+        </p>
       </div>
 
-      {/* Divider + draggable handle (moves with slider position) */}
+      {/* MISSED — fills right half, blurred per slider position */}
       <div
-        ref={dividerRef}
-        className="ba-divider absolute top-0 bottom-0 w-0.5 z-[4]"
+        ref={missedRef}
+        className="ba-missed absolute left-1/2 top-0 bottom-0 w-1/2 px-6 py-7 flex flex-col justify-center items-end gap-4 text-right"
+      >
+        <span className="font-mono text-[11px] uppercase tracking-[1.2px] px-3 py-1.5 rounded-full bg-surface border border-ink-300 text-ink-500">
+          {situation.outcomes.missed.badge}
+        </span>
+        <div className="flex flex-wrap gap-2 justify-end">
+          {situation.outcomes.missed.chips.map((c) => (
+            <span
+              key={c}
+              className="text-[14px] px-4 py-2 rounded-full leading-tight border border-dashed border-ink-300 bg-transparent text-ink-400"
+            >
+              {c}
+            </span>
+          ))}
+        </div>
+        <p className="font-serif text-[16px] leading-snug font-medium text-ink-500">
+          {situation.outcomes.missed.punch}
+        </p>
+      </div>
+
+      {/* Draggable handle — sits on top, moves with slider position */}
+      <div
+        ref={handleRef}
+        className="ba-handle-wrap absolute top-0 bottom-0 z-[4] pointer-events-none"
         style={{ left: "50%" }}
         aria-hidden="true"
       >
-        <span className="ba-handle absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[46px] h-[46px] rounded-full border border-ink-200 flex items-center justify-center text-ink cursor-ew-resize">
+        <span className="ba-handle absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-[46px] h-[46px] rounded-full border border-ink-200 flex items-center justify-center text-ink">
           <svg
             viewBox="0 0 24 24"
             width="22"

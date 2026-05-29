@@ -157,9 +157,9 @@ body {
   50%      { transform: translateY(1.5px); }
 }
 
-/* Before/After slider: solved overlays missed, clipped from the right by the
-   slider position. Both sides also blur in proportion to how clipped they are,
-   so the dominant side is BIG + SHARP and the shrinking side is SMALL + FUZZY. */
+/* Before/After: both sides blurred at rest; drag the handle to focus either side.
+   Blur is applied inline via JS for real-time response during drag. CSS gives a
+   short transition so jumps (click-to-position, auto-demo settle) feel smooth. */
 .ba {
   user-select: none;
 }
@@ -174,17 +174,15 @@ body {
     rgb(var(--accent-soft) / 0.6),
     rgb(var(--surface) / 0.95)
   );
-  transition: clip-path 120ms linear, filter 120ms linear;
-  will-change: clip-path, filter;
+  transition: filter 120ms linear;
+  will-change: filter;
 }
-.ba-divider {
-  background: rgb(var(--surface));
-  box-shadow: 0 0 0 1px rgb(var(--ink) / 0.07);
-  transition: left 120ms linear;
-}
+
+/* Draggable focus handle */
 .ba-handle {
   background: rgb(var(--surface));
   box-shadow: 0 3px 12px rgb(var(--ink) / 0.16);
+  pointer-events: none;
 }
 .ba-handle::after {
   content: "";
@@ -252,8 +250,7 @@ body {
   .strata-collapse,
   .strata-pill-chev,
   .ba-solved,
-  .ba-missed,
-  .ba-divider {
+  .ba-missed {
     transition: none;
   }
 }
