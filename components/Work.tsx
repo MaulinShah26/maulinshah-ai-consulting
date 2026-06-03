@@ -1,114 +1,82 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import {
-  Activity,
-  Apple,
-  Bot,
-  Brain,
-  Briefcase,
-  Layers,
-  Pill,
-  ArrowUpRight,
-  type LucideIcon,
-} from "lucide-react";
-import { work } from "@/lib/data";
+  work,
+  type CorporateCard as CorporateCardData,
+  type PersonalCard as PersonalCardData,
+} from "@/lib/data";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
-const ICONS: Record<string, LucideIcon> = {
-  Activity,
-  Apple,
-  Bot,
-  Brain,
-  Briefcase,
-  Layers,
-  Pill,
-};
-
-const TAG_VARIANT_CLASSES: Record<string, string> = {
-  blue:
-    "bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-900",
-  teal:
-    "bg-teal-50 text-teal-700 border-teal-100 dark:bg-teal-950 dark:text-teal-300 dark:border-teal-900",
-  purple:
-    "bg-purple-50 text-purple-700 border-purple-100 dark:bg-purple-950 dark:text-purple-300 dark:border-purple-900",
-};
-
-type CardData = {
-  title: string;
-  description: string;
-  icon: string;
-  tags: Array<{ label: string; variant?: string }>;
-  status: string;
-  cta?: string;
-  href?: string;
-};
-
-function Card({ card }: { card: CardData }) {
-  const Icon = ICONS[card.icon];
-  const isInternal = card.href?.startsWith("/");
-
-  const inner = (
-    <div className="group border border-ink-200 rounded-md p-5 hover:border-ink-400 transition-colors h-full flex flex-col">
-      <div className="flex items-start justify-between mb-3">
-        {Icon && <Icon size={18} className="text-ink-600" aria-hidden />}
-        <span className="font-mono text-[10px] uppercase tracking-wider text-ink-500">
-          {card.status}
-        </span>
-      </div>
-      <h3 className="font-serif text-[17px] font-medium text-ink mb-2 group-hover:text-accent transition-colors">
-        {card.title}
-      </h3>
-      <p className="text-[13px] text-ink-600 leading-[1.65] mb-3 flex-1">
-        {card.description}
-      </p>
-      {card.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {card.tags.map((tag, i) => (
-            <span
-              key={i}
-              className={`text-[10px] px-2 py-0.5 rounded-md border ${
-                tag.variant
-                  ? TAG_VARIANT_CLASSES[tag.variant]
-                  : "bg-ink-50 text-ink-600 border-ink-100"
-              }`}
-            >
-              {tag.label}
-            </span>
-          ))}
-        </div>
-      )}
-      {card.cta && card.href && (
-        <div className="flex items-center gap-1 text-[12px] font-medium text-ink-700 group-hover:text-accent transition-colors mt-auto">
-          {card.cta}
-          <ArrowUpRight size={12} aria-hidden />
-        </div>
-      )}
-    </div>
-  );
-
-  if (card.href) {
-    if (isInternal) {
-      return (
-        <Link href={card.href} className="block h-full">
-          {inner}
-        </Link>
-      );
-    }
-    return (
-      <a href={card.href} target="_blank" rel="noopener noreferrer" className="block h-full">
-        {inner}
-      </a>
-    );
-  }
-  return <div className="h-full">{inner}</div>;
-}
+type TabKey = "corporate" | "personal";
 
 export function Work() {
-  const [activeTab, setActiveTab] = useState<"corporate" | "personal">("corporate");
-  const tabKeys: Array<"corporate" | "personal"> = ["corporate", "personal"];
+  const [activeTab, setActiveTab] = useState<TabKey>("corporate");
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(2);
+
+  const cards = work.tabs[activeTab].cards;
+  const totalCards = cards.length;
+  const totalPages = Math.max(1, Math.ceil(totalCards / Math.max(1, visibleCount)));
+  const currentPage = Math.floor(currentIndex / Math.max(1, visibleCount));
+
+  // Read width of a card + gap, in px
+  const cardStep = useCallback((): number => {
+    const track = trackRef.current;
+    if (!track) return 380;
+    const card = track.querySelector<HTMLElement>(".case-card");
+    if (!card) return 380;
+    const gap = parseInt(getComputedStyle(track).gap || "18", 10);
+    return card.offsetWidth + gap;
+  }, []);
+
+  const measure = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const step = cardStep();
+    const newIdx = Math.round(track.scrollLeft / step);
+    const vis = Math.max(1, Math.round(track.clientWidth / step));
+    setCurrentIndex(newIdx);
+    setVisibleCount(vis);
+  }, [cardStep]);
+
+  // Reset to start on tab switch
+  useEffect(() => {
+    const track = trackRef.current;
+    if (track) {
+      track.scrollTo({ left: 0, behavior: "auto" });
+    }
+    setCurrentIndex(0);
+    // remeasure visibleCount after layout settles
+    requestAnimationFrame(measure);
+  }, [activeTab, measure]);
+
+  // Initial measure + resize listener
+  useEffect(() => {
+    measure();
+    const onResize = () => measure();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [measure]);
+
+  const scrollByPage = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollBy({
+      left: direction * cardStep() * visibleCount,
+      behavior: "smooth",
+    });
+  };
+
+  const onScroll = () => requestAnimationFrame(measure);
+
+  const fromIdx = currentIndex + 1;
+  const toIdx = Math.min(currentIndex + visibleCount, totalCards);
+  const counterText = fromIdx === toIdx ? `${fromIdx}` : `${fromIdx}–${toIdx}`;
 
   return (
     <Reveal id="work" className="py-4 px-6">
@@ -116,34 +84,145 @@ export function Work() {
         <div className="reveal-child">
           <SectionHeader number={work.sectionNumber} label={work.sectionLabel} />
         </div>
-        <h2 className="reveal-child font-serif text-[20px] font-medium text-ink mb-4">{work.heading}</h2>
-        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6">
-          {work.intro}
-        </p>
 
-        <div className="reveal-child flex items-center gap-1 mb-6 border-b border-ink-200">
-          {tabKeys.map((tab) => (
+        <div className="reveal-child tabs-row">
+          <div className="tabs">
             <button
-              key={tab}
               type="button"
-              onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2.5 text-[13px] font-medium transition-colors border-b-2 -mb-px ${
-                activeTab === tab
-                  ? "border-accent text-ink"
-                  : "border-transparent text-ink-500 hover:text-ink"
-              }`}
+              onClick={() => setActiveTab("corporate")}
+              className={`tab ${activeTab === "corporate" ? "is-active" : ""}`}
             >
-              {work.tabs[tab].label}
+              {work.tabs.corporate.label}
             </button>
-          ))}
+            <button
+              type="button"
+              onClick={() => setActiveTab("personal")}
+              className={`tab ${activeTab === "personal" ? "is-active" : ""}`}
+            >
+              {work.tabs.personal.label}
+            </button>
+          </div>
+
+          <div className="carousel-nav">
+            <span className="nav-pos">
+              <b>{counterText}</b> / {totalCards}
+            </span>
+            <button
+              type="button"
+              className="nav-btn"
+              onClick={() => scrollByPage(-1)}
+              disabled={currentIndex === 0}
+              aria-label="Previous"
+            >
+              <ChevronLeft size={14} strokeWidth={2} />
+            </button>
+            <button
+              type="button"
+              className="nav-btn"
+              onClick={() => scrollByPage(1)}
+              disabled={currentIndex + visibleCount >= totalCards}
+              aria-label="Next"
+            >
+              <ChevronRight size={14} strokeWidth={2} />
+            </button>
+          </div>
         </div>
 
-        <div className="reveal-child grid grid-cols-1 md:grid-cols-2 gap-4">
-          {work.tabs[activeTab].cards.map((card, i) => (
-            <Card key={`${activeTab}-${i}`} card={card} />
+        <div className="reveal-child carousel">
+          <div
+            className="carousel-track"
+            ref={trackRef}
+            onScroll={onScroll}
+          >
+            {activeTab === "corporate"
+              ? (cards as CorporateCardData[]).map((card, i) => (
+                  <CorporateCardEl key={`corp-${i}`} card={card} />
+                ))
+              : (cards as PersonalCardData[]).map((card, i) => (
+                  <PersonalCardEl key={`pers-${i}`} card={card} />
+                ))}
+          </div>
+        </div>
+
+        <div className="pagination">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <span
+              key={i}
+              className={`dot ${i === currentPage ? "is-active" : ""}`}
+              aria-hidden="true"
+            />
           ))}
         </div>
       </div>
     </Reveal>
+  );
+}
+
+function CorporateCardEl({ card }: { card: CorporateCardData }) {
+  return (
+    <Link className="case-card" href={card.href}>
+      <span className="case-tag">{card.tag}</span>
+      <h3 className="case-title">{card.title}</h3>
+      <p className="case-meta">{card.meta}</p>
+      <p className="case-summary">{card.summary}</p>
+      <div className="case-metrics">
+        {card.metrics.map((m, i) => (
+          <div key={i} className="metric">
+            <span className="metric-value">{m.value}</span>
+            <span className="metric-label">{m.label}</span>
+          </div>
+        ))}
+      </div>
+    </Link>
+  );
+}
+
+function PersonalCardEl({ card }: { card: PersonalCardData }) {
+  const isExternal = card.href.startsWith("http");
+
+  const inner = (
+    <>
+      <span className="case-tag">{card.tag}</span>
+      <h3 className="case-title">{card.title}</h3>
+      <p className="case-meta">{card.meta}</p>
+      <div className="sao">
+        <div className="sao-block">
+          <span className="sao-label">Situation</span>
+          <p className="sao-text">{card.situation}</p>
+        </div>
+        <div className="sao-block">
+          <span className="sao-label">Approach</span>
+          <p className="sao-text">{card.approach}</p>
+        </div>
+        <div className="sao-block">
+          <span className="sao-label">Outcome</span>
+          <p className="sao-text">{card.outcome}</p>
+        </div>
+      </div>
+      {card.ctaLabel && (
+        <div className="demo-cta">
+          <span className="demo-link-text">{card.ctaLabel}</span>
+          <ArrowRight size={18} className="demo-arrow" aria-hidden />
+        </div>
+      )}
+    </>
+  );
+
+  if (isExternal) {
+    return (
+      <a
+        className="case-card"
+        href={card.href}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {inner}
+      </a>
+    );
+  }
+  return (
+    <Link className="case-card" href={card.href}>
+      {inner}
+    </Link>
   );
 }
