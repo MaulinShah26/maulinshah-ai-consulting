@@ -211,19 +211,36 @@ export const outcomes = {
     "How fast you reach each one depends on the data you start with, what your team can absorb, and how seriously you act on what we find. Six weeks for some companies. Six months for others. Both are normal.",
 };
 
-type WorkCard = {
+export type Metric = { value: string; label: string };
+
+export type CorporateCard = {
+  tag: string;
   title: string;
-  description: string;
-  icon: string;
-  tags: Array<{ label: string; variant?: string }>;
-  status: string;
-  cta?: string;
-  href?: string;
+  meta: string;
+  summary: string;
+  metrics: Metric[];
+  href: string;
 };
 
-type WorkTab = {
+export type PersonalCard = {
+  tag: string;
+  title: string;
+  meta: string;
+  situation: string;
+  approach: string;
+  outcome: string;
+  href: string;
+  ctaLabel?: string;
+};
+
+type CorporateTab = {
   label: string;
-  cards: WorkCard[];
+  cards: CorporateCard[];
+};
+
+type PersonalTab = {
+  label: string;
+  cards: PersonalCard[];
 };
 
 export const work: {
@@ -232,8 +249,8 @@ export const work: {
   heading: string;
   intro: string;
   tabs: {
-    corporate: WorkTab;
-    personal: WorkTab;
+    corporate: CorporateTab;
+    personal: PersonalTab;
   };
 } = {
   sectionNumber: "05",
@@ -246,87 +263,73 @@ export const work: {
       label: "Corporate work",
       cards: [
         {
-          title: "Food Replenishment Strategic Framework",
-          description:
-            "A three-phase decisioning framework at Supertails that predicted when pet parents would run out of food, and timed the right nudge to land before they did.",
-          icon: "Layers",
-          tags: [
-            { label: "Retention ML" },
-            { label: "Decision systems" },
-            { label: "Pet-tech" },
-          ],
-          status: "Supertails · 2024 to 2025",
-          cta: "Read the case study",
-          href: "/case-studies/food-replenishment",
-        },
-        {
-          title: "Adaptive Nudge Decision Engine (ANDE)",
-          description:
-            "A unified, six-layer decision system at Supertails. Moves the company from use-case campaigns to system-driven decisioning, with one nudge per customer per cycle.",
-          icon: "Brain",
-          tags: [
-            { label: "Decision systems" },
-            { label: "Platform architecture" },
-            { label: "Pet-tech" },
-          ],
-          status: "Supertails · 2025 · In operationalization",
-          cta: "Read the case study",
-          href: "/case-studies/adaptive-nudge-decision-engine",
-        },
-        {
+          tag: "Retention ML · Production model",
           title: "Customer Retention Probability Score",
-          description:
-            "A hybrid ML model scoring every Supertails customer’s 30-day repurchase probability. Two-stage architecture (CatBoost precision + MLP recall), 25+ engineered features, refreshed daily to production. ROC AUC 98.6%, ~60% lift on test conversion.",
-          icon: "Target",
-          tags: [
-            { label: "Retention ML" },
-            { label: "Production model" },
-            { label: "Pet-tech" },
+          meta: "Supertails · 2025 · Live in production",
+          summary:
+            "A hybrid ML system that scores every Supertails customer’s 30-day repurchase probability, refreshed daily, and routes the right intervention to the right channel.",
+          metrics: [
+            { value: "~60%", label: "Lift on test conversion" },
+            { value: "25+", label: "Features engineered" },
           ],
-          status: "Supertails · 2025 · Live in production",
-          cta: "Read the case study",
           href: "/case-studies/customer-retention-probability",
         },
         {
-          title: "Customer Affinity Modelling",
-          description:
-            "A multi-level scoring system at Supertails that quantifies what every customer cares about, across pet types, categories, sub-categories, and brands. Weights all behavioral signals by intent, decays old behavior, normalizes scores at each level. Live in BigQuery feeding personalization, segmentation, and cross-sell.",
-          icon: "Compass",
-          tags: [
-            { label: "Behavioral scoring" },
-            { label: "Personalization layer" },
-            { label: "Pet-tech" },
-          ],
-          status: "Supertails · 2025 · Live in production",
-          cta: "Read the case study",
-          href: "/case-studies/customer-affinity-modelling",
-        },
-        {
+          tag: "Clustering ML · Product-as-ML",
           title: "Batters & Bowlers Tag",
-          description:
-            "An ML clustering system at CricHeroes that classified grassroots cricketers into five batting archetypes (Steady, Classicist, Accumulator, Hard Hitter, Destroyer). Rolled out to millions of players. Became the language a community uses to talk about itself, and the basis for a personalized merchandise line. Still one of the platform’s most impactful features.",
-          icon: "Trophy",
-          tags: [
-            { label: "Clustering ML" },
-            { label: "Player profiling" },
-            { label: "Sports-tech" },
+          meta: "CricHeroes · Launched 2022 · Live",
+          summary:
+            "Classified grassroots cricketers into nine archetypes. Adopted across the platform, became the community’s vocabulary for talking about cricket, and grew into a branded merchandise line.",
+          metrics: [
+            { value: "10M+", label: "Players adopted" },
+            { value: "Brand", label: "Now the community language" },
           ],
-          status: "CricHeroes · Launched 2022 · Live in production",
-          cta: "Read the case study",
           href: "/case-studies/batters-bowlers-tag",
         },
         {
-          title: "AI Commentary at CricHeroes",
-          description:
-            "A unified GenAI vision to bring the international cricket experience (pre-match, live ball-by-ball, and post-match) to grassroots cricketers. Three pilots evaluated in 2024 across OpenAI + ElevenLabs. Live commentary delivered 15% engagement uplift but surfaced LLM repetition limits. Pre/post voice shows were killed on cost economics (~₹50–60 lakh/month projected). The case study is about evaluating GenAI bets across cost, quality, and value.",
-          icon: "Headphones",
-          tags: [
-            { label: "GenAI evaluation" },
-            { label: "Cost-benefit analysis" },
-            { label: "Sports-tech" },
+          tag: "Retention ML · Decision Systems",
+          title: "Food Replenishment Strategic Framework",
+          meta: "Supertails · 2024–25",
+          summary:
+            "Three-phase decisioning framework predicting when pet parents would run out of food. Combined repeat-buyer history, breed / pack guidelines for first-timers, and real-time browsing intent into one nudge per customer per category.",
+          metrics: [
+            { value: "~60%", label: "Precision · Dry food" },
+            { value: "~75%", label: "Precision · Wet food" },
+            { value: "±7 days", label: "Prediction window" },
           ],
-          status: "CricHeroes · 2024 · Three pilots evaluated",
-          cta: "Read the case study",
+          href: "/case-studies/food-replenishment",
+        },
+        {
+          tag: "Personalization · Behavioral scoring",
+          title: "Customer Affinity Modelling",
+          meta: "Supertails · 2025 · Live in production",
+          summary:
+            "Multi-level scoring system quantifying what every Supertails customer cares about across pet types, categories, sub-categories, and brands. Time-decayed, intent-weighted, normalized at every level.",
+          metrics: [
+            { value: "Multi-team", label: "Personalization & cross-sell insights unlocked" },
+          ],
+          href: "/case-studies/customer-affinity-modelling",
+        },
+        {
+          tag: "Decision Systems · Platform architecture",
+          title: "Adaptive Nudge Decision Engine",
+          meta: "Supertails · 2025 · In rollout",
+          summary:
+            "Replaced overlapping campaign workflows with one decisioning system. Picks the best next action per customer per cycle. Designed to reduce WhatsApp cost wastage and lift 30/60-day repeat rates.",
+          metrics: [
+            { value: "In rollout", label: "Real metrics arrive after the first 90 days of full operation" },
+          ],
+          href: "/case-studies/adaptive-nudge-decision-engine",
+        },
+        {
+          tag: "GenAI Evaluation · Cost-benefit",
+          title: "AI Commentary at CricHeroes",
+          meta: "CricHeroes · 2024 · Pilot",
+          summary:
+            "Evaluated three GenAI pilots for cricket commentary — pre-match show, live ball-by-ball, post-match wrap-up. Made the cost-benefit call on what ships, what waits, and what dies.",
+          metrics: [
+            { value: "+15%", label: "Engagement on live commentary" },
+          ],
           href: "/case-studies/ai-cricket-commentary",
         },
       ],
@@ -335,73 +338,66 @@ export const work: {
       label: "Personal projects",
       cards: [
         {
+          tag: "Cricket Analytics",
           title: "NerdyCricket",
-          description:
-            "A data-driven IPL analytics and engagement platform built solo. Bloomberg-for-cricket dressed up as Wordle-for-cricket. Proprietary analytical signals across 18 years of ball-by-ball data, delivered through five daily puzzle games scored into a single Cricket IQ. Live at nerdycricket.com.",
-          icon: "Activity",
-          tags: [
-            { label: "Solo build", variant: "blue" },
-            { label: "AI agents", variant: "blue" },
-            { label: "Live in production", variant: "blue" },
-          ],
-          status: "Live at nerdycricket.com · IPL 2026 season",
-          cta: "Read the case study",
-          href: "/case-studies/nerdycricket",
+          meta: "Personal project · Live · IPL 2026 season",
+          situation:
+            "Broadcasters talk about pressure, momentum, and rivalry during every match. Fans never get those numbers to study.",
+          approach:
+            "Took 18 years of cricket data and turned it into clear signals. Five daily puzzle games, all scored into one Cricket IQ.",
+          outcome:
+            "Live at nerdycricket.com, running through the IPL 2026 season.",
+          href: "https://nerdycricket.com",
+          ctaLabel: "See it live",
         },
         {
+          tag: "Healthcare",
           title: "Medicine Helper",
-          description:
-            "A medicine label scanner built as a native mobile app. Camera-first scanning, curated knowledge base grounding the LLM, safety scoring, side effects, and alternatives. Built solo. In active development with Play Store prep in progress.",
-          icon: "Pill",
-          tags: [
-            { label: "Camera-First OCR", variant: "teal" },
-            { label: "Mobile-Native", variant: "teal" },
-            { label: "Healthcare", variant: "teal" },
-          ],
-          status: "In active development · Play Store prep",
-          cta: "Read the case study",
-          href: "/case-studies/medicine-helper",
+          meta: "Personal project · Live in GPT marketplace",
+          situation:
+            "Indian homes have a lot of medicines lying around. Most people don’t know what each one is for, or what to use instead.",
+          approach:
+            "A mobile app. Point your camera at the label. You get a safety score, side effects, and a list of alternatives.",
+          outcome:
+            "Live as a custom GPT inside ChatGPT right now. A full mobile app is being built next, headed to the Play Store.",
+          href: "https://chatgpt.com/g/g-6752c12adeb88191825f918d2ed306f1-medicine-helper",
+          ctaLabel: "Use it now",
         },
         {
+          tag: "Healthcare",
           title: "Packaged Food Label Analyzer",
-          description:
-            "A Custom GPT that decodes packaged food labels into a clear health read, calibrated to age, BMI, dietary preferences, and health conditions. Personalized scoring, ingredient decoding, portion recommendations, and healthier alternatives. Live in OpenAI's GPT marketplace.",
-          icon: "Apple",
-          tags: [
-            { label: "Custom GPT", variant: "teal" },
-            { label: "Personalized Nutrition", variant: "teal" },
-            { label: "Healthcare", variant: "teal" },
-          ],
-          status: "Live · OpenAI GPT marketplace",
-          cta: "Read the case study",
-          href: "/case-studies/packaged-food-label-analyzer",
+          meta: "Personal project · Live in GPT marketplace",
+          situation:
+            "Most people can’t read packaged food labels. Generic nutrition advice ignores your age, your body, your diet, your conditions.",
+          approach:
+            "A custom GPT that reads any label and gives you a personal health read. What’s in it, how much to eat, what to switch to.",
+          outcome:
+            "Live in OpenAI’s GPT marketplace. Became the proof that led to Medicine Helper.",
+          href: "https://chatgpt.com/g/g-67517ea5a680819191527c1065b1d2f5-packaged-food-label-analyzer",
+          ctaLabel: "Use it now",
         },
         {
+          tag: "Markets",
           title: "AI Trading Copilot",
-          description:
-            "A personal AI trading desk for retail investors on Indian equities. The investor sets three things (budget, timeline, risk appetite). An eight-agent pipeline handles market scanning, signal analysis, strategy selection, risk management, and execution. Built solo. Currently in paper-trading mode with demos available on request.",
-          icon: "Bot",
-          tags: [
-            { label: "Multi-Agent Pipeline", variant: "teal" },
-            { label: "Decision Engine", variant: "teal" },
-            { label: "Markets", variant: "teal" },
-          ],
-          status: "In active development · Limited access",
-          cta: "Read the case study",
+          meta: "Personal project · Limited access",
+          situation:
+            "Most retail traders lose money over the long run. Professional help sits behind ₹50 lakh+ minimums.",
+          approach:
+            "You give three inputs: budget, timeline, risk appetite. Eight AI agents handle the rest, from scanning the market to managing risk.",
+          outcome:
+            "Running in paper trading mode for now. Demos on request.",
           href: "/case-studies/ai-trading-copilot",
         },
         {
+          tag: "Career Strategy",
           title: "AI Job Impact Assessor",
-          description:
-            "A career clarity tool for the AI era. Built solo, calibrated against a 15-role expert benchmark. Decomposes your role into tasks, scores each against 2026 AI capability movement, and The output: what to stop doing, what to invest in, and what to become over the next 18 months. In closed beta.",
-          icon: "Briefcase",
-          tags: [
-            { label: "Career strategy", variant: "purple" },
-            { label: "AI literacy", variant: "purple" },
-            { label: "Calibrated diagnostic", variant: "purple" },
-          ],
-          status: "In closed beta · Limited access",
-          cta: "Read the case study",
+          meta: "Personal project · In closed beta",
+          situation:
+            "Every headline says AI will replace jobs. None tell you which parts of your specific role are actually affected.",
+          approach:
+            "You tell it your job. It breaks the role into tasks. Each task gets scored against where AI is going in 2026.",
+          outcome:
+            "In closed beta. You walk away with what to stop doing, what to invest in, and what to become over the next 18 months.",
           href: "/case-studies/ai-job-impact-assessor",
         },
       ],

@@ -354,3 +354,267 @@ body {
   }
 
 }
+
+/* =====================================================================
+   Work section: tabs + carousel + case cards
+   ===================================================================== */
+
+.tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: rgb(var(--ink-100));
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.tab {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgb(var(--ink-500));
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.tab.is-active {
+  background: rgb(var(--page));
+  color: rgb(var(--ink));
+}
+
+.carousel-nav {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.nav-btn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 50%;
+  cursor: pointer;
+  color: rgb(var(--ink-500));
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.nav-btn:hover { border-color: rgb(var(--accent)); color: rgb(var(--accent)); }
+.nav-btn:disabled { opacity: 0.35; cursor: default; }
+.nav-btn:disabled:hover { border-color: rgb(var(--ink-200)); color: rgb(var(--ink-500)); }
+.nav-pos {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: rgb(var(--ink-500));
+  margin: 0 6px;
+  letter-spacing: 0.5px;
+}
+.nav-pos b { color: rgb(var(--ink)); font-weight: 500; }
+
+/* Carousel container & scroll track */
+.carousel {
+  position: relative;
+  margin: 0 -24px;
+  overflow: hidden;
+}
+.carousel-track {
+  display: flex;
+  gap: 18px;
+  padding: 4px 24px 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  align-items: stretch;
+  touch-action: pan-x pan-y;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+/* Case card — 2 visible, wider with breathing room */
+.case-card {
+  flex: 0 0 calc((100% - 18px - 48px) / 2);
+  min-width: 320px;
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+  transition: border-color 0.18s ease;
+}
+.case-card:hover { border-color: rgb(var(--accent) / 0.55); }
+
+.case-tag {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: rgb(var(--accent));
+  line-height: 1.4;
+  margin-bottom: 18px;
+}
+.case-title {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: rgb(var(--ink));
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  margin-bottom: 8px;
+}
+.case-meta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: rgb(var(--ink-500));
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.case-summary {
+  font-size: 14px;
+  color: rgb(var(--ink-700));
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Corporate card metrics row */
+.case-metrics {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgb(var(--ink-200));
+  display: flex;
+  gap: 22px;
+}
+.metric {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.metric-value {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: rgb(var(--ink));
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+.metric-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgb(var(--ink-500));
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  line-height: 1.4;
+}
+
+/* Personal card S/A/O blocks */
+.sao {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: auto;
+}
+.sao-block {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.sao-block + .sao-block {
+  padding-top: 14px;
+  border-top: 1px dashed rgb(var(--ink-200));
+}
+.sao-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: rgb(var(--ink-400));
+}
+.sao-text {
+  font-size: 14px;
+  color: rgb(var(--ink-700));
+  line-height: 1.55;
+}
+
+/* Personal card CTA button (only when ctaLabel present) */
+.demo-cta {
+  margin-top: 22px;
+  background: rgb(var(--accent-soft));
+  color: rgb(var(--accent));
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.case-card:hover .demo-cta {
+  background: rgb(var(--accent));
+  color: rgb(var(--page));
+}
+.demo-link-text {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+.demo-arrow {
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+.case-card:hover .demo-arrow {
+  transform: translateX(4px);
+}
+
+/* Pagination dots */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 22px;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(var(--ink-300));
+  transition: width 0.2s ease, background 0.2s ease;
+}
+.dot.is-active {
+  width: 18px;
+  border-radius: 3px;
+  background: rgb(var(--accent));
+}
+
+/* Responsive — single card per view */
+@media (max-width: 720px) {
+  .case-card { flex: 0 0 calc(100% - 48px); }
+  .tabs-row { gap: 12px; }
+  .carousel-nav { display: none; }
+}
