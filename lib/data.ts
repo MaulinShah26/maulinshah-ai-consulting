@@ -18,10 +18,10 @@ export const social = {
 };
 
 export const nav = [
-  { label: "Approach", href: "#approach" },
-  { label: "Work", href: "#work" },
-  { label: "Journey", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "How I work", href: "#approach" },
+  { label: "Selected work", href: "#work" },
+  { label: "About me", href: "#about" },
+  { label: "Start a conversation", href: "#contact" },
 ];
 
 export const hero = {
