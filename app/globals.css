@@ -125,94 +125,21 @@ body {
           box-decoration-break: clone;
 }
 
-/* Strata: depth tint + collapse transition + chevron rotation + idle nudge */
-.strata-collapse {
-  display: grid;
-  grid-template-rows: 1fr;
-  transition: grid-template-rows 0.45s ease;
-}
-.strata.is-closed .strata-collapse {
-  grid-template-rows: 0fr;
-}
+/* Strata: depth panel tint (both panels always visible, no toggle) */
 .stratum-depth {
   background: rgb(var(--accent-soft) / 0.4);
   box-shadow: inset 0 14px 16px -14px rgb(var(--ink) / 0.22);
 }
-.strata:not(.is-closed) .strata-pill-chev {
-  transform: rotate(180deg);
-}
-.strata.is-closed .strata-pill-cap {
-  animation: strata-nudge 2s ease-in-out infinite;
-}
-.surface-marker {
-  box-shadow: 0 10px 15px -10px rgb(var(--ink) / 0.22);
-  -webkit-tap-highlight-color: transparent;
-}
-.surface-marker:hover .strata-pill {
-  background: rgb(var(--accent-soft));
-  border-color: rgb(var(--accent));
-}
-@keyframes strata-nudge {
-  0%, 100% { transform: translateY(-1.5px); }
-  50%      { transform: translateY(1.5px); }
-}
 
-/* Before/After slider: solved overlays missed, clipped from the right by the
-   slider position. Both sides also blur in proportion to how clipped they are,
-   so the dominant side is BIG + SHARP and the shrinking side is SMALL + FUZZY. */
-.ba {
-  user-select: none;
-}
-.ba-missed {
-  background: rgb(var(--ink-100));
-  transition: filter 120ms linear;
-  will-change: filter;
-}
-.ba-solved {
-  background: linear-gradient(
-    135deg,
-    rgb(var(--accent-soft) / 0.6),
-    rgb(var(--surface) / 0.95)
-  );
-  transition: clip-path 120ms linear, filter 120ms linear;
-  will-change: clip-path, filter;
-}
-.ba-divider {
-  background: rgb(var(--surface));
-  box-shadow: 0 0 0 1px rgb(var(--ink) / 0.07);
-  transition: left 120ms linear;
-}
-.ba-handle {
-  background: rgb(var(--surface));
-  box-shadow: 0 3px 12px rgb(var(--ink) / 0.16);
-}
-.ba-handle::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px solid rgb(var(--accent));
-  opacity: 0;
-  animation: ba-handle-pulse 2.6s ease-out infinite;
-  pointer-events: none;
-}
-@keyframes ba-handle-pulse {
-  0%        { opacity: 0.45; transform: scale(0.85); }
-  70%, 100% { opacity: 0;    transform: scale(1.25); }
-}
-
-/* Mobile fallback for the slider: two stacked cards */
+/* Outcomes: two stacked cards side by side, collapse to single column on mobile */
 .fork-stack {
-  display: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 @media (max-width: 640px) {
-  .ba {
-    display: none;
-  }
   .fork-stack {
-    display: grid;
     grid-template-columns: 1fr;
-    gap: 14px;
   }
 }
 
@@ -245,17 +172,8 @@ body {
 
 /* Reduced motion: kill decorative animations */
 @media (prefers-reduced-motion: reduce) {
-  .strata.is-closed .strata-pill-cap,
-  .ba-handle::after {
-    animation: none;
-  }
-  .strata-collapse,
-  .strata-pill-chev,
-  .ba-solved,
-  .ba-missed,
-  .ba-divider {
-    transition: none;
-  }
+  /* no decorative animations remain in this section after the toggle and
+     before/after slider were removed; rules kept here as future-proofing */
 }
 
 /* =====================================================================
