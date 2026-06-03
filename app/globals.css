@@ -379,7 +379,7 @@ body {
 .tab {
   padding: 7px 14px;
   border-radius: 999px;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
@@ -416,7 +416,7 @@ body {
 .nav-btn:disabled { opacity: 0.35; cursor: default; }
 .nav-btn:disabled:hover { border-color: rgb(var(--ink-200)); color: rgb(var(--ink-500)); }
 .nav-pos {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   color: rgb(var(--ink-500));
   margin: 0 6px;
@@ -462,7 +462,7 @@ body {
 .case-card:hover { border-color: rgb(var(--accent) / 0.55); }
 
 .case-tag {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
@@ -472,7 +472,7 @@ body {
   margin-bottom: 18px;
 }
 .case-title {
-  font-family: "Spectral", Georgia, serif;
+  font-family: var(--font-serif), Georgia, serif;
   font-size: 22px;
   font-weight: 600;
   color: rgb(var(--ink));
@@ -481,7 +481,7 @@ body {
   margin-bottom: 8px;
 }
 .case-meta {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   color: rgb(var(--ink-500));
   letter-spacing: 0.4px;
@@ -511,7 +511,7 @@ body {
   gap: 6px;
 }
 .metric-value {
-  font-family: "Spectral", Georgia, serif;
+  font-family: var(--font-serif), Georgia, serif;
   font-size: 22px;
   font-weight: 600;
   color: rgb(var(--ink));
@@ -519,7 +519,7 @@ body {
   letter-spacing: -0.015em;
 }
 .metric-label {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   font-weight: 500;
   color: rgb(var(--ink-500));
@@ -545,7 +545,7 @@ body {
   border-top: 1px dashed rgb(var(--ink-200));
 }
 .sao-label {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
@@ -576,7 +576,7 @@ body {
   color: rgb(var(--page));
 }
 .demo-link-text {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1.3px;
