@@ -321,7 +321,7 @@ export const work: {
   sectionLabel: "Selected work",
   heading: "What I’ve built, what I’m building",
   intro:
-    "Corporate work is where ideas get tested against real business pressure. Personal projects are where I try the tools I want to bring into client work. Both make each other better.",
+    "Corporate work is the production systems I built and owned. Labs are where I test the tools I want to bring into client work. Both make each other better.",
   tabs: {
     corporate: {
       label: "Corporate work",
@@ -399,7 +399,7 @@ export const work: {
       ],
     },
     personal: {
-      label: "Personal projects",
+      label: "Labs",
       cards: [
         {
           tag: "Cricket Analytics",
