@@ -63,7 +63,7 @@ const activation = [
   },
   {
     label: "Might purchase",
-    condition: "Middle band — neither high nor low",
+    condition: "Middle band, neither high nor low",
     objective: "Nudge based on intent",
     primaryChannel: "Email",
     secondaryChannel: "Push, In-app",
@@ -117,7 +117,7 @@ export default function CustomerRetentionProbabilityPage() {
         <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
           A hybrid ML system that scores every customer’s 30-day repurchase
           likelihood, refreshes daily, and routes the right intervention into
-          the right channel — WhatsApp, email, push notifications.
+          the right channel: WhatsApp, email, or push.
         </p>
         <div className="flex flex-wrap gap-2">
           <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
@@ -145,8 +145,8 @@ export default function CustomerRetentionProbabilityPage() {
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
-            Supertails was running campaigns the way most growing companies do
-            — rule-based segments, calendar-driven blasts, the same offers
+            Supertails was running campaigns the way most growing companies do:
+            rule-based segments, calendar-driven blasts, the same offers
             going to everyone in a cohort. The result was predictable.
             High-intent customers got discounts they didn’t need (margin loss).
             Lapsed customers got irrelevant nudges (wasted spend).
@@ -179,9 +179,9 @@ export default function CustomerRetentionProbabilityPage() {
             so the right customer gets the right intervention.
           </p>
           <p>
-            Four non-negotiable constraints. High recall AND high precision is
-            the hard part — most models optimize one at the expense of the
-            other.
+            Four non-negotiable constraints. High recall and high precision
+            together is the hard part. Most models optimize one at the expense
+            of the other.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -295,12 +295,12 @@ export default function CustomerRetentionProbabilityPage() {
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
           <p>
             Most retention models stop at RFM (recency, frequency, monetary
-            value). Useful, but RFM conflates two very different customers —
-            the one who lapsed last month (recoverable) and the one who lapsed
+            value). Useful, but RFM conflates two very different customers: the
+            one who lapsed last month (recoverable) and the one who lapsed
             eight months ago (probably gone). Both look identical.
           </p>
           <p>
-            The unlock was a set of engineered momentum signals — velocity
+            The unlock was a set of engineered momentum signals: velocity
             ratios and trend flags that distinguish recoverable customers
             from long-gone ones. That single feature class likely moved the
             model 5–10 points on recall.
@@ -355,15 +355,15 @@ export default function CustomerRetentionProbabilityPage() {
 
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
-            The threshold is tunable by business teams — raise it to spend less
+            The threshold is tunable by business teams: raise it to spend less
             budget at higher precision, lower it to extend reach at lower
             precision. The model gives the dial. The business decides where to
             set it.
           </p>
           <p>
             The ~60% lift mattered most to leadership. It’s the practical
-            answer to: “if we listen to this model, do we make more money?” —
-            yes, by about 60%.
+            answer to: “if we listen to this model, do we make more money?”
+            Yes, by about 60%.
           </p>
         </div>
       </section>
@@ -450,7 +450,7 @@ export default function CustomerRetentionProbabilityPage() {
             title="What worked"
             icon={<CheckCircle2 size={16} aria-hidden />}
             items={[
-              "The hybrid architecture (CatBoost + MLP) was the architectural win — pure precision OR pure recall wasn’t enough. The blend was.",
+              "The hybrid architecture (CatBoost + MLP) was the architectural win. Pure precision or pure recall wasn’t enough. The blend was.",
               "Momentum signals separated recoverable customers from gone ones. That single feature class probably moved the model 5–10 points on recall.",
               "Combining the model score with business logic gave stakeholders an explanation they trusted, beyond ‘the model says so.’",
             ]}
@@ -471,7 +471,7 @@ export default function CustomerRetentionProbabilityPage() {
             items={[
               "Uplift modeling to measure the causal impact of campaigns, not just predicted likelihood.",
               "Real-time scoring for recent behavior (cart abandonment, in-session nudges) layered on top of daily scoring.",
-              "Channel optimization — best day/time/channel per user, on top of the likelihood score.",
+              "Channel optimization: best day, time, and channel per user, on top of the likelihood score.",
               "Quarterly threshold recalibration based on observed lift and churn.",
             ]}
           />
@@ -500,19 +500,19 @@ export default function CustomerRetentionProbabilityPage() {
           <div className="px-5 pb-5 pt-3 space-y-6 border-t border-ink-100">
             <TechBlock title="Model architecture">
               <p>
-                <strong>Stage 1 (CatBoost)</strong> — tuned via
+                <strong>Stage 1 (CatBoost)</strong>: tuned via
                 RandomizedSearchCV over 20 iterations with 3-fold
                 cross-validation. Hyperparameter search across iteration count,
                 learning rate, tree depth, L2 regularization, and border count.
               </p>
               <p>
-                <strong>Stage 2 (MLP)</strong> — 2 hidden layers (128, 64).
+                <strong>Stage 2 (MLP)</strong>: 2 hidden layers (128, 64).
                 alpha=0.0005, early stopping enabled, max_iter=500. Trained on
                 SMOTE-resampled training data, validated on the real
                 (non-synthetic) hold-out set.
               </p>
               <p>
-                <strong>Hybrid blend</strong> — final score = 0.65 × CatBoost
+                <strong>Hybrid blend</strong>: final score = 0.65 × CatBoost
                 probability + 0.35 × MLP probability. The 65/35 split was
                 calibrated against the validation set.
               </p>
@@ -563,6 +563,19 @@ export default function CustomerRetentionProbabilityPage() {
             </TechBlock>
           </div>
         </details>
+      </section>
+
+      {/* Founder takeaway */}
+      <section className="max-w-content mx-auto px-6 pb-4">
+        <div className="bg-accent-soft/40 border-l-2 border-accent rounded-md px-5 py-5">
+          <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-2">
+            Founder takeaway
+          </div>
+          <p className="text-[15px] text-ink-800 leading-[1.6]">
+            A churn score does nothing on its own. The value is in routing it to
+            an action the team will actually take.
+          </p>
+        </div>
       </section>
 
       <hr className="border-ink-200" />
