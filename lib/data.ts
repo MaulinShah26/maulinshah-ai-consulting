@@ -281,7 +281,9 @@ export type CorporateCard = {
   tag: string;
   title: string;
   meta: string;
+  problem: string;
   summary: string;
+  takeaway: string;
   metrics: Metric[];
   href: string;
 };
@@ -330,8 +332,12 @@ export const work: {
           tag: "Retention ML · Production model",
           title: "Customer Retention Probability Score",
           meta: "Supertails · 2025 · Live in production",
+          problem:
+            "Supertails was spending on retention without knowing which customers were actually about to lapse.",
           summary:
-            "A hybrid ML system that scores every Supertails customer’s 30-day repurchase probability, refreshed daily, and routes the right intervention to the right channel.",
+            "I built a hybrid ML system that scores every customer’s 30-day repurchase probability daily, then routes the right intervention to the right channel.",
+          takeaway:
+            "A churn score does nothing on its own. The value is in routing it to an action the team will actually take.",
           metrics: [
             { value: "~60%", label: "Lift on test conversion" },
             { value: "25+", label: "Features engineered" },
@@ -342,8 +348,12 @@ export const work: {
           tag: "Clustering ML · Product-as-ML",
           title: "Batters & Bowlers Tag",
           meta: "CricHeroes · Launched 2022 · Live",
+          problem:
+            "CricHeroes had years of grassroots performance data, but no way for players to see themselves in it.",
           summary:
-            "Classified grassroots cricketers into nine archetypes. Adopted across the platform, became the community’s vocabulary for talking about cricket, and grew into a branded merchandise line.",
+            "I classified every cricketer into nine playing archetypes that the community adopted as its own language, and that grew into a branded merchandise line.",
+          takeaway:
+            "The strongest data product is one users adopt as their own language. That comes from giving people an identity, not just a stat.",
           metrics: [
             { value: "10M+", label: "Players adopted" },
             { value: "Brand", label: "Now the community language" },
@@ -354,8 +364,12 @@ export const work: {
           tag: "Retention ML · Decision Systems",
           title: "Food Replenishment Strategic Framework",
           meta: "Supertails · 2024–25",
+          problem:
+            "Supertails couldn’t tell when a pet parent was about to run out of food, so reorder nudges were guesswork.",
           summary:
-            "Three-phase decisioning framework predicting when pet parents would run out of food. Combined repeat-buyer history, breed / pack guidelines for first-timers, and real-time browsing intent into one nudge per customer per category.",
+            "I built a three-phase framework that predicts run-out timing from buyer history, breed and pack guidelines, and live browsing intent, into one nudge per customer per category.",
+          takeaway:
+            "Timing is the product. A reorder nudge on the wrong day is noise. On the right day it feels like a service.",
           metrics: [
             { value: "~60%", label: "Precision · Dry food" },
             { value: "~75%", label: "Precision · Wet food" },
@@ -367,8 +381,12 @@ export const work: {
           tag: "Personalization · Behavioral scoring",
           title: "Customer Affinity Modelling",
           meta: "Supertails · 2025 · Live in production",
+          problem:
+            "Teams across Supertails were personalizing blind, with no shared read on what each customer actually cared about.",
           summary:
-            "Multi-level scoring system quantifying what every Supertails customer cares about across pet types, categories, sub-categories, and brands. Time-decayed, intent-weighted, normalized at every level.",
+            "I built a multi-level affinity layer scoring preference across pet type, category, sub-category, and brand, time-decayed and intent-weighted.",
+          takeaway:
+            "Personalization is a problem of understanding the customer before it is a model problem. Get the customer read right and every team downstream benefits.",
           metrics: [
             { value: "Multi-team", label: "Personalization & cross-sell insights unlocked" },
           ],
@@ -378,8 +396,12 @@ export const work: {
           tag: "Decision Systems · Platform architecture",
           title: "Adaptive Nudge Decision Engine",
           meta: "Supertails · 2025 · In rollout",
+          problem:
+            "Overlapping CRM campaigns were nudging the same customer repeatedly and burning WhatsApp spend.",
           summary:
-            "Replaced overlapping campaign workflows with one decisioning system. Picks the best next action per customer per cycle. Designed to reduce WhatsApp cost wastage and lift 30/60-day repeat rates.",
+            "I replaced the campaign workflows with one decisioning system that picks the best next action per customer per cycle.",
+          takeaway:
+            "More nudges is not more retention. The win was deciding when not to message someone, which cut waste and protected the relationship.",
           metrics: [
             { value: "In rollout", label: "Real metrics arrive after the first 90 days of full operation" },
           ],
@@ -389,8 +411,12 @@ export const work: {
           tag: "GenAI Evaluation · Cost-benefit",
           title: "AI Commentary at CricHeroes",
           meta: "CricHeroes · 2024 · Pilot",
+          problem:
+            "CricHeroes had three tempting GenAI commentary ideas and no way to tell which was worth the engineering bill.",
           summary:
-            "Evaluated three GenAI pilots for cricket commentary — pre-match show, live ball-by-ball, post-match wrap-up. Made the cost-benefit call on what ships, what waits, and what dies.",
+            "I evaluated all three, pre-match show, live ball-by-ball, and post-match wrap-up, and made the cost-benefit call on what ships, what waits, and what dies.",
+          takeaway:
+            "The senior call on AI is often what not to build. Killing two pilots early was worth more than shipping all three.",
           metrics: [
             { value: "+15%", label: "Engagement on live commentary" },
           ],

@@ -164,6 +164,7 @@ function CorporateCardEl({ card }: { card: CorporateCardData }) {
       <span className="case-tag">{card.tag}</span>
       <h3 className="case-title">{card.title}</h3>
       <p className="case-meta">{card.meta}</p>
+      <p className="case-problem">{card.problem}</p>
       <p className="case-summary">{card.summary}</p>
       <div className="case-metrics">
         {card.metrics.map((m, i) => (
@@ -172,6 +173,10 @@ function CorporateCardEl({ card }: { card: CorporateCardData }) {
             <span className="metric-label">{m.label}</span>
           </div>
         ))}
+      </div>
+      <div className="case-takeaway">
+        <span className="case-takeaway-label">Founder takeaway</span>
+        <p>{card.takeaway}</p>
       </div>
     </Link>
   );
