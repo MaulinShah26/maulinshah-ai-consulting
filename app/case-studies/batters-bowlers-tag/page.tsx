@@ -83,11 +83,11 @@ const tacticalUses = [
   },
   {
     scenario: "Defending a low total",
-    body: "Lean on the Economist for early pressure — dot balls, tight lines, no boundary balls. Save the Spearhead overs for when wickets matter most.",
+    body: "Lean on the Economist for early pressure: dot balls, tight lines, no boundary balls. Save the Spearhead overs for when wickets matter most.",
   },
   {
     scenario: "Reading your own team",
-    body: "Too many Steady Batters and Classicists? Your lineup isn’t built for chasing big totals. Too many Economists in the bowling unit? Consider batting first — your strength is defending, not breaking through.",
+    body: "Too many Steady Batters and Classicists? Your lineup isn’t built for chasing big totals. Too many Economists in the bowling unit? Consider batting first. Your strength is defending, not breaking through.",
   },
 ];
 
@@ -95,12 +95,12 @@ const impactBlocks = [
   {
     icon: <Activity size={16} aria-hidden />,
     title: "Adoption inside the first month",
-    body: "The feature was rolled out to a few million eligible players from a base of 30M+ — the rest of the platform needed more historical data or format consistency to qualify. Within the first month, adoption was visible across the platform. Players talked about their tags, compared with teammates, debated placements.",
+    body: "The feature was rolled out to a few million eligible players from a base of 30M+. The rest of the platform needed more historical data or format consistency to qualify. Within the first month, adoption was visible across the platform. Players talked about their tags, compared with teammates, debated placements.",
   },
   {
     icon: <MessageCircle size={16} aria-hidden />,
     title: "Inquiries from day one",
-    body: "The strongest engagement signal arrived immediately. Why am I tagged as an Accumulator? Why isn’t my friend a Destroyer? What does it take to become a Hard Hitter or a Spearhead? Players didn’t just see the tag — they questioned it, engaged with it, and started thinking about how to change it.",
+    body: "The strongest engagement signal arrived immediately. Why am I tagged as an Accumulator? Why isn’t my friend a Destroyer? What does it take to become a Hard Hitter or a Spearhead? Players didn’t just see the tag. They questioned it, engaged with it, and started thinking about how to change it.",
   },
   {
     icon: <Users size={16} aria-hidden />,
@@ -115,7 +115,7 @@ const impactBlocks = [
   {
     icon: <ShoppingBag size={16} aria-hidden />,
     title: "A merchandise line built on the tags",
-    body: "The tags moved beyond the app. CricHeroes launched a personalized merchandise line built around them — t-shirts, caps, and pads branded with each archetype. A clustering model had spawned a revenue line. Not a side effect of the project — a direct consequence of the cultural traction the tags earned.",
+    body: "The tags moved beyond the app. CricHeroes launched a personalized merchandise line built around them: t-shirts, caps, and pads branded with each archetype. A clustering model had spawned a revenue line. Not a side effect of the project, but a direct consequence of the cultural traction the tags earned.",
   },
   {
     icon: <Sparkles size={16} aria-hidden />,
@@ -158,7 +158,7 @@ export default function BattersBowlersTagPage() {
           An ML clustering system that classified grassroots cricketers into{" "}
           <strong>five batting</strong> and <strong>four bowling</strong>{" "}
           archetypes. Rolled out to millions of players on CricHeroes. Became
-          the language a community uses to talk about itself — and the basis
+          the language a community uses to talk about itself, and the basis
           for a personalized merchandise line.
         </p>
         <div className="flex flex-wrap gap-2">
@@ -214,7 +214,7 @@ export default function BattersBowlersTagPage() {
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
             Use unsupervised ML to cluster grassroots cricketers based on
-            their performance patterns. Build two parallel systems — one for
+            their performance patterns. Build two parallel systems: one for
             batters, one for bowlers. Surface each player’s cluster as a tag
             on their profile. Make the tag mean something: not “Cluster 3”
             but a name with character that a player could read, recognize,
@@ -225,7 +225,7 @@ export default function BattersBowlersTagPage() {
             <em>Balanced Lineups</em> analysis of 2019 World Cup batters,
             which used K-means clustering to identify playing styles among
             professional players. The CricHeroes team adapted the same
-            approach for grassroots — but at the scale of millions of
+            approach for grassroots, but at the scale of millions of
             players, not a few dozen, and extended the framework to bowlers as
             well.
           </p>
@@ -243,8 +243,8 @@ export default function BattersBowlersTagPage() {
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
           <p>
             The model produced two separate sets of tags. The framework was
-            consistent — cluster on performance patterns, validate with the
-            Elbow Method, surface as a tag — but the number of natural
+            consistent: cluster on performance patterns, validate with the
+            Elbow Method, surface as a tag, but the number of natural
             clusters was different. Five for batters. Four for bowlers. That’s
             what the data said, and that’s what shipped.
           </p>
@@ -288,7 +288,7 @@ export default function BattersBowlersTagPage() {
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
           <p>
             The real value of the tags shows up when captains read them
-            together. A balanced batting lineup needs a mix — not all
+            together. A balanced batting lineup needs a mix, not all
             Destroyers, not all Steady Batters. A balanced bowling unit needs
             both pressure-builders and wicket-takers. The tags made that
             balance visible at a glance.
@@ -339,10 +339,10 @@ export default function BattersBowlersTagPage() {
             title="What made it work"
             icon={<CheckCircle2 size={16} aria-hidden />}
             items={[
-              "Translating ML output into product language. Players understood ‘Destroyer’ and ‘Spearhead’ instantly. They wouldn’t have engaged with ‘Cluster 5’ or ‘Cluster 3.’ The naming wasn’t cosmetic — it was the product.",
-              "Letting the data choose the number of clusters. The Elbow Method pointed at five for batters and four for bowlers. Not five and five for symmetry. The asymmetry was honest — bowlers cluster differently than batters do, and forcing parallel structure would have meant worse tags.",
-              "Eligibility cutoffs. Not every player qualified. The model needed enough match history in a single format to cluster confidently — players without that history were held back rather than mislabeled. That discipline protected trust.",
-              "Letting the community make the feature their own. Once players started comparing tags, debating placements, and building team selection around them, the platform stopped pushing the feature — the community pulled it forward.",
+              "Translating ML output into product language. Players understood ‘Destroyer’ and ‘Spearhead’ instantly. They wouldn’t have engaged with ‘Cluster 5’ or ‘Cluster 3.’ The naming wasn’t cosmetic. It was the product.",
+              "Letting the data choose the number of clusters. The Elbow Method pointed at five for batters and four for bowlers. Not five and five for symmetry. The asymmetry was honest. Bowlers cluster differently than batters do, and forcing parallel structure would have meant worse tags.",
+              "Eligibility cutoffs. Not every player qualified. The model needed enough match history in a single format to cluster confidently. Players without that history were held back rather than mislabeled. That discipline protected trust.",
+              "Letting the community make the feature their own. Once players started comparing tags, debating placements, and building team selection around them, the platform stopped pushing the feature. The community pulled it forward.",
             ]}
           />
           <ReflectionBlock
@@ -351,7 +351,7 @@ export default function BattersBowlersTagPage() {
             items={[
               "Naming matters as much as architecture. A perfectly tuned clustering with anonymous labels is a footnote. A simply tuned clustering with names that carry character is a product.",
               "Engagement signal precedes revenue signal. The day-one inquiries told us the merchandise idea would work months before we tested it. Curiosity is the best leading indicator.",
-              "Some ML features ARE the product. The Batters & Bowlers Tag wasn’t an enhancement to the scoring app — it became one of its anchors. Worth remembering when scoping any ML build: is this a feature, or is it a product surface?",
+              "Some ML features are the product. The Batters & Bowlers Tag wasn’t an enhancement to the scoring app. It became one of its anchors. Worth remembering when scoping any ML build: is this a feature, or is it a product surface?",
             ]}
           />
         </div>
@@ -381,7 +381,7 @@ export default function BattersBowlersTagPage() {
               <p>
                 Unsupervised clustering of player performance data using
                 K-means, validated with the Elbow Method. Two separate models
-                — one for batters, one for bowlers — each producing its own
+                , one for batters, one for bowlers, each producing its own
                 cluster set.
               </p>
               <p>
@@ -394,7 +394,7 @@ export default function BattersBowlersTagPage() {
 
             <TechBlock title="Batter features">
               <p>
-                Drawn from full historical performance — runs, balls faced,
+                Drawn from full historical performance: runs, balls faced,
                 strike rates, boundary percentages, dot-ball percentages,
                 dismissal patterns, scoring tempo across phases, consistency
                 measures across matches.
@@ -412,7 +412,7 @@ export default function BattersBowlersTagPage() {
             <TechBlock title="Eligibility">
               <p>
                 Tags were never assigned to players without sufficient
-                history. The eligibility rules existed to protect trust — a
+                history. The eligibility rules existed to protect trust. A
                 wrong tag is worse than no tag.
               </p>
               <p>
@@ -441,7 +441,7 @@ export default function BattersBowlersTagPage() {
                 Box (Indoor) Cricket, The Hundred, and Test matches were
                 outside scope at launch. Players were tagged in the format
                 where they had played the most matches, not across all
-                formats — a Hard Hitter in T20 might be a Steady Batter at the
+                formats: a Hard Hitter in T20 might be a Steady Batter at the
                 T10 cadence, and the tag was honest about which game it
                 described.
               </p>
@@ -451,7 +451,7 @@ export default function BattersBowlersTagPage() {
               <p>
                 The tag was surfaced on the player’s mini profile, full
                 profile, and team lineup view. Three surfaces with three
-                different audiences — the player themselves, anyone viewing
+                different audiences: the player themselves, anyone viewing
                 them, and the captain selecting a side.
               </p>
             </TechBlock>
@@ -467,9 +467,9 @@ export default function BattersBowlersTagPage() {
               <p>
                 The CricHeroes adaptation kept the core methodology but moved
                 from dozens of professional players to millions of grassroots
-                cricketers — requiring more careful feature engineering to
+                cricketers, requiring more careful feature engineering to
                 handle the wider variance in match volume and quality at the
-                grassroots level — and extended the framework to bowlers, who
+                grassroots level, and extended the framework to bowlers, who
                 weren’t in the original analysis.
               </p>
               <p>
@@ -489,7 +489,7 @@ export default function BattersBowlersTagPage() {
               <p>
                 The clustering pipelines ran on production player data and
                 surfaced the tag directly on each eligible player’s profile.
-                Both models were monitored continuously after launch — for
+                Both models were monitored continuously after launch, for
                 drift in cluster characteristics and for shifts in player
                 distribution across clusters as the platform’s user base
                 evolved.
@@ -502,6 +502,18 @@ export default function BattersBowlersTagPage() {
             </TechBlock>
           </div>
         </details>
+      </section>
+
+      {/* Founder takeaway */}
+      <section className="max-w-content mx-auto px-6 pb-4">
+        <div className="bg-accent-soft/40 border-l-2 border-accent rounded-md px-5 py-5">
+          <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-2">
+            Founder takeaway
+          </div>
+          <p className="text-[15px] text-ink-800 leading-[1.6]">
+            The strongest data product is one users adopt as their own language. That comes from giving people an identity, not just a stat.
+          </p>
+        </div>
       </section>
 
       <hr className="border-ink-200" />

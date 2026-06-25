@@ -19,7 +19,7 @@ import {
 export const metadata = {
   title: "Customer Affinity Modelling · Maulin Shah",
   description:
-    "A multi-level scoring system at Supertails that quantifies what every customer cares about — across pet types, categories, sub-categories, and brands. Live in production.",
+    "A multi-level scoring system at Supertails that quantifies what every customer cares about, across pet types, categories, sub-categories, and brands. Live in production.",
 };
 
 const eventWeights = [
@@ -67,7 +67,7 @@ const applications = [
   },
   {
     title: "Persona auto-generation",
-    body: "“Dry Food Loyalist — Royal Canin” or “New Brand Explorer — Treats”, feeding journey orchestration with concrete personas.",
+    body: "“Dry Food Loyalist: Royal Canin” or “New Brand Explorer: Treats”, feeding journey orchestration with concrete personas.",
     icon: <Users size={14} aria-hidden />,
   },
   {
@@ -114,8 +114,8 @@ export default function CustomerAffinityModellingPage() {
         </h1>
         <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
           A multi-level scoring system that quantifies what every Supertails
-          customer actually cares about — across pet types, categories,
-          sub-categories, and brands — by weighting behavioral signals and
+          customer actually cares about, across pet types, categories,
+          sub-categories, and brands, by weighting behavioral signals and
           decaying old behavior.
         </p>
         <div className="flex flex-wrap gap-2">
@@ -144,7 +144,7 @@ export default function CustomerAffinityModellingPage() {
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
-            Supertails was growing fast — more SKUs, more brands, more
+            Supertails was growing fast: more SKUs, more brands, more
             sub-categories per pet type. Marketing was running campaigns.
             Product was building features. CRM was sending nudges. Everyone
             was guessing at the same underlying question:
@@ -153,7 +153,7 @@ export default function CustomerAffinityModellingPage() {
             What does this specific customer actually care about?
           </p>
           <p>
-            The data existed — views, add-to-cart events, wishlist actions,
+            The data existed: views, add-to-cart events, wishlist actions,
             purchases. But the signals were fragmented and unweighted. A
             wishlist meant something different than a purchase. A view from
             yesterday meant something different than one from 90 days ago.
@@ -209,7 +209,7 @@ export default function CustomerAffinityModellingPage() {
             Each level builds on the previous. A customer’s brand affinity is
             contextualized within their sub-category affinity, which sits
             within their category affinity, which sits within their pet type.
-            The hierarchy isn’t just organizational — it’s how the
+            The hierarchy isn’t just organizational. It’s how the
             normalization works.
           </p>
         </div>
@@ -262,7 +262,7 @@ export default function CustomerAffinityModellingPage() {
 
         {/* Event weights */}
         <h3 className="font-serif text-[18px] font-medium text-ink mb-4 mt-8">
-          Event weights — by intent
+          Event weights: by intent
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
           {eventWeights.map((w, i) => (
@@ -288,7 +288,7 @@ export default function CustomerAffinityModellingPage() {
 
         {/* Time decay */}
         <h3 className="font-serif text-[18px] font-medium text-ink mb-4">
-          Time decay — recency over staleness
+          Time decay: recency over staleness
         </h3>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-6">
           <p>
@@ -319,7 +319,7 @@ export default function CustomerAffinityModellingPage() {
 
         {/* Normalization */}
         <h3 className="font-serif text-[18px] font-medium text-ink mb-4">
-          Normalization — making scores comparable
+          Normalization: making scores comparable
         </h3>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
           <p>
@@ -327,7 +327,7 @@ export default function CustomerAffinityModellingPage() {
             a Royal Canin score of 50; a light buyer might have 5. Both could
             still have Royal Canin as their #1 brand. Normalization converts
             raw scores into percentages relative to the customer’s own
-            behavior — “60% of this customer’s Dry Food affinity goes to
+            behavior: “60% of this customer’s Dry Food affinity goes to
             Royal Canin” instead of an opaque “50.”
           </p>
         </div>
@@ -372,7 +372,7 @@ export default function CustomerAffinityModellingPage() {
             Supertails. Marketing uses them for segmentation. Product uses
             them for personalization. CRM uses them for retargeting. Each
             consumer pulls the slice of granularity that matches their use
-            case — category-level for broad campaigns, brand-level for
+            case: category-level for broad campaigns, brand-level for
             personalized recommendations.
           </p>
         </div>
@@ -392,7 +392,7 @@ export default function CustomerAffinityModellingPage() {
             title="What worked"
             icon={<CheckCircle2 size={16} aria-hidden />}
             items={[
-              "Time-decayed scoring surfaced TRUE recent interests, avoiding bias from outdated behavior. Two customers with identical 12-month histories can have very different ‘today’ affinities — decay captures that.",
+              "Time-decayed scoring surfaced true recent interests, avoiding bias from outdated behavior. Two customers with identical 12-month histories can have very different ‘today’ affinities. Decay captures that.",
               "High-granularity scoring (brand and sub-category level) opened cross-sell, nudge campaign, and feature personalization use cases that category-level scoring couldn’t.",
               "Single-table output with normalized percentages made scores immediately interpretable for marketing and growth teams. No need to translate raw scores or explain logarithms.",
             ]}
@@ -401,10 +401,10 @@ export default function CustomerAffinityModellingPage() {
             title="What’s next"
             icon={<Sparkles size={16} aria-hidden />}
             items={[
-              "ML-learned weights — replace manual event weights (1.0 / 2.5 / 3.0 / 5.0) with model-calibrated weights using uplift modeling. Different categories may benefit from different weight structures.",
-              "Score trend analysis — periodic snapshots to identify growing or dropping affinities over time. Catches customer drift early.",
-              "Persona auto-generation — turn affinity scores into named personas (“Grooming Explorer — Cat”) that feed journey orchestration directly.",
-              "Inventory-aware personalization — combine affinity with stock availability for contextual nudges that respect what’s actually purchasable.",
+              "ML-learned weights: replace manual event weights (1.0 / 2.5 / 3.0 / 5.0) with model-calibrated weights using uplift modeling. Different categories may benefit from different weight structures.",
+              "Score trend analysis: periodic snapshots to identify growing or dropping affinities over time. Catches customer drift early.",
+              "Persona auto-generation: turn affinity scores into named personas (“Grooming Explorer: Cat”) that feed journey orchestration directly.",
+              "Inventory-aware personalization: combine affinity with stock availability for contextual nudges that respect what’s actually purchasable.",
             ]}
           />
         </div>
@@ -471,8 +471,8 @@ export default function CustomerAffinityModellingPage() {
               </p>
               <p>
                 This gives downstream teams percentages they can interpret
-                directly — “Royal Canin captures 60% of this customer’s Dry
-                Food affinity” — instead of opaque raw scores.
+                directly: “Royal Canin captures 60% of this customer’s Dry
+                Food affinity”, instead of opaque raw scores.
               </p>
             </TechBlock>
 
@@ -484,14 +484,26 @@ export default function CustomerAffinityModellingPage() {
                 significantly and was a major early investment that paid off.
               </p>
               <p>
-                The output is four production tables — one per level plus a
-                unified view — refreshed regularly and available to CRM,
+                The output is four production tables, one per level plus a
+                unified view, refreshed regularly and available to CRM,
                 product, recommendation, and analytics teams via direct
                 BigQuery access.
               </p>
             </TechBlock>
           </div>
         </details>
+      </section>
+
+      {/* Founder takeaway */}
+      <section className="max-w-content mx-auto px-6 pb-4">
+        <div className="bg-accent-soft/40 border-l-2 border-accent rounded-md px-5 py-5">
+          <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-2">
+            Founder takeaway
+          </div>
+          <p className="text-[15px] text-ink-800 leading-[1.6]">
+            Personalization is a problem of understanding the customer before it is a model problem. Get the customer read right and every team downstream benefits.
+          </p>
+        </div>
       </section>
 
       <hr className="border-ink-200" />

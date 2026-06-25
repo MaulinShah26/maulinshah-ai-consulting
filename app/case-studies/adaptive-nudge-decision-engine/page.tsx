@@ -135,7 +135,7 @@ export default function AndePage() {
               <ArrowDown size={16} className="text-ink-400" aria-hidden />
             </div>
 
-            {/* Layer 4 — the central decision engine, slightly emphasized */}
+            {/* Layer 4, the central decision engine, slightly emphasized */}
             <div className="border-[1.5px] border-accent rounded-md p-4 bg-accent/5 flex gap-4 items-start">
               <Brain size={18} className="text-accent flex-shrink-0 mt-0.5" aria-hidden />
               <div className="flex-1 min-w-0">
@@ -324,6 +324,20 @@ export default function AndePage() {
                 Real-time carries a halo it doesn&apos;t always deserve. Slower, more predictable, more auditable systems outperform faster ones in contexts where trust matters more than reflex. Real-time is something you earn by getting the batch system right first.
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder takeaway */}
+      <section className="py-2 px-6">
+        <div className="max-w-wide mx-auto">
+          <div className="bg-accent-soft/40 border-l-2 border-accent rounded-md px-5 py-5">
+            <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-2">
+              Founder takeaway
+            </div>
+            <p className="text-[15px] text-ink-800 leading-[1.6]">
+              More nudges is not more retention. The win was deciding when not to message someone, which cut waste and protected the relationship.
+            </p>
           </div>
         </div>
       </section>

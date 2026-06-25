@@ -324,6 +324,20 @@ export default function FoodReplenishmentPage() {
         </div>
       </section>
 
+      {/* Founder takeaway */}
+      <section className="py-2 px-6">
+        <div className="max-w-wide mx-auto">
+          <div className="bg-accent-soft/40 border-l-2 border-accent rounded-md px-5 py-5">
+            <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-2">
+              Founder takeaway
+            </div>
+            <p className="text-[15px] text-ink-800 leading-[1.6]">
+              Timing is the product. A reorder nudge on the wrong day is noise. On the right day it feels like a service.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Bottom navigation */}
       <section className="py-8 px-6">
         <div className="max-w-wide mx-auto">

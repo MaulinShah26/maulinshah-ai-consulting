@@ -18,7 +18,7 @@ import {
 export const metadata = {
   title: "AI Commentary at CricHeroes · Maulin Shah",
   description:
-    "A unified GenAI vision at CricHeroes to bring the international cricket experience — pre-match analysis, live ball-by-ball commentary, and post-match wrap-up — to grassroots cricketers. Three pilots evaluated in 2024, three different outcomes, three different lessons about evaluating GenAI bets.",
+    "A unified GenAI vision at CricHeroes to bring the international cricket experience, pre-match analysis, live ball-by-ball commentary, and post-match wrap-up, to grassroots cricketers. Three pilots evaluated in 2024, three different outcomes, three different lessons about evaluating GenAI bets.",
 };
 
 const components = [
@@ -26,7 +26,7 @@ const components = [
     icon: <Mic size={18} aria-hidden />,
     label: "Pre-match show",
     role: "Voice",
-    body: "Expert-style studio analysis before the game — player form, ground history, conditions, why this match matters.",
+    body: "Expert-style studio analysis before the game: player form, ground history, conditions, why this match matters.",
   },
   {
     icon: <MessageCircle size={18} aria-hidden />,
@@ -38,7 +38,7 @@ const components = [
     icon: <Headphones size={18} aria-hidden />,
     label: "Post-match show",
     role: "Voice",
-    body: "Expert-style wrap-up after the game — key moments, milestones, top performances, what the result means.",
+    body: "Expert-style wrap-up after the game: key moments, milestones, top performances, what the result means.",
   },
 ];
 
@@ -96,19 +96,19 @@ const costs = [
 const lessons = [
   {
     title: "Three components, three different killers",
-    body: "Pre and post died on cost economics — the math at scale couldn’t be defended for a non-revenue feature. Live died on quality — the LLM produced repetitive output that wouldn’t hold engagement long-term. Same vision, same team, same year — three completely different reasons to pause. A Fractional AI Lead’s job is to evaluate each bet on its own terms, not bucket them into ‘GenAI worked’ or ‘GenAI didn’t.’",
+    body: "Pre and post died on cost economics. The math at scale couldn’t be defended for a non-revenue feature. Live died on quality. The LLM produced repetitive output that wouldn’t hold engagement long-term. Same vision, same team, same year, three completely different reasons to pause. The job is to evaluate each bet on its own terms, not bucket them into ‘GenAI worked’ or ‘GenAI didn’t.’",
   },
   {
     title: "Cost is not the same problem as cost-at-scale",
-    body: "₹5–6 per match is nothing for a single match. The same number at 10 lakh matches per month becomes ₹50–60 lakh — a real budget conversation. Cost-at-scale is where most GenAI pilots fall down. Looks great in demo, painful in production.",
+    body: "₹5–6 per match is nothing for a single match. The same number at 10 lakh matches per month becomes ₹50–60 lakh, a real budget conversation. Cost-at-scale is where most GenAI pilots fall down. Looks great in demo, painful in production.",
   },
   {
     title: "Engagement uplift isn’t enough by itself",
-    body: "Live commentary moved its target metric 15%. That’s real. But the project surfaced an LLM limitation — repetition over time — that an engagement product can’t survive. Sometimes the headline number is right and the long-term durability isn’t. Both have to clear the bar before something ships.",
+    body: "Live commentary moved its target metric 15%. That’s real. But the project surfaced an LLM limitation, repetition over time, that an engagement product can’t survive. Sometimes the headline number is right and the long-term durability isn’t. Both have to clear the bar before something ships.",
   },
   {
     title: "Architect for the revive",
-    body: "All three pilots produced working code, defensible numbers, and clear conditions under which they become shippable: voice costs drop ~50%, or a revenue model (sponsored audio, premium tier) attaches; LLM repetition gets solved through better prompt diversification or model improvements. None of these are abstract — they’re tracked conditions. The decision is paused, not deleted.",
+    body: "All three pilots produced working code, defensible numbers, and clear conditions under which they become shippable: voice costs drop ~50%, or a revenue model (sponsored audio, premium tier) attaches; LLM repetition gets solved through better prompt diversification or model improvements. None of these are abstract. They’re tracked conditions. The decision is paused, not deleted.",
   },
 ];
 
@@ -143,9 +143,9 @@ export default function AICricketCommentaryPage() {
           AI Commentary at CricHeroes
         </h1>
         <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
-          A unified GenAI vision to bring the international cricket experience —
+          A unified GenAI vision to bring the international cricket experience,
           pre-match analysis, live ball-by-ball commentary, and post-match
-          wrap-up — to grassroots cricketers. Three pilots evaluated in 2024.{" "}
+          wrap-up, to grassroots cricketers. Three pilots evaluated in 2024.{" "}
           <strong>Three different outcomes, three different lessons</strong>{" "}
           about evaluating GenAI bets across cost, quality, and value.
         </p>
@@ -185,10 +185,10 @@ export default function AICricketCommentaryPage() {
             wrap-around is half the reason fans tune in.
           </p>
           <p>
-            CricHeroes had the match — live scoring, ball-by-ball tracking,
+            CricHeroes had the match: live scoring, ball-by-ball tracking,
             player stats, profiles. But the moments around the match were
             quiet. The live commentary that did exist was mechanical and
-            technical — accurate, but flat. Pre and post were dead air. The
+            technical: accurate, but flat. Pre and post were dead air. The
             gap was clear: could GenAI bring the international experience to
             grassroots cricket?
           </p>
@@ -242,7 +242,7 @@ export default function AICricketCommentaryPage() {
       <section className="max-w-content mx-auto px-6 py-12">
         <SectionEyebrow number="03" label="What we built" />
         <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          Two distinct pipelines — voice and text — sharing a foundation
+          Two distinct pipelines, voice and text, sharing a foundation
         </h2>
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
           <p>
@@ -256,8 +256,8 @@ export default function AICricketCommentaryPage() {
           <p>
             The <strong>text pipeline</strong> (used for live commentary) took
             the existing ball-by-ball mechanical text the app was already
-            producing — “4 runs off the over,” “bowled,” “six over square leg”
-            — and rewrote it in real time with GPT into richer, more
+            producing, “4 runs off the over,” “bowled,” “six over square leg”
+            , and rewrote it in real time with GPT into richer, more
             narrative commentary in the Cricbuzz / Cricinfo style.
           </p>
         </div>
@@ -314,7 +314,7 @@ export default function AICricketCommentaryPage() {
           <p>
             Each component was piloted and evaluated against the bar a
             production rollout would have to clear. The results split three
-            ways — and the reasons were as different as the components
+            ways, and the reasons were as different as the components
             themselves.
           </p>
         </div>
@@ -337,7 +337,7 @@ export default function AICricketCommentaryPage() {
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
           <p>
             The unit costs are what determined which components were
-            shippable and which weren’t. Voice synthesis dominated — and it
+            shippable and which weren’t. Voice synthesis dominated, and it
             ran on a different cost curve than text generation.
           </p>
         </div>
@@ -373,19 +373,19 @@ export default function AICricketCommentaryPage() {
             </h4>
           </div>
           <p className="text-[14px] text-ink-700 leading-[1.65]">
-            The gap was about 2x — actual ₹5–6 per match vs. shippable ~₹2–3.
+            The gap was about 2x: actual ₹5–6 per match vs. shippable ~₹2–3.
             But the deeper blocker wasn’t the number. The pre and post shows
             were engagement-only features with no direct revenue tie-in. The
             stakeholder conversation became “is this worth ₹50–60 lakh a
             month to grow engagement?” For an engagement-only feature at
-            that scale, that argument is hard to win — and the right call
+            that scale, that argument is hard to win, and the right call
             was probably not to win it.
           </p>
         </div>
 
         <p className="text-[14px] text-ink-600 leading-[1.65]">
           Live commentary lived on the other side of this math. Text-only
-          generation meant ~₹1–1.5 per match — the economics worked. Which
+          generation meant ~₹1–1.5 per match. The economics worked. Which
           is why the bet on live commentary failed for an entirely
           different reason.
         </p>
@@ -422,7 +422,7 @@ export default function AICricketCommentaryPage() {
         <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-6">
           <p>
             The pilot ran for one month across all matches of 20 overs and
-            above — roughly 25–30 thousand matches. Engagement on the
+            above, roughly 25–30 thousand matches. Engagement on the
             commentary screen rose 15% versus the prior month’s baseline.
             That signal was real.
           </p>
@@ -449,7 +449,7 @@ export default function AICricketCommentaryPage() {
             Engagement products live or die on variety. Repetitive content
             loses users over time even when the initial signal is positive.
             For live commentary to scale into a permanent feature, the
-            repetition problem had to be solved — either through better
+            repetition problem had to be solved: either through better
             prompt diversification, a fundamentally different model
             architecture, or LLM improvements that hadn’t yet arrived in
             2024.
@@ -542,7 +542,7 @@ export default function AICricketCommentaryPage() {
                 The rewritten commentary surfaced in the live match screen,
                 replacing the mechanical text without changing the
                 underlying scoring pipeline. The pilot covered all matches
-                of 20 overs and above — about 25–30 thousand matches in the
+                of 20 overs and above, about 25–30 thousand matches in the
                 pilot month.
               </p>
             </TechBlock>
@@ -573,12 +573,12 @@ export default function AICricketCommentaryPage() {
                 the time of the pilots. Conservatively assuming ~2.5 lakh
                 matches per week × 4 weeks gave ~10 lakh matches per month.
                 At ~₹5.5 average per match for voice shows, the monthly bill
-                came to ~₹55 lakh — with the range ~₹50–60 lakh depending
+                came to ~₹55 lakh, with the range ~₹50–60 lakh depending
                 on exact format mix.
               </p>
               <p>
                 The live commentary pilot ran on ~25–30K matches in one
-                month — limited to matches of 20 overs and above, which was
+                month, limited to matches of 20 overs and above, which was
                 a fraction of total match volume but the right starting
                 cohort for evaluating engagement.
               </p>
@@ -599,7 +599,7 @@ export default function AICricketCommentaryPage() {
                 This is a known characteristic of 2024-era LLMs in
                 high-volume, repeating-event domains. Solving it requires
                 explicit prompt diversification, output deduplication
-                logic, or model improvements — none of which were part of
+                logic, or model improvements, none of which were part of
                 the pilot’s scope.
               </p>
             </TechBlock>
@@ -632,6 +632,18 @@ export default function AICricketCommentaryPage() {
             </TechBlock>
           </div>
         </details>
+      </section>
+
+      {/* Founder takeaway */}
+      <section className="max-w-content mx-auto px-6 pb-4">
+        <div className="bg-accent-soft/40 border-l-2 border-accent rounded-md px-5 py-5">
+          <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-2">
+            Founder takeaway
+          </div>
+          <p className="text-[15px] text-ink-800 leading-[1.6]">
+            The senior call on AI is often what not to build. Killing two pilots early was worth more than shipping all three.
+          </p>
+        </div>
       </section>
 
       <hr className="border-ink-200" />
