@@ -9,10 +9,7 @@ export function Problems() {
         <div className="reveal-child">
           <SectionHeader label={problems.sectionLabel} />
         </div>
-        <h2 className="reveal-child font-serif text-[22px] font-medium tracking-tight text-ink mb-1.5">
-          {problems.heading}
-        </h2>
-        <p className="reveal-child text-[13.5px] text-ink-500 leading-relaxed mb-5 max-w-[560px]">
+        <p className="reveal-child text-base text-ink-600 leading-relaxed mb-5">
           {problems.lede}
         </p>
         <div className="reveal-child grid grid-cols-1 sm:grid-cols-2 gap-3">
