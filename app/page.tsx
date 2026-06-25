@@ -18,8 +18,8 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <Problems />
         <Experience />
+        <Problems />
         <Situation />
         <Approach />
         <Engagements />
