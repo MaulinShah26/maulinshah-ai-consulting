@@ -1,11 +1,15 @@
 // All site content lives here so you can edit copy without touching components.
 
+// Single source for the headline title. Bump to "Fractional Chief Data & AI
+// Officer" later for larger growth-stage clients without touching every section.
+export const role = "Fractional Head of Data & AI";
+
 export const meta = {
   siteUrl: "https://maulinshah.vercel.app",
-  siteName: "Maulin Shah, Fractional AI Lead",
-  defaultTitle: "Maulin Shah · Fractional AI Lead",
+  siteName: `Maulin Shah, ${role}`,
+  defaultTitle: `Maulin Shah · ${role}`,
   defaultDescription:
-    "Fractional AI Lead for founder-led startups. I help you turn “we’ll figure out the data later” into something the team can act on, defend, and explain. The senior AI person you don’t have yet.",
+    "Fractional Head of Data & AI for founder-led startups. I join your leadership team to build and run your data and AI function, until your team can run it without me.",
   author: "Maulin Shah",
   location: "Ahmedabad, India",
 };
@@ -25,13 +29,36 @@ export const nav = [
 ];
 
 export const hero = {
-  eyebrow: "Fractional AI Lead",
+  eyebrow: role,
   headlinePrefix: "For founders who’ve outgrown",
   headlineQuote: "“we’ll figure out the data later.”",
   subhead:
-    "I help turn messy data and unclear AI priorities into decision systems your team can act on, defend, and measure.",
-  primaryCta: { label: "Start a conversation", href: "#contact" },
-  secondaryCta: { label: "See how I work", href: "#approach" },
+    "I join your leadership team to build and run your data and AI function, until your team can run it without me.",
+  primaryCta: { label: "Book a call", href: "#contact" },
+  secondaryCta: { label: "See selected work", href: "#work" },
+};
+
+export const problems: {
+  sectionLabel: string;
+  heading: string;
+  lede: string;
+  cards: { body: string; bridge?: boolean }[];
+} = {
+  sectionLabel: "Sound familiar?",
+  heading: "The week that made you look for someone like me.",
+  lede:
+    "If three or more of these are true, the cost of deciding things informally has started to outrun the speed it used to buy you.",
+  cards: [
+    { body: "Spend keeps going up, but no one can say cleanly what’s working." },
+    { body: "Retention matters, but repeat purchase still happens by reaction, not by plan." },
+    { body: "You have dashboards. Leadership still argues about whose number is right." },
+    { body: "Everyone has an AI idea. No one can say which one is worth engineering time." },
+    { body: "Every real decision still waits on someone pulling numbers by hand." },
+    {
+      body: "You need a senior data and AI person owning this. A full-time hire is too early, or too slow.",
+      bridge: true,
+    },
+  ],
 };
 
 export const experience = {
@@ -155,24 +182,61 @@ export const engagements = {
   cards: [
     {
       quote: "I need a senior data and AI person on my team, but I can’t hire one yet.",
-      title: "Fractional AI Lead",
+      title: role,
       meta: "~10 hrs/week - 3 months minimum - Monthly Retainer",
       tagline: "A senior data and AI lead on your team, running the roadmap from inside.",
       walkaway: "a clear roadmap, working systems live, and a team that runs more of it on their own over time.",
     },
     {
       quote: "I want to know where my data and AI actually stand before going deeper.",
-      title: "Strategic Audit",
+      title: "Data & AI Opportunity Audit",
       meta: "~10-12 hrs/week - 2-3 weeks - Fixed scope",
       tagline: "An honest check on your data and AI, with a written report at the end.",
       walkaway: "a written report on the 2–3 most useful things to do next, plus one 90-minute call with leadership.",
     },
     {
       quote: "I know what to build. I need someone senior to own the design and the build.",
-      title: "Scoped Build",
+      title: "Decision System Build",
       meta: "~15-25 hrs/week - Timeline shaped to scope",
       tagline: "I own one specific build from start to finish, until it’s live.",
       walkaway: "what you wanted, built and live. Or a full system, with your team trained to run it.",
+    },
+  ],
+};
+
+export const faq = {
+  sectionLabel: "Before you book",
+  heading: "The questions founders usually ask first.",
+  items: [
+    {
+      question: "When should we work together?",
+      answer:
+        "When data, retention, or AI decisions have gotten important enough that making them informally is starting to cost you. If it’s still early and cheap to wing it, you don’t need me yet.",
+    },
+    {
+      question: "What if our data is a mess?",
+      answer:
+        "That’s normal, and it’s usually the first thing I sort out. We figure out what you can trust, what you can’t, and which decisions can still get better with what you already have.",
+    },
+    {
+      question: "Do you only advise, or do you build?",
+      answer:
+        "I own the work. The point isn’t a report. It’s the systems, models, and decision habits your team keeps using after I leave.",
+    },
+    {
+      question: "How is this different from hiring a data scientist?",
+      answer:
+        "A data scientist executes the tasks you hand them. I own the function: what to prioritize, what to build, what not to build, and how it ties back to growth. Closer to a head of function than a pair of hands.",
+    },
+    {
+      question: "Do you only work with consumer startups?",
+      answer:
+        "That’s the strongest fit, because retention and customer behavior are home turf for me. The same decision problems show up in marketplaces and other models, and those can fit too.",
+    },
+    {
+      question: "What happens after the first call?",
+      answer:
+        "We decide together whether the right next step is a short audit, a scoped build, an embedded engagement, or nothing at all. If it’s nothing, I’ll say so.",
     },
   ],
 };
@@ -439,7 +503,7 @@ export const about = {
     },
     {
       years: "2026 →",
-      title: "Fractional AI Lead",
+      title: role,
       subtitle: "Independent practice",
       body: "Senior data and AI operator embedded with founder-led startups that don't have one yet.",
     },
