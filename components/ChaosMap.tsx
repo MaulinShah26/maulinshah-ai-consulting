@@ -58,9 +58,9 @@ export function ChaosMap() {
     reduce
       ? undefined
       : {
-          strokeDasharray: 1000,
-          strokeDashoffset: visible ? 0 : 1000,
-          transition: `stroke-dashoffset 700ms ease-out ${i * 90}ms`,
+          strokeDasharray: "1",
+          strokeDashoffset: visible ? "0" : "1",
+          transition: `stroke-dashoffset 850ms ease-out ${i * 110}ms`,
         };
 
   return (
@@ -110,6 +110,7 @@ export function ChaosMap() {
               <path
                 key={i}
                 d={d}
+                pathLength={1}
                 fill="none"
                 stroke="#B5C7C0"
                 strokeWidth="1.2"
@@ -144,6 +145,7 @@ export function ChaosMap() {
               <path
                 key={i}
                 d={d}
+                pathLength={1}
                 fill="none"
                 stroke="#5B3FBE"
                 strokeWidth="1.5"

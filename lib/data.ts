@@ -563,7 +563,7 @@ export const contact = {
 export const diagnostic = {
   sectionLabel: "Sound familiar?",
   lede:
-    "Four questions. If you hesitate on any of them, that hesitation is the cost of deciding informally.",
+    "A few questions. If you hesitate on any of them, that hesitation is the cost of deciding informally.",
   cards: [
     {
       q: "Do your leadership meetings still turn into debates about which numbers are right?",
@@ -571,15 +571,26 @@ export const diagnostic = {
       implication: "Your team is deciding from numbers no one fully trusts.",
     },
     {
-      q: "Do you know why customers didn’t buy again last month?",
+      q: "Do you know which customers are about to stop buying, before they do?",
       label: "If not",
-      implication: "Retention is happening by reaction, not by plan.",
+      implication: "Retention is a reaction, not a plan.",
     },
     {
       q: "How many AI ideas are sitting in Notion but not in production?",
       label: "The real problem",
       implication:
         "Ideas are cheap. Knowing which one earns engineering time is the hard part.",
+    },
+    {
+      q: "Have you shipped something with AI that no one ended up using?",
+      label: "The real cost",
+      implication:
+        "The expensive mistake now isn’t building. It’s building the wrong thing with confidence.",
+    },
+    {
+      q: "When a decision needs data from three teams, how long does it actually take?",
+      label: "The hidden tax",
+      implication: "Slow cross-team answers are slow decisions, and they compound.",
     },
     {
       q: "Do you need senior data and AI ownership before you’re ready to hire full-time?",
