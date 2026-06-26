@@ -48,7 +48,7 @@ export function FAQ() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-[13.5px] text-ink-600 leading-relaxed pb-4 pr-8 max-w-[680px]">
+                    <p className="text-[13.5px] text-ink-600 leading-relaxed pb-4">
                       {item.answer}
                     </p>
                   </div>
