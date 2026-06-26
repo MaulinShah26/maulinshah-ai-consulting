@@ -1,9 +1,9 @@
 const LEFT = [[45,70],[80,60],[115,72],[60,95],[95,100],[130,98],[40,125],[75,128],[110,130],[140,120],[55,155],[90,160],[125,158],[70,188],[105,190],[48,175]];
 const COLS = ["#5B3FBE", "#8B73D8", "#758680"];
 const OVALS = [
-  { y: 60, c: "#5B3FBE", label: "Aggressive openers" },
-  { y: 132, c: "#8B73D8", label: "Anchors" },
-  { y: 204, c: "#758680", label: "Finishers" },
+  { y: 60, c: "#5B3FBE", label: "Destroyer" },
+  { y: 132, c: "#8B73D8", label: "Accumulator" },
+  { y: 204, c: "#758680", label: "Steady Batter" },
 ];
 const OFF = [[-34,-7],[30,-5],[-16,10],[22,9],[2,1]];
 

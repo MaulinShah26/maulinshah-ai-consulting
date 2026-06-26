@@ -63,7 +63,7 @@ export default function AndePage() {
           </p>
 
           {/* Vertical 6-layer stack */}
-          <div className="my-6 max-w-[560px]">
+          <div className="my-6 max-w-[560px] mx-auto">
             {/* Layer 1 */}
             <div className="border border-ink-200 rounded-md p-4 bg-surface flex gap-4 items-start">
               <Users size={18} className="text-accent flex-shrink-0 mt-0.5" aria-hidden />
