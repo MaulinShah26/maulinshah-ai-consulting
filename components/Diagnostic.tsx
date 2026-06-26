@@ -9,7 +9,7 @@ export function Diagnostic() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <Reveal id="problems" className="py-6 px-6">
+    <Reveal id="problems" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader label={diagnostic.sectionLabel} />

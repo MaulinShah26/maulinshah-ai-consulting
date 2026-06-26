@@ -8,7 +8,7 @@ export function About() {
   );
 
   return (
-    <Reveal id="about" className="py-6 px-6">
+    <Reveal id="about" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader label={about.sectionLabel} />

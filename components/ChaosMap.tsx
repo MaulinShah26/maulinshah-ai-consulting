@@ -61,7 +61,7 @@ export function ChaosMap() {
         };
 
   return (
-    <Reveal id="operating-chaos" className="py-6 px-6">
+    <Reveal id="operating-chaos" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader label={chaosMap.sectionLabel} />

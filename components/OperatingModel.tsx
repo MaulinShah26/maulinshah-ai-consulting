@@ -4,7 +4,7 @@ import { SectionHeader } from "./SectionHeader";
 
 export function OperatingModel() {
   return (
-    <Reveal id="operating-model" className="py-6 px-6">
+    <Reveal id="operating-model" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader label={operatingModel.sectionLabel} />
