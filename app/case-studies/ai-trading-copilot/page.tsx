@@ -1,3 +1,4 @@
+import { Nav } from "@/components/Nav";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -278,6 +279,7 @@ function SectionEyebrow({ number, label }: { number: string; label: string }) {
 export default function AITradingCopilotPage() {
   return (
     <main className="bg-page text-ink min-h-screen">
+      <Nav />
       {/* Back link */}
       <div className="max-w-content mx-auto px-6 pt-8 pb-2">
         <Link

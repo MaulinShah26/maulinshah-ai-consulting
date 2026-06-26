@@ -22,11 +22,11 @@ export const social = {
 };
 
 export const nav = [
-  { label: "Problems", href: "#problems" },
-  { label: "Operating model", href: "#operating-model" },
-  { label: "Work", href: "#work" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Book a call", href: "#contact" },
+  { label: "Problems", href: "/#problems" },
+  { label: "Operating model", href: "/#operating-model" },
+  { label: "Work", href: "/#work" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Book a call", href: "/#contact" },
 ];
 
 export const hero = {

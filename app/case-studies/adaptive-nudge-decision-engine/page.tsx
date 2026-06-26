@@ -1,3 +1,4 @@
+import { Nav } from "@/components/Nav";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 export default function AndePage() {
   return (
     <main>
+      <Nav />
       {/* Hero */}
       <section className="pt-12 pb-8 px-6">
         <div className="max-w-wide mx-auto">

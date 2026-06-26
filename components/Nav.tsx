@@ -6,7 +6,7 @@ export function Nav() {
     <nav className="sticky top-0 z-40 bg-page/85 backdrop-blur-md border-b border-ink-200/70">
       <div className="max-w-content mx-auto flex items-center justify-between px-6 py-3.5">
         <a
-          href="#top"
+          href="/"
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           aria-label={`${meta.author}, home`}
         >
