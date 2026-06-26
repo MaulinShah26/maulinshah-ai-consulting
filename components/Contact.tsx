@@ -1,4 +1,5 @@
 "use client";
+import { track } from "@/lib/analytics";
 
 import { useState } from "react";
 import { Calendar, Linkedin, Mail } from "lucide-react";
@@ -36,6 +37,7 @@ export function Contact() {
         <div className="reveal-child flex flex-wrap items-center gap-2">
           <a
             href={social.calendly}
+            onClick={() => track("book_call_click", { location: "contact" })}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-ink text-page rounded-md text-[13px] font-medium hover:bg-ink-800 transition-colors"
@@ -45,7 +47,10 @@ export function Contact() {
           </a>
           <button
             type="button"
-            onClick={copyEmail}
+            onClick={() => {
+              track("email_copy_click");
+              copyEmail();
+            }}
             className="inline-flex items-center gap-1.5 px-4 py-2.5 border border-ink-300 text-ink rounded-md text-[13px] font-medium hover:border-ink-500 hover:bg-ink-50 transition-colors"
           >
             <Mail size={14} aria-hidden />

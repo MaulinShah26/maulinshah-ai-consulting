@@ -1,4 +1,5 @@
 "use client";
+import { track } from "@/lib/analytics";
 
 import { Calendar } from "lucide-react";
 import { hero } from "@/lib/data";
@@ -20,6 +21,7 @@ export function Hero() {
         <div className="reveal-child flex flex-wrap items-center gap-2">
           <a
             href={hero.primaryCta.href}
+            onClick={() => track("hero_cta_click", { cta: "primary" })}
             className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-ink text-page rounded-md text-[13px] font-medium hover:bg-ink-800 transition-colors"
           >
             <Calendar size={14} aria-hidden />
@@ -27,6 +29,7 @@ export function Hero() {
           </a>
           <a
             href={hero.secondaryCta.href}
+            onClick={() => track("hero_cta_click", { cta: "secondary" })}
             className="inline-flex items-center px-4 py-2.5 border border-ink-300 text-ink rounded-md text-[13px] font-medium hover:border-ink-500 hover:bg-ink-50 transition-colors"
           >
             {hero.secondaryCta.label}

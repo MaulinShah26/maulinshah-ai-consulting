@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TrackedLink } from "./TrackedLink";
 import { proof } from "@/lib/data";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
@@ -12,9 +12,11 @@ export function ProofTriptych() {
         </div>
         <div className="reveal-child grid grid-cols-1 sm:grid-cols-3 gap-3">
           {proof.cards.map((c, i) => (
-            <Link
+            <TrackedLink
               key={i}
               href={c.href}
+              event="case_study_click"
+              params={{ slug: c.href, from: "home" }}
               className="block bg-surface border border-ink-200 rounded-xl p-5 hover:border-accent/40 transition-colors"
             >
               <div className="font-mono text-[10px] uppercase tracking-wide text-accent mb-1.5">
@@ -39,16 +41,17 @@ export function ProofTriptych() {
                   </span>
                 </div>
               ))}
-            </Link>
+            </TrackedLink>
           ))}
         </div>
         <div className="reveal-child mt-4">
-          <Link
+          <TrackedLink
             href="/work"
+            event="view_all_work_click"
             className="font-mono text-[11px] uppercase tracking-wide text-accent"
           >
             See all work &rarr;
-          </Link>
+          </TrackedLink>
         </div>
       </div>
     </Reveal>

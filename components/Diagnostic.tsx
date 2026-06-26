@@ -1,4 +1,5 @@
 "use client";
+import { track } from "@/lib/analytics";
 
 import { useState } from "react";
 import { diagnostic } from "@/lib/data";
@@ -24,7 +25,10 @@ export function Diagnostic() {
               <button
                 key={i}
                 type="button"
-                onClick={() => setOpen(isOpen ? null : i)}
+                onClick={() => {
+                  setOpen(isOpen ? null : i);
+                  if (!isOpen) track("diagnostic_card_open", { card: c.q });
+                }}
                 aria-expanded={isOpen}
                 className="group text-left rounded-[10px] border border-ink-200 bg-surface p-[18px] hover:border-accent/40 transition-colors"
               >

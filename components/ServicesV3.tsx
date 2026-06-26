@@ -1,4 +1,5 @@
 "use client";
+import { track } from "@/lib/analytics";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -74,7 +75,10 @@ export function ServicesV3() {
                   {!isOpen && (
                     <button
                       type="button"
-                      onClick={() => setOpen(i)}
+                      onClick={() => {
+                        setOpen(i);
+                        track("service_expand", { service: c.title });
+                      }}
                       aria-expanded={isOpen}
                       className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
                     >
@@ -85,12 +89,14 @@ export function ServicesV3() {
                     <>
                       <Link
                         href={c.pageHref}
+                        onClick={() => track("service_details_click", { service: c.title })}
                         className="font-mono text-[10.5px] uppercase tracking-wide text-accent whitespace-nowrap"
                       >
                         Full details
                       </Link>
                       <a
                         href={c.href}
+                        onClick={() => track("service_discuss_click", { service: c.title })}
                         className="font-mono text-[10.5px] uppercase tracking-wide text-accent whitespace-nowrap hover:text-ink transition-colors"
                       >
                         Discuss

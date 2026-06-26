@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Spectral, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { meta } from "@/lib/data";
 import "./globals.css";
 
@@ -74,6 +75,9 @@ export default function RootLayout({
       </head>
       <body className="bg-page text-ink font-sans antialiased">
         <ThemeProvider>{children}</ThemeProvider>
+        {process.env.NEXT_PUBLIC_GA_ID ? (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        ) : null}
       </body>
     </html>
   );

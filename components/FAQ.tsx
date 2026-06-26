@@ -1,4 +1,5 @@
 "use client";
+import { track } from "@/lib/analytics";
 
 import { useState } from "react";
 import { faq } from "@/lib/data";
@@ -24,7 +25,10 @@ export function FAQ() {
               <div key={i} className="border-b border-ink-200">
                 <button
                   type="button"
-                  onClick={() => setOpen(isOpen ? null : i)}
+                  onClick={() => {
+                    setOpen(isOpen ? null : i);
+                    if (!isOpen) track("faq_open", { question: item.question });
+                  }}
                   aria-expanded={isOpen}
                   className="w-full flex items-center justify-between gap-4 py-4 text-left"
                 >

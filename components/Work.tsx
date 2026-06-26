@@ -1,4 +1,5 @@
 "use client";
+import { track } from "@/lib/analytics";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -160,7 +161,11 @@ export function Work() {
 
 function CorporateCardEl({ card }: { card: CorporateCardData }) {
   return (
-    <Link className="case-card" href={card.href}>
+    <Link
+      className="case-card"
+      href={card.href}
+      onClick={() => track("case_study_click", { slug: card.href, kind: "corporate" })}
+    >
       <span className="case-tag">{card.tag}</span>
       <h3 className="case-title">{card.title}</h3>
       <p className="case-meta">{card.meta}</p>
@@ -220,13 +225,18 @@ function PersonalCardEl({ card }: { card: PersonalCardData }) {
         href={card.href}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => track("case_study_click", { slug: card.href, kind: "personal" })}
       >
         {inner}
       </a>
     );
   }
   return (
-    <Link className="case-card" href={card.href}>
+    <Link
+      className="case-card"
+      href={card.href}
+      onClick={() => track("case_study_click", { slug: card.href, kind: "personal" })}
+    >
       {inner}
     </Link>
   );
