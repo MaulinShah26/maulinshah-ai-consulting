@@ -1,10 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import { faq } from "@/lib/data";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
 export function FAQ() {
+  const [open, setOpen] = useState<number | null>(null);
+
   return (
-    <Reveal id="faq" className="py-4 px-6">
+    <Reveal id="faq" className="py-6 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
           <SectionHeader label={faq.sectionLabel} />
@@ -12,23 +17,45 @@ export function FAQ() {
         <h2 className="reveal-child font-serif text-[22px] font-medium tracking-tight text-ink mb-5">
           {faq.heading}
         </h2>
-        <div className="reveal-child grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
-          {faq.items.map((item, i) => (
-            <div
-              key={i}
-              className="rounded-[10px] border border-ink-200 bg-surface px-[18px] py-4"
-            >
-              <span className="block font-mono text-[10.5px] font-medium tracking-[0.08em] uppercase text-accent mb-2.5">
-                Q
-              </span>
-              <h3 className="text-[14.5px] font-medium text-ink mb-2 leading-snug">
-                {item.question}
-              </h3>
-              <p className="text-[13px] text-ink-600 leading-[1.65]">
-                {item.answer}
-              </p>
-            </div>
-          ))}
+        <div className="reveal-child border-t border-ink-200">
+          {faq.items.map((item, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={i} className="border-b border-ink-200">
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  className="w-full flex items-center justify-between gap-4 py-4 text-left"
+                >
+                  <span className="text-[15px] font-medium text-ink leading-snug">
+                    {item.question}
+                  </span>
+                  <span
+                    className={`shrink-0 text-accent text-xl leading-none transition-transform duration-200 ${
+                      isOpen ? "rotate-45" : ""
+                    }`}
+                    aria-hidden
+                  >
+                    +
+                  </span>
+                </button>
+                <div
+                  className={`grid transition-all duration-200 ease-out ${
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="text-[13.5px] text-ink-600 leading-relaxed pb-4 pr-8 max-w-[680px]">
+                      {item.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </Reveal>

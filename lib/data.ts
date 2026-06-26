@@ -592,9 +592,9 @@ export const diagnostic = {
 
 export const chaosMap = {
   sectionLabel: "Why this happens",
-  heading: "Every team owns a piece. No one owns the decision.",
+  heading: "Every team owns its piece. No one owns how they connect.",
   lede:
-    "Marketing, product, engineering, and finance each hold part of the picture. Without one owner, the signals stay fragmented and the decisions stay slow.",
+    "Marketing, product, engineering, and finance each have their own data and their own targets. The decisions that need all of it together, retention, growth, which AI to build, have no single owner.",
   teams: [
     { name: "Marketing", signal: "CAC · campaigns" },
     { name: "Product", signal: "events · funnels" },
@@ -602,8 +602,8 @@ export const chaosMap = {
     { name: "Finance", signal: "revenue · margin" },
     { name: "AI ideas", signal: "LLM pilots" },
   ],
-  chaosLine: "fragmented signals · unclear ownership · slow decisions",
-  core: { title: role, sub: "one operating logic for better decisions" },
+  chaosLine: "different numbers · no shared owner · slow decisions",
+  core: { title: role, sub: "one owner for the data and decisions that cross teams" },
   outcomes: ["Growth", "Retention", "Efficiency", "Practical AI"],
 };
 
