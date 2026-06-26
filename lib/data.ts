@@ -828,3 +828,145 @@ export const servicePages = [
 export function getServicePage(slug: string) {
   return servicePages.find((s) => s.slug === slug);
 }
+
+
+export const caseNarratives: Record<string, {
+  company: string; year: string; status: string;
+  heroTitle: string; heroLead: string; tags: string[];
+  context: string; problem: string; constraints: string[];
+  insight: string; system: string;
+  impact: { v: string; k: string }[]; playbook: string;
+}> = {
+  "customer-retention-probability": {
+    company: "Supertails", year: "2025", status: "Live in production",
+    heroTitle: "Catching customers before they lapse, not after.",
+    heroLead: "A daily score that flags who’s about to stop buying, wired straight into the team’s retention actions. Roughly 60% more conversions in the test group.",
+    tags: ["Retention", "Subscription pet care", "Daily scoring"],
+    context: "Supertails sells pet food and medicine on repeat. The model leans on customers coming back, so a customer who quietly stops ordering costs far more than it looks. Growth depends less on new sign-ups than on keeping the ones already here.",
+    problem: "Plenty of customers placed a first order and never came back. By the time it showed up in the numbers they were already gone, and winning a lapsed customer back costs far more than keeping one who’s wavering.",
+    constraints: [
+      "No clean churned label to learn from. Churn here is silent, not a cancel button.",
+      "The output had to be explainable to a non-technical retention team.",
+      "It had to run every day, per customer, not as a one-off analysis.",
+      "Built on messy, real-world event data across orders and app activity.",
+    ],
+    insight: "Retention is a prediction problem before it’s a campaign problem. The win isn’t a better win-back email. It’s knowing who’s about to slip while you can still do something about it.",
+    system: "A daily repurchase-probability score for every customer, turned straight into an action the retention team could take.",
+    impact: [
+      { v: "~60%", k: "more conversions in the test group" },
+      { v: "Daily", k: "scored per customer, in production" },
+      { v: "Holdout", k: "measured against a control, not a guess" },
+    ],
+    playbook: "If your business runs on repeat purchase, treat retention as a prediction problem first. Score who’s about to lapse, act while you still can, and always measure against a holdout so the lift is real.",
+  },
+  "batters-bowlers-tag": {
+    company: "CricHeroes", year: "2023", status: "Adopted platform-wide",
+    heroTitle: "Giving ten million players a name for how they play.",
+    heroLead: "Clustering turned a mountain of match data into nine playing styles the whole community adopted, five batting, four bowling.",
+    tags: ["Player intelligence", "Clustering", "Community"],
+    context: "CricHeroes is where millions of amateur cricketers record their matches. Players don’t just want stats. They want to be seen, to know what kind of cricketer they are.",
+    problem: "There was a mountain of player data and no way for a player to find themselves in it. Numbers without a story don’t build identity, and identity is what keeps a community coming back.",
+    constraints: [
+      "No labels. Nobody had ever defined the types the model had to find.",
+      "It had to feel obvious to players who aren’t analysts.",
+      "It had to hold up across millions of players and stay true over time.",
+      "The output had to be a name a player would proudly claim.",
+    ],
+    insight: "People don’t want a stat line. They want an identity. The win was handing every player a name for how they actually play.",
+    system: "Clustering grouped players into nine playing styles, five batting and four bowling, that the community adopted as its own language.",
+    impact: [
+      { v: "10M+", k: "players given a playing style" },
+      { v: "9 styles", k: "a shared community language" },
+      { v: "Merch", k: "the tags became products players bought" },
+    ],
+    playbook: "A data product wins when it hands the user an identity, not a dashboard. Find the few types your users already half-feel, and name them.",
+  },
+  "food-replenishment": {
+    company: "Supertails", year: "2024", status: "Framework",
+    heroTitle: "Reaching customers the moment before they run out.",
+    heroLead: "A replenishment model that times each customer’s next order instead of nagging everyone on the same schedule.",
+    tags: ["Replenishment", "Timing", "Subscription pet care"],
+    context: "Pet food gets consumed on a clock. A bag lasts a fairly predictable number of days, which means there’s a right moment to remind a customer to reorder, and a wrong one.",
+    problem: "Reminders were generic and mistimed. Customers ran out and bought elsewhere, or got nudged too early and tuned out. The reorder moment was being guessed, not modeled.",
+    constraints: [
+      "Two very different customers: repeat buyers with history, and first-timers with none.",
+      "Consumption varies by pet, pack size, and household.",
+      "It had to predict per customer and keep running, not score once.",
+      "Getting the timing wrong in either direction loses trust.",
+    ],
+    insight: "Replenishment is a timing problem, not a discount problem. The job is to reach each customer just before they run low, every cycle.",
+    system: "Predict each customer’s reorder window, nudge just before it, then learn from what they do and tighten the next prediction.",
+    impact: [
+      { v: "Per customer", k: "reorder timing, not a blanket reminder" },
+      { v: "2 paths", k: "history-based and first-order inference" },
+      { v: "Reusable", k: "a framework, not a one-off model" },
+    ],
+    playbook: "For any business selling consumables, model the consumption clock, not just the purchase. The money is in the timing of the next order.",
+  },
+  "customer-affinity-modelling": {
+    company: "Supertails", year: "2025", status: "In production",
+    heroTitle: "Recommendations that actually know what goes with what.",
+    heroLead: "An affinity model that learns which products truly move together, so cross-sell stops being noise.",
+    tags: ["Affinity", "Recommendations", "Subscription pet care"],
+    context: "Supertails carries food, medicine, grooming, and more. What a customer buys says a lot about what they’ll want next, if you know which things actually go together.",
+    problem: "Recommendations leaned on broad rules and gut feel. Without real affinities, cross-sell was noisy and often irrelevant, which trains customers to ignore it.",
+    constraints: [
+      "Co-purchase is sparse and noisy. Popular items co-occur with everything.",
+      "Pet type changes everything. Dog and cat baskets barely overlap.",
+      "It had to drive recommendations, not just sit in a report.",
+      "It had to stay fresh as the catalog changed.",
+    ],
+    insight: "Affinity isn’t what’s popular. It’s what genuinely moves together once you strip out the noise. That signal is what makes a recommendation feel like it gets you.",
+    system: "Model which products and categories truly co-occur, group them into themes, and feed those affinities into recommendations.",
+    impact: [
+      { v: "Themes", k: "affinity groups, not flat rules" },
+      { v: "Cleaner", k: "recommendations tied to real signal" },
+      { v: "Per pet", k: "affinities that respect dog vs cat" },
+    ],
+    playbook: "Before you recommend, model affinity properly. Bought together beats also popular every time, but only after you remove what’s popular with everything.",
+  },
+  "adaptive-nudge-decision-engine": {
+    company: "Supertails", year: "2025", status: "In rollout",
+    heroTitle: "One decision per customer, instead of five campaigns.",
+    heroLead: "A decision engine that picks the single best next action for each customer each cycle, sends it, and measures it.",
+    tags: ["Decision engine", "Cross-channel", "Subscription pet care"],
+    context: "Supertails could reach a customer many ways: email, WhatsApp, a discount, or nothing at all. Each channel and team ran its own campaigns, often nudging the same customer at once.",
+    problem: "Overlapping campaigns meant the same customer got hit from several directions, spending budget and burning goodwill. No one owned the single question: what’s the one best thing to do for this customer right now?",
+    constraints: [
+      "Many teams, many channels, no shared decision layer.",
+      "The best action changes per customer and per cycle.",
+      "It had to be measurable, not just sent.",
+      "It had to learn, not stay static.",
+    ],
+    insight: "The problem wasn’t more channels. It was the lack of one owner for the next action. Turn it from many campaigns into one decision, made per customer, per cycle.",
+    system: "One engine takes every candidate action, picks the single best next action for each customer, sends it, measures against a holdout, and re-ranks each cycle.",
+    impact: [
+      { v: "One decision", k: "per customer, per cycle" },
+      { v: "vs holdout", k: "every action measured, not assumed" },
+      { v: "Learns", k: "re-ranks as outcomes come in" },
+    ],
+    playbook: "When channels multiply, the fix isn’t another campaign. It’s a decision layer that owns the single next action and measures it. That is ANDE, the Adaptive Nudge Decision Engine.",
+  },
+  "ai-cricket-commentary": {
+    company: "CricHeroes", year: "2024", status: "Shipped",
+    heroTitle: "Commentary that sounds human and stays true to the match.",
+    heroLead: "GenAI that narrates real community matches at scale, grounded in what actually happened and judged before it ships.",
+    tags: ["GenAI", "Generation", "Community"],
+    context: "CricHeroes records millions of community matches, but ball-by-ball data is dry. Commentary is what makes a match feel alive, and writing it by hand at that volume is impossible.",
+    problem: "Auto-generated commentary either sounded robotic or drifted from what actually happened. Getting it both accurate and natural, at scale, is genuinely hard.",
+    constraints: [
+      "It had to stay true to the real match events, no invented drama.",
+      "It had to sound human, not like a template.",
+      "It had to run cheaply at huge volume.",
+      "Quality had to be judged, not assumed.",
+    ],
+    insight: "Generation only works on top of grounded events. The model’s job isn’t to invent a story. It’s to narrate the one that actually happened, well.",
+    system: "Match events become structured context, the model writes commentary grounded in that context, and the output is evaluated before it ships.",
+    impact: [
+      { v: "At scale", k: "commentary across community matches" },
+      { v: "Grounded", k: "tied to real events, not invented" },
+      { v: "Evaluated", k: "quality judged, not assumed" },
+    ],
+    playbook: "GenAI works when it narrates grounded facts, not when it free-styles. Feed it structured truth, then judge the output before it reaches users.",
+  },
+};

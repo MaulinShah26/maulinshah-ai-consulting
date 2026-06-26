@@ -1,4 +1,5 @@
 import { Nav } from "@/components/Nav";
+import { CaseNarrative } from "@/components/CaseNarrative";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -21,6 +22,7 @@ export default function FoodReplenishmentPage() {
   return (
     <main>
       <Nav />
+      <CaseNarrative slug="food-replenishment" />
       {/* Hero */}
       <section className="pt-12 pb-8 px-6">
         <div className="max-w-wide mx-auto">

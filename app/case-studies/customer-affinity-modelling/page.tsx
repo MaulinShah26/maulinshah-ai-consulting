@@ -1,4 +1,5 @@
 import { Nav } from "@/components/Nav";
+import { CaseNarrative } from "@/components/CaseNarrative";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -95,6 +96,7 @@ export default function CustomerAffinityModellingPage() {
   return (
     <main className="bg-page text-ink min-h-screen">
       <Nav />
+      <CaseNarrative slug="customer-affinity-modelling" />
       {/* Back link */}
       <div className="max-w-content mx-auto px-6 pt-8 pb-2">
         <Link
