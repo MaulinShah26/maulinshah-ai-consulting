@@ -643,15 +643,17 @@ export const services = {
       commitment: "~10 hrs/week · 3 months minimum · monthly retainer",
       whatThisIs: "A senior data and AI lead on your team, running the roadmap from inside.",
       walkAway: "A clear roadmap, working systems live, and a team that runs more of it on their own over time.",
+      pageHref: "/services/fractional-head",
       href: "#contact",
     },
     {
       title: "Data & AI Opportunity Audit",
       bestFor: "For founders who want to know where they actually stand first.",
-      outcome: "Two weeks to know what to fix, build, automate, or ignore.",
-      commitment: "~10-12 hrs/week · 2-3 weeks · fixed scope",
+      outcome: "Two to four weeks to know what to fix, build, automate, or ignore.",
+      commitment: "~10-12 hrs/week · 2-4 weeks · fixed scope",
       whatThisIs: "An honest check on your data and AI, with a written report at the end.",
       walkAway: "A written report on the 2-3 most useful things to do next, plus one 90-minute call with leadership.",
+      pageHref: "/services/opportunity-audit",
       href: "#contact",
     },
     {
@@ -661,6 +663,7 @@ export const services = {
       commitment: "~15-25 hrs/week · timeline shaped to scope",
       whatThisIs: "I own one specific build from start to finish, until it’s live.",
       walkAway: "What you wanted, built and live. Or a full system, with your team trained to run it.",
+      pageHref: "/services/decision-system-build",
       href: "#contact",
     },
   ],
@@ -695,3 +698,133 @@ export const proof = {
     },
   ],
 };
+
+
+export const servicePages = [
+  {
+    slug: "opportunity-audit",
+    eyebrow: "Data & AI Opportunity Audit",
+    heroTitle:
+      "Know exactly what to fix, build, automate, or ignore. In two to four weeks.",
+    heroSub:
+      "For founders who know their data and AI are getting messy but can’t yet see where it’s costing them. A short, focused review that ends with a clear, ranked plan, not a longer to-do list.",
+    meta: ["~10-12 hrs/week", "2-4 weeks", "Fixed scope"],
+    problem:
+      "The data exists, but no two teams agree on the numbers. There’s a list of AI ideas and no clear way to rank them. And the biggest call, what to build first, keeps getting made on gut feel. You don’t need more tools. You need to know which two or three moves actually matter.",
+    visual: "audit" as const,
+    whatLabel: "What I do in those weeks",
+    whatIDo: [
+      "Short interviews with the people who own growth, product, and the data.",
+      "A scan of your actual data, metrics, and definitions, where they agree and where they don’t.",
+      "List every AI and data idea, then rank each one by value and readiness.",
+      "Write up the ranked plan and walk your leadership team through it.",
+    ],
+    walkAway: [
+      "A written report on the two or three most useful things to do next.",
+      "Your AI ideas sorted on the priority matrix.",
+      "An honest read on where your numbers stop being trustworthy.",
+      "One 90-minute session with your leadership team to agree on the plan.",
+    ],
+    notThis: [
+      "Not a dashboard build or a tooling project.",
+      "Not a fifty-page deck you’ll never reread.",
+      "Not a vendor or model recommendation in disguise.",
+    ],
+    useCases: [
+      "We have a dozen AI ideas and no idea which one to build.",
+      "Every team reports a different number and I can’t tell who’s right.",
+      "We’re about to hire a data lead and want to scope the role first.",
+    ],
+    ctaLabel: "Request an audit",
+    ctaTitle: "Want this for your company?",
+    ctaSub:
+      "A 30-minute call to see if an audit is the right first step. If it isn’t, I’ll tell you what is.",
+  },
+  {
+    slug: "fractional-head",
+    eyebrow: role,
+    heroTitle:
+      "A senior data and AI lead on your team, before you’re ready to hire one full-time.",
+    heroSub:
+      "For founders whose data and AI matter to the business but don’t yet justify a full-time executive. I join your leadership team, own the function, and run it from inside until your team can.",
+    meta: ["~10 hrs/week", "3 months minimum", "Monthly retainer"],
+    problem:
+      "Your data and AI are now too important to leave to whoever has time, but a full-time head is too early or too expensive. So decisions slip, the roadmap drifts, and good people work on the wrong things. You need someone senior owning this now, not a job posting that takes six months to fill.",
+    visual: "rail" as const,
+    whatLabel: "What I do inside the business",
+    whatIDo: [
+      "Sit in your leadership team and own the data and AI function.",
+      "Set the roadmap: what to build, what to fix, what to leave alone.",
+      "Build the systems and decision logic your team runs on.",
+      "Set up the rituals and coach or hire the people who take it over.",
+    ],
+    walkAway: [
+      "A clear roadmap your team actually follows.",
+      "Working systems live in production, not slideware.",
+      "A team that runs more of it on their own each month.",
+      "A function that’s ready for a full-time head when you are.",
+    ],
+    notThis: [
+      "Not a part-time pair of hands taking tickets.",
+      "Not a strategy deck with no one to execute it.",
+      "Not a permanent dependency. The goal is to leave.",
+    ],
+    useCases: [
+      "We have data people but no one owning the direction.",
+      "We know AI matters but keep starting and stopping.",
+      "We’re a year from a full-time hire and can’t wait that long.",
+    ],
+    ctaLabel: "Discuss fractional leadership",
+    ctaTitle: "Need this on your team?",
+    ctaSub:
+      "A 30-minute call to see if a fractional engagement fits where you are. No pitch.",
+  },
+  {
+    slug: "decision-system-build",
+    eyebrow: "Decision System Build",
+    heroTitle: "One high-impact system, designed, built, and handed over.",
+    heroSub:
+      "For founders who already know the bet and want someone senior to own the build end to end. A retention score, a replenishment engine, customer intelligence, whatever the one system is that moves the business.",
+    meta: ["~15-25 hrs/week", "Timeline shaped to scope", "Fixed outcome"],
+    problem:
+      "You know what you want built. What you don’t have is someone senior who can design it properly, build it, and leave your team able to run it. Hand it to a junior and you get something fragile no one trusts. Hand it to an agency and you get a black box. You need one owner from design to live.",
+    visual: "timeline" as const,
+    whatLabel: "What I do",
+    whatIDo: [
+      "Pin down the decision the system has to make, and who acts on it.",
+      "Design the data, logic, and outputs around that one decision.",
+      "Build it, test it against real cases, and put it in front of users.",
+      "Document it and train your team to own and extend it.",
+    ],
+    walkAway: [
+      "The system you wanted, built and live.",
+      "Decision logic your team understands, not a black box.",
+      "Your people trained to run and extend it.",
+      "A pattern you can reuse for the next system.",
+    ],
+    notThis: [
+      "Not a proof of concept that dies in a notebook.",
+      "Not an outsourced build you can’t maintain.",
+      "Not a dashboard. This makes a call, not just a chart.",
+    ],
+    useCases: [
+      "We need a retention score wired into our CRM.",
+      "We want a replenishment engine for repeat orders.",
+      "We have the model idea but no one to ship it right.",
+    ],
+    phases: [
+      { label: "Frame", body: "Pin the decision, the data, and the owner." },
+      { label: "Design", body: "Shape the logic and the outputs." },
+      { label: "Build", body: "Build, test against real cases, ship." },
+      { label: "Transfer", body: "Document and train your team to run it." },
+    ],
+    ctaLabel: "Explore a build",
+    ctaTitle: "Have a system in mind?",
+    ctaSub:
+      "A 30-minute call to scope what you want built and whether I’m the right person to own it.",
+  },
+];
+
+export function getServicePage(slug: string) {
+  return servicePages.find((s) => s.slug === slug);
+}

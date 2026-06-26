@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { services } from "@/lib/data";
 import { Reveal } from "./Reveal";
@@ -79,12 +80,20 @@ export function ServicesV3() {
                     {isOpen ? "Show less" : "Explore this path"}
                   </button>
                   {isOpen && (
-                    <a
-                      href={c.href}
-                      className="font-mono text-[10.5px] uppercase tracking-wide text-ink-500 hover:text-ink transition-colors"
-                    >
-                      Discuss &rarr;
-                    </a>
+                    <>
+                      <Link
+                        href={c.pageHref}
+                        className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
+                      >
+                        Full details &rarr;
+                      </Link>
+                      <a
+                        href={c.href}
+                        className="font-mono text-[10.5px] uppercase tracking-wide text-ink-500 hover:text-ink transition-colors"
+                      >
+                        Discuss &rarr;
+                      </a>
+                    </>
                   )}
                 </div>
               </div>
