@@ -41,14 +41,9 @@ export function ChaosMap() {
     }
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setVisible(true);
-            io.unobserve(e.target);
-          }
-        });
+        entries.forEach((e) => setVisible(e.isIntersecting));
       },
-      { threshold: 0.35 }
+      { threshold: 0.3 }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -60,7 +55,9 @@ export function ChaosMap() {
       : {
           strokeDasharray: "1",
           strokeDashoffset: visible ? "0" : "1",
-          transition: `stroke-dashoffset 850ms ease-out ${i * 110}ms`,
+          transition: visible
+            ? `stroke-dashoffset 850ms ease-out ${i * 110}ms`
+            : "none",
         };
 
   return (
