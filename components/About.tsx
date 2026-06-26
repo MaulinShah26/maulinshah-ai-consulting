@@ -3,17 +3,33 @@ import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
 export function About() {
+  const milestones = about.journey.filter(
+    (j) => j.title !== "Lericon Informatics"
+  );
+
   return (
-    <Reveal id="about" className="py-4 px-6">
+    <Reveal id="about" className="py-6 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
-          <SectionHeader number={about.sectionNumber} label={about.sectionLabel} />
+          <SectionHeader label={about.sectionLabel} />
         </div>
-
-        <div className="reveal-child">
-          <p className="text-[15px] text-ink-700 leading-[1.7]">
-            Ten years across data and AI roles. Started in satellite operations at ISRO and analytics consulting. Spent five years at CricHeroes as Senior Data Scientist, where I built their data and AI function from scratch, shipped ML at consumer scale, and led the team. Then a year as EIR at Supertails on retention and decision systems before starting this independent practice.
-          </p>
+        <div className="reveal-child grid grid-cols-1 sm:grid-cols-4 gap-5">
+          {milestones.map((m) => (
+            <div key={m.title}>
+              <div className="font-mono text-[10.5px] text-accent mb-2">
+                {m.years}
+              </div>
+              <h4 className="font-serif text-[16px] font-semibold text-ink leading-tight">
+                {m.title}
+              </h4>
+              <div className="text-[11px] text-ink-500 mt-0.5 mb-2">
+                {m.subtitle}
+              </div>
+              <p className="text-[12px] text-ink-600 leading-relaxed">
+                {m.body}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </Reveal>
