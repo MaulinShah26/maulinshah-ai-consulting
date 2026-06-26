@@ -619,9 +619,8 @@ export const chaosMap = {
 };
 
 export const notebook = {
-  sectionLabel: "Founder notebook · 01",
   insight:
-    "The companies that scale aren’t the ones with the most dashboards. They’re the ones that consistently make better decisions.",
+    "Most companies have plenty of dashboards. Far fewer have someone making sure they lead to better decisions.",
 };
 
 export const operatingModel = {
