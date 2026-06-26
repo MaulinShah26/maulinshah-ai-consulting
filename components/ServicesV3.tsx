@@ -70,29 +70,39 @@ export function ServicesV3() {
                   </div>
                 </div>
 
-                <div className="mt-4 flex items-center gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setOpen(isOpen ? null : i)}
-                    aria-expanded={isOpen}
-                    className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
-                  >
-                    {isOpen ? "Show less" : "Explore this path"}
-                  </button>
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5">
+                  {!isOpen && (
+                    <button
+                      type="button"
+                      onClick={() => setOpen(i)}
+                      aria-expanded={isOpen}
+                      className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
+                    >
+                      Explore this path
+                    </button>
+                  )}
                   {isOpen && (
                     <>
                       <Link
                         href={c.pageHref}
-                        className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
+                        className="font-mono text-[10.5px] uppercase tracking-wide text-accent whitespace-nowrap"
                       >
-                        Full details &rarr;
+                        Full details
                       </Link>
                       <a
                         href={c.href}
-                        className="font-mono text-[10.5px] uppercase tracking-wide text-ink-500 hover:text-ink transition-colors"
+                        className="font-mono text-[10.5px] uppercase tracking-wide text-accent whitespace-nowrap hover:text-ink transition-colors"
                       >
-                        Discuss &rarr;
+                        Discuss
                       </a>
+                      <button
+                        type="button"
+                        onClick={() => setOpen(null)}
+                        aria-expanded={isOpen}
+                        className="font-mono text-[10.5px] uppercase tracking-wide text-ink-400 whitespace-nowrap hover:text-ink transition-colors"
+                      >
+                        Show less
+                      </button>
                     </>
                   )}
                 </div>
