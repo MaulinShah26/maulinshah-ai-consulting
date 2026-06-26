@@ -1,14 +1,14 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
-import { Problems } from "@/components/Problems";
 import { Experience } from "@/components/Experience";
-import { Situation } from "@/components/Situation";
-import { Approach } from "@/components/Approach";
-import { Engagements } from "@/components/Engagements";
-import { FAQ } from "@/components/FAQ";
-import { Outcomes } from "@/components/Outcomes";
-import { Work } from "@/components/Work";
+import { Diagnostic } from "@/components/Diagnostic";
+import { ChaosMap } from "@/components/ChaosMap";
+import { NotebookInsight } from "@/components/NotebookInsight";
+import { OperatingModel } from "@/components/OperatingModel";
+import { ServicesV3 } from "@/components/ServicesV3";
+import { ProofTriptych } from "@/components/ProofTriptych";
 import { About } from "@/components/About";
+import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 
@@ -19,12 +19,12 @@ export default function Home() {
       <main>
         <Hero />
         <Experience />
-        <Problems />
-        <Situation />
-        <Approach />
-        <Engagements />
-        <Outcomes />
-        <Work />
+        <Diagnostic />
+        <ChaosMap />
+        <NotebookInsight />
+        <OperatingModel />
+        <ServicesV3 />
+        <ProofTriptych />
         <About />
         <FAQ />
         <Contact />

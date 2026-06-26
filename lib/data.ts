@@ -22,10 +22,11 @@ export const social = {
 };
 
 export const nav = [
-  { label: "How I work", href: "#approach" },
-  { label: "Selected work", href: "#work" },
-  { label: "About me", href: "#about" },
-  { label: "Start a conversation", href: "#contact" },
+  { label: "Problems", href: "#problems" },
+  { label: "Operating model", href: "#operating-model" },
+  { label: "Work", href: "#work" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Book a call", href: "#contact" },
 ];
 
 export const hero = {
@@ -554,4 +555,127 @@ export const contact = {
   emailLabel: "Copy email",
   emailCopiedLabel: "✓ Copied! Paste anywhere",
   linkedinLabel: "Connect on LinkedIn",
+};
+
+
+/* ----------------------------- V3 Lighthouse ----------------------------- */
+
+export const diagnostic = {
+  sectionLabel: "Sound familiar?",
+  lede:
+    "Four questions. If you hesitate on any of them, that hesitation is the cost of deciding informally.",
+  cards: [
+    {
+      q: "Do your leadership meetings still turn into debates about which numbers are right?",
+      label: "If yes",
+      implication: "Your team is deciding from numbers no one fully trusts.",
+    },
+    {
+      q: "Do you know why customers didn’t buy again last month?",
+      label: "If not",
+      implication: "Retention is happening by reaction, not by plan.",
+    },
+    {
+      q: "How many AI ideas are sitting in Notion but not in production?",
+      label: "The real problem",
+      implication:
+        "Ideas are cheap. Knowing which one earns engineering time is the hard part.",
+    },
+    {
+      q: "Do you need senior data and AI ownership before you’re ready to hire full-time?",
+      label: "The gap",
+      implication:
+        "A full-time hire is often too early, or too slow. This is the in-between.",
+    },
+  ],
+};
+
+export const chaosMap = {
+  sectionLabel: "Why this happens",
+  heading: "Every team owns a piece. No one owns the decision.",
+  lede:
+    "Marketing, product, engineering, and finance each hold part of the picture. Without one owner, the signals stay fragmented and the decisions stay slow.",
+  teams: [
+    { name: "Marketing", signal: "CAC · campaigns" },
+    { name: "Product", signal: "events · funnels" },
+    { name: "Engineering", signal: "pipelines · warehouse" },
+    { name: "Finance", signal: "revenue · margin" },
+    { name: "AI ideas", signal: "LLM pilots" },
+  ],
+  chaosLine: "fragmented signals · unclear ownership · slow decisions",
+  core: { title: role, sub: "one operating logic for better decisions" },
+  outcomes: ["Growth", "Retention", "Efficiency", "Practical AI"],
+};
+
+export const notebook = {
+  sectionLabel: "Founder notebook · 01",
+  insight:
+    "The companies that scale aren’t the ones with the most dashboards. They’re the ones that consistently make better decisions.",
+};
+
+export const operatingModel = {
+  sectionLabel: "How I work inside the business",
+  steps: [
+    { n: "01", title: "Diagnose", body: "Find what’s moving growth, and what’s quietly leaking." },
+    { n: "02", title: "Prioritize", body: "Decide which bets and which AI earn the work, in what order." },
+    { n: "03", title: "Build", body: "Ship the systems and decision logic the team runs on." },
+    { n: "04", title: "Transfer", body: "Hand it over so the team runs it without me." },
+  ],
+};
+
+export const services = {
+  sectionLabel: "Three ways to work together",
+  cards: [
+    {
+      title: role,
+      bestFor: "For Series A/B founders who need senior ownership before a full-time hire.",
+      outcome: "Monthly executive ownership of your data and AI function.",
+      cta: "Explore this path",
+      href: "#contact",
+    },
+    {
+      title: "Data & AI Opportunity Audit",
+      bestFor: "For founders who want to know where they actually stand first.",
+      outcome: "Two weeks to know what to fix, build, automate, or ignore.",
+      cta: "Request an audit",
+      href: "#contact",
+    },
+    {
+      title: "Decision System Build",
+      bestFor: "For founders who know the bet and want it shipped right.",
+      outcome: "One high-impact system designed, built, and handed over.",
+      cta: "Explore a build",
+      href: "#contact",
+    },
+  ],
+};
+
+export const proof = {
+  sectionLabel: "Selected systems I’ve built",
+  cards: [
+    {
+      tag: "Retention",
+      title: "Customer Retention Score",
+      problem: "Spending on retention without knowing who was about to lapse.",
+      system: "A daily repurchase-probability score wired to intervention logic.",
+      outcome: "~60% lift on test conversion.",
+      href: "/case-studies/customer-retention-probability",
+    },
+    {
+      tag: "Player intelligence",
+      title: "Batters & Bowlers Tag",
+      problem: "Years of player data, no way for players to see themselves in it.",
+      system: "Clustering into nine archetypes adopted platform-wide.",
+      outcome: "10M+ players, a community language, a merch line.",
+      href: "/case-studies/batters-bowlers-tag",
+    },
+    {
+      tag: "Decision engine",
+      title: "Adaptive Nudge Engine",
+      problem: "Overlapping campaigns nudging the same customer, burning spend.",
+      system: "One engine picking the best next action per cycle.",
+      outcome: "In rollout, built to cut waste and lift repeat rates.",
+      href: "/case-studies/adaptive-nudge-decision-engine",
+    },
+  ],
 };
