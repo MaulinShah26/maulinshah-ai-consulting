@@ -24,30 +24,6 @@ export default function AndePage() {
     <main>
       <Nav />
       <CaseNarrative slug="adaptive-nudge-decision-engine" />
-      {/* Hero */}
-      <section className="pt-12 pb-8 px-6">
-        <div className="max-w-wide mx-auto">
-          <Link
-            href="/#work"
-            className="inline-flex items-center gap-1.5 text-[12px] text-ink-500 hover:text-ink mb-8 transition-colors"
-          >
-            <ArrowLeft size={12} aria-hidden />
-            Back to portfolio
-          </Link>
-          <div className="text-[11px] font-mono uppercase tracking-wider text-accent mb-3">
-            Case study &middot; Supertails
-          </div>
-          <h1 className="font-serif text-[28px] md:text-[34px] font-medium text-ink leading-tight mb-4 tracking-tight">
-            Adaptive Nudge Decision Engine (ANDE)
-          </h1>
-          <div className="text-[13px] text-ink-500 mb-6">
-            Supertails &middot; 2025 &middot; Framework now in operationalization
-          </div>
-          <p className="text-[15px] md:text-[16px] text-ink-700 leading-[1.6]">
-            A unified decision layer for customer nudges. Designed to move Supertails from use-case campaigns to system-driven decisioning.
-          </p>
-        </div>
-      </section>
 
       {/* Section: The situation */}
       <section className="py-6 px-6">

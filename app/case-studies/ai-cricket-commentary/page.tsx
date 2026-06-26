@@ -127,52 +127,6 @@ export default function AICricketCommentaryPage() {
     <main className="bg-page text-ink min-h-screen">
       <Nav />
       <CaseNarrative slug="ai-cricket-commentary" />
-      {/* Back link */}
-      <div className="max-w-content mx-auto px-6 pt-8 pb-2">
-        <Link
-          href="/#work"
-          className="inline-flex items-center gap-1.5 text-[13px] font-mono uppercase tracking-wider text-ink-500 hover:text-accent transition-colors"
-        >
-          <ArrowLeft size={14} aria-hidden />
-          Back to selected work
-        </Link>
-      </div>
-
-      {/* Hero */}
-      <header className="max-w-content mx-auto px-6 pt-6 pb-10">
-        <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent font-medium mb-4">
-          CricHeroes · 2024 · Three GenAI pilots evaluated
-        </div>
-        <h1 className="font-serif text-[36px] md:text-[44px] font-medium text-ink leading-[1.1] mb-5">
-          AI Commentary at CricHeroes
-        </h1>
-        <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
-          A unified GenAI vision to bring the international cricket experience,
-          pre-match analysis, live ball-by-ball commentary, and post-match
-          wrap-up, to grassroots cricketers. Three pilots evaluated in 2024.{" "}
-          <strong>Three different outcomes, three different lessons</strong>{" "}
-          about evaluating GenAI bets across cost, quality, and value.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            GenAI evaluation
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Voice synthesis
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            LLM quality limits
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Cost-benefit analysis
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Sports-tech
-          </span>
-        </div>
-      </header>
-
-      <hr className="border-ink-200" />
 
       {/* 01 The situation */}
       <section className="max-w-content mx-auto px-6 py-12">

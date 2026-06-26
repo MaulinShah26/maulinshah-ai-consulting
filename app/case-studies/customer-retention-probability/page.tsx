@@ -99,47 +99,6 @@ export default function CustomerRetentionProbabilityPage() {
     <main className="bg-page text-ink min-h-screen">
       <Nav />
       <CaseNarrative slug="customer-retention-probability" />
-      {/* Back link */}
-      <div className="max-w-content mx-auto px-6 pt-8 pb-2">
-        <Link
-          href="/#work"
-          className="inline-flex items-center gap-1.5 text-[13px] font-mono uppercase tracking-wider text-ink-500 hover:text-accent transition-colors"
-        >
-          <ArrowLeft size={14} aria-hidden />
-          Back to selected work
-        </Link>
-      </div>
-
-      {/* Hero */}
-      <header className="max-w-content mx-auto px-6 pt-6 pb-10">
-        <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent font-medium mb-4">
-          Supertails · 2025 · Live in production
-        </div>
-        <h1 className="font-serif text-[36px] md:text-[44px] font-medium text-ink leading-[1.1] mb-5">
-          Customer Retention Probability Score
-        </h1>
-        <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
-          A hybrid ML system that scores every customer’s 30-day repurchase
-          likelihood, refreshes daily, and routes the right intervention into
-          the right channel: WhatsApp, email, or push.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Production ML
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Hybrid model
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Retention activation
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            SHAP interpretability
-          </span>
-        </div>
-      </header>
-
-      <hr className="border-ink-200" />
 
       {/* 01 The Situation */}
       <section className="max-w-content mx-auto px-6 py-12">

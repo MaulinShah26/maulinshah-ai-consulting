@@ -139,49 +139,6 @@ export default function BattersBowlersTagPage() {
     <main className="bg-page text-ink min-h-screen">
       <Nav />
       <CaseNarrative slug="batters-bowlers-tag" />
-      {/* Back link */}
-      <div className="max-w-content mx-auto px-6 pt-8 pb-2">
-        <Link
-          href="/#work"
-          className="inline-flex items-center gap-1.5 text-[13px] font-mono uppercase tracking-wider text-ink-500 hover:text-accent transition-colors"
-        >
-          <ArrowLeft size={14} aria-hidden />
-          Back to selected work
-        </Link>
-      </div>
-
-      {/* Hero */}
-      <header className="max-w-content mx-auto px-6 pt-6 pb-10">
-        <div className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent font-medium mb-4">
-          CricHeroes · Launched 2022 · Live in production
-        </div>
-        <h1 className="font-serif text-[36px] md:text-[44px] font-medium text-ink leading-[1.1] mb-5">
-          Batters & Bowlers Tag
-        </h1>
-        <p className="text-[16px] md:text-[17px] text-ink-700 leading-[1.6] mb-6">
-          An ML clustering system that classified grassroots cricketers into{" "}
-          <strong>five batting</strong> and <strong>four bowling</strong>{" "}
-          archetypes. Rolled out to millions of players on CricHeroes. Became
-          the language a community uses to talk about itself, and the basis
-          for a personalized merchandise line.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Clustering ML
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Player profiling
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Product-as-ML
-          </span>
-          <span className="inline-block bg-surface text-ink-700 font-mono text-[10px] font-medium px-2.5 py-1 rounded border-[0.5px] border-ink-200">
-            Sports-tech
-          </span>
-        </div>
-      </header>
-
-      <hr className="border-ink-200" />
 
       {/* 01 The situation */}
       <section className="max-w-content mx-auto px-6 py-12">

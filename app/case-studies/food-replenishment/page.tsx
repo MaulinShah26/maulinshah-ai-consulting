@@ -23,30 +23,6 @@ export default function FoodReplenishmentPage() {
     <main>
       <Nav />
       <CaseNarrative slug="food-replenishment" />
-      {/* Hero */}
-      <section className="pt-12 pb-8 px-6">
-        <div className="max-w-wide mx-auto">
-          <Link
-            href="/#work"
-            className="inline-flex items-center gap-1.5 text-[12px] text-ink-500 hover:text-ink mb-8 transition-colors"
-          >
-            <ArrowLeft size={12} aria-hidden />
-            Back to portfolio
-          </Link>
-          <div className="text-[11px] font-mono uppercase tracking-wider text-accent mb-3">
-            Case study &middot; Supertails
-          </div>
-          <h1 className="font-serif text-[28px] md:text-[34px] font-medium text-ink leading-tight mb-4 tracking-tight">
-            Food Replenishment Strategic Framework
-          </h1>
-          <div className="text-[13px] text-ink-500 mb-6">
-            Supertails &middot; EIR &middot; 2024 to 2025
-          </div>
-          <p className="text-[15px] md:text-[16px] text-ink-700 leading-[1.6]">
-            Predicting when pet parents would run out of food, and timing the right nudge to land before they did.
-          </p>
-        </div>
-      </section>
 
       {/* Section: The situation */}
       <section className="py-6 px-6">
