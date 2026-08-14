@@ -73,9 +73,12 @@ const businessDecisions = [
 export function HomeDecisionFriction() {
   return (
     <section className={styles.section} aria-labelledby="decision-friction-title">
-      <div className={styles.inner}>
+      <div className={styles.inner} style={{ width: "min(1440px, 100%)" }}>
         <div className={styles.intro}>
-          <h2 id="decision-friction-title" style={{ gridColumn: "1 / -1" }}>
+          <h2
+            id="decision-friction-title"
+            style={{ gridColumn: "1 / -1", maxWidth: "none" }}
+          >
             Most growing companies already have the teams. What they often lack is one owner connecting them.
           </h2>
         </div>
