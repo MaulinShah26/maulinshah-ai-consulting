@@ -1,0 +1,328 @@
+.root {
+  background: rgb(var(--page));
+  color: rgb(var(--ink));
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 34px 24px 66px;
+  border-bottom: 1px solid rgb(var(--ink-200));
+  background:
+    radial-gradient(circle at 88% 14%, rgb(var(--accent-soft) / 0.72), transparent 29%),
+    linear-gradient(180deg, rgb(var(--surface) / 0.42), transparent 72%);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 460px;
+  height: 460px;
+  right: -190px;
+  top: -210px;
+  border: 1px solid rgb(var(--accent) / 0.16);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.frame {
+  position: relative;
+  z-index: 1;
+  width: min(1440px, 100%);
+  margin: 0 auto;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgb(var(--ink-500));
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.back:hover {
+  color: rgb(var(--accent));
+  transform: translateX(-3px);
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.65fr);
+  gap: 68px;
+  align-items: end;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 22px;
+}
+
+.meta span,
+.tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 999px;
+  font-size: 11.5px;
+  line-height: 1.2;
+  color: rgb(var(--ink-600));
+  background: rgb(var(--surface) / 0.74);
+}
+
+.meta span:first-child {
+  border-color: rgb(var(--accent) / 0.3);
+  color: rgb(var(--accent));
+  background: rgb(var(--accent-soft) / 0.56);
+}
+
+.title {
+  max-width: 1020px;
+  margin: 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(54px, 6.4vw, 94px);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.052em;
+  color: rgb(var(--ink));
+}
+
+.lead {
+  max-width: 880px;
+  margin: 28px 0 0;
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.58;
+  color: rgb(var(--ink-600));
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.tags span {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.impactPanel {
+  padding: 24px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 26px;
+  background: rgb(var(--surface) / 0.86);
+  box-shadow: 0 22px 60px rgb(var(--ink) / 0.07);
+}
+
+.panelLabel,
+.summaryLabel,
+.takeawayLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  line-height: 1.2;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+.impactGrid {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.impactItem {
+  padding: 16px 0 0;
+  border-top: 1px solid rgb(var(--ink-200));
+}
+
+.impactValue {
+  display: block;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(30px, 3vw, 48px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: rgb(var(--ink));
+}
+
+.impactKey {
+  display: block;
+  margin-top: 7px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: rgb(var(--ink-500));
+}
+
+.summary {
+  padding: 68px 24px 52px;
+}
+
+.summaryHeader {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+  margin-bottom: 28px;
+}
+
+.summaryHeader h2 {
+  max-width: 920px;
+  margin: 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(34px, 3.5vw, 52px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.summaryCard {
+  min-height: 220px;
+  padding: 24px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 22px;
+  background: rgb(var(--surface));
+}
+
+.summaryCardDecision {
+  background:
+    linear-gradient(145deg, rgb(var(--accent-soft) / 0.86), rgb(var(--surface)) 74%);
+  border-color: rgb(var(--accent) / 0.28);
+}
+
+.summaryCard h3 {
+  margin: 14px 0 12px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(24px, 2.2vw, 34px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.summaryCard p {
+  max-width: 620px;
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: rgb(var(--ink-600));
+}
+
+.visualGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.visualGridSingle {
+  grid-template-columns: 1fr;
+}
+
+.visualCard {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 22px;
+  background: rgb(var(--surface));
+}
+
+.visualCard > div:last-child {
+  margin-top: 16px;
+}
+
+.takeaway {
+  margin-top: 14px;
+  padding: 22px 24px;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+  border-radius: 22px;
+  color: rgb(var(--page));
+  background:
+    radial-gradient(circle at 88% 20%, rgb(var(--accent) / 0.2), transparent 32%),
+    rgb(var(--ink));
+}
+
+.takeawayLabel {
+  color: rgb(var(--page) / 0.62);
+}
+
+.takeaway p {
+  max-width: 980px;
+  margin: 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(20px, 2vw, 29px);
+  line-height: 1.25;
+  color: rgb(var(--page));
+}
+
+@media (max-width: 1000px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .impactGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .impactItem {
+    padding-top: 14px;
+  }
+
+  .summaryHeader,
+  .takeaway {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding: 26px 18px 48px;
+  }
+
+  .back {
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: clamp(46px, 13vw, 68px);
+  }
+
+  .impactGrid,
+  .summaryGrid,
+  .visualGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary {
+    padding: 50px 18px 38px;
+  }
+
+  .summaryCard {
+    min-height: auto;
+  }
+
+  .takeaway {
+    padding: 20px;
+  }
+}
