@@ -29,7 +29,7 @@
 }
 
 .intro h2 {
-  max-width: 940px;
+  max-width: 1040px;
   margin: 0;
   font-family: var(--font-serif), Georgia, serif;
   font-size: clamp(36px, 4.1vw, 56px);
@@ -37,11 +37,6 @@
   line-height: 1.01;
   letter-spacing: -0.04em;
   color: rgb(var(--ink));
-}
-
-.intro h2 em {
-  font-weight: 500;
-  color: rgb(var(--accent));
 }
 
 .diagram {
@@ -63,8 +58,8 @@
 .diagramGlow {
   position: absolute;
   z-index: -1;
-  width: 500px;
-  height: 500px;
+  width: 520px;
+  height: 520px;
   left: 50%;
   top: 48%;
   transform: translate(-50%, -50%);
@@ -77,7 +72,7 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) 54px 292px 54px minmax(350px, 1.12fr);
+  grid-template-columns: minmax(260px, 1fr) 54px 304px 54px minmax(350px, 1.12fr);
   gap: 0;
   align-items: stretch;
 }
@@ -228,7 +223,7 @@
 }
 
 .hubColumn {
-  min-height: 474px;
+  min-height: 500px;
   padding-top: 36px;
   display: grid;
   place-items: center;
@@ -257,8 +252,8 @@
 .hubOrbit {
   position: absolute;
   z-index: 0;
-  width: 286px;
-  height: 286px;
+  width: 310px;
+  height: 310px;
   left: 50%;
   top: calc(50% + 18px);
   transform: translate(-50%, -50%);
@@ -277,16 +272,16 @@
 }
 
 .orbitTwo {
-  inset: 30px;
+  inset: 32px;
   border-color: rgb(var(--diagram-mint) / 0.17);
 }
 
 .hub {
   position: relative;
   z-index: 2;
-  width: 228px;
-  min-height: 244px;
-  padding: 24px 20px;
+  width: 246px;
+  min-height: 286px;
+  padding: 26px 21px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -325,7 +320,7 @@
 }
 
 .hub strong {
-  max-width: 190px;
+  max-width: 205px;
   font-family: var(--font-serif), Georgia, serif;
   font-size: 25px;
   line-height: 1.03;
@@ -353,11 +348,11 @@
 }
 
 .hub p {
-  max-width: 190px;
+  max-width: 205px;
   margin: 0;
   font-size: 11.5px;
   line-height: 1.45;
-  color: rgb(255 255 255 / 0.7);
+  color: rgb(255 255 255 / 0.72);
 }
 
 .questionStack {
@@ -366,8 +361,8 @@
 
 .questionNode {
   position: relative;
-  min-height: 101px;
-  padding: 15px 18px;
+  min-height: 112px;
+  padding: 16px 18px;
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr);
   gap: 14px;
@@ -426,9 +421,9 @@
 
 .questionNode strong {
   display: block;
-  max-width: 360px;
+  max-width: 365px;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(16px, 1.28vw, 19px);
+  font-size: clamp(16px, 1.22vw, 18.5px);
   line-height: 1.12;
   font-weight: 600;
   color: #ffffff;
@@ -447,10 +442,11 @@
 }
 
 .diagramFooter p {
-  max-width: 760px;
+  max-width: none;
   margin: 0;
+  white-space: nowrap;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(17px, 1.55vw, 21px);
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.25;
   color: rgb(255 255 255 / 0.9);
 }
@@ -483,7 +479,7 @@
   }
 
   .diagramBody {
-    grid-template-columns: minmax(230px, 1fr) 42px 250px 42px minmax(300px, 1.08fr);
+    grid-template-columns: minmax(230px, 1fr) 42px 260px 42px minmax(300px, 1.08fr);
   }
 
   .teamNode::after,
@@ -500,7 +496,12 @@
   }
 
   .hub {
-    width: 210px;
+    width: 220px;
+    min-height: 278px;
+  }
+
+  .diagramFooter p {
+    white-space: normal;
   }
 }
 
@@ -558,13 +559,17 @@
   }
 
   .hub {
-    width: min(390px, 100%);
+    width: min(420px, 100%);
     min-height: auto;
     border-radius: 24px;
   }
 
   .questionStack {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .diagramFooter p {
+    white-space: normal;
   }
 }
 
@@ -602,7 +607,7 @@
   }
 
   .questionNode {
-    min-height: 92px;
+    min-height: 100px;
   }
 
   .diagramFooter {
