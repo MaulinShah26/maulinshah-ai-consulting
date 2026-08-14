@@ -49,23 +49,23 @@ const teams = [
 
 const businessDecisions = [
   {
-    label: "Acquisition quality",
-    question: "Which channels bring customers who retain and pay back?",
+    label: "Profitable growth",
+    question: "What is constraining profitable growth, and where should the next unit of capital go?",
     Icon: TrendingUp,
   },
   {
-    label: "Retention economics",
-    question: "Where are valuable customers being lost, and which intervention is worth the cost?",
+    label: "Customer value",
+    question: "Which customers create the most long term value, and what should we change to win more of them?",
     Icon: Target,
   },
   {
-    label: "Investment priority",
-    question: "Which product or growth bet deserves the next unit of budget and engineering time?",
+    label: "Capital allocation",
+    question: "Which product, growth or operating bet should we fund next, and what should we stop doing?",
     Icon: BriefcaseBusiness,
   },
   {
-    label: "AI automation",
-    question: "Which workflow should we automate now, and which should wait?",
+    label: "AI leverage",
+    question: "Where can AI create material business leverage without adding operational risk?",
     Icon: Sparkles,
   },
 ];
@@ -75,9 +75,9 @@ export function HomeDecisionFriction() {
     <section className={styles.section} aria-labelledby="decision-friction-title">
       <div className={styles.inner}>
         <div className={styles.intro}>
-          <span className={styles.eyebrow}>The missing connective layer</span>
+          <span className={styles.eyebrow}>The connective gap</span>
           <h2 id="decision-friction-title">
-            Most companies already have the functions. <em>What is often missing is one owner connecting them.</em>
+            Most growing companies already have the teams. What they often lack is one owner connecting them.
           </h2>
         </div>
 
@@ -116,21 +116,21 @@ export function HomeDecisionFriction() {
                 <span className={styles.hubIcon} aria-hidden>
                   <DatabaseZap size={25} strokeWidth={1.6} />
                 </span>
-                <span className={styles.hubKicker}>This is where I sit</span>
+                <span className={styles.hubKicker}>The connective owner</span>
                 <strong>Fractional Head of Data & AI</strong>
                 <div className={styles.hubCapabilities}>
                   <span>Shared data</span>
                   <span>Decision logic</span>
                   <span>Applied AI</span>
                 </div>
-                <p>I connect the functions, ask the questions no single team owns, and turn the answer into action.</p>
+                <p>I connect the functions, challenge assumptions with shared data, and turn CEO level questions into decisions the business can act on.</p>
               </div>
             </div>
 
             <div className={styles.rightRail} aria-hidden />
 
             <div className={styles.questionColumn}>
-              <div className={styles.columnLabel}>Questions no single team owns</div>
+              <div className={styles.columnLabel}>Questions no single team can answer alone</div>
               <div className={styles.questionStack}>
                 {businessDecisions.map(({ label, question, Icon }) => (
                   <article key={label} className={styles.questionNode}>
