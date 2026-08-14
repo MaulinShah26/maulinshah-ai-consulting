@@ -18,18 +18,15 @@ export function Nav() {
 
   return (
     <nav className="sticky top-0 z-40 border-b border-ink-200/70 bg-page/88 backdrop-blur-xl">
-      <div className="max-w-[1180px] mx-auto flex items-center justify-between px-6 py-4">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="group flex items-baseline gap-4"
+          className="group flex items-baseline"
           aria-label={`${meta.author}, home`}
           onClick={() => setOpen(false)}
         >
           <span className="font-serif text-[23px] font-semibold tracking-tight text-ink group-hover:text-accent transition-colors">
             Maulin Shah
-          </span>
-          <span className="hidden sm:inline font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-500">
-            Data &amp; AI Decision Systems
           </span>
         </Link>
 
@@ -71,7 +68,7 @@ export function Nav() {
 
       {open && (
         <div className="md:hidden border-t border-ink-200 bg-page px-6 py-5">
-          <div className="max-w-[1180px] mx-auto flex flex-col">
+          <div className="max-w-[1440px] mx-auto flex flex-col">
             {links.map((item, index) => (
               <Link
                 key={item.href}
