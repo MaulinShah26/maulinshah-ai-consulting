@@ -2,14 +2,7 @@
 
 import { useEffect } from "react";
 
-const SKIP_TAGS = new Set([
-  "SCRIPT",
-  "STYLE",
-  "CODE",
-  "PRE",
-  "TEXTAREA",
-  "SVG",
-]);
+const SKIP_SELECTOR = "script, style, code, pre, textarea, svg";
 
 function normalizeDashlessText(value: string) {
   return value
@@ -20,17 +13,25 @@ function normalizeDashlessText(value: string) {
     .replace(/(^|\s)-(?=\d)/g, "$1minus ");
 }
 
+function cleanTextNode(node: Node) {
+  if (node.nodeType !== Node.TEXT_NODE) return;
+
+  const parent = node.parentElement;
+  if (!parent || parent.closest(SKIP_SELECTOR)) return;
+
+  const current = node.nodeValue ?? "";
+  const next = normalizeDashlessText(current);
+  if (next !== current) node.nodeValue = next;
+}
+
 function scrub(root: Node) {
+  cleanTextNode(root);
+
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   let node = walker.nextNode();
 
   while (node) {
-    const parent = node.parentElement;
-    if (parent && !SKIP_TAGS.has(parent.tagName)) {
-      const current = node.nodeValue ?? "";
-      const next = normalizeDashlessText(current);
-      if (next !== current) node.nodeValue = next;
-    }
+    cleanTextNode(node);
     node = walker.nextNode();
   }
 }
@@ -42,7 +43,7 @@ export function DashlessPolicy() {
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
         if (mutation.type === "characterData") {
-          if (mutation.target.parentNode) scrub(mutation.target.parentNode);
+          cleanTextNode(mutation.target);
           continue;
         }
 
