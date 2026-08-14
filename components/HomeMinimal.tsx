@@ -173,8 +173,8 @@ export function HomeMinimal() {
         <div className={portalStyles.exploreInner}>
           <header className={portalStyles.exploreHeader}>
             <span className={portalStyles.exploreKicker}>Explore</span>
-            <h2>Go where the question takes you.</h2>
-            <p>Proof, ways to work together, background, or a direct conversation.</p>
+            <h2>Explore the work behind better decisions.</h2>
+            <span className={portalStyles.exploreLine} aria-hidden />
           </header>
 
           <div className={portalStyles.portalGrid}>
