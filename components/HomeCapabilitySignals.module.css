@@ -1,0 +1,137 @@
+.capabilityLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.capabilityCard {
+  position: absolute;
+  width: 128px;
+  min-height: 78px;
+  padding: 11px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid rgb(var(--accent) / 0.24);
+  border-radius: 13px;
+  background: rgb(var(--accent-soft) / 0.58);
+  color: rgb(var(--ink));
+  box-shadow: 0 10px 28px rgb(var(--accent) / 0.08);
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.capabilityCard:hover {
+  border-color: rgb(var(--accent) / 0.55);
+  background: rgb(var(--accent-soft) / 0.78);
+  transform: translateY(-2px);
+}
+
+.capabilityOne {
+  left: 0;
+  top: 42px;
+  transform: rotate(2deg);
+}
+
+.capabilityTwo {
+  left: -2px;
+  bottom: 22px;
+  transform: rotate(-2deg);
+}
+
+.capabilityThree {
+  right: 0;
+  top: 292px;
+  transform: rotate(2deg);
+}
+
+.capabilityOne:hover,
+.capabilityTwo:hover,
+.capabilityThree:hover {
+  transform: translateY(-2px) rotate(0deg);
+}
+
+.capabilityLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 7.5px;
+  line-height: 1.2;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+.capabilityTitle {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 13px;
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: rgb(var(--ink));
+}
+
+.capabilityCopy {
+  font-size: 8.7px;
+  line-height: 1.35;
+  color: rgb(var(--ink-600));
+}
+
+@media (max-width: 980px) {
+  .capabilityLayer {
+    position: relative;
+    inset: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding-top: 370px;
+  }
+
+  .capabilityCard,
+  .capabilityOne,
+  .capabilityTwo,
+  .capabilityThree {
+    position: relative;
+    inset: auto;
+    width: auto;
+    min-height: 82px;
+    transform: none;
+  }
+
+  .capabilityCard:hover,
+  .capabilityOne:hover,
+  .capabilityTwo:hover,
+  .capabilityThree:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 640px) {
+  .capabilityLayer {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding-top: 382px;
+  }
+
+  .capabilityCard,
+  .capabilityOne,
+  .capabilityTwo,
+  .capabilityThree {
+    min-height: auto;
+    padding: 11px 13px;
+  }
+
+  .capabilityTitle {
+    font-size: 14px;
+  }
+
+  .capabilityCopy {
+    font-size: 9.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capabilityCard {
+    transition: none;
+  }
+}
