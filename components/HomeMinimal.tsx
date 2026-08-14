@@ -3,6 +3,7 @@ import { ArrowUpRight, Calendar } from "lucide-react";
 import { experience, social } from "@/lib/data";
 import styles from "./HomeMinimal.module.css";
 import problemStyles from "./HomeCapabilitySignals.module.css";
+import portalStyles from "./HomePortals.module.css";
 
 const founderProblems = [
   {
@@ -46,26 +47,38 @@ const chapters = [
   {
     number: "01",
     label: "Work",
+    eyebrow: "Selected work",
     href: "/work",
-    description: "Production systems, case studies and experiments.",
+    statement: "See how ambiguous business problems become systems teams can actually use.",
+    tags: ["Case studies", "Decision systems", "Experiments"],
+    cardClass: portalStyles.portalWork,
   },
   {
     number: "02",
     label: "Services",
+    eyebrow: "Ways to work together",
     href: "/services",
-    description: "Audit, build and fractional leadership engagements.",
+    statement: "Bring in senior Data and AI judgment without waiting for the perfect full time hire.",
+    tags: ["Diagnose", "Build", "Lead"],
+    cardClass: portalStyles.portalServices,
   },
   {
     number: "03",
     label: "About",
+    eyebrow: "Background and approach",
     href: "/about",
-    description: "The operator behind the systems and how I work.",
+    statement: "The experience, principles and operating style behind the work.",
+    tags: ["Experience", "Thinking", "Approach"],
+    cardClass: portalStyles.portalAbout,
   },
   {
     number: "04",
     label: "Contact",
+    eyebrow: "Start a conversation",
     href: "/contact",
-    description: "Bring me the business decision that is getting expensive.",
+    statement: "Have a decision that is getting expensive, slow or unclear? Bring it here.",
+    tags: ["Fit call", "Project inquiry"],
+    cardClass: portalStyles.portalContact,
   },
 ];
 
@@ -156,21 +169,44 @@ export function HomeMinimal() {
         </div>
       </section>
 
-      <section className={styles.chapters}>
-        <div className={styles.chapterInner}>
-          <div className={styles.chapterIntro}>
-            <span>Go deeper</span>
-            <span>The homepage is the overview. The evidence lives one click away.</span>
-          </div>
+      <section className={portalStyles.exploreSection}>
+        <div className={portalStyles.exploreInner}>
+          <header className={portalStyles.exploreHeader}>
+            <span className={portalStyles.exploreKicker}>Explore</span>
+            <h2>Go where the question takes you.</h2>
+            <p>Proof, ways to work together, background, or a direct conversation.</p>
+          </header>
 
-          {chapters.map((chapter) => (
-            <Link key={chapter.href} href={chapter.href} className={styles.chapterLink}>
-              <span className={styles.chapterNum}>{chapter.number}</span>
-              <span className={styles.chapterTitle}>{chapter.label}</span>
-              <span className={styles.chapterDesc}>{chapter.description}</span>
-              <ArrowUpRight size={19} aria-hidden />
-            </Link>
-          ))}
+          <div className={portalStyles.portalGrid}>
+            {chapters.map((chapter) => (
+              <Link
+                key={chapter.href}
+                href={chapter.href}
+                className={`${portalStyles.portal} ${chapter.cardClass}`}
+              >
+                <span className={portalStyles.portalGhost} aria-hidden>{chapter.label}</span>
+
+                <div className={portalStyles.portalTop}>
+                  <span className={portalStyles.portalNum}>{chapter.number}</span>
+                  <span className={portalStyles.portalEyebrow}>{chapter.eyebrow}</span>
+                  <span className={portalStyles.portalArrow} aria-hidden>
+                    <ArrowUpRight size={18} />
+                  </span>
+                </div>
+
+                <div className={portalStyles.portalMain}>
+                  <h3>{chapter.label}</h3>
+                  <p>{chapter.statement}</p>
+                </div>
+
+                <div className={portalStyles.portalTags} aria-hidden>
+                  {chapter.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </main>
