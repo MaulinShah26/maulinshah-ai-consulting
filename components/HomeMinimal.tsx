@@ -172,7 +172,7 @@ export function HomeMinimal() {
       <section className={portalStyles.exploreSection}>
         <div className={portalStyles.exploreInner}>
           <header className={portalStyles.exploreHeader}>
-            <span className={portalStyles.exploreKicker}>Explore</span>
+            <span className={portalStyles.exploreKicker}>Next</span>
             <h2>Explore the work behind better decisions.</h2>
             <span className={portalStyles.exploreLine} aria-hidden />
           </header>
