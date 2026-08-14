@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/case-studies/packaged-food-label-analyzer",
   ];
 
-  return routes.map((route) => ({
+  return routes.map((route): MetadataRoute.Sitemap[number] => ({
     url: `${baseUrl}${route}`,
     changeFrequency: route === "" ? "weekly" : "monthly",
     priority: route === "" ? 1 : route.startsWith("/services") ? 0.9 : 0.7,
