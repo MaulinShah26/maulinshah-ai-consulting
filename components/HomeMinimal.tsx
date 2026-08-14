@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import { experience, social } from "@/lib/data";
 import styles from "./HomeMinimal.module.css";
+import capStyles from "./HomeCapabilitySignals.module.css";
 
 const proof = [
   {
@@ -40,21 +41,21 @@ const capabilitySignals = [
     title: "Decision systems",
     copy: "Retention · customer intelligence · AI workflows",
     href: "/work",
-    cardClass: styles.capabilityOne,
+    cardClass: capStyles.capabilityOne,
   },
   {
     label: "Problems I solve",
     title: "Decision bottlenecks",
     copy: "Retention leaks · metric trust · AI prioritisation",
     href: "/services",
-    cardClass: styles.capabilityTwo,
+    cardClass: capStyles.capabilityTwo,
   },
   {
     label: "Subject expertise",
     title: "Data + AI",
     copy: "Product analytics · ML systems · data strategy · AI adoption",
     href: "/about",
-    cardClass: styles.capabilityThree,
+    cardClass: capStyles.capabilityThree,
   },
 ];
 
@@ -165,17 +166,19 @@ export function HomeMinimal() {
                 </Link>
               ))}
 
-              {capabilitySignals.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`${styles.capabilityCard} ${item.cardClass}`}
-                >
-                  <span className={styles.capabilityLabel}>{item.label}</span>
-                  <strong className={styles.capabilityTitle}>{item.title}</strong>
-                  <span className={styles.capabilityCopy}>{item.copy}</span>
-                </Link>
-              ))}
+              <div className={capStyles.capabilityLayer} aria-label="What I bring">
+                {capabilitySignals.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={`${capStyles.capabilityCard} ${item.cardClass}`}
+                  >
+                    <span className={capStyles.capabilityLabel}>{item.label}</span>
+                    <strong className={capStyles.capabilityTitle}>{item.title}</strong>
+                    <span className={capStyles.capabilityCopy}>{item.copy}</span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
