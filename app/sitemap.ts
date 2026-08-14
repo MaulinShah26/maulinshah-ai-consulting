@@ -7,6 +7,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
     "/work",
+    "/services",
+    "/about",
+    "/contact",
     "/services/opportunity-audit",
     "/services/decision-system-build",
     "/services/fractional-head",
@@ -26,6 +29,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route): MetadataRoute.Sitemap[number] => ({
     url: `${baseUrl}${route}`,
     changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : route.startsWith("/services") ? 0.9 : 0.7,
+    priority: route === "" ? 1 : ["/work", "/services", "/about", "/contact"].includes(route) ? 0.9 : 0.7,
   }));
 }
