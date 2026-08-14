@@ -18,15 +18,15 @@ export function HeroV4() {
           {positioningV4.headline}
         </h1>
 
-        <p className="reveal-child max-w-[790px] text-[17px] md:text-[18px] text-ink-600 leading-[1.65] mb-4">
+        <p className="reveal-child max-w-[760px] text-[16px] md:text-[17px] text-ink-600 leading-[1.6] mb-3">
           {positioningV4.subhead}
         </p>
 
-        <p className="reveal-child text-[14px] font-medium text-ink-800 mb-6">
+        <p className="reveal-child text-[13.5px] font-medium text-ink-800 mb-6">
           {positioningV4.operatorLine}
         </p>
 
-        <div className="reveal-child flex flex-wrap items-center gap-2 mb-6">
+        <div className="reveal-child flex flex-wrap items-center gap-2">
           <a
             href={social.calendly}
             target="_blank"
@@ -45,17 +45,6 @@ export function HeroV4() {
             {positioningV4.secondaryCta}
             <ArrowDownRight size={14} aria-hidden />
           </a>
-        </div>
-
-        <div className="reveal-child flex flex-wrap gap-2" aria-label="Best-fit client signals">
-          {positioningV4.fitSignals.map((signal) => (
-            <span
-              key={signal}
-              className="rounded-full border border-ink-200 bg-surface px-3 py-1.5 text-[11px] text-ink-600"
-            >
-              {signal}
-            </span>
-          ))}
         </div>
       </div>
     </Reveal>
