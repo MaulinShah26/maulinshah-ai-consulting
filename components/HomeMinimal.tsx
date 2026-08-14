@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import { experience, social } from "@/lib/data";
+import { ServicesOwnership } from "./ServicesOwnership";
 import styles from "./HomeMinimal.module.css";
 import problemStyles from "./HomeCapabilitySignals.module.css";
 import portalStyles from "./HomePortals.module.css";
 import identityStyles from "./HomeIdentity.module.css";
+import spacingStyles from "./HomeSpacing.module.css";
 
 const founderProblems = [
   {
@@ -86,7 +88,7 @@ const chapters = [
 export function HomeMinimal() {
   return (
     <main>
-      <section className={styles.stage}>
+      <section className={`${styles.stage} ${spacingStyles.stageCompact}`}>
         <div className={styles.inner}>
           <div className={styles.heroGrid}>
             <div>
@@ -170,12 +172,10 @@ export function HomeMinimal() {
         </div>
       </section>
 
-      <section className={portalStyles.exploreSection}>
-        <div className={portalStyles.exploreInner}>
-          <header className={portalStyles.exploreHeader}>
-            <span className={portalStyles.exploreKicker}>Explore</span>
-          </header>
+      <ServicesOwnership />
 
+      <section className={`${portalStyles.exploreSection} ${spacingStyles.portalsCompact}`}>
+        <div className={portalStyles.exploreInner}>
           <div className={portalStyles.portalGrid}>
             {chapters.map((chapter) => (
               <Link
