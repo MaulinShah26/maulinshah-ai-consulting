@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
+import { ServicesOwnership } from "@/components/ServicesOwnership";
 import { ServicesV3 } from "@/components/ServicesV3";
+import { ServicesProcess } from "@/components/ServicesProcess";
 import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Services | Maulin Shah",
-  description: "Data and AI audits, decision system builds and fractional leadership for growth stage startups.",
+  description: "Data and AI audits, decision system builds and fractional leadership for growing companies.",
 };
 
 export default function ServicesPage() {
@@ -26,7 +28,9 @@ export default function ServicesPage() {
             </p>
           </div>
         </section>
+        <ServicesOwnership />
         <ServicesV3 />
+        <ServicesProcess />
         <FAQ />
         <Contact />
       </main>
