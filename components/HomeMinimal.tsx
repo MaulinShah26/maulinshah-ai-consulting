@@ -98,7 +98,7 @@ export function HomeMinimal() {
               <h1 className={styles.headline}>
                 Better decisions.
                 <br />
-                Built from <span className={styles.headlineAccent}>data and AI.</span>
+                Built on <span className={styles.headlineAccent}>data and AI.</span>
               </h1>
 
               <p className={styles.subhead}>
@@ -173,9 +173,7 @@ export function HomeMinimal() {
       <section className={portalStyles.exploreSection}>
         <div className={portalStyles.exploreInner}>
           <header className={portalStyles.exploreHeader}>
-            <span className={portalStyles.exploreKicker}>Next</span>
-            <h2>Explore the work behind better decisions.</h2>
-            <span className={portalStyles.exploreLine} aria-hidden />
+            <span className={portalStyles.exploreKicker}>Explore</span>
           </header>
 
           <div className={portalStyles.portalGrid}>
