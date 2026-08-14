@@ -37,23 +37,23 @@ const proof = [
 
 const founderSignals = [
   {
-    label: "Retention signal",
-    title: "Good customers quietly stop buying.",
-    copy: "You find out after the revenue is already gone.",
+    label: "Retention",
+    title: "Who is about to stop buying?",
+    copy: "Know before they leave.",
     href: "/case-studies/customer-retention-probability",
     cardClass: capStyles.capabilityOne,
   },
   {
-    label: "Decision signal",
-    title: "Leadership debates which number is right.",
-    copy: "Different teams bring different versions of the truth.",
+    label: "Data trust",
+    title: "Which number should leadership trust?",
+    copy: "One answer, not five dashboards.",
     href: "/services/opportunity-audit",
     cardClass: capStyles.capabilityTwo,
   },
   {
-    label: "AI signal",
-    title: "AI ideas keep growing. Production does not.",
-    copy: "Value, readiness and ownership are still unclear.",
+    label: "AI delivery",
+    title: "Which AI ideas are worth shipping?",
+    copy: "Value before novelty.",
     href: "/services/opportunity-audit",
     cardClass: capStyles.capabilityThree,
   },
@@ -142,7 +142,7 @@ export function HomeMinimal() {
               </div>
             </div>
 
-            <div className={styles.signalField} aria-label="Founder problems and selected proof">
+            <div className={styles.signalField} aria-label="Founder questions and selected proof">
               <div className={styles.orbit} aria-hidden />
               <div className={styles.orbitSmall} aria-hidden />
               <div className={styles.centerMark} aria-hidden>
@@ -166,7 +166,7 @@ export function HomeMinimal() {
                 </Link>
               ))}
 
-              <div className={capStyles.capabilityLayer} aria-label="Problems founders may recognize">
+              <div className={capStyles.capabilityLayer} aria-label="Questions founders may recognize">
                 {founderSignals.map((item) => (
                   <Link
                     key={item.label}
