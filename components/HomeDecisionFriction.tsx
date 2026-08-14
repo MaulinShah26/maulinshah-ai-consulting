@@ -75,9 +75,9 @@ export function HomeDecisionFriction() {
     <section className={styles.section} aria-labelledby="decision-friction-title">
       <div className={styles.inner}>
         <div className={styles.intro}>
-          <span className={styles.eyebrow}>Cross team decisions</span>
+          <span className={styles.eyebrow}>The missing connective layer</span>
           <h2 id="decision-friction-title">
-            Teams own functions. <em>The expensive decisions cut across them.</em>
+            Most companies already have the functions. <em>What is often missing is one owner connecting them.</em>
           </h2>
         </div>
 
@@ -86,7 +86,7 @@ export function HomeDecisionFriction() {
 
           <div className={styles.diagramBody}>
             <div className={styles.teamColumn}>
-              <div className={styles.columnLabel}>Function signals</div>
+              <div className={styles.columnLabel}>Teams already in place</div>
               <div className={styles.teamStack}>
                 {teams.map(({ name, owns, signals, Icon }) => (
                   <article key={name} className={styles.teamNode}>
@@ -116,21 +116,21 @@ export function HomeDecisionFriction() {
                 <span className={styles.hubIcon} aria-hidden>
                   <DatabaseZap size={25} strokeWidth={1.6} />
                 </span>
-                <span className={styles.hubKicker}>Decision operating layer</span>
-                <strong>Connect. Evaluate. Act.</strong>
+                <span className={styles.hubKicker}>This is where I sit</span>
+                <strong>Fractional Head of Data & AI</strong>
                 <div className={styles.hubCapabilities}>
                   <span>Shared data</span>
                   <span>Decision logic</span>
                   <span>Applied AI</span>
                 </div>
-                <p>Turn separate signals into a quantified choice and a clear next action.</p>
+                <p>I connect the functions, ask the questions no single team owns, and turn the answer into action.</p>
               </div>
             </div>
 
             <div className={styles.rightRail} aria-hidden />
 
             <div className={styles.questionColumn}>
-              <div className={styles.columnLabel}>Business decisions</div>
+              <div className={styles.columnLabel}>Questions no single team owns</div>
               <div className={styles.questionStack}>
                 {businessDecisions.map(({ label, question, Icon }) => (
                   <article key={label} className={styles.questionNode}>
@@ -148,7 +148,7 @@ export function HomeDecisionFriction() {
           </div>
 
           <div className={styles.diagramFooter}>
-            <p>The value is not another dashboard. It is making the cross team decision repeatable.</p>
+            <p>I become the connective layer between teams, data and the decisions that need one accountable owner.</p>
             <Link href="/services" className={styles.servicesLink}>
               See how I work
               <ArrowUpRight size={16} aria-hidden />
