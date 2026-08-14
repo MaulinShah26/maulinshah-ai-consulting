@@ -34,6 +34,30 @@ const proof = [
   },
 ];
 
+const capabilitySignals = [
+  {
+    label: "What I build",
+    title: "Decision systems",
+    copy: "Retention · customer intelligence · AI workflows",
+    href: "/work",
+    cardClass: styles.capabilityOne,
+  },
+  {
+    label: "Problems I solve",
+    title: "Decision bottlenecks",
+    copy: "Retention leaks · metric trust · AI prioritisation",
+    href: "/services",
+    cardClass: styles.capabilityTwo,
+  },
+  {
+    label: "Subject expertise",
+    title: "Data + AI",
+    copy: "Product analytics · ML systems · data strategy · AI adoption",
+    href: "/about",
+    cardClass: styles.capabilityThree,
+  },
+];
+
 const chapters = [
   {
     number: "01",
@@ -117,7 +141,7 @@ export function HomeMinimal() {
               </div>
             </div>
 
-            <div className={styles.signalField} aria-label="Selected proof">
+            <div className={styles.signalField} aria-label="Selected proof and capabilities">
               <div className={styles.orbit} aria-hidden />
               <div className={styles.orbitSmall} aria-hidden />
               <div className={styles.centerMark} aria-hidden>
@@ -138,6 +162,18 @@ export function HomeMinimal() {
                     {item.copy}
                     <ArrowUpRight size={13} aria-hidden />
                   </span>
+                </Link>
+              ))}
+
+              {capabilitySignals.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`${styles.capabilityCard} ${item.cardClass}`}
+                >
+                  <span className={styles.capabilityLabel}>{item.label}</span>
+                  <strong className={styles.capabilityTitle}>{item.title}</strong>
+                  <span className={styles.capabilityCopy}>{item.copy}</span>
                 </Link>
               ))}
             </div>
