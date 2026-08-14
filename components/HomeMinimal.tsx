@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import { experience, social } from "@/lib/data";
-import { ServicesOwnership } from "./ServicesOwnership";
+import { HomeDecisionFriction } from "./HomeDecisionFriction";
 import styles from "./HomeMinimal.module.css";
 import problemStyles from "./HomeCapabilitySignals.module.css";
 import portalStyles from "./HomePortals.module.css";
@@ -172,7 +172,7 @@ export function HomeMinimal() {
         </div>
       </section>
 
-      <ServicesOwnership />
+      <HomeDecisionFriction />
 
       <section className={`${portalStyles.exploreSection} ${spacingStyles.portalsCompact}`}>
         <div className={portalStyles.exploreInner}>
