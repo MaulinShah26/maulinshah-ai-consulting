@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
-import { ServicesOwnership } from "@/components/ServicesOwnership";
 import { ServicesV3 } from "@/components/ServicesV3";
 import { ServicesProcess } from "@/components/ServicesProcess";
 import { FAQ } from "@/components/FAQ";
@@ -28,7 +27,6 @@ export default function ServicesPage() {
             </p>
           </div>
         </section>
-        <ServicesOwnership />
         <ServicesV3 />
         <ServicesProcess />
         <FAQ />
