@@ -35,26 +35,26 @@ const proof = [
   },
 ];
 
-const capabilitySignals = [
+const founderSignals = [
   {
-    label: "What I build",
-    title: "Decision systems",
-    copy: "Retention · customer intelligence · AI workflows",
-    href: "/work",
+    label: "Retention signal",
+    title: "Good customers quietly stop buying.",
+    copy: "You find out after the revenue is already gone.",
+    href: "/case-studies/customer-retention-probability",
     cardClass: capStyles.capabilityOne,
   },
   {
-    label: "Problems I solve",
-    title: "Decision bottlenecks",
-    copy: "Retention leaks · metric trust · AI prioritisation",
-    href: "/services",
+    label: "Decision signal",
+    title: "Leadership debates which number is right.",
+    copy: "Different teams bring different versions of the truth.",
+    href: "/services/opportunity-audit",
     cardClass: capStyles.capabilityTwo,
   },
   {
-    label: "Subject expertise",
-    title: "Data + AI",
-    copy: "Product analytics · ML systems · data strategy · AI adoption",
-    href: "/about",
+    label: "AI signal",
+    title: "AI ideas keep growing. Production does not.",
+    copy: "Value, readiness and ownership are still unclear.",
+    href: "/services/opportunity-audit",
     cardClass: capStyles.capabilityThree,
   },
 ];
@@ -142,7 +142,7 @@ export function HomeMinimal() {
               </div>
             </div>
 
-            <div className={styles.signalField} aria-label="Selected proof and capabilities">
+            <div className={styles.signalField} aria-label="Founder problems and selected proof">
               <div className={styles.orbit} aria-hidden />
               <div className={styles.orbitSmall} aria-hidden />
               <div className={styles.centerMark} aria-hidden>
@@ -166,8 +166,8 @@ export function HomeMinimal() {
                 </Link>
               ))}
 
-              <div className={capStyles.capabilityLayer} aria-label="What I bring">
-                {capabilitySignals.map((item) => (
+              <div className={capStyles.capabilityLayer} aria-label="Problems founders may recognize">
+                {founderSignals.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
@@ -176,6 +176,7 @@ export function HomeMinimal() {
                     <span className={capStyles.capabilityLabel}>{item.label}</span>
                     <strong className={capStyles.capabilityTitle}>{item.title}</strong>
                     <span className={capStyles.capabilityCopy}>{item.copy}</span>
+                    <span className={capStyles.capabilityArrow} aria-hidden>↗</span>
                   </Link>
                 ))}
               </div>
