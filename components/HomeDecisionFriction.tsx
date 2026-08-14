@@ -2,60 +2,62 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import styles from "./HomeDecisionFriction.module.css";
 
-const teams = [
-  { name: "Marketing", signal: "Campaigns · acquisition" },
-  { name: "Product", signal: "Events · funnels" },
-  { name: "Engineering", signal: "Pipelines · systems" },
-  { name: "Finance", signal: "Revenue · margin" },
-  { name: "AI", signal: "Experiments · agents" },
+const symptoms = [
+  {
+    n: "01",
+    label: "The numbers disagree",
+    body: "Marketing, product and finance can answer the same business question differently.",
+  },
+  {
+    n: "02",
+    label: "Important answers wait on people",
+    body: "A decision stalls while someone pulls data, reconciles definitions or explains what changed.",
+  },
+  {
+    n: "03",
+    label: "AI creates more bets than clarity",
+    body: "Ideas multiply faster than the company can decide what is valuable, ready or worth owning.",
+  },
 ];
-
-const decisions = ["Retention", "Growth", "Margin", "AI priorities"];
 
 export function HomeDecisionFriction() {
   return (
     <section className={styles.section} aria-labelledby="decision-friction-title">
       <div className={styles.inner}>
-        <div className={styles.headingRow}>
+        <div className={styles.intro}>
           <span className={styles.kicker}>Why this happens</span>
           <h2 id="decision-friction-title">
-            Every team owns its piece. <em>No one owns how they connect.</em>
+            The company grows. <em>The decisions start crossing teams.</em>
           </h2>
         </div>
 
-        <div className={styles.systemMap}>
-          <div className={styles.teamRail} aria-label="Business teams and their signals">
-            {teams.map((team) => (
-              <div key={team.name} className={styles.team}>
-                <strong>{team.name}</strong>
-                <span>{team.signal}</span>
-              </div>
+        <div className={styles.storyGrid}>
+          <div className={styles.symptoms}>
+            {symptoms.map((item) => (
+              <article key={item.n} className={styles.symptom}>
+                <span className={styles.number}>{item.n}</span>
+                <div>
+                  <h3>{item.label}</h3>
+                  <p>{item.body}</p>
+                </div>
+              </article>
             ))}
           </div>
 
-          <div className={styles.decisionBridge} aria-hidden>
-            <span className={styles.bridgeLine} />
-            <div className={styles.decisionCore}>
-              <span>Shared decision</span>
-              <strong>One question. Many signals.</strong>
-            </div>
-          </div>
-
-          <div className={styles.decisionRow} aria-label="Examples of decisions that cross teams">
-            {decisions.map((decision) => (
-              <span key={decision}>{decision}</span>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.closingRow}>
-          <p>
-            <strong>Dashboards are not the gap.</strong> The gap is someone connecting the signals to the decision.
-          </p>
-          <Link href="/services" className={styles.servicesLink}>
-            See how I work
-            <ArrowUpRight size={16} aria-hidden />
-          </Link>
+          <aside className={styles.ownership}>
+            <span className={styles.ownershipKicker}>The gap</span>
+            <h3>The gap is ownership.</h3>
+            <p>
+              One senior person connecting data, business context and applied AI to the decisions that matter.
+            </p>
+            <p className={styles.ownershipNote}>
+              Senior enough to set direction. Hands on enough to make the system work. Structured to leave the team stronger.
+            </p>
+            <Link href="/services" className={styles.servicesLink}>
+              See how I work
+              <ArrowUpRight size={16} aria-hidden />
+            </Link>
+          </aside>
         </div>
       </div>
     </section>
