@@ -21,20 +21,20 @@ export function Nav() {
       <div className="max-w-[1180px] mx-auto flex items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="group flex items-baseline gap-3"
+          className="group flex items-baseline gap-4"
           aria-label={`${meta.author}, home`}
           onClick={() => setOpen(false)}
         >
-          <span className="font-serif text-[19px] font-semibold tracking-tight text-ink group-hover:text-accent transition-colors">
+          <span className="font-serif text-[23px] font-semibold tracking-tight text-ink group-hover:text-accent transition-colors">
             Maulin Shah
           </span>
-          <span className="hidden sm:inline font-mono text-[9px] uppercase tracking-[0.14em] text-ink-400">
-            Data + AI
+          <span className="hidden sm:inline font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-500">
+            Data &amp; AI Decision Systems
           </span>
         </Link>
 
         <div className="hidden md:flex items-center gap-6">
-          <ul className="flex items-center gap-6 text-[12px] text-ink-600">
+          <ul className="flex items-center gap-6 text-[13px] text-ink-600">
             {links.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="hover:text-accent transition-colors">
@@ -47,9 +47,9 @@ export function Nav() {
             href={social.calendly}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full border border-ink-300 px-3.5 py-2 text-[11px] font-medium text-ink hover:border-accent hover:text-accent transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full border border-ink-300 px-3.5 py-2 text-[12px] font-medium text-ink hover:border-accent hover:text-accent transition-colors"
           >
-            <Calendar size={12} aria-hidden />
+            <Calendar size={13} aria-hidden />
             Book a call
           </a>
           <ThemeToggle />
