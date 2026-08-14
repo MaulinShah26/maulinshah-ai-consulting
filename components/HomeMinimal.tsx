@@ -6,37 +6,37 @@ import problemStyles from "./HomeCapabilitySignals.module.css";
 
 const founderProblems = [
   {
-    label: "Retention",
-    title: "Good customers stop buying without warning.",
-    copy: "Churn shows up after the revenue is gone.",
+    label: "Customer intelligence",
+    title: "Who is likely to leave, buy again or need attention next?",
+    copy: "Know before the signal becomes lost revenue.",
     href: "/case-studies/customer-retention-probability",
     cardClass: problemStyles.capabilityOne,
   },
   {
-    label: "Metric trust",
-    title: "Leadership cannot agree on the number.",
-    copy: "Teams bring different versions of the truth.",
+    label: "Single source of truth",
+    title: "Can leadership trust the same number?",
+    copy: "Align definitions before decisions depend on them.",
     href: "/services/opportunity-audit",
     cardClass: problemStyles.capabilityTwo,
   },
   {
-    label: "Decision speed",
-    title: "Data exists everywhere. Answers still take days.",
-    copy: "Every important decision needs three teams and another spreadsheet.",
-    href: "/services/fractional-head",
+    label: "Next best action",
+    title: "What should happen next for each customer?",
+    copy: "Turn behavior into timely action, not another segment.",
+    href: "/case-studies/adaptive-nudge-decision-engine",
     cardClass: problemStyles.capabilityThree,
   },
   {
-    label: "Growth",
-    title: "Growth moved. Nobody knows exactly why.",
-    copy: "Attribution is noisy, so decisions drift toward opinion.",
+    label: "Growth intelligence",
+    title: "Growth moved. What actually caused it?",
+    copy: "Separate real drivers from attribution noise.",
     href: "/services/opportunity-audit",
     cardClass: problemStyles.capabilityFour,
   },
   {
-    label: "AI",
-    title: "AI ideas keep growing. Production does not.",
-    copy: "Value, readiness and ownership stay unclear.",
+    label: "AI readiness",
+    title: "Are your data and workflows ready for AI agents?",
+    copy: "Scale use cases with value, readiness and ownership.",
     href: "/services/opportunity-audit",
     cardClass: problemStyles.capabilityFive,
   },
@@ -88,7 +88,7 @@ export function HomeMinimal() {
               </h1>
 
               <p className={styles.subhead}>
-                I help growing companies make better decisions when data gets messy, growth gets harder and AI creates more choices than clarity.
+                I help growing companies turn customer intelligence, trusted data and practical AI into better growth decisions.
               </p>
 
               <div className={styles.actions}>
