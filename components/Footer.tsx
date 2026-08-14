@@ -10,12 +10,12 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className="px-6 py-7 border-t border-ink-200 text-[12px] text-ink-500">
-      <div className="max-w-content mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <footer className="px-6 py-7 text-[11px] text-ink-500">
+      <div className="max-w-[1180px] mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-ink-200 pt-6">
         <span>© {new Date().getFullYear()} {meta.author} · {meta.location}</span>
         <div className="flex flex-wrap items-center gap-4">
           {links.map((item) => (
-            <Link key={item.href} href={item.href} className="hover:text-ink transition-colors">
+            <Link key={item.href} href={item.href} className="hover:text-accent transition-colors">
               {item.label}
             </Link>
           ))}
