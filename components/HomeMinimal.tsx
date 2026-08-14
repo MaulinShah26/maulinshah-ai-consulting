@@ -89,7 +89,7 @@ export function HomeMinimal() {
   return (
     <main>
       <section className={`${styles.stage} ${spacingStyles.stageCompact}`}>
-        <div className={styles.inner}>
+        <div className={styles.inner} style={{ width: "min(1440px, 100%)" }}>
           <div className={styles.heroGrid}>
             <div>
               <div className={`${styles.kicker} ${identityStyles.heroKicker}`}>
@@ -175,7 +175,7 @@ export function HomeMinimal() {
       <HomeDecisionFriction />
 
       <section className={`${portalStyles.exploreSection} ${spacingStyles.portalsCompact}`}>
-        <div className={portalStyles.exploreInner}>
+        <div className={portalStyles.exploreInner} style={{ width: "min(1440px, 100%)" }}>
           <div className={portalStyles.portalGrid}>
             {chapters.map((chapter) => (
               <Link
@@ -200,7 +200,12 @@ export function HomeMinimal() {
 
                 <div className={portalStyles.portalTags} aria-hidden>
                   {chapter.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
+                    <span
+                      key={tag}
+                      style={{ minHeight: 32, padding: "0 13px", fontSize: 11 }}
+                    >
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </Link>
