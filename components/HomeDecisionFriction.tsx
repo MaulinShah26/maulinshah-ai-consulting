@@ -75,8 +75,7 @@ export function HomeDecisionFriction() {
     <section className={styles.section} aria-labelledby="decision-friction-title">
       <div className={styles.inner}>
         <div className={styles.intro}>
-          <span className={styles.eyebrow}>The connective gap</span>
-          <h2 id="decision-friction-title">
+          <h2 id="decision-friction-title" style={{ gridColumn: "1 / -1" }}>
             Most growing companies already have the teams. What they often lack is one owner connecting them.
           </h2>
         </div>
