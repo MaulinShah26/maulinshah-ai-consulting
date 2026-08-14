@@ -1,10 +1,10 @@
 import { Nav } from "@/components/Nav";
 import { HeroV4 } from "@/components/HeroV4";
 import { Experience } from "@/components/Experience";
-import { ProofTriptych } from "@/components/ProofTriptych";
-import { Diagnostic } from "@/components/Diagnostic";
+import { ProofV4 } from "@/components/ProofV4";
+import { DiagnosticV4 } from "@/components/DiagnosticV4";
 import { DecisionSystems } from "@/components/DecisionSystems";
-import { OperatingModel } from "@/components/OperatingModel";
+import { OperatingModelV4 } from "@/components/OperatingModelV4";
 import { ServicesV4 } from "@/components/ServicesV4";
 import { AboutV4 } from "@/components/AboutV4";
 import { FAQ } from "@/components/FAQ";
@@ -20,10 +20,10 @@ export default function Home() {
       <main>
         <HeroV4 />
         <Experience />
-        <ProofTriptych />
-        <Diagnostic />
+        <ProofV4 />
+        <DiagnosticV4 />
         <DecisionSystems />
-        <OperatingModel />
+        <OperatingModelV4 />
         <ServicesV4 />
         <AboutV4 />
         <FAQ />
