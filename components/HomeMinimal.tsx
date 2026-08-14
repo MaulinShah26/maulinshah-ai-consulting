@@ -88,7 +88,7 @@ export function HomeMinimal() {
               </h1>
 
               <p className={styles.subhead}>
-                I help growing companies turn customer intelligence, trusted data and practical AI into better growth decisions.
+                I work with growing companies when important business decisions need stronger data, smarter systems or applied AI.
               </p>
 
               <div className={styles.actions}>
