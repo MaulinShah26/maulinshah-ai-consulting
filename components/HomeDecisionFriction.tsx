@@ -42,24 +42,29 @@ export function HomeDecisionFriction() {
     <section className={styles.section} aria-labelledby="decision-friction-title">
       <div className={styles.inner}>
         <div className={styles.intro}>
-          <span className={styles.kicker}>Inside a growing company</span>
           <h2 id="decision-friction-title">
             Each team is doing its job. <em>The important questions do not stay inside one team.</em>
           </h2>
         </div>
 
-        <div className={styles.siloGrid} aria-label="Teams and the parts of the business they own">
-          {teams.map((team) => (
-            <article key={team.name} className={styles.silo}>
-              <span className={styles.siloOwns}>Owns {team.owns}</span>
-              <h3>{team.name}</h3>
-              <p>{team.signals}</p>
-            </article>
-          ))}
+        <div className={styles.siloArea}>
+          <div className={styles.siloLabel}>Each team owns a different part of the business</div>
+          <div className={styles.siloGrid} aria-label="Teams and the parts of the business they own">
+            {teams.map((team, index) => (
+              <article key={team.name} className={`${styles.silo} ${styles[`silo${index + 1}`]}`}>
+                <span className={styles.siloOwns}>{team.owns}</span>
+                <h3>{team.name}</h3>
+                <p>{team.signals}</p>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div className={styles.crossTeam}>
-          <div className={styles.crossTeamLabel}>Questions that cross all of them</div>
+          <div className={styles.crossTeamIntro}>
+            <span>But the questions that matter most are shared</span>
+            <strong>Cross team decisions</strong>
+          </div>
           <div className={styles.questionGrid}>
             {sharedQuestions.map((question) => (
               <span key={question}>{question}</span>
@@ -68,7 +73,7 @@ export function HomeDecisionFriction() {
         </div>
 
         <div className={styles.conclusion}>
-          <div>
+          <div className={styles.conclusionLead}>
             <span className={styles.conclusionKicker}>The missing layer</span>
             <h3>Someone has to connect the pieces.</h3>
           </div>
