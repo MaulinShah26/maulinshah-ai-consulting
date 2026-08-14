@@ -1,13 +1,12 @@
 import { Nav } from "@/components/Nav";
-import { Hero } from "@/components/Hero";
+import { HeroV4 } from "@/components/HeroV4";
 import { Experience } from "@/components/Experience";
-import { Diagnostic } from "@/components/Diagnostic";
-import { ChaosMap } from "@/components/ChaosMap";
-import { NotebookInsight } from "@/components/NotebookInsight";
-import { OperatingModel } from "@/components/OperatingModel";
-import { ServicesV3 } from "@/components/ServicesV3";
 import { ProofTriptych } from "@/components/ProofTriptych";
-import { About } from "@/components/About";
+import { Diagnostic } from "@/components/Diagnostic";
+import { DecisionSystems } from "@/components/DecisionSystems";
+import { OperatingModel } from "@/components/OperatingModel";
+import { ServicesV4 } from "@/components/ServicesV4";
+import { AboutV4 } from "@/components/AboutV4";
 import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
@@ -19,15 +18,14 @@ export default function Home() {
       <Nav />
       <ScrollDepth />
       <main>
-        <Hero />
+        <HeroV4 />
         <Experience />
-        <Diagnostic />
-        <ChaosMap />
-        <NotebookInsight />
-        <OperatingModel />
-        <ServicesV3 />
         <ProofTriptych />
-        <About />
+        <Diagnostic />
+        <DecisionSystems />
+        <OperatingModel />
+        <ServicesV4 />
+        <AboutV4 />
         <FAQ />
         <Contact />
       </main>
