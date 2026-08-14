@@ -4,75 +4,126 @@ export const positioningV4 = {
   eyebrow: `Data & AI Decision Systems · ${role}`,
   headline: "Turn messy data and AI into better growth decisions.",
   subhead:
-    "I help Series A/B consumer, commerce, and marketplace startups build the decision systems behind retention, customer intelligence, and practical AI — from diagnosis to production.",
-  operatorLine: "Senior enough to own the roadmap. Hands-on enough to build it.",
+    "I help Series A/B consumer businesses use data and AI to improve retention, customer intelligence and growth decisions.",
+  operatorLine: "Strategy that gets built. Systems that get used.",
   primaryCta: "Book a fit call",
   secondaryCta: "See proof",
-  fitSignals: [
-    "Series A/B",
-    "Consumer · commerce · marketplace",
-    "Retention & growth",
-    "No full-time Data/AI head yet",
+};
+
+export const diagnosticV4 = {
+  sectionLabel: "Sound familiar?",
+  heading: "Six questions that expose the gap.",
+  items: [
+    "Which number is right?",
+    "Who is about to lapse?",
+    "Which AI idea should ship?",
+    "Will anyone use what we build?",
+    "Why does this answer take days?",
+    "Who owns data and AI?",
   ],
 };
 
 export const decisionSystemsV4 = {
   sectionLabel: "My core expertise",
-  heading: "I build decision systems, not more dashboards.",
-  definition:
-    "A decision system combines data, business rules, and AI/ML to repeatedly answer an important business question and trigger the next action.",
+  heading: "I build decision systems, not dashboards.",
+  subhead: "Signals become actions the business can repeat.",
   examples: [
     {
-      question: "Who is likely to lapse?",
-      answer: "Score risk daily → choose the right retention action.",
+      label: "Retention",
+      signal: "Lapse risk",
+      action: "Right intervention",
     },
     {
-      question: "When will a customer need to reorder?",
-      answer: "Predict run-out timing → nudge when the message is useful.",
+      label: "Replenishment",
+      signal: "Run out timing",
+      action: "Useful nudge",
     },
     {
-      question: "What does this customer care about?",
-      answer: "Read behavioral affinity → personalize the next experience.",
+      label: "Personalization",
+      signal: "Customer affinity",
+      action: "Next experience",
     },
     {
-      question: "Which AI idea deserves engineering time?",
-      answer: "Rank value and readiness → build, wait, or kill the idea early.",
+      label: "AI priority",
+      signal: "Value + readiness",
+      action: "Build, wait or stop",
     },
   ],
-  close:
-    "The model is only one part. The value comes from connecting the signal to a decision the business can actually repeat.",
+  close: "Data explains what happened. Decision systems shape what happens next.",
+};
+
+export const proofV4 = {
+  sectionLabel: "Selected proof",
+  heading: "Built in production. Measured in outcomes.",
+  cards: [
+    {
+      tag: "Retention",
+      title: "Customer Retention Score",
+      metric: "~60%",
+      metricLabel: "test conversion lift",
+      flowFrom: "Lapse risk",
+      flowTo: "Daily retention action",
+      href: "/case-studies/customer-retention-probability",
+    },
+    {
+      tag: "Player intelligence",
+      title: "Batters & Bowlers Tag",
+      metric: "10M+",
+      metricLabel: "players reached",
+      flowFrom: "Player data",
+      flowTo: "Identity product",
+      href: "/case-studies/batters-bowlers-tag",
+    },
+    {
+      tag: "Decision engine",
+      title: "Adaptive Nudge Engine",
+      metric: "1 action",
+      metricLabel: "per customer per cycle",
+      flowFrom: "Campaign overlap",
+      flowTo: "Best next action",
+      href: "/case-studies/adaptive-nudge-decision-engine",
+    },
+  ],
+};
+
+export const operatingModelV4 = {
+  sectionLabel: "How I work",
+  steps: [
+    { n: "01", title: "Diagnose", short: "Find what matters" },
+    { n: "02", title: "Prioritize", short: "Choose what comes first" },
+    { n: "03", title: "Build", short: "Put the system live" },
+    { n: "04", title: "Transfer", short: "Make the team owner" },
+  ],
 };
 
 export const servicesV4 = {
   sectionLabel: "Ways to work together",
-  heading: "Start with the smallest useful commitment.",
-  lede:
-    "Diagnose → Build → Operate. You do not need to know the engagement model before we speak; the problem should determine the scope.",
+  heading: "Start small. Go deeper only when it earns it.",
   cards: [
     {
       step: "01 · Diagnose",
       title: "Data & AI Opportunity Audit",
-      bestFor: "You know data or AI is getting expensive and messy, but the first move is unclear.",
-      outcome: "A ranked plan for what to fix, build, automate, or ignore.",
-      meta: "2–4 weeks · fixed scope",
+      bestFor: "When the first move is unclear",
+      outcome: "A ranked plan",
+      meta: "2 to 4 weeks · fixed scope",
       pageHref: "/services/opportunity-audit",
       cta: "See the audit",
     },
     {
       step: "02 · Build",
       title: "Decision System Build",
-      bestFor: "You already know the business decision that needs a better system behind it.",
-      outcome: "One high-impact system designed, shipped, and handed over to your team.",
-      meta: "Fixed outcome · timeline shaped to scope",
+      bestFor: "When the business decision is clear",
+      outcome: "One live system",
+      meta: "Fixed outcome · scope based timeline",
       pageHref: "/services/decision-system-build",
       cta: "See the build model",
     },
     {
       step: "03 · Operate",
       title: role,
-      bestFor: "Data and AI now need senior ownership, but a full-time head is still too early.",
-      outcome: "Executive ownership of the roadmap, systems, and team transition from inside the business.",
-      meta: "~10 hrs/week · 3 months minimum",
+      bestFor: "When senior ownership is missing",
+      outcome: "Roadmap, systems and team transition",
+      meta: "About 10 hrs per week · 3 month minimum",
       pageHref: "/services/fractional-head",
       cta: "See fractional leadership",
     },
@@ -81,13 +132,10 @@ export const servicesV4 = {
 
 export const aboutV4 = {
   sectionLabel: "Why me",
-  heading: "I work between the business question and the system that answers it.",
-  paragraphs: [
-    "I started in mission-critical data operations at ISRO, moved through analytics consulting, and then spent years inside consumer startups building data and ML products tied to real operating decisions.",
-    "At CricHeroes and Supertails, the work kept moving upstream: from models and dashboards to retention, customer intelligence, AI prioritization, roadmaps, and cross-team ownership.",
-    "That is why I do not start with ‘Which model should we use?’ I start with ‘Which repeated decision is expensive, slow, or weak — and what would make it materially better?’",
-  ],
-  principle: "The goal is not to make your company dependent on me. It is to leave behind a system and a team that can run without me.",
+  heading: "From data work to decision ownership.",
+  summary:
+    "For 10+ years I have moved closer to the decisions that matter, from mission critical systems at ISRO to consumer data products at CricHeroes and retention systems at Supertails.",
+  principle: "Build it. Transfer it. Leave the team stronger.",
 };
 
 // Add only attributable, approved quotes here. The homepage intentionally does
