@@ -2,60 +2,43 @@ import Link from "next/link";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import { experience, social } from "@/lib/data";
 import styles from "./HomeMinimal.module.css";
-import capStyles from "./HomeCapabilitySignals.module.css";
+import problemStyles from "./HomeCapabilitySignals.module.css";
 
-const proof = [
+const founderProblems = [
   {
     label: "Retention",
-    value: "~60%",
-    copy: "lift on test conversion",
+    title: "Good customers stop buying without warning.",
+    copy: "Churn shows up after the revenue is gone.",
     href: "/case-studies/customer-retention-probability",
-    cardClass: styles.cardOne,
+    cardClass: problemStyles.capabilityOne,
   },
   {
-    label: "Product scale",
-    value: "10M+",
-    copy: "players reached",
-    href: "/case-studies/batters-bowlers-tag",
-    cardClass: styles.cardTwo,
-  },
-  {
-    label: "Systems",
-    value: "5+",
-    copy: "production systems",
-    href: "/work",
-    cardClass: styles.cardThree,
-  },
-  {
-    label: "Experience",
-    value: "10+",
-    copy: "years across data and AI",
-    href: "/about",
-    cardClass: styles.cardFour,
-  },
-];
-
-const founderSignals = [
-  {
-    label: "Retention",
-    title: "Who is about to stop buying?",
-    copy: "Know before they leave.",
-    href: "/case-studies/customer-retention-probability",
-    cardClass: capStyles.capabilityOne,
-  },
-  {
-    label: "Data trust",
-    title: "Which number should leadership trust?",
-    copy: "One answer, not five dashboards.",
+    label: "Metric trust",
+    title: "Leadership cannot agree on the number.",
+    copy: "Teams bring different versions of the truth.",
     href: "/services/opportunity-audit",
-    cardClass: capStyles.capabilityTwo,
+    cardClass: problemStyles.capabilityTwo,
   },
   {
-    label: "AI delivery",
-    title: "Which AI ideas are worth shipping?",
-    copy: "Value before novelty.",
+    label: "Decision speed",
+    title: "Data exists everywhere. Answers still take days.",
+    copy: "Every important decision needs three teams and another spreadsheet.",
+    href: "/services/fractional-head",
+    cardClass: problemStyles.capabilityThree,
+  },
+  {
+    label: "Growth",
+    title: "Growth moved. Nobody knows exactly why.",
+    copy: "Attribution is noisy, so decisions drift toward opinion.",
     href: "/services/opportunity-audit",
-    cardClass: capStyles.capabilityThree,
+    cardClass: problemStyles.capabilityFour,
+  },
+  {
+    label: "AI",
+    title: "AI ideas keep growing. Production does not.",
+    copy: "Value, readiness and ownership stay unclear.",
+    href: "/services/opportunity-audit",
+    cardClass: problemStyles.capabilityFive,
   },
 ];
 
@@ -105,7 +88,7 @@ export function HomeMinimal() {
               </h1>
 
               <p className={styles.subhead}>
-                I help growth stage consumer businesses know who to retain, what to automate and where AI is actually worth building.
+                I help growing companies make better decisions when data gets messy, growth gets harder and AI creates more choices than clarity.
               </p>
 
               <div className={styles.actions}>
@@ -142,41 +125,29 @@ export function HomeMinimal() {
               </div>
             </div>
 
-            <div className={styles.signalField} aria-label="Founder questions and selected proof">
+            <div
+              className={`${styles.signalField} ${problemStyles.problemField}`}
+              aria-label="Recurring problems growing companies face"
+            >
               <div className={styles.orbit} aria-hidden />
               <div className={styles.orbitSmall} aria-hidden />
               <div className={styles.centerMark} aria-hidden>
-                signal
+                where
                 <br />
-                to action
+                decisions break
               </div>
 
-              {proof.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`${styles.signalCard} ${item.cardClass}`}
-                >
-                  <span className={styles.signalLabel}>{item.label}</span>
-                  <strong className={styles.signalValue}>{item.value}</strong>
-                  <span className={styles.signalCopy}>
-                    {item.copy}
-                    <ArrowUpRight size={13} aria-hidden />
-                  </span>
-                </Link>
-              ))}
-
-              <div className={capStyles.capabilityLayer} aria-label="Questions founders may recognize">
-                {founderSignals.map((item) => (
+              <div className={problemStyles.capabilityLayer}>
+                {founderProblems.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
-                    className={`${capStyles.capabilityCard} ${item.cardClass}`}
+                    className={`${problemStyles.capabilityCard} ${item.cardClass}`}
                   >
-                    <span className={capStyles.capabilityLabel}>{item.label}</span>
-                    <strong className={capStyles.capabilityTitle}>{item.title}</strong>
-                    <span className={capStyles.capabilityCopy}>{item.copy}</span>
-                    <span className={capStyles.capabilityArrow} aria-hidden>↗</span>
+                    <span className={problemStyles.capabilityLabel}>{item.label}</span>
+                    <strong className={problemStyles.capabilityTitle}>{item.title}</strong>
+                    <span className={problemStyles.capabilityCopy}>{item.copy}</span>
+                    <span className={problemStyles.capabilityArrow} aria-hidden>↗</span>
                   </Link>
                 ))}
               </div>
