@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Spectral, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { DashlessPolicy } from "@/components/DashlessPolicy";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { meta, social } from "@/lib/data";
 import "./globals.css";
@@ -28,9 +29,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? meta.siteUrl;
-const title = "Maulin Shah | Data & AI Decision Systems for Growth-Stage Startups";
+const title = "Maulin Shah | Data & AI Decision Systems for Growth Stage Startups";
 const description =
-  "Fractional Data & AI leadership for Series A/B consumer, commerce, and marketplace startups. Build decision systems for retention, customer intelligence, growth, and practical AI.";
+  "Fractional Data & AI leadership for Series A/B consumer, commerce and marketplace startups. Build decision systems for retention, customer intelligence, growth and practical AI.";
 
 export const metadata: Metadata = {
   title,
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Maulin Shah — Data & AI Decision Systems for Growth-Stage Startups",
+        alt: "Maulin Shah · Data & AI Decision Systems for Growth Stage Startups",
       },
     ],
   },
@@ -96,7 +97,7 @@ const structuredData = [
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "@id": `${siteUrl}/#data-ai-consulting`,
-    name: "Maulin Shah — Data & AI Decision Systems",
+    name: "Maulin Shah · Data & AI Decision Systems",
     url: siteUrl,
     provider: { "@id": `${siteUrl}/#maulin-shah` },
     areaServed: "Worldwide",
@@ -139,6 +140,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-page text-ink font-sans antialiased">
+        <DashlessPolicy />
         <ThemeProvider>{children}</ThemeProvider>
         {process.env.NEXT_PUBLIC_GA_ID ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
