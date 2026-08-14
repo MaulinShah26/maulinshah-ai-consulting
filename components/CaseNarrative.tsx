@@ -77,6 +77,8 @@ export function CaseNarrative({ slug }: { slug: string }) {
 
   const visual = VISUALS[slug] ?? {};
   const visualCount = Number(Boolean(visual.problem)) + Number(Boolean(visual.system));
+  const useSingleVisualColumn =
+    visualCount === 1 || slug === "customer-retention-probability";
 
   return (
     <div className={styles.root}>
@@ -153,7 +155,7 @@ export function CaseNarrative({ slug }: { slug: string }) {
 
           {visualCount > 0 && (
             <div
-              className={`${styles.visualGrid} ${visualCount === 1 ? styles.visualGridSingle : ""}`}
+              className={`${styles.visualGrid} ${useSingleVisualColumn ? styles.visualGridSingle : ""}`}
               aria-label="Case study visual summary"
             >
               {visual.problem && (
