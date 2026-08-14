@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   BriefcaseBusiness,
-  ChartNoAxesCombined,
   CircleDollarSign,
   Code2,
   DatabaseZap,
@@ -10,6 +9,7 @@ import {
   PackageCheck,
   Sparkles,
   Target,
+  TrendingUp,
   Users,
 } from "lucide-react";
 import styles from "./HomeDecisionFriction.module.css";
@@ -51,7 +51,7 @@ const businessDecisions = [
   {
     label: "Acquisition quality",
     question: "Which channels bring customers who retain and pay back?",
-    Icon: ChartNoAxesCombined,
+    Icon: TrendingUp,
   },
   {
     label: "Retention economics",
