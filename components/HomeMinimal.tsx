@@ -4,6 +4,7 @@ import { experience, social } from "@/lib/data";
 import styles from "./HomeMinimal.module.css";
 import problemStyles from "./HomeCapabilitySignals.module.css";
 import portalStyles from "./HomePortals.module.css";
+import identityStyles from "./HomeIdentity.module.css";
 
 const founderProblems = [
   {
@@ -89,7 +90,7 @@ export function HomeMinimal() {
         <div className={styles.inner}>
           <div className={styles.heroGrid}>
             <div>
-              <div className={styles.kicker}>
+              <div className={`${styles.kicker} ${identityStyles.heroKicker}`}>
                 <span className={styles.kickerDot} aria-hidden />
                 Fractional Head of Data & AI
               </div>
@@ -120,7 +121,7 @@ export function HomeMinimal() {
                 </a>
               </div>
 
-              <div className={styles.builtAt}>
+              <div className={`${styles.builtAt} ${identityStyles.credibility}`}>
                 <span className={styles.builtAtLabel}>Built data and AI at</span>
                 {experience.firms.map((firm) => (
                   <a
@@ -131,7 +132,7 @@ export function HomeMinimal() {
                     className={styles.firm}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={firm.logo} alt="" width={20} height={20} />
+                    <img src={firm.logo} alt="" width={25} height={25} />
                     {firm.name}
                   </a>
                 ))}
