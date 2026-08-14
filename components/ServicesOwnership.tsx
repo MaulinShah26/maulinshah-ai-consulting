@@ -31,10 +31,9 @@ export function ServicesOwnership() {
       <div className={styles.inner}>
         <div className={styles.sectionKicker}>Why this happens</div>
         <div className={styles.ownershipIntro}>
-          <h2 id="ownership-heading">Every team owns its piece. Few own how the pieces connect.</h2>
+          <h2 id="ownership-heading">Every team owns its piece. No one owns how they connect.</h2>
           <p>
-            As companies grow, important decisions start crossing product, marketing, engineering,
-            finance and AI. The data exists. Shared ownership usually does not.
+            As companies grow, important decisions start crossing teams. The data exists. Shared ownership often does not.
           </p>
         </div>
 
@@ -58,7 +57,7 @@ export function ServicesOwnership() {
 
           <div className={styles.ownershipCore}>
             <span>Senior Data &amp; AI ownership</span>
-            <small>Connect the signals, choose the decision, make someone accountable for the outcome.</small>
+            <small>Connect the signals, choose the decision and make someone accountable for the outcome.</small>
           </div>
 
           <svg className={styles.connectionsOut} viewBox="0 0 1000 125" preserveAspectRatio="none" aria-hidden="true">
@@ -75,7 +74,7 @@ export function ServicesOwnership() {
         </div>
 
         <p className={styles.ownershipPunch}>
-          Most companies do not need another dashboard. They need the data, systems and decisions to work together.
+          Most companies have plenty of dashboards. Far fewer have someone making sure they lead to better decisions.
         </p>
       </div>
     </section>
