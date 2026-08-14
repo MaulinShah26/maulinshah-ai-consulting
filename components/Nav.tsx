@@ -17,33 +17,27 @@ export function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-40 border-b border-ink-200/70 bg-page/90 backdrop-blur-md">
-      <div className="max-w-content mx-auto flex items-center justify-between px-6 py-3.5">
+    <nav className="sticky top-0 z-40 border-b border-ink-200/70 bg-page/88 backdrop-blur-xl">
+      <div className="max-w-[1180px] mx-auto flex items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+          className="group flex items-baseline gap-3"
           aria-label={`${meta.author}, home`}
           onClick={() => setOpen(false)}
         >
-          <span
-            className="w-[38px] h-[38px] border-[1.5px] border-accent rounded-md flex items-center justify-center text-accent text-[14px] font-medium flex-shrink-0"
-            aria-hidden="true"
-          >
-            MS
+          <span className="font-serif text-[19px] font-semibold tracking-tight text-ink group-hover:text-accent transition-colors">
+            Maulin Shah
           </span>
-          <span className="flex flex-col leading-none">
-            <span className="text-[15px] font-medium text-ink leading-tight">{meta.author}</span>
-            <span className="text-[9px] font-mono uppercase tracking-[1.3px] text-ink-500 mt-1.5 leading-none">
-              Data & AI Decision Systems
-            </span>
+          <span className="hidden sm:inline font-mono text-[9px] uppercase tracking-[0.14em] text-ink-400">
+            Data + AI
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-5">
-          <ul className="flex items-center gap-5 text-[13px] text-ink-600">
+        <div className="hidden md:flex items-center gap-6">
+          <ul className="flex items-center gap-6 text-[12px] text-ink-600">
             {links.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="hover:text-ink transition-colors">
+                <Link href={item.href} className="hover:text-accent transition-colors">
                   {item.label}
                 </Link>
               </li>
@@ -53,9 +47,9 @@ export function Nav() {
             href={social.calendly}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md bg-ink px-3.5 py-2 text-[12px] font-medium text-page hover:bg-ink-800 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full border border-ink-300 px-3.5 py-2 text-[11px] font-medium text-ink hover:border-accent hover:text-accent transition-colors"
           >
-            <Calendar size={13} aria-hidden />
+            <Calendar size={12} aria-hidden />
             Book a call
           </a>
           <ThemeToggle />
@@ -68,7 +62,7 @@ export function Nav() {
             onClick={() => setOpen((value) => !value)}
             aria-label={open ? "Close navigation" : "Open navigation"}
             aria-expanded={open}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-ink-200 text-ink"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink-200 text-ink"
           >
             {open ? <X size={17} aria-hidden /> : <Menu size={17} aria-hidden />}
           </button>
@@ -76,23 +70,24 @@ export function Nav() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-ink-200 bg-page px-6 py-4">
-          <div className="max-w-content mx-auto flex flex-col gap-1">
-            {links.map((item) => (
+        <div className="md:hidden border-t border-ink-200 bg-page px-6 py-5">
+          <div className="max-w-[1180px] mx-auto flex flex-col">
+            {links.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="py-3 text-[15px] text-ink border-b border-ink-200 last:border-0"
+                className="flex items-baseline justify-between py-4 border-b border-ink-200"
               >
-                {item.label}
+                <span className="font-serif text-[28px] text-ink">{item.label}</span>
+                <span className="font-mono text-[9px] text-ink-400">0{index + 1}</span>
               </Link>
             ))}
             <a
               href={social.calendly}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-md bg-ink px-4 py-3 text-[13px] font-medium text-page"
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-ink px-4 py-3 text-[13px] font-medium text-page"
             >
               <Calendar size={14} aria-hidden />
               Book a call
