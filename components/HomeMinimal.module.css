@@ -1,0 +1,555 @@
+.stage {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - 68px);
+  padding: 76px 24px 54px;
+}
+
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(var(--ink-200) / 0.32) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--ink-200) / 0.32) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black 0%, black 66%, transparent 100%);
+  opacity: 0.55;
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  width: 560px;
+  height: 560px;
+  right: -170px;
+  top: -150px;
+  border-radius: 999px;
+  background: rgb(var(--accent-soft) / 0.72);
+  filter: blur(1px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(390px, 0.95fr);
+  gap: 58px;
+  align-items: center;
+  min-height: 560px;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+  margin-bottom: 22px;
+}
+
+.kickerDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(var(--accent));
+  box-shadow: 0 0 0 6px rgb(var(--accent) / 0.10);
+}
+
+.headline {
+  max-width: 730px;
+  margin: 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(54px, 6.7vw, 92px);
+  font-weight: 500;
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+  color: rgb(var(--ink));
+}
+
+.headlineAccent {
+  color: rgb(var(--accent));
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.subhead {
+  max-width: 590px;
+  margin: 28px 0 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: rgb(var(--ink-600));
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.primaryAction {
+  background: rgb(var(--ink));
+  color: rgb(var(--page));
+}
+
+.secondaryAction {
+  border: 1px solid rgb(var(--ink-300));
+  color: rgb(var(--ink));
+  background: rgb(var(--page) / 0.45);
+  backdrop-filter: blur(8px);
+}
+
+.primaryAction:hover,
+.secondaryAction:hover {
+  transform: translateY(-2px);
+}
+
+.secondaryAction:hover {
+  border-color: rgb(var(--accent));
+}
+
+.builtAt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 34px;
+  color: rgb(var(--ink-500));
+  font-size: 11px;
+}
+
+.builtAtLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 9px;
+}
+
+.firm {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgb(var(--ink-700));
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.firm img {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.signalField {
+  position: relative;
+  min-height: 500px;
+}
+
+.orbit,
+.orbitSmall {
+  position: absolute;
+  border: 1px solid rgb(var(--accent) / 0.24);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.orbit {
+  width: 410px;
+  height: 410px;
+  right: 8px;
+  top: 42px;
+}
+
+.orbitSmall {
+  width: 260px;
+  height: 260px;
+  right: 83px;
+  top: 118px;
+}
+
+.centerMark {
+  position: absolute;
+  right: 182px;
+  top: 222px;
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgb(var(--accent));
+  color: white;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.2;
+  text-align: center;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 14px 40px rgb(var(--accent) / 0.22);
+  z-index: 2;
+}
+
+.signalCard {
+  position: absolute;
+  width: 186px;
+  min-height: 126px;
+  padding: 17px 17px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 16px;
+  background: rgb(var(--surface) / 0.94);
+  color: rgb(var(--ink));
+  box-shadow: 0 16px 45px rgb(var(--ink) / 0.08);
+  backdrop-filter: blur(12px);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  z-index: 3;
+  animation: floatCard 7s ease-in-out infinite;
+}
+
+.signalCard:hover {
+  border-color: rgb(var(--accent) / 0.55);
+  box-shadow: 0 22px 55px rgb(var(--ink) / 0.13);
+  animation-play-state: paused;
+}
+
+.cardOne {
+  right: 208px;
+  top: 4px;
+  transform: rotate(-3deg);
+}
+
+.cardTwo {
+  right: 0;
+  top: 128px;
+  transform: rotate(3deg);
+  animation-delay: -1.8s;
+}
+
+.cardThree {
+  right: 218px;
+  bottom: 6px;
+  transform: rotate(2deg);
+  animation-delay: -3.1s;
+}
+
+.cardFour {
+  left: 0;
+  top: 177px;
+  transform: rotate(-2deg);
+  animation-delay: -4.5s;
+}
+
+.signalLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgb(var(--ink-400));
+}
+
+.signalValue {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 29px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgb(var(--ink));
+}
+
+.signalCopy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  color: rgb(var(--ink-500));
+}
+
+.signalCopy svg {
+  color: rgb(var(--accent));
+  flex: 0 0 auto;
+}
+
+@keyframes floatCard {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -7px; }
+}
+
+.chapters {
+  position: relative;
+  z-index: 1;
+  padding: 26px 24px 70px;
+}
+
+.chapterInner {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  border-top: 1px solid rgb(var(--ink-300));
+}
+
+.chapterIntro {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0 18px;
+  color: rgb(var(--ink-500));
+}
+
+.chapterIntro span:first-child {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+.chapterIntro span:last-child {
+  font-size: 12px;
+}
+
+.chapterLink {
+  display: grid;
+  grid-template-columns: 58px minmax(160px, 0.75fr) minmax(240px, 1fr) 32px;
+  align-items: center;
+  gap: 18px;
+  padding: 25px 0;
+  border-top: 1px solid rgb(var(--ink-200));
+  color: rgb(var(--ink));
+  transition: padding 180ms ease, color 180ms ease;
+}
+
+.chapterLink:last-child {
+  border-bottom: 1px solid rgb(var(--ink-200));
+}
+
+.chapterLink:hover {
+  padding-left: 10px;
+  color: rgb(var(--accent));
+}
+
+.chapterNum {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  color: rgb(var(--ink-400));
+}
+
+.chapterTitle {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.chapterDesc {
+  font-size: 13px;
+  color: rgb(var(--ink-500));
+}
+
+.chapterLink svg {
+  justify-self: end;
+  color: rgb(var(--accent));
+  transition: transform 180ms ease;
+}
+
+.chapterLink:hover svg {
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 980px) {
+  .stage {
+    padding-top: 58px;
+  }
+
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .signalField {
+    min-height: 360px;
+    width: min(560px, 100%);
+    margin: 0 auto;
+  }
+
+  .orbit {
+    width: 310px;
+    height: 310px;
+    right: 50%;
+    transform: translateX(50%);
+    top: 25px;
+  }
+
+  .orbitSmall {
+    width: 190px;
+    height: 190px;
+    right: 50%;
+    transform: translateX(50%);
+    top: 85px;
+  }
+
+  .centerMark {
+    right: 50%;
+    transform: translateX(50%);
+    top: 145px;
+  }
+
+  .signalCard {
+    width: 170px;
+    min-height: 112px;
+  }
+
+  .cardOne { left: 0; right: auto; top: 0; }
+  .cardTwo { right: 0; top: 45px; }
+  .cardThree { right: 28px; bottom: 0; }
+  .cardFour { left: 16px; top: auto; bottom: 30px; }
+}
+
+@media (max-width: 640px) {
+  .stage {
+    min-height: auto;
+    padding: 46px 18px 38px;
+  }
+
+  .stage::before {
+    background-size: 38px 38px;
+  }
+
+  .stage::after {
+    width: 330px;
+    height: 330px;
+    right: -170px;
+    top: -80px;
+  }
+
+  .headline {
+    font-size: clamp(46px, 14vw, 66px);
+    line-height: 0.96;
+  }
+
+  .headlineAccent {
+    white-space: normal;
+  }
+
+  .subhead {
+    font-size: 15px;
+    margin-top: 22px;
+  }
+
+  .actions {
+    margin-top: 24px;
+  }
+
+  .builtAt {
+    margin-top: 28px;
+  }
+
+  .signalField {
+    min-height: 370px;
+    margin-top: 6px;
+  }
+
+  .orbit {
+    width: 270px;
+    height: 270px;
+    top: 45px;
+  }
+
+  .orbitSmall {
+    width: 160px;
+    height: 160px;
+    top: 100px;
+  }
+
+  .centerMark {
+    top: 144px;
+    width: 64px;
+    height: 64px;
+    font-size: 8px;
+  }
+
+  .signalCard {
+    width: 145px;
+    min-height: 105px;
+    padding: 14px;
+    border-radius: 13px;
+  }
+
+  .signalValue {
+    font-size: 24px;
+  }
+
+  .signalCopy {
+    font-size: 10px;
+  }
+
+  .cardOne { left: 0; top: 0; }
+  .cardTwo { right: 0; top: 62px; }
+  .cardThree { right: 2px; bottom: 0; }
+  .cardFour { left: 0; bottom: 42px; }
+
+  .chapters {
+    padding: 10px 18px 54px;
+  }
+
+  .chapterIntro {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .chapterLink {
+    grid-template-columns: 34px 1fr 24px;
+    gap: 12px;
+    padding: 21px 0;
+  }
+
+  .chapterDesc {
+    grid-column: 2 / 4;
+    grid-row: 2;
+    margin-top: -5px;
+  }
+
+  .chapterTitle {
+    font-size: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signalCard {
+    animation: none;
+  }
+
+  .primaryAction,
+  .secondaryAction,
+  .chapterLink,
+  .chapterLink svg {
+    transition: none;
+  }
+}

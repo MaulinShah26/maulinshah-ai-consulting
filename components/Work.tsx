@@ -14,6 +14,14 @@ import { SectionHeader } from "./SectionHeader";
 
 type TabKey = "corporate" | "personal";
 
+const labCaseStudyRoutes: Record<string, string> = {
+  NerdyCricket: "/case-studies/nerdycricket",
+  "Medicine Helper": "/case-studies/medicine-helper",
+  "Packaged Food Label Analyzer": "/case-studies/packaged-food-label-analyzer",
+  "AI Trading Copilot": "/case-studies/ai-trading-copilot",
+  "AI Job Impact Assessor": "/case-studies/ai-job-impact-assessor",
+};
+
 export function Work() {
   const [activeTab, setActiveTab] = useState<TabKey>("corporate");
   const trackRef = useRef<HTMLDivElement>(null);
@@ -25,7 +33,6 @@ export function Work() {
   const totalPages = Math.max(1, Math.ceil(totalCards / Math.max(1, visibleCount)));
   const currentPage = Math.floor(currentIndex / Math.max(1, visibleCount));
 
-  // Read width of a card + gap, in px
   const cardStep = useCallback((): number => {
     const track = trackRef.current;
     if (!track) return 380;
@@ -45,18 +52,15 @@ export function Work() {
     setVisibleCount(vis);
   }, [cardStep]);
 
-  // Reset to start on tab switch
   useEffect(() => {
     const track = trackRef.current;
     if (track) {
       track.scrollTo({ left: 0, behavior: "auto" });
     }
     setCurrentIndex(0);
-    // remeasure visibleCount after layout settles
     requestAnimationFrame(measure);
   }, [activeTab, measure]);
 
-  // Initial measure + resize listener
   useEffect(() => {
     measure();
     const onResize = () => measure();
@@ -179,16 +183,17 @@ function CorporateCardEl({ card }: { card: CorporateCardData }) {
           </div>
         ))}
       </div>
-      <div className="case-takeaway">
-        <span className="case-takeaway-label">Founder takeaway</span>
-        <p>{card.takeaway}</p>
+      <div className="demo-cta">
+        <span className="demo-link-text">View case study</span>
+        <ArrowRight size={18} className="demo-arrow" aria-hidden />
       </div>
     </Link>
   );
 }
 
 function PersonalCardEl({ card }: { card: PersonalCardData }) {
-  const isExternal = card.href.startsWith("http");
+  const caseStudyHref = labCaseStudyRoutes[card.title] ?? card.href;
+  const isExternal = caseStudyHref.startsWith("http");
 
   const inner = (
     <>
@@ -197,24 +202,22 @@ function PersonalCardEl({ card }: { card: PersonalCardData }) {
       <p className="case-meta">{card.meta}</p>
       <div className="sao">
         <div className="sao-block">
-          <span className="sao-label">Situation</span>
+          <span className="sao-label">Problem</span>
           <p className="sao-text">{card.situation}</p>
         </div>
         <div className="sao-block">
-          <span className="sao-label">Approach</span>
+          <span className="sao-label">What I built</span>
           <p className="sao-text">{card.approach}</p>
         </div>
         <div className="sao-block">
-          <span className="sao-label">Outcome</span>
+          <span className="sao-label">Where it is now</span>
           <p className="sao-text">{card.outcome}</p>
         </div>
       </div>
-      {card.ctaLabel && (
-        <div className="demo-cta">
-          <span className="demo-link-text">{card.ctaLabel}</span>
-          <ArrowRight size={18} className="demo-arrow" aria-hidden />
-        </div>
-      )}
+      <div className="demo-cta">
+        <span className="demo-link-text">View case study</span>
+        <ArrowRight size={18} className="demo-arrow" aria-hidden />
+      </div>
     </>
   );
 
@@ -222,20 +225,21 @@ function PersonalCardEl({ card }: { card: PersonalCardData }) {
     return (
       <a
         className="case-card"
-        href={card.href}
+        href={caseStudyHref}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => track("case_study_click", { slug: card.href, kind: "personal" })}
+        onClick={() => track("case_study_click", { slug: caseStudyHref, kind: "personal" })}
       >
         {inner}
       </a>
     );
   }
+
   return (
     <Link
       className="case-card"
-      href={card.href}
-      onClick={() => track("case_study_click", { slug: card.href, kind: "personal" })}
+      href={caseStudyHref}
+      onClick={() => track("case_study_click", { slug: caseStudyHref, kind: "personal" })}
     >
       {inner}
     </Link>

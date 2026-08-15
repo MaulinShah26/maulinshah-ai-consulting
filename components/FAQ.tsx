@@ -15,7 +15,7 @@ export function FAQ() {
         <div className="reveal-child">
           <SectionHeader label={faq.sectionLabel} />
         </div>
-        <h2 className="reveal-child font-serif text-[22px] font-medium tracking-tight text-ink mb-5">
+        <h2 className="reveal-child max-w-[760px] font-serif text-[22px] font-medium tracking-tight text-ink mb-5">
           {faq.heading}
         </h2>
         <div className="reveal-child border-t border-ink-200">
@@ -32,7 +32,7 @@ export function FAQ() {
                   aria-expanded={isOpen}
                   className="w-full flex items-center justify-between gap-4 py-4 text-left"
                 >
-                  <span className="text-[15px] font-medium text-ink leading-snug">
+                  <span className="max-w-[900px] text-[15px] font-medium text-ink leading-snug">
                     {item.question}
                   </span>
                   <span
@@ -52,7 +52,7 @@ export function FAQ() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-[13.5px] text-ink-600 leading-relaxed pb-4">
+                    <p className="max-w-[860px] text-[13.5px] text-ink-600 leading-relaxed pb-4 pr-6">
                       {item.answer}
                     </p>
                   </div>

@@ -11,21 +11,28 @@ export function SignalToActionPipeline({
 }) {
   return (
     <div>
-      <div className="flex flex-wrap items-stretch gap-1.5">
-        {nodes.map((n, i) => (
-          <Fragment key={i}>
+      <div className="flex flex-col md:flex-row md:items-stretch gap-2 md:gap-1.5">
+        {nodes.map((node, index) => (
+          <Fragment key={`${node.k}-${index}`}>
             <div
-              className={`flex-1 min-w-[116px] rounded-[9px] border p-2.5 ${
-                n.act ? "bg-accent-soft border-accent" : "bg-surface border-ink-200"
+              className={`w-full md:flex-1 md:min-w-0 rounded-[12px] border px-3.5 py-3.5 ${
+                node.act
+                  ? "bg-accent-soft border-accent"
+                  : "bg-surface border-ink-200"
               }`}
             >
-              <div className="font-mono text-[8px] uppercase tracking-wide text-ink-400 mb-1">
-                {n.k}
+              <div className="font-mono text-[9px] uppercase tracking-[0.08em] text-ink-400 mb-1.5">
+                {node.k}
               </div>
-              <div className="text-[12px] font-medium leading-tight">{n.v}</div>
+              <div className="text-[13.5px] font-medium leading-[1.25] text-ink">
+                {node.v}
+              </div>
             </div>
-            {i < nodes.length - 1 && (
-              <div className="flex items-center text-ink-300" aria-hidden>
+            {index < nodes.length - 1 && (
+              <div
+                className="flex h-4 md:h-auto md:w-5 flex-none items-center justify-center text-ink-300 rotate-90 md:rotate-0"
+                aria-hidden
+              >
                 &rarr;
               </div>
             )}
@@ -33,7 +40,9 @@ export function SignalToActionPipeline({
         ))}
       </div>
       {caption && (
-        <p className="text-[12px] text-ink-500 italic mt-2.5">{caption}</p>
+        <p className="text-[13px] text-ink-500 italic mt-3.5 leading-[1.45]">
+          {caption}
+        </p>
       )}
     </div>
   );

@@ -1,0 +1,313 @@
+.page {
+  background: rgb(var(--page));
+  color: rgb(var(--ink));
+}
+
+.section {
+  width: min(1240px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: 64px 0;
+  border-top: 1px solid rgb(var(--ink-200));
+}
+
+.page > .section h2 {
+  max-width: 1120px;
+  margin: 0 0 24px !important;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(30px, 2.55vw, 40px) !important;
+  font-weight: 500;
+  line-height: 1.08 !important;
+  letter-spacing: -0.03em;
+  color: rgb(var(--ink));
+}
+
+.eyebrow {
+  margin-bottom: 14px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+.copy {
+  max-width: 900px;
+  font-size: 17px;
+  line-height: 1.72;
+  color: rgb(var(--ink-700));
+}
+
+.copy p + p {
+  margin-top: 16px;
+}
+
+.constraintGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.architecture {
+  margin-top: 34px;
+  padding: 24px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 24px;
+  background: rgb(var(--surface));
+}
+
+.modelGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.flowLine {
+  width: 1px;
+  height: 30px;
+  margin: 12px auto;
+  background: rgb(var(--ink-300));
+}
+
+.hybrid {
+  padding: 20px;
+  border: 1px solid rgb(var(--accent) / 0.42);
+  border-radius: 18px;
+  text-align: center;
+  background: rgb(var(--accent-soft) / 0.58);
+}
+
+.hybridLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+.hybridTitle {
+  margin-top: 7px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.hybridFormula {
+  margin-top: 5px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  color: rgb(var(--ink-600));
+}
+
+.labelGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.featureCard {
+  padding: 20px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 18px;
+  background: rgb(var(--surface));
+}
+
+.featureCardHighlight {
+  grid-column: 1 / -1;
+  border-color: rgb(var(--accent) / 0.45);
+  background: linear-gradient(135deg, rgb(var(--accent-soft) / 0.66), rgb(var(--surface)) 72%);
+}
+
+.featureLabel {
+  margin-bottom: 8px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--ink-500));
+}
+
+.featureCardHighlight .featureLabel {
+  color: rgb(var(--accent));
+}
+
+.featureCard p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: rgb(var(--ink-700));
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 30px 0 26px;
+}
+
+.metricCard {
+  padding: 20px 14px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 18px;
+  text-align: center;
+  background: rgb(var(--surface));
+}
+
+.metricCard:last-child {
+  border-color: rgb(var(--accent) / 0.4);
+  background: rgb(var(--accent-soft) / 0.54);
+}
+
+.metricValue {
+  display: block;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.metricLabel {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--ink-500));
+}
+
+.insightGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.insightCard {
+  padding: 20px;
+  border-radius: 18px;
+  background: rgb(var(--subtle));
+}
+
+.insightCard strong {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.insightCard p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.58;
+  color: rgb(var(--ink-700));
+}
+
+.activationStack {
+  display: grid;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.productionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.lessonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.techSection {
+  width: min(1240px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: 0 0 64px;
+}
+
+.techSection details {
+  overflow: hidden;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 20px;
+  background: rgb(var(--surface));
+}
+
+.techSection summary {
+  min-height: 76px;
+  padding: 18px 22px;
+}
+
+.footer {
+  width: min(1240px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: 34px 0 52px;
+  border-top: 1px solid rgb(var(--ink-200));
+}
+
+@media (max-width: 900px) {
+  .constraintGrid,
+  .metricGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featureGrid,
+  .productionGrid,
+  .insightGrid,
+  .lessonGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .featureCardHighlight {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .section,
+  .techSection,
+  .footer {
+    width: min(100% - 36px, 1240px);
+  }
+
+  .section {
+    padding: 50px 0;
+  }
+
+  .page > .section h2 {
+    font-size: clamp(28px, 8vw, 36px) !important;
+  }
+
+  .copy {
+    font-size: 16px;
+  }
+
+  .constraintGrid,
+  .metricGrid,
+  .modelGrid,
+  .labelGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture {
+    padding: 16px;
+    border-radius: 18px;
+  }
+}

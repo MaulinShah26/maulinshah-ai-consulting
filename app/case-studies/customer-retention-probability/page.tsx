@@ -12,11 +12,12 @@ import {
   TrendingUp,
   ChevronDown,
 } from "lucide-react";
+import styles from "./page.module.css";
 
 export const metadata = {
   title: "Customer Retention Probability Score · Maulin Shah",
   description:
-    "A hybrid ML system at Supertails scoring every customer’s 30-day repurchase probability. Two-stage CatBoost + MLP architecture, refreshed daily, ~60% lift on test conversion.",
+    "A hybrid ML system at Supertails scoring every customer’s 30 day repurchase probability. Two stage CatBoost + MLP architecture, refreshed daily, ~60% lift on test conversion.",
 };
 
 const features = [
@@ -30,7 +31,7 @@ const features = [
   },
   {
     group: "Communication interaction",
-    body: "Campaign exposure, response rates, channel preferences, comms recency.",
+    body: "Campaign exposure, response rates, channel preferences, communication recency.",
   },
   {
     group: "Customer status",
@@ -38,7 +39,7 @@ const features = [
   },
   {
     group: "Engineered momentum signals",
-    body: "Velocity ratios (30/60 and 60/90 day windows), trend flags, weighted recency score.",
+    body: "Velocity ratios across 30, 60 and 90 day windows, trend flags, and weighted recency signals that separate recoverable customers from long gone ones.",
     highlight: true,
   },
 ];
@@ -58,506 +59,325 @@ const activation = [
     objective: "Convert with minimal effort",
     primaryChannel: "WhatsApp",
     secondaryChannel: "Push, Email",
-    cap: "1–2x / week",
+    cap: "1 to 2 times per week",
     tactic:
-      "Subtle nudges, loyalty perks. No discount unless prior signal indicates price sensitivity.",
+      "Subtle nudges and loyalty perks. Avoid a discount unless prior behavior shows clear price sensitivity.",
     tone: "accent" as const,
   },
   {
     label: "Might purchase",
-    condition: "Middle band, neither high nor low",
+    condition: "Middle probability band",
     objective: "Nudge based on intent",
     primaryChannel: "Email",
-    secondaryChannel: "Push, In-app",
-    cap: "2–3x / week",
+    secondaryChannel: "Push, In app",
+    cap: "2 to 3 times per week",
     tactic:
-      "Best offers in preferred categories. Urgency framing. Dynamic personalization.",
+      "Preferred category offers, urgency where appropriate, and dynamic personalization based on recent intent.",
     tone: "neutral" as const,
   },
   {
     label: "Unlikely to purchase",
     condition: "Score < 25, or weak engagement signals",
-    objective: "Re-engage or learn intent",
-    primaryChannel: "Push, In-app",
-    secondaryChannel: "Email (if opted in)",
-    cap: "1x / week",
-    tactic: "Win-back offers. Feedback surveys. Content to recapture attention.",
+    objective: "Re engage or learn intent",
+    primaryChannel: "Push, In app",
+    secondaryChannel: "Email if opted in",
+    cap: "1 time per week",
+    tactic:
+      "Win back offers, feedback prompts, and useful content designed to recover attention without over messaging.",
     tone: "muted" as const,
   },
 ];
 
 function SectionEyebrow({ number, label }: { number: string; label: string }) {
-  return (
-    <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-accent font-medium mb-3">
-      {number} · {label}
-    </div>
-  );
+  return <div className={styles.eyebrow}>{number} · {label}</div>;
 }
 
 export default function CustomerRetentionProbabilityPage() {
   return (
-    <main className="bg-page text-ink min-h-screen">
+    <main className={`${styles.page} min-h-screen`}>
       <Nav />
       <CaseNarrative slug="customer-retention-probability" />
 
-      {/* 01 The Situation */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="01" label="The situation" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          Volume metrics, no answer to the only question that mattered
-        </h2>
-        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
+      <section className={styles.section}>
+        <SectionEyebrow number="01" label="Architecture" />
+        <h2>A hybrid model because the business needed precision and recall at the same time.</h2>
+        <div className={styles.copy}>
           <p>
-            Supertails was running campaigns the way most growing companies do:
-            rule-based segments, calendar-driven blasts, the same offers
-            going to everyone in a cohort. The result was predictable.
-            High-intent customers got discounts they didn’t need (margin loss).
-            Lapsed customers got irrelevant nudges (wasted spend).
-          </p>
-          <p>
-            The team had open rates and click rates. What it didn’t have was an
-            answer to the question that actually mattered:
-          </p>
-          <p className="border-l-2 border-accent pl-4 italic text-ink-800">
-            Who is actually likely to come back in the next 30 days, and who
-            isn’t?
+            CatBoost was strong at identifying the clearest likely buyers, but it was conservative. The MLP found more of the harder cases, but at the cost of precision. A weighted blend gave the business a better operating balance than either model alone.
           </p>
         </div>
-      </section>
 
-      <hr className="border-ink-200" />
-
-      {/* 02 The Bet */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="02" label="The bet" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          A score and a label per customer, refreshed daily, routed to the
-          right channel
-        </h2>
-        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-6">
-          <p>
-            Build a model that scores every customer on their 30-day
-            repurchase probability. Output a number AND a label (Likely /
-            Might / Unlikely). Refresh daily. Route into activation channels
-            so the right customer gets the right intervention.
-          </p>
-          <p>
-            Four non-negotiable constraints. High recall and high precision
-            together is the hard part. Most models optimize one at the expense
-            of the other.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className={styles.constraintGrid}>
           <ConstraintCard
-            icon={<Target size={16} aria-hidden />}
-            title="High AUC"
-            body="The model has to actually work. Predictions need to track reality."
+            icon={<Target size={17} aria-hidden />}
+            title="Accurate"
+            body="The score had to rank real purchase likelihood reliably."
           />
           <ConstraintCard
-            icon={<TrendingUp size={16} aria-hidden />}
+            icon={<TrendingUp size={17} aria-hidden />}
             title="High recall"
-            body="Don’t miss customers who would have converted if engaged."
+            body="Do not miss customers who can still be recovered."
           />
           <ConstraintCard
-            icon={<CheckCircle2 size={16} aria-hidden />}
+            icon={<CheckCircle2 size={17} aria-hidden />}
             title="High precision"
-            body="Don’t waste campaign budget on customers who won’t convert."
+            body="Do not spend retention budget on weak opportunities."
           />
           <ConstraintCard
-            icon={<Sparkles size={16} aria-hidden />}
-            title="Interpretable"
-            body="Marketing needs to trust it. CRM needs to actuate it. SHAP for every score."
+            icon={<Sparkles size={17} aria-hidden />}
+            title="Explainable"
+            body="Marketing and CRM teams needed reasons they could trust."
           />
         </div>
-      </section>
 
-      <hr className="border-ink-200" />
-
-      {/* 03 Architecture */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="03" label="Architecture" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          A two-stage hybrid: precision on top, recall underneath
-        </h2>
-        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
-          <p>
-            A deliberate hybrid of two classifiers with opposing tunings,
-            blended into a single probability score. CatBoost alone was too
-            conservative. MLP alone was too aggressive. The weighted blend
-            captures the best of both.
-          </p>
-        </div>
-
-        {/* Pipeline diagram */}
-        <div className="my-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className={styles.architecture}>
+          <div className={styles.modelGrid}>
             <ModelBox
               stage="Stage 1"
               name="CatBoost Classifier"
-              tuning="Precision-tuned"
+              tuning="Precision tuned"
               weight="65%"
-              details="Strong tabular learner. Catches the clearest ‘will convert’ customers."
+              details="Strong tabular learner focused on the clearest purchase signals."
             />
             <ModelBox
               stage="Stage 2"
               name="MLP Classifier"
-              tuning="Recall-tuned"
+              tuning="Recall tuned"
               weight="35%"
-              details="Catches the non-linear patterns CatBoost misses. Reaches the harder converts."
+              details="Captures nonlinear patterns and extends reach into harder to classify customers."
             />
           </div>
 
-          <div className="flex justify-center my-4" aria-hidden>
-            <div className="w-px h-10 bg-ink-300" />
+          <div className={styles.flowLine} aria-hidden />
+
+          <div className={styles.hybrid}>
+            <div className={styles.hybridLabel}>Weighted hybrid</div>
+            <div className={styles.hybridTitle}>30 day repurchase probability</div>
+            <div className={styles.hybridFormula}>0.65 × CatBoost score + 0.35 × MLP score</div>
           </div>
 
-          <div className="border-2 border-accent rounded-md p-5 text-center bg-accent-soft">
-            <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent font-medium mb-2">
-              Weighted hybrid
-            </div>
-            <div className="font-serif text-[20px] font-medium text-ink mb-1">
-              30-day retention probability
-            </div>
-            <div className="text-[12px] text-ink-600 font-mono">
-              0.65 × CatBoost score + 0.35 × MLP score
-            </div>
-          </div>
+          <div className={styles.flowLine} aria-hidden />
 
-          <div className="flex justify-center my-4" aria-hidden>
-            <div className="w-px h-10 bg-ink-300" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <LabelTile
-              label="Likely to purchase"
-              condition="Score ≥ 70"
-              tone="accent"
-            />
-            <LabelTile
-              label="Might purchase"
-              condition="Middle band"
-              tone="neutral"
-            />
-            <LabelTile
-              label="Unlikely to purchase"
-              condition="Score < 25"
-              tone="muted"
-            />
+          <div className={styles.labelGrid}>
+            <LabelTile label="Likely to purchase" condition="Score ≥ 70" tone="accent" />
+            <LabelTile label="Might purchase" condition="Middle band" tone="neutral" />
+            <LabelTile label="Unlikely to purchase" condition="Score < 25" tone="muted" />
           </div>
         </div>
       </section>
 
-      <hr className="border-ink-200" />
-
-      {/* 04 Features */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="04" label="Features that matter" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          Standard RFM, plus the engineered momentum signals that did the work
-        </h2>
-        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
+      <section className={styles.section}>
+        <SectionEyebrow number="02" label="Signals that mattered" />
+        <h2>RFM was useful. Momentum was what separated a recoverable customer from a lost one.</h2>
+        <div className={styles.copy}>
           <p>
-            Most retention models stop at RFM (recency, frequency, monetary
-            value). Useful, but RFM conflates two very different customers: the
-            one who lapsed last month (recoverable) and the one who lapsed
-            eight months ago (probably gone). Both look identical.
+            Two customers can have the same recency and frequency while being in very different states. Someone who stopped buying last month may still be recoverable. Someone who stopped eight months ago may not be. Static RFM cannot express that difference well enough on its own.
           </p>
           <p>
-            The unlock was a set of engineered momentum signals: velocity
-            ratios and trend flags that distinguish recoverable customers
-            from long-gone ones. That single feature class likely moved the
-            model 5–10 points on recall.
+            The biggest unlock was engineering momentum signals that captured how behavior was changing over time, not just where the customer sat today.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {features.map((g, i) => (
-            <div
-              key={i}
-              className={`bg-surface border-[0.5px] rounded-md p-4 ${
-                g.highlight ? "border-accent" : "border-ink-200"
-              }`}
+        <div className={styles.featureGrid}>
+          {features.map((feature) => (
+            <article
+              key={feature.group}
+              className={`${styles.featureCard} ${feature.highlight ? styles.featureCardHighlight : ""}`}
             >
-              <div
-                className={`font-mono text-[10px] uppercase tracking-wider font-medium mb-2 ${
-                  g.highlight ? "text-accent" : "text-ink-500"
-                }`}
-              >
-                {g.group}
-              </div>
-              <p className="text-[13px] text-ink-700 leading-[1.6]">{g.body}</p>
-            </div>
+              <div className={styles.featureLabel}>{feature.group}</div>
+              <p>{feature.body}</p>
+            </article>
           ))}
         </div>
       </section>
 
-      <hr className="border-ink-200" />
+      <section className={styles.section}>
+        <SectionEyebrow number="03" label="Performance" />
+        <h2>Model quality mattered. Business lift was the metric leadership cared about.</h2>
 
-      {/* 05 Performance */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="05" label="Performance" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          What the hybrid delivered
-        </h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 my-8">
-          {metrics.map((m, i) => (
-            <div
-              key={i}
-              className="bg-surface border-[0.5px] border-ink-200 rounded-md p-4 text-center"
-            >
-              <div className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-1">
-                {m.value}
-              </div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-ink-500 leading-tight">
-                {m.label}
-              </div>
+        <div className={styles.metricGrid}>
+          {metrics.map((metric) => (
+            <div className={styles.metricCard} key={metric.label}>
+              <span className={styles.metricValue}>{metric.value}</span>
+              <span className={styles.metricLabel}>{metric.label}</span>
             </div>
           ))}
         </div>
 
-        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7]">
-          <p>
-            The threshold is tunable by business teams: raise it to spend less
-            budget at higher precision, lower it to extend reach at lower
-            precision. The model gives the dial. The business decides where to
-            set it.
-          </p>
-          <p>
-            The ~60% lift mattered most to leadership. It’s the practical
-            answer to: “if we listen to this model, do we make more money?”
-            Yes, by about 60%.
-          </p>
+        <div className={styles.insightGrid}>
+          <article className={styles.insightCard}>
+            <strong>The threshold is a business dial.</strong>
+            <p>
+              Raise it when budget is tight and precision matters more. Lower it when the business wants more reach and can tolerate weaker precision. The model provides the tradeoff; the team decides where to operate.
+            </p>
+          </article>
+          <article className={styles.insightCard}>
+            <strong>The commercial proof was the holdout.</strong>
+            <p>
+              The roughly 60% lift answered the question leadership actually cared about: if the business acts on this score, does it convert more customers than the existing approach?
+            </p>
+          </article>
         </div>
       </section>
 
-      <hr className="border-ink-200" />
-
-      {/* 06 Activation */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="06" label="Activation" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          A score is useless without a decision. Three labels, three different
-          campaigns.
-        </h2>
-        <div className="space-y-4 text-[15px] text-ink-700 leading-[1.7] mb-8">
+      <section className={styles.section}>
+        <SectionEyebrow number="04" label="Activation" />
+        <h2>One score becomes three different actions.</h2>
+        <div className={styles.copy}>
           <p>
-            Channel choice isn’t arbitrary. High-intent customers need less
-            friction (WhatsApp = personal). Middle customers need rich content
-            (Email = explanatory). Low-engagement customers need passive
-            presence (Push = lightweight).
+            Prediction was only useful once it changed what the customer experienced. The probability bands drove different objectives, channels, frequencies, and message strategies instead of sending the same campaign to everyone.
           </p>
         </div>
 
-        <div className="space-y-4">
-          {activation.map((a, i) => (
-            <ActivationCard key={i} {...a} />
+        <div className={styles.activationStack}>
+          {activation.map((item) => (
+            <ActivationCard key={item.label} {...item} />
           ))}
         </div>
 
-        <p className="text-[13px] text-ink-500 leading-[1.65] mt-6">
-          Cross-personalization rules layer on top: brand affinity drives SKU
-          choice, discount sensitivity gates discount eligibility, delivery
-          experience suppresses offers to customers with bad delivery history,
-          and engagement rate optimizes channel mix per customer.
-        </p>
+        <div className={`${styles.copy} mt-6`}>
+          <p>
+            Brand affinity, discount sensitivity, delivery experience, and engagement rate then refine the exact product, offer, and channel used for each customer.
+          </p>
+        </div>
       </section>
 
-      <hr className="border-ink-200" />
+      <section className={styles.section}>
+        <SectionEyebrow number="05" label="In production" />
+        <h2>A live decision input, refreshed every day.</h2>
+        <div className={styles.copy}>
+          <p>
+            The model was designed to live inside the operating workflow, not as a notebook artifact. Each daily run creates one current score that downstream teams can use consistently.
+          </p>
+        </div>
 
-      {/* 07 In production */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="07" label="In production today" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-5">
-          Not a research artifact. A live system feeding decisions every day.
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-6">
+        <div className={styles.productionGrid}>
           <ProductionCard
-            icon={<Layers size={16} aria-hidden />}
+            icon={<Layers size={17} aria-hidden />}
             title="Daily refresh"
-            body="The score refreshes every night and lands in BigQuery as a clean replacement of the prior day’s table. A single, current source of truth."
+            body="Nightly scoring writes one current production table in BigQuery so every activation surface reads the same answer."
           />
           <ProductionCard
-            icon={<Sparkles size={16} aria-hidden />}
+            icon={<Sparkles size={17} aria-hidden />}
             title="SHAP interpretability"
-            body="Feature importance plots generated per run, showing which signals drove each segment’s predictions. Builds stakeholder trust beyond ‘the model says so.’"
+            body="Feature importance is generated with each run so stakeholders can see which signals are driving the score."
           />
           <ProductionCard
-            icon={<Cpu size={16} aria-hidden />}
-            title="Multi-channel activation"
-            body="Scores actuated via WhatsApp, Email, Push with channel prioritization and frequency caps per segment."
+            icon={<Cpu size={17} aria-hidden />}
+            title="Multi channel activation"
+            body="WhatsApp, email, push, and product surfaces can use the same score with channel and frequency rules layered on top."
           />
           <ProductionCard
-            icon={<Target size={16} aria-hidden />}
-            title="Cross-team usage"
-            body="CRM uses it for campaign targeting. Product for in-app nudges. Retention for A/B tests on win-back. Data for lift tracking vs baseline cohorts."
+            icon={<Target size={17} aria-hidden />}
+            title="Cross team usage"
+            body="CRM targets campaigns, Product triggers in app nudges, Retention runs win back tests, and Data measures lift against holdouts."
           />
         </div>
-        <p className="text-[14px] text-ink-600 leading-[1.65] mt-2">
-          Each customer’s score is valid for 30 days. Daily refresh keeps the
-          picture current as behavior changes.
-        </p>
       </section>
 
-      <hr className="border-ink-200" />
+      <section className={styles.section}>
+        <SectionEyebrow number="06" label="What I learned" />
+        <h2>The model was only one part of making the system useful.</h2>
 
-      {/* 08 Reflections */}
-      <section className="max-w-content mx-auto px-6 py-12">
-        <SectionEyebrow number="08" label="Reflections" />
-        <h2 className="font-serif text-[24px] md:text-[28px] font-medium text-ink leading-tight mb-8">
-          What worked, what was hard, what’s next
-        </h2>
-
-        <div className="space-y-8">
+        <div className={styles.lessonGrid}>
           <ReflectionBlock
             title="What worked"
-            icon={<CheckCircle2 size={16} aria-hidden />}
+            icon={<CheckCircle2 size={17} aria-hidden />}
             items={[
-              "The hybrid architecture (CatBoost + MLP) was the architectural win. Pure precision or pure recall wasn’t enough. The blend was.",
-              "Momentum signals separated recoverable customers from gone ones. That single feature class probably moved the model 5–10 points on recall.",
-              "Combining the model score with business logic gave stakeholders an explanation they trusted, beyond ‘the model says so.’",
+              "The CatBoost and MLP blend created a better operating balance than either model alone.",
+              "Momentum signals separated customers who were recoverable from customers who were simply inactive for a long time.",
+              "Combining model output with business rules made the system easier for stakeholders to trust and use.",
             ]}
           />
           <ReflectionBlock
             title="What was hard"
-            icon={<AlertCircle size={16} aria-hidden />}
+            icon={<AlertCircle size={17} aria-hidden />}
             tone="warning"
             items={[
-              "Label leakage. A few features were predictive because they encoded the answer in disguise. Catching those took careful audit.",
-              "Validation discipline. Synthetic oversampling on training boosts metrics; let it leak into validation and you’re fooling yourself.",
-              "Stakeholder education. ‘Model precision’ and ‘campaign conversion’ aren’t the same thing. Bridging that took time.",
+              "Label leakage had to be audited carefully because some apparently useful features encoded the answer in disguise.",
+              "SMOTE could only touch training data. Letting synthetic samples into validation would make the metrics look better than reality.",
+              "Model precision and campaign conversion are different concepts, and stakeholder education mattered as much as modeling quality.",
             ]}
           />
           <ReflectionBlock
-            title="What’s next"
-            icon={<Sparkles size={16} aria-hidden />}
+            title="What comes next"
+            icon={<Sparkles size={17} aria-hidden />}
             items={[
-              "Uplift modeling to measure the causal impact of campaigns, not just predicted likelihood.",
-              "Real-time scoring for recent behavior (cart abandonment, in-session nudges) layered on top of daily scoring.",
-              "Channel optimization: best day, time, and channel per user, on top of the likelihood score.",
-              "Quarterly threshold recalibration based on observed lift and churn.",
+              "Uplift modeling to estimate causal campaign impact instead of purchase likelihood alone.",
+              "Real time scoring for recent events such as cart abandonment layered on top of the daily score.",
+              "Channel, timing, and threshold optimization based on observed outcomes.",
             ]}
           />
         </div>
       </section>
 
-      {/* Technical detail (collapsible) */}
-      <section className="max-w-content mx-auto px-6 pb-12">
-        <details className="group bg-surface border-[0.5px] border-ink-200 rounded-md">
-          <summary className="cursor-pointer list-none px-5 py-4 flex items-center justify-between hover:bg-ink-50 transition-colors">
+      <section className={styles.techSection}>
+        <details className="group">
+          <summary className="cursor-pointer list-none flex items-center justify-between hover:bg-ink-50 transition-colors">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium mb-0.5">
-                For depth
+              <div className="font-mono text-[10.5px] uppercase tracking-wider text-accent font-medium mb-1">
+                For technical depth
               </div>
-              <div className="font-serif text-[16px] font-medium text-ink">
-                Technical detail
+              <div className="font-serif text-[19px] font-medium text-ink">
+                Model, validation, features, and deployment details
               </div>
             </div>
             <ChevronDown
-              size={18}
+              size={19}
               className="text-ink-500 group-open:rotate-180 transition-transform"
               aria-hidden
             />
           </summary>
 
-          <div className="px-5 pb-5 pt-3 space-y-6 border-t border-ink-100">
+          <div className="px-6 pb-6 pt-5 space-y-7 border-t border-ink-100">
             <TechBlock title="Model architecture">
               <p>
-                <strong>Stage 1 (CatBoost)</strong>: tuned via
-                RandomizedSearchCV over 20 iterations with 3-fold
-                cross-validation. Hyperparameter search across iteration count,
-                learning rate, tree depth, L2 regularization, and border count.
+                <strong>Stage 1, CatBoost:</strong> tuned with randomized search and three fold cross validation across iteration count, learning rate, tree depth, regularization, and border count.
               </p>
               <p>
-                <strong>Stage 2 (MLP)</strong>: 2 hidden layers (128, 64).
-                alpha=0.0005, early stopping enabled, max_iter=500. Trained on
-                SMOTE-resampled training data, validated on the real
-                (non-synthetic) hold-out set.
+                <strong>Stage 2, MLP:</strong> two hidden layers with early stopping, trained on SMOTE resampled training data and validated against the real holdout distribution.
               </p>
               <p>
-                <strong>Hybrid blend</strong>: final score = 0.65 × CatBoost
-                probability + 0.35 × MLP probability. The 65/35 split was
-                calibrated against the validation set.
+                <strong>Hybrid blend:</strong> final score = 0.65 × CatBoost probability + 0.35 × MLP probability, calibrated on the validation set.
               </p>
             </TechBlock>
 
             <TechBlock title="Validation discipline">
               <p>
-                SMOTE (synthetic minority oversampling) was applied only to
-                training data, never to the validation hold-out. Synthetic
-                samples leaking into validation inflate metrics dangerously;
-                the hold-out had to be the real distribution.
+                SMOTE was applied only to training data. The validation holdout stayed untouched so synthetic examples could not inflate precision or recall.
               </p>
               <p>
-                Threshold sensitivity analysis: precision, recall, and F1
-                computed at every probability cutoff from 0.3 to 0.9. The ≥65
-                threshold for the “Likely” label was selected from this
-                analysis based on the business’s budget vs. reach trade-off.
+                Precision, recall, and F1 were checked across probability thresholds so the operating cutoff could reflect the business tradeoff between budget and reach.
               </p>
             </TechBlock>
 
             <TechBlock title="Feature engineering">
               <p>
-                25+ features extracted from BigQuery. Preprocessing:
-                StandardScaler for numeric features, OneHotEncoder for
-                categorical features.
-              </p>
-              <p>
-                Engineered momentum signals included velocity ratios across
-                30-day, 60-day, and 90-day windows; binary trend flags
-                (momentum-up, lost-momentum); and a weighted recency score
-                aggregating engagement across multiple timeframes.
+                More than 25 features were built from BigQuery, including purchase history, engagement, campaign interaction, customer status, and momentum signals across multiple time windows.
               </p>
             </TechBlock>
 
             <TechBlock title="Deployment">
               <p>
-                The scoring pipeline runs nightly and writes to a production
-                table in BigQuery using WRITE_TRUNCATE for clean daily
-                replacement. The output table includes the hybrid score, the
-                customer label, last_model_run_date, and prediction_valid_till
-                (30-day horizon).
-              </p>
-              <p>
-                Activation systems (CRM, push notification platforms, email)
-                read from this single production table. SHAP-based feature
-                importance is generated per run for interpretability.
+                The scoring pipeline runs nightly and writes the current hybrid score, customer label, model run date, and prediction validity horizon to a production BigQuery table consumed by activation systems.
               </p>
             </TechBlock>
           </div>
         </details>
       </section>
 
-      {/* Founder takeaway */}
-      <section className="max-w-content mx-auto px-6 pb-4">
-        <div className="bg-accent-soft/40 border-l-2 border-accent rounded-md px-5 py-5">
-          <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent font-medium mb-2">
-            Founder takeaway
-          </div>
-          <p className="text-[15px] text-ink-800 leading-[1.6]">
-            A churn score does nothing on its own. The value is in routing it to
-            an action the team will actually take.
-          </p>
-        </div>
-      </section>
-
-      <hr className="border-ink-200" />
-
-      {/* Footer */}
-      <footer className="max-w-content mx-auto px-6 py-10">
+      <footer className={styles.footer}>
         <Link
-          href="/#work"
-          className="inline-flex items-center gap-1.5 text-[13px] font-mono uppercase tracking-wider text-ink-500 hover:text-accent transition-colors"
+          href="/work"
+          className="inline-flex items-center gap-2 text-[13px] font-mono uppercase tracking-wider text-ink-500 hover:text-accent transition-colors"
         >
           <ArrowLeft size={14} aria-hidden />
-          Back to selected work
+          Back to work
         </Link>
       </footer>
     </main>
   );
 }
-
-/* ---------- Sub-components ---------- */
 
 function ConstraintCard({
   icon,
@@ -569,17 +389,15 @@ function ConstraintCard({
   body: string;
 }) {
   return (
-    <div className="bg-surface border-[0.5px] border-ink-200 rounded-md p-4 flex gap-3 items-start">
-      <div className="w-7 h-7 rounded bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">
+    <article className="bg-surface border border-ink-200 rounded-[16px] p-4 flex gap-3 items-start">
+      <div className="w-8 h-8 rounded-full bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">
         {icon}
       </div>
       <div>
-        <div className="font-serif text-[15px] font-medium text-ink leading-tight mb-1">
-          {title}
-        </div>
-        <div className="text-[13px] text-ink-600 leading-[1.55]">{body}</div>
+        <div className="font-serif text-[17px] font-medium text-ink leading-tight mb-1.5">{title}</div>
+        <div className="text-[13px] text-ink-600 leading-[1.5]">{body}</div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -597,21 +415,15 @@ function ModelBox({
   details: string;
 }) {
   return (
-    <div className="bg-surface border-[0.5px] border-ink-200 rounded-md p-5">
-      <div className="flex items-center justify-between mb-2">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-ink-500 font-medium">
-          {stage}
-        </span>
-        <span className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium">
-          weight {weight}
-        </span>
+    <article className="border border-ink-200 rounded-[18px] p-5 bg-page/70">
+      <div className="flex items-center justify-between gap-4 mb-3">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-ink-500 font-medium">{stage}</span>
+        <span className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium">weight {weight}</span>
       </div>
-      <div className="font-serif text-[16px] font-medium text-ink leading-tight mb-1">
-        {name}
-      </div>
+      <div className="font-serif text-[21px] font-medium text-ink leading-tight mb-1">{name}</div>
       <div className="text-[12px] text-accent font-medium mb-3">{tuning}</div>
-      <p className="text-[12.5px] text-ink-600 leading-[1.55]">{details}</p>
-    </div>
+      <p className="text-[13.5px] text-ink-600 leading-[1.55]">{details}</p>
+    </article>
   );
 }
 
@@ -628,13 +440,12 @@ function LabelTile({
     tone === "accent"
       ? "border-accent bg-accent-soft"
       : tone === "neutral"
-      ? "border-ink-300 bg-surface"
+      ? "border-ink-300 bg-page"
       : "border-ink-200 bg-ink-50";
+
   return (
-    <div className={`border-[0.5px] rounded-md p-3 text-center ${toneClasses}`}>
-      <div className="font-serif text-[14px] font-medium text-ink leading-tight mb-1">
-        {label}
-      </div>
+    <div className={`border rounded-[15px] p-4 text-center ${toneClasses}`}>
+      <div className="font-serif text-[16px] font-medium text-ink leading-tight mb-1.5">{label}</div>
       <div className="font-mono text-[10px] text-ink-500">{condition}</div>
     </div>
   );
@@ -665,39 +476,32 @@ function ActivationCard({
       : tone === "neutral"
       ? "border-l-ink-400"
       : "border-l-ink-300";
+
   return (
-    <div
-      className={`bg-surface border-[0.5px] border-ink-200 border-l-2 ${borderClass} rounded-r-md p-5`}
-    >
-      <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-3">
-        <div className="font-serif text-[17px] font-medium text-ink leading-tight">
-          {label}
-        </div>
+    <article className={`bg-surface border border-ink-200 border-l-[3px] ${borderClass} rounded-[18px] p-5`}>
+      <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-4">
+        <div className="font-serif text-[21px] font-medium text-ink leading-tight">{label}</div>
         <div className="font-mono text-[10.5px] text-ink-500">{condition}</div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-3">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
         <ActivationField label="Objective" value={objective} />
         <ActivationField label="Primary channel" value={primaryChannel} />
         <ActivationField label="Secondary" value={secondaryChannel} />
         <ActivationField label="Frequency cap" value={cap} />
       </div>
-      <div className="pt-3 border-t border-ink-100">
-        <div className="font-mono text-[10px] uppercase tracking-wider text-ink-500 font-medium mb-1">
-          Tactic
-        </div>
-        <p className="text-[13px] text-ink-700 leading-[1.55]">{tactic}</p>
+      <div className="pt-4 border-t border-ink-100">
+        <div className="font-mono text-[10px] uppercase tracking-wider text-ink-500 font-medium mb-1.5">Tactic</div>
+        <p className="text-[14px] text-ink-700 leading-[1.55]">{tactic}</p>
       </div>
-    </div>
+    </article>
   );
 }
 
 function ActivationField({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <div className="font-mono text-[9.5px] uppercase tracking-wider text-ink-500 font-medium mb-0.5">
-        {label}
-      </div>
-      <div className="text-[13px] text-ink-700 leading-tight">{value}</div>
+      <div className="font-mono text-[9.5px] uppercase tracking-wider text-ink-500 font-medium mb-1">{label}</div>
+      <div className="text-[13.5px] text-ink-700 leading-[1.35]">{value}</div>
     </div>
   );
 }
@@ -712,17 +516,13 @@ function ProductionCard({
   body: string;
 }) {
   return (
-    <div className="bg-surface border-[0.5px] border-ink-200 rounded-md p-4 flex gap-3 items-start">
-      <div className="w-7 h-7 rounded bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">
-        {icon}
-      </div>
+    <article className="bg-surface border border-ink-200 rounded-[18px] p-5 flex gap-3.5 items-start">
+      <div className="w-9 h-9 rounded-full bg-accent-soft text-accent flex items-center justify-center flex-shrink-0">{icon}</div>
       <div>
-        <div className="font-serif text-[15px] font-medium text-ink leading-tight mb-1">
-          {title}
-        </div>
-        <div className="text-[12.5px] text-ink-600 leading-[1.55]">{body}</div>
+        <div className="font-serif text-[18px] font-medium text-ink leading-tight mb-1.5">{title}</div>
+        <div className="text-[13.5px] text-ink-600 leading-[1.55]">{body}</div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -739,35 +539,27 @@ function ReflectionBlock({
 }) {
   const toneClasses =
     tone === "warning"
-      ? "border-l-ink-400 bg-ink-50"
-      : "border-l-accent bg-accent-soft/40";
+      ? "border-ink-300 bg-ink-50"
+      : "border-accent/30 bg-accent-soft/35";
   const iconBg =
     tone === "warning"
       ? "bg-ink-100 text-ink-700"
       : "bg-accent-soft text-accent";
+
   return (
-    <div className={`border-l-2 ${toneClasses} pl-5 py-2`}>
-      <div className="flex items-center gap-2 mb-3">
-        <span
-          className={`w-6 h-6 rounded flex items-center justify-center ${iconBg}`}
-        >
-          {icon}
-        </span>
-        <h3 className="font-serif text-[18px] font-medium text-ink leading-tight">
-          {title}
-        </h3>
+    <article className={`border ${toneClasses} rounded-[18px] p-5`}>
+      <div className="flex items-center gap-2.5 mb-4">
+        <span className={`w-8 h-8 rounded-full flex items-center justify-center ${iconBg}`}>{icon}</span>
+        <h3 className="font-serif text-[20px] font-medium text-ink leading-tight">{title}</h3>
       </div>
-      <ul className="space-y-2.5">
-        {items.map((item, i) => (
-          <li
-            key={i}
-            className="text-[14px] text-ink-700 leading-[1.65] pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-ink-400"
-          >
+      <ul className="space-y-3">
+        {items.map((item) => (
+          <li key={item} className="text-[13.5px] text-ink-700 leading-[1.58] pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-accent">
             {item}
           </li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 }
 
@@ -780,12 +572,8 @@ function TechBlock({
 }) {
   return (
     <div>
-      <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-medium mb-2">
-        {title}
-      </div>
-      <div className="space-y-2 text-[13px] text-ink-700 leading-[1.65]">
-        {children}
-      </div>
+      <div className="font-mono text-[10.5px] uppercase tracking-wider text-accent font-medium mb-2">{title}</div>
+      <div className="max-w-[900px] space-y-2.5 text-[14px] text-ink-700 leading-[1.68]">{children}</div>
     </div>
   );
 }
