@@ -10,37 +10,37 @@ import spacingStyles from "./HomeSpacing.module.css";
 
 const founderProblems = [
   {
-    label: "Customer intelligence",
-    title: "Who is likely to leave, buy again or need attention next?",
-    copy: "Know before the signal becomes lost revenue.",
+    label: "Customers",
+    title: "Who is about to leave, buy again or need attention?",
+    copy: "See the signal before it becomes lost revenue.",
     href: "/case-studies/customer-retention-probability",
     cardClass: problemStyles.capabilityOne,
   },
   {
-    label: "Single source of truth",
-    title: "Can leadership trust the same number?",
-    copy: "Align definitions before decisions depend on them.",
+    label: "Trusted numbers",
+    title: "Can everyone trust the same number?",
+    copy: "Agree on the numbers before acting on them.",
     href: "/services/opportunity-audit",
     cardClass: problemStyles.capabilityTwo,
   },
   {
-    label: "Next best action",
-    title: "What should happen next for each customer?",
-    copy: "Turn behavior into timely action, not another segment.",
+    label: "Next action",
+    title: "What should we do next for each customer?",
+    copy: "Turn behavior into one clear action.",
     href: "/case-studies/adaptive-nudge-decision-engine",
     cardClass: problemStyles.capabilityThree,
   },
   {
-    label: "Growth intelligence",
+    label: "Growth",
     title: "Growth moved. What actually caused it?",
-    copy: "Separate real drivers from attribution noise.",
+    copy: "Separate real drivers from noise.",
     href: "/services/opportunity-audit",
     cardClass: problemStyles.capabilityFour,
   },
   {
-    label: "AI readiness",
-    title: "Are your data and workflows ready for AI agents?",
-    copy: "Scale use cases with value, readiness and ownership.",
+    label: "AI",
+    title: "Where is AI actually worth using?",
+    copy: "Prioritize by value, readiness and risk.",
     href: "/services/opportunity-audit",
     cardClass: problemStyles.capabilityFive,
   },
@@ -53,28 +53,28 @@ const chapters = [
     ghost: "Proof",
     eyebrow: "What I have shipped",
     href: "/work",
-    statement: "Business problems, decisions I made, systems I built, and what changed after they went live.",
-    tags: ["Case studies", "Production systems", "Outcomes"],
+    statement: "Real business problems, the calls I made, what I built and what changed.",
+    tags: ["Case studies", "Outcomes", "Systems"],
     cardClass: portalStyles.portalWork,
   },
   {
     number: "02",
-    label: "Find the right engagement",
-    ghost: "Engage",
-    eyebrow: "Choose the level of help",
+    label: "Work with me",
+    ghost: "Work",
+    eyebrow: "Ways I can help",
     href: "/services",
-    statement: "Start with an audit, bring me in for one build, or add ongoing senior Data and AI ownership.",
+    statement: "Start with a short audit, one focused build or ongoing Data and AI leadership.",
     tags: ["Audit", "Build", "Fractional lead"],
     cardClass: portalStyles.portalServices,
   },
   {
     number: "03",
-    label: "My path here",
+    label: "How I got here",
     ghost: "Path",
-    eyebrow: "Background and working style",
+    eyebrow: "Experience and approach",
     href: "/about",
-    statement: "I’ve spent 10+ years moving from infrastructure and analytics into Data and AI products, decision systems and leadership.",
-    tags: ["Experience", "Principles", "Working style"],
+    statement: "From infrastructure and analytics to ML products, decision systems and leadership.",
+    tags: ["Experience", "Approach", "Principles"],
     cardClass: portalStyles.portalAbout,
   },
 ];
@@ -98,7 +98,7 @@ export function HomeMinimal() {
               </h1>
 
               <p className={styles.subhead}>
-                I work with growing companies when important business decisions need stronger data, smarter systems or applied AI.
+                I step in when data and AI have become important to the business, but no one senior owns what to trust, what to build or what to do next.
               </p>
 
               <div className={styles.actions}>
