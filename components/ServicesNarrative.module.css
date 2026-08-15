@@ -258,7 +258,7 @@
   color: rgb(var(--ink-600));
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1020px) {
   .ownershipIntro {
     grid-template-columns: 1fr;
     gap: 16px;
