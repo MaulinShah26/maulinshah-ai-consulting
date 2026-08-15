@@ -1,12 +1,13 @@
 import { operatingModel } from "@/lib/data";
+import { SectionHeader } from "./SectionHeader";
 import styles from "./ServicesNarrative.module.css";
 
 export function ServicesProcess() {
   return (
     <section className={styles.processSection} aria-labelledby="process-heading">
       <div className={styles.inner}>
-        <div className={styles.processLead}>
-          <span className={styles.sectionKicker} id="process-heading">How I work</span>
+        <div id="process-heading">
+          <SectionHeader label={operatingModel.sectionLabel} />
         </div>
 
         <div className={styles.processGrid}>
