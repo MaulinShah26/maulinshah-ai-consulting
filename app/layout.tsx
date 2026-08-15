@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { meta, social } from "@/lib/data";
 import "./globals.css";
+import "./readability.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,9 +29,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? meta.siteUrl;
-const title = "Maulin Shah | Data & AI Decision Systems for Growth Stage Startups";
+const title = "Maulin Shah | Fractional Head of Data & AI";
 const description =
-  "Fractional Data & AI leadership for growth stage consumer businesses. Build decision systems for retention, customer intelligence, growth and practical AI.";
+  "I help growing companies turn important business questions into better decisions, working data systems and practical AI.";
 
 export const metadata: Metadata = {
   title,
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Maulin Shah, Data & AI Decision Systems for Growth Stage Startups",
+        alt: "Maulin Shah, Fractional Head of Data & AI",
       },
     ],
   },
@@ -96,7 +97,7 @@ const structuredData = [
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "@id": `${siteUrl}/#data-ai-consulting`,
-    name: "Maulin Shah, Data & AI Decision Systems",
+    name: "Maulin Shah, Fractional Data & AI Leadership",
     url: siteUrl,
     provider: { "@id": `${siteUrl}/#maulin-shah` },
     areaServed: "Worldwide",
