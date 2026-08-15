@@ -23,7 +23,6 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgb(var(--accent));
-  white-space: nowrap;
 }
 
 .exploreHeader h2 {
@@ -34,7 +33,7 @@
   line-height: 1;
   letter-spacing: -0.035em;
   color: rgb(var(--ink));
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
 .exploreLine {
@@ -52,7 +51,7 @@
 .portal {
   position: relative;
   overflow: hidden;
-  min-height: 330px;
+  min-height: 320px;
   padding: 22px;
   display: flex;
   flex-direction: column;
@@ -109,20 +108,23 @@
   background: rgb(var(--accent) / 0.14);
 }
 
+.portalWork,
+.portalServices,
+.portalAbout {
+  grid-column: span 4;
+}
+
 .portalWork {
-  grid-column: span 5;
   background:
     linear-gradient(145deg, rgb(var(--accent-soft) / 0.7), transparent 55%),
     rgb(var(--surface));
 }
 
 .portalServices {
-  grid-column: span 4;
   background: rgb(var(--surface));
 }
 
 .portalAbout {
-  grid-column: span 3;
   background:
     linear-gradient(160deg, rgb(var(--subtle) / 0.78), rgb(var(--surface)) 70%);
 }
@@ -216,18 +218,11 @@
 .portalMain h3 {
   margin: 0 0 12px;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(36px, 3.5vw, 52px);
+  font-size: clamp(32px, 2.8vw, 44px);
   font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
-}
-
-.portalServices .portalMain h3 {
-  font-size: clamp(32px, 3vw, 45px);
-}
-
-.portalAbout .portalMain h3 {
-  font-size: clamp(30px, 2.6vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 .portalMain p {
@@ -275,7 +270,7 @@
   right: -8px;
   bottom: -18px;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(78px, 9vw, 135px);
+  font-size: clamp(72px, 8vw, 118px);
   font-style: italic;
   line-height: 0.8;
   letter-spacing: -0.06em;
@@ -283,11 +278,6 @@
   user-select: none;
   pointer-events: none;
   transition: transform 420ms ease, color 220ms ease;
-}
-
-.portalServices .portalGhost,
-.portalAbout .portalGhost {
-  font-size: clamp(64px, 7vw, 105px);
 }
 
 .portalContact .portalGhost {
@@ -310,7 +300,6 @@
   }
 
   .exploreHeader h2 {
-    white-space: normal;
     font-size: clamp(36px, 5vw, 48px);
   }
 
@@ -329,10 +318,6 @@
   .portalAbout {
     grid-column: span 12;
     min-height: 260px;
-  }
-
-  .portalAbout .portalMain h3 {
-    font-size: clamp(34px, 5vw, 46px);
   }
 }
 
@@ -375,10 +360,8 @@
     border-radius: 19px;
   }
 
-  .portalMain h3,
-  .portalServices .portalMain h3,
-  .portalAbout .portalMain h3 {
-    font-size: 38px;
+  .portalMain h3 {
+    font-size: 36px;
   }
 
   .portalMain p {
@@ -387,7 +370,7 @@
   }
 
   .portalGhost {
-    font-size: 86px;
+    font-size: 82px;
   }
 }
 
