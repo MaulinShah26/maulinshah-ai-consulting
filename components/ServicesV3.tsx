@@ -16,13 +16,13 @@ export function ServicesV3() {
         <div className="reveal-child">
           <SectionHeader label={services.sectionLabel} />
         </div>
-        <div className="reveal-child grid grid-cols-1 sm:grid-cols-3 gap-3 items-start">
+        <div className="reveal-child grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 items-start">
           {services.cards.map((c, i) => {
             const isOpen = open === i;
             return (
               <div
                 key={i}
-                className="flex flex-col bg-surface border border-ink-200 rounded-xl p-5"
+                className="flex flex-col bg-surface border border-ink-200 rounded-xl p-5 min-w-0"
               >
                 <h4 className="font-serif text-[17px] font-semibold text-ink leading-tight mb-2">
                   {c.title}
@@ -71,7 +71,7 @@ export function ServicesV3() {
                   </div>
                 </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5">
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
                   {!isOpen && (
                     <button
                       type="button"
@@ -82,7 +82,7 @@ export function ServicesV3() {
                       aria-expanded={isOpen}
                       className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
                     >
-                      Explore this path
+                      What&apos;s included
                     </button>
                   )}
                   {isOpen && (
@@ -99,7 +99,7 @@ export function ServicesV3() {
                         onClick={() => track("service_discuss_click", { service: c.title })}
                         className="font-mono text-[10.5px] uppercase tracking-wide text-accent whitespace-nowrap hover:text-ink transition-colors"
                       >
-                        Discuss
+                        Talk to me
                       </a>
                       <button
                         type="button"
