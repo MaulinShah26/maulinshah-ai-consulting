@@ -19,7 +19,7 @@
 }
 
 .modeInner {
-  min-height: 66px;
+  min-height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,7 +28,7 @@
 
 .modeLabel {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgb(var(--ink-500));
@@ -45,7 +45,7 @@
 }
 
 .modeButton {
-  min-height: 42px;
+  min-height: 40px;
   padding: 7px 16px;
   display: inline-flex;
   align-items: center;
@@ -78,7 +78,7 @@
 }
 
 .hero {
-  padding: 58px 0 70px;
+  padding: 44px 0 52px;
   border-bottom: 1px solid rgb(var(--ink-200));
   background:
     radial-gradient(circle at 88% 14%, rgb(var(--accent-soft) / 0.62), transparent 28%),
@@ -89,7 +89,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-bottom: 34px;
+  margin-bottom: 26px;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10.5px;
   letter-spacing: 0.1em;
@@ -100,7 +100,7 @@
 .heroGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.55fr);
-  gap: 72px;
+  gap: 58px;
   align-items: end;
 }
 
@@ -108,7 +108,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .meta span,
@@ -145,9 +145,9 @@
 
 .lead {
   max-width: 860px;
-  margin: 28px 0 0;
+  margin: 22px 0 0;
   font-size: clamp(18px, 1.4vw, 21px);
-  line-height: 1.6;
+  line-height: 1.56;
   color: rgb(var(--ink-600));
 }
 
@@ -155,7 +155,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  margin-top: 26px;
+  margin-top: 22px;
 }
 
 .tags span {
@@ -168,24 +168,24 @@
 
 .impact {
   border: 1px solid rgb(var(--ink-200));
-  border-radius: 24px;
+  border-radius: 22px;
   overflow: hidden;
   background: rgb(var(--surface) / 0.9);
-  box-shadow: 0 24px 60px rgb(var(--ink) / 0.07);
+  box-shadow: 0 20px 48px rgb(var(--ink) / 0.06);
 }
 
 .impactTitle {
-  padding: 17px 20px;
+  padding: 14px 18px;
   border-bottom: 1px solid rgb(var(--ink-200));
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10px;
+  font-size: 10.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgb(var(--accent));
 }
 
 .impactItem {
-  padding: 20px;
+  padding: 17px 18px;
   border-bottom: 1px solid rgb(var(--ink-200));
 }
 
@@ -196,61 +196,62 @@
 .impactValue {
   display: block;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(30px, 3vw, 46px);
+  font-size: clamp(30px, 3vw, 44px);
   line-height: 0.98;
   letter-spacing: -0.035em;
 }
 
 .impactKey {
   display: block;
-  margin-top: 7px;
+  margin-top: 6px;
   font-size: 12.5px;
-  line-height: 1.4;
+  line-height: 1.38;
   color: rgb(var(--ink-500));
 }
 
 .executiveBody {
-  padding: 72px 0 82px;
+  padding: 42px 0 50px;
 }
 
 .sectionIntro {
   display: grid;
-  grid-template-columns: 190px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   gap: 34px;
-  margin-bottom: 28px;
-  align-items: start;
+  margin-bottom: 22px;
+  align-items: center;
 }
 
 .eyebrow {
-  padding-top: 5px;
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: rgb(var(--accent));
 }
 
 .sectionIntro h2 {
-  max-width: 900px;
+  max-width: 1040px;
   margin: 0;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(36px, 4vw, 56px);
+  font-size: clamp(38px, 4vw, 58px);
   font-weight: 500;
-  line-height: 1;
+  line-height: 0.98;
   letter-spacing: -0.042em;
 }
 
 .readGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
 }
 
 .readCard {
-  min-height: 240px;
-  padding: 26px;
+  min-height: 196px;
+  padding: 22px 24px;
   border: 1px solid rgb(var(--ink-200));
-  border-radius: 22px;
+  border-radius: 20px;
   background: rgb(var(--surface));
 }
 
@@ -261,38 +262,38 @@
 
 .cardLabel {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10px;
+  font-size: 10.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgb(var(--accent));
 }
 
 .readCard h3 {
-  max-width: 560px;
-  margin: 15px 0 12px;
+  max-width: 590px;
+  margin: 12px 0 9px;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(25px, 2.3vw, 34px);
+  font-size: clamp(24px, 2.2vw, 32px);
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1.04;
   letter-spacing: -0.025em;
 }
 
 .readCard p {
-  max-width: 650px;
+  max-width: 660px;
   margin: 0;
-  font-size: 15.5px;
-  line-height: 1.67;
+  font-size: 15px;
+  line-height: 1.58;
   color: rgb(var(--ink-600));
 }
 
 .takeaway {
-  margin-top: 16px;
-  padding: 28px 30px;
+  margin-top: 12px;
+  padding: 22px 28px;
   display: grid;
-  grid-template-columns: 190px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   gap: 34px;
-  align-items: start;
-  border-radius: 24px;
+  align-items: center;
+  border-radius: 22px;
   color: rgb(var(--page));
   background:
     radial-gradient(circle at 90% 25%, rgb(var(--accent) / 0.25), transparent 30%),
@@ -301,30 +302,32 @@
 
 .takeawayLabel {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: rgb(var(--page) / 0.62);
+  color: rgb(var(--page) / 0.68);
 }
 
 .takeaway p {
-  max-width: 980px;
+  max-width: 1040px;
   margin: 0;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(23px, 2.4vw, 34px);
-  line-height: 1.22;
+  font-size: clamp(25px, 2.35vw, 34px);
+  line-height: 1.16;
 }
 
 .deepPrompt {
-  margin-top: 16px;
-  min-height: 82px;
-  padding: 18px 22px;
+  margin-top: 12px;
+  min-height: 72px;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   border: 1px solid rgb(var(--ink-200));
-  border-radius: 20px;
+  border-radius: 18px;
   background: rgb(var(--surface));
 }
 
@@ -334,7 +337,7 @@
 }
 
 .deepPrompt p {
-  margin: 4px 0 0;
+  margin: 3px 0 0;
   font-size: 12.5px;
   color: rgb(var(--ink-500));
 }
@@ -344,7 +347,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 42px;
+  min-height: 40px;
   padding: 0 16px;
   border-radius: 999px;
   color: rgb(var(--page));
@@ -364,7 +367,7 @@
 
   .heroGrid {
     grid-template-columns: 1fr;
-    gap: 34px;
+    gap: 30px;
   }
 
   .impact {
@@ -388,7 +391,13 @@
   .sectionIntro,
   .takeaway {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .eyebrow,
+  .takeawayLabel {
+    font-size: 12px;
   }
 }
 
@@ -421,7 +430,7 @@
   }
 
   .hero {
-    padding: 42px 0 52px;
+    padding: 34px 0 42px;
   }
 
   .title {
@@ -439,7 +448,7 @@
   }
 
   .executiveBody {
-    padding: 54px 0 64px;
+    padding: 42px 0 50px;
   }
 
   .readCard {
