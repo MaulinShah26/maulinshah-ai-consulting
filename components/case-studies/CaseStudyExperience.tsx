@@ -249,14 +249,14 @@ function ExecutiveView({
           </div>
 
           <div className={styles.takeaway}>
-            <span className={styles.takeawayLabel}>Leadership takeaway</span>
+            <span className={styles.takeawayLabel}>Takeaway</span>
             <p>{data.takeaway}</p>
           </div>
 
           <div className={styles.deepPrompt}>
             <div>
-              <strong>Need the implementation, architecture and technical decisions?</strong>
-              <p>The deep dive keeps the full modeling, validation, system design and lessons.</p>
+              <strong>Want the implementation details?</strong>
+              <p>Open the full architecture, modeling, validation and lessons.</p>
             </div>
             <button type="button" className={styles.deepButton} onClick={onOpenDeep}>
               Open deep dive
@@ -291,7 +291,6 @@ export function CaseStudyExperience({ children }: { children: ReactNode }) {
     <div className={styles.experience}>
       <div className={styles.modeBar}>
         <div className={`${styles.frame} ${styles.modeInner}`}>
-          <span className={styles.modeLabel}>Choose your level of detail</span>
           <div className={styles.modeSwitch} role="group" aria-label="Case study view">
             <button
               type="button"
