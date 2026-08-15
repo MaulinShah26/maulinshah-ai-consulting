@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { services } from "@/lib/data";
 import { Reveal } from "./Reveal";
+import { SectionHeader } from "./SectionHeader";
 
 export function ServicesV3() {
   const [open, setOpen] = useState<number | null>(null);
@@ -12,6 +13,10 @@ export function ServicesV3() {
   return (
     <Reveal id="services" className="py-4 px-6">
       <div className="max-w-content mx-auto">
+        <div className="reveal-child">
+          <SectionHeader label={services.sectionLabel} />
+        </div>
+
         <div className="reveal-child grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 items-start">
           {services.cards.map((c, i) => {
             const isOpen = open === i;
