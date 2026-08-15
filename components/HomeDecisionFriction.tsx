@@ -77,7 +77,13 @@ export function HomeDecisionFriction() {
         <div className={styles.intro}>
           <h2
             id="decision-friction-title"
-            style={{ gridColumn: "1 / -1", maxWidth: "none" }}
+            style={{
+              gridColumn: "1 / -1",
+              maxWidth: "none",
+              fontSize: "clamp(32px, 3vw, 41px)",
+              lineHeight: 1,
+              letterSpacing: "-0.035em",
+            }}
           >
             The decisions that matter most rarely belong to one team.
           </h2>
