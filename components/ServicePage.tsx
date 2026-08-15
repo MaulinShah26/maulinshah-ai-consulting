@@ -51,7 +51,7 @@ export function ServicePage({ service }: { service: ServiceData }) {
       <section className="pt-7 pb-5 px-6">
         <div className="max-w-content mx-auto">
           <SectionHeader label={service.eyebrow} />
-          <h1 className="max-w-[980px] font-serif font-medium text-[clamp(30px,4vw,44px)] leading-[1.08] tracking-tight mb-4 text-balance">
+          <h1 className="max-w-[980px] font-serif font-medium text-[clamp(30px,3.6vw,42px)] leading-[1.08] tracking-tight mb-4">
             {service.heroTitle}
           </h1>
           <p className="max-w-[860px] text-[15.5px] text-ink-600 leading-[1.65]">{service.heroSub}</p>
@@ -80,7 +80,7 @@ export function ServicePage({ service }: { service: ServiceData }) {
           <section className="py-4 px-6">
             <div className="max-w-content mx-auto">
               <SectionHeader label="Data before AI" />
-              <h2 className="max-w-[820px] font-serif text-[21px] font-medium tracking-tight mb-2 text-balance">
+              <h2 className="max-w-[820px] font-serif text-[21px] font-medium tracking-tight mb-2">
                 AI only works on top of data you can trust.
               </h2>
               <p className="max-w-[900px] text-[14px] text-ink-700 leading-relaxed mb-3">
@@ -88,15 +88,15 @@ export function ServicePage({ service }: { service: ServiceData }) {
                 top. Most stuck AI projects are really a broken layer lower down.
               </p>
               <DataTrustPyramid />
-              <p className="text-center text-[12px] text-ink-500 italic mt-2.5">
+              <p className="max-w-[900px] text-center text-[12px] text-ink-500 italic mt-2.5">
                 Read bottom to top. AI can’t make a decision your business hasn’t defined yet.
               </p>
             </div>
           </section>
           <section className="py-4 px-6">
             <div className="max-w-content mx-auto">
-              <SectionHeader label="What you get, not a list" />
-              <h2 className="max-w-[820px] font-serif text-[21px] font-medium tracking-tight mb-2 text-balance">
+              <SectionHeader label="What you get" />
+              <h2 className="max-w-[820px] font-serif text-[21px] font-medium tracking-tight mb-2">
                 Every idea sorted by value and readiness.
               </h2>
               <p className="max-w-[900px] text-[14px] text-ink-700 leading-relaxed mb-3">
@@ -113,12 +113,12 @@ export function ServicePage({ service }: { service: ServiceData }) {
         <section className="py-4 px-6">
           <div className="max-w-content mx-auto">
             <SectionHeader label="How I work inside the business" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
               {operatingModel.steps.map((s) => (
                 <div key={s.n} className="min-w-0">
                   <div className="font-mono text-[11px] text-accent mb-2">{s.n}</div>
                   <h4 className="font-serif text-[16px] font-semibold mb-1">{s.title}</h4>
-                  <p className="text-[12.5px] text-ink-600 leading-relaxed max-w-[250px]">{s.body}</p>
+                  <p className="text-[12.5px] text-ink-600 leading-relaxed max-w-[280px]">{s.body}</p>
                 </div>
               ))}
             </div>
@@ -130,13 +130,13 @@ export function ServicePage({ service }: { service: ServiceData }) {
         <section className="py-4 px-6">
           <div className="max-w-content mx-auto">
             <SectionHeader label="How the build runs" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
               {service.phases.map((ph, i) => (
                 <div key={ph.label} className="min-w-0">
                   <div className="font-mono text-[11px] text-accent mb-2">
                     {String(i + 1).padStart(2, "0")} · {ph.label}
                   </div>
-                  <p className="text-[12.5px] text-ink-600 leading-relaxed max-w-[250px]">{ph.body}</p>
+                  <p className="text-[12.5px] text-ink-600 leading-relaxed max-w-[280px]">{ph.body}</p>
                 </div>
               ))}
             </div>
@@ -183,7 +183,7 @@ export function ServicePage({ service }: { service: ServiceData }) {
 
       <section className="py-5 px-6 pb-10">
         <div className="max-w-content mx-auto">
-          <h2 className="max-w-[760px] font-serif text-[21px] font-medium tracking-tight mb-2 text-balance">
+          <h2 className="max-w-[760px] font-serif text-[21px] font-medium tracking-tight mb-2">
             {service.ctaTitle}
           </h2>
           <p className="max-w-[760px] text-[14px] text-ink-700 leading-relaxed mb-3.5">{service.ctaSub}</p>
