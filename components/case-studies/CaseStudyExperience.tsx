@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowLeft, ArrowRight, BriefcaseBusiness, Layers3 } from "lucide-react";
-import { caseNarratives } from "@/lib/data";
+import { caseNarratives, work } from "@/lib/data";
 import styles from "./CaseStudyExperience.module.css";
 
 type Mode = "executive" | "deep";
@@ -157,6 +157,10 @@ function corporateCase(slug: string): ExecutiveCase | null {
   const narrative = caseNarratives[slug];
   if (!narrative) return null;
 
+  const workCard = work.tabs.corporate.cards.find((card) =>
+    card.href.endsWith(`/${slug}`),
+  );
+
   return {
     title: narrative.heroTitle,
     company: narrative.company,
@@ -164,15 +168,15 @@ function corporateCase(slug: string): ExecutiveCase | null {
     status: narrative.status,
     lead: narrative.heroLead,
     tags: narrative.tags,
-    businessProblem: narrative.problem,
+    businessProblem: workCard?.problem ?? narrative.problem,
     whyItMattered: narrative.context,
     decision: narrative.insight,
-    change: narrative.system,
+    change: workCard?.summary ?? narrative.system,
     metrics: narrative.impact.map((metric) => ({
       value: metric.v,
       label: metric.k,
     })),
-    takeaway: narrative.playbook,
+    takeaway: workCard?.takeaway ?? narrative.playbook,
   };
 }
 
@@ -227,33 +231,19 @@ function ExecutiveView({
 
       <section className={styles.executiveBody}>
         <div className={styles.frame}>
-          <div className={styles.sectionIntro}>
-            <span className={styles.eyebrow}>Leadership read</span>
-            <h2>The problem, the judgment call, and what changed.</h2>
-          </div>
-
           <div className={styles.readGrid}>
             <article className={styles.readCard}>
               <span className={styles.cardLabel}>Business problem</span>
-              <h3>What needed to be solved</h3>
               <p>{data.businessProblem}</p>
             </article>
 
-            <article className={styles.readCard}>
-              <span className={styles.cardLabel}>Why it mattered</span>
-              <h3>Why this was worth leadership attention</h3>
-              <p>{data.whyItMattered}</p>
-            </article>
-
             <article className={`${styles.readCard} ${styles.readCardDecision}`}>
-              <span className={styles.cardLabel}>The call I made</span>
-              <h3>The judgment behind the solution</h3>
+              <span className={styles.cardLabel}>Decision</span>
               <p>{data.decision}</p>
             </article>
 
             <article className={styles.readCard}>
-              <span className={styles.cardLabel}>What changed</span>
-              <h3>The operating system that came out of it</h3>
+              <span className={styles.cardLabel}>Business change</span>
               <p>{data.change}</p>
             </article>
           </div>
