@@ -7,103 +7,113 @@
     background-color 180ms ease;
 }
 
-.motionDiagram [data-flow-node="team"]::before {
-  animation: junctionMint 2.8s ease-in-out infinite;
+/* The SVG overlay owns the connector story on desktop. The original grid
+   rails remain in the DOM for layout, but their straight-line graphics are
+   suppressed so every visible connector actually converges on the hub. */
+.motionDiagram [data-flow-node]::after,
+.motionDiagram [data-flow-rail]::before,
+.motionDiagram [data-flow-rail]::after,
+.motionDiagram [data-flow-hub-column]::before,
+.motionDiagram [data-flow-hub-column]::after {
+  opacity: 0;
+  animation: none;
 }
 
-.motionDiagram [data-flow-node="team"]::after {
-  background: linear-gradient(
-    90deg,
-    rgb(var(--diagram-mint) / 0.14),
-    rgb(var(--diagram-mint) / 0.95),
-    rgb(var(--diagram-mint) / 0.14)
-  );
-  background-size: 220% 100%;
-  animation: flowRight 2.6s linear infinite;
+.flowOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.flowBase,
+.flowStream {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+}
+
+.flowBase {
+  stroke-width: 1.15;
+  opacity: 0.42;
+}
+
+.flowMint {
+  stroke: rgb(var(--diagram-mint) / 0.52);
+}
+
+.flowViolet {
+  stroke: rgb(var(--diagram-violet) / 0.58);
+}
+
+.flowStream {
+  stroke-width: 2.1;
+  stroke-dasharray: 12 88;
+  stroke-dashoffset: 100;
+  opacity: 0.92;
+  animation: connectorSweep 3.6s linear infinite;
+}
+
+.flowStreamMint {
+  stroke: rgb(var(--diagram-mint));
+  filter: drop-shadow(0 0 4px rgb(var(--diagram-mint) / 0.72));
+}
+
+.flowStreamViolet {
+  stroke: rgb(157 118 255);
+  filter: drop-shadow(0 0 5px rgb(var(--diagram-violet) / 0.74));
+}
+
+.flowParticle {
+  opacity: 0.96;
+}
+
+.flowParticleMint {
+  fill: rgb(var(--diagram-mint));
+}
+
+.flowParticleViolet {
+  fill: rgb(157 118 255);
+}
+
+.flowCoreGlow {
+  fill: rgb(var(--diagram-violet) / 0.035);
+  stroke: rgb(var(--diagram-violet) / 0.22);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: coreConvergence 3.6s ease-in-out infinite;
+}
+
+.motionDiagram [data-flow-node="team"]::before {
+  animation: junctionMint 3.1s ease-in-out infinite;
 }
 
 .motionDiagram [data-flow-node="question"]::before {
-  animation: junctionViolet 2.8s ease-in-out infinite;
-}
-
-.motionDiagram [data-flow-node="question"]::after {
-  background: linear-gradient(
-    90deg,
-    rgb(var(--diagram-violet) / 0.14),
-    rgb(var(--diagram-violet) / 0.95),
-    rgb(var(--diagram-violet) / 0.14)
-  );
-  background-size: 220% 100%;
-  animation: flowRight 2.6s linear infinite reverse;
+  animation: junctionViolet 3.1s ease-in-out infinite;
 }
 
 .motionDiagram [data-flow-node="team"]:nth-child(2)::before,
-.motionDiagram [data-flow-node="team"]:nth-child(2)::after,
-.motionDiagram [data-flow-node="question"]:nth-child(2)::before,
-.motionDiagram [data-flow-node="question"]:nth-child(2)::after {
+.motionDiagram [data-flow-node="question"]:nth-child(2)::before {
   animation-delay: -0.55s;
 }
 
 .motionDiagram [data-flow-node="team"]:nth-child(3)::before,
-.motionDiagram [data-flow-node="team"]:nth-child(3)::after,
-.motionDiagram [data-flow-node="question"]:nth-child(3)::before,
-.motionDiagram [data-flow-node="question"]:nth-child(3)::after {
+.motionDiagram [data-flow-node="question"]:nth-child(3)::before {
   animation-delay: -1.1s;
 }
 
 .motionDiagram [data-flow-node="team"]:nth-child(4)::before,
-.motionDiagram [data-flow-node="team"]:nth-child(4)::after,
-.motionDiagram [data-flow-node="question"]:nth-child(4)::before,
-.motionDiagram [data-flow-node="question"]:nth-child(4)::after {
+.motionDiagram [data-flow-node="question"]:nth-child(4)::before {
   animation-delay: -1.65s;
 }
 
-.motionDiagram [data-flow-node="team"]:nth-child(5)::before,
-.motionDiagram [data-flow-node="team"]:nth-child(5)::after {
+.motionDiagram [data-flow-node="team"]:nth-child(5)::before {
   animation-delay: -2.2s;
-}
-
-.motionDiagram [data-flow-rail]::after {
-  content: "";
-  position: absolute;
-  z-index: 4;
-  left: 50%;
-  top: 10%;
-  width: 7px;
-  height: 7px;
-  margin-left: -3px;
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-  animation: railTravel 4.4s ease-in-out infinite;
-}
-
-.motionDiagram [data-flow-rail="left"]::after {
-  background: rgb(var(--diagram-mint));
-  box-shadow: 0 0 18px rgb(var(--diagram-mint) / 0.8);
-}
-
-.motionDiagram [data-flow-rail="right"]::after {
-  background: rgb(var(--diagram-violet));
-  box-shadow: 0 0 18px rgb(var(--diagram-violet) / 0.8);
-  animation-delay: -2.2s;
-}
-
-.motionDiagram [data-flow-hub-column]::before,
-.motionDiagram [data-flow-hub-column]::after {
-  background: linear-gradient(
-    90deg,
-    rgb(var(--diagram-violet) / 0.12),
-    rgb(var(--diagram-mint) / 0.85),
-    rgb(var(--diagram-violet) / 0.85),
-    rgb(var(--diagram-violet) / 0.12)
-  );
-  background-size: 240% 100%;
-  animation: hubLineFlow 3s linear infinite;
-}
-
-.motionDiagram [data-flow-hub-column]::after {
-  animation-direction: reverse;
 }
 
 .motionDiagram [data-flow-orbit] {
@@ -111,7 +121,7 @@
 }
 
 .motionDiagram [data-flow-hub] {
-  animation: hubHeartbeat 4.8s ease-in-out infinite;
+  animation: hubHeartbeat 3.6s ease-in-out infinite;
 }
 
 .motionDiagram [data-flow-node="team"]:hover {
@@ -131,24 +141,29 @@
   border-color: rgb(var(--diagram-violet) / 0.95);
 }
 
-.motionDiagram:hover [data-flow-node]::after,
-.motionDiagram:focus-within [data-flow-node]::after {
-  animation-duration: 1.65s;
+.motionDiagram:hover .flowStream,
+.motionDiagram:focus-within .flowStream {
+  animation-duration: 2.7s;
 }
 
-.motionDiagram:hover [data-flow-rail]::after,
-.motionDiagram:focus-within [data-flow-rail]::after {
-  animation-duration: 3.1s;
+@keyframes connectorSweep {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
 }
 
-@keyframes flowRight {
-  from { background-position: 210% 0; }
-  to { background-position: -10% 0; }
-}
-
-@keyframes hubLineFlow {
-  from { background-position: 220% 0; }
-  to { background-position: -20% 0; }
+@keyframes coreConvergence {
+  0%, 100% {
+    opacity: 0.36;
+    transform: scale(0.94);
+  }
+  42% {
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+  62% {
+    opacity: 0.62;
+    transform: scale(1.01);
+  }
 }
 
 @keyframes junctionMint {
@@ -177,20 +192,6 @@
   }
 }
 
-@keyframes railTravel {
-  0% {
-    top: 10%;
-    opacity: 0;
-  }
-  12% { opacity: 1; }
-  50% { opacity: 0.95; }
-  88% { opacity: 1; }
-  100% {
-    top: 90%;
-    opacity: 0;
-  }
-}
-
 @keyframes orbitBreath {
   0%, 100% {
     transform: translate(-50%, -50%) scale(0.975);
@@ -208,14 +209,24 @@
       0 0 0 10px rgb(var(--diagram-violet) / 0.035),
       0 0 42px rgb(var(--diagram-violet) / 0.15);
   }
-  50% {
+  42% {
     box-shadow:
-      0 0 0 12px rgb(var(--diagram-violet) / 0.055),
-      0 0 62px rgb(var(--diagram-violet) / 0.27);
+      0 0 0 13px rgb(var(--diagram-violet) / 0.065),
+      0 0 72px rgb(var(--diagram-violet) / 0.32),
+      0 0 34px rgb(var(--diagram-mint) / 0.13);
+  }
+  62% {
+    box-shadow:
+      0 0 0 11px rgb(var(--diagram-violet) / 0.045),
+      0 0 54px rgb(var(--diagram-violet) / 0.22);
   }
 }
 
 @media (max-width: 1020px) {
+  .flowOverlay {
+    display: none;
+  }
+
   .motionDiagram [data-flow-node="team"]:hover,
   .motionDiagram [data-flow-node="question"]:hover {
     transform: translateY(-2px);
@@ -232,5 +243,15 @@
   .motionDiagram *::after {
     animation: none !important;
     transition: none !important;
+  }
+
+  .flowStream,
+  .flowParticle {
+    display: none;
+  }
+
+  .flowCoreGlow {
+    animation: none !important;
+    opacity: 0.45;
   }
 }
