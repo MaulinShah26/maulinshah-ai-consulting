@@ -131,7 +131,6 @@
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.04em;
-  text-wrap: balance;
 }
 
 .lead {
@@ -313,6 +312,27 @@
 
 .deepContent :global(main > nav:first-child) {
   display: none !important;
+}
+
+/* Deep-dive pages can use a wide canvas for diagrams, but prose should not. */
+.deepContent :global(main p),
+.deepContent :global(main li) {
+  max-width: 900px;
+}
+
+.deepContent :global(main h2) {
+  max-width: 980px;
+}
+
+.deepContent :global(main h1),
+.deepContent :global(main h2),
+.deepContent :global(main h3),
+.deepContent :global(main h4),
+.deepContent :global(main p),
+.deepContent :global(main li) {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 @media (max-width: 1080px) {
