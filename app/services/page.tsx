@@ -17,16 +17,16 @@ export default function ServicesPage() {
     <>
       <Nav />
       <main>
-        <section className="px-6 pt-12 pb-5">
+        <section className="px-6 pt-10 pb-3">
           <div className="max-w-content mx-auto">
             <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent mb-3">
               Services
             </div>
-            <h1 className="max-w-[760px] font-serif text-[36px] md:text-[48px] font-medium leading-tight text-ink mb-4">
-              Choose the help you need right now.
+            <h1 className="max-w-[920px] font-serif text-[34px] md:text-[44px] font-medium leading-[1.08] text-ink mb-3">
+              How I can help.
             </h1>
-            <p className="max-w-[620px] text-[15px] text-ink-600 leading-relaxed">
-              Start with clarity, a specific build, or ongoing senior ownership. The engagement follows the problem.
+            <p className="max-w-[760px] text-[15px] text-ink-600 leading-relaxed">
+              Start with clarity, one focused build, or ongoing senior ownership. We choose the format after we understand the problem.
             </p>
           </div>
         </section>
