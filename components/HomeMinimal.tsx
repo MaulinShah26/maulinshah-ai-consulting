@@ -49,39 +49,33 @@ const founderProblems = [
 const chapters = [
   {
     number: "01",
-    label: "Work",
-    eyebrow: "Selected work",
+    label: "See the proof",
+    ghost: "Proof",
+    eyebrow: "What I have shipped",
     href: "/work",
-    statement: "See how ambiguous business problems become systems teams can actually use.",
-    tags: ["Case studies", "Decision systems", "Experiments"],
+    statement: "Business problems, decisions I made, systems I built, and what changed after they went live.",
+    tags: ["Case studies", "Production systems", "Outcomes"],
     cardClass: portalStyles.portalWork,
   },
   {
     number: "02",
-    label: "Services",
-    eyebrow: "Ways to work together",
+    label: "Find the right engagement",
+    ghost: "Engage",
+    eyebrow: "Choose the level of help",
     href: "/services",
-    statement: "Bring in senior Data and AI judgment without waiting for the perfect full time hire.",
-    tags: ["Diagnose", "Build", "Lead"],
+    statement: "Start with an audit, bring me in for one build, or add ongoing senior Data and AI ownership.",
+    tags: ["Audit", "Build", "Fractional lead"],
     cardClass: portalStyles.portalServices,
   },
   {
     number: "03",
-    label: "About",
-    eyebrow: "Background and approach",
+    label: "Know the operator",
+    ghost: "Operator",
+    eyebrow: "Background and operating style",
     href: "/about",
-    statement: "The experience, principles and operating style behind the work.",
-    tags: ["Experience", "Thinking", "Approach"],
+    statement: "See the experience, principles and way of working behind the engagements.",
+    tags: ["Experience", "Principles", "Working style"],
     cardClass: portalStyles.portalAbout,
-  },
-  {
-    number: "04",
-    label: "Contact",
-    eyebrow: "Start a conversation",
-    href: "/contact",
-    statement: "Have a decision that is getting expensive, slow or unclear? Bring it here.",
-    tags: ["Fit call", "Project inquiry"],
-    cardClass: portalStyles.portalContact,
   },
 ];
 
@@ -183,7 +177,7 @@ export function HomeMinimal() {
                 href={chapter.href}
                 className={`${portalStyles.portal} ${chapter.cardClass}`}
               >
-                <span className={portalStyles.portalGhost} aria-hidden>{chapter.label}</span>
+                <span className={portalStyles.portalGhost} aria-hidden>{chapter.ghost}</span>
 
                 <div className={portalStyles.portalTop}>
                   <span className={portalStyles.portalNum}>{chapter.number}</span>
