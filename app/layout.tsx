@@ -4,7 +4,6 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { meta, social } from "@/lib/data";
 import "./globals.css";
-import "./readability.css";
 
 const inter = Inter({
   subsets: ["latin"],
