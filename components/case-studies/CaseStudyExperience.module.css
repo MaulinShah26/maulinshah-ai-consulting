@@ -134,20 +134,22 @@
 }
 
 .title {
-  max-width: 1040px;
+  max-width: 1180px;
   margin: 0;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(52px, 6.1vw, 92px);
+  font-size: clamp(48px, 5vw, 76px);
   font-weight: 500;
-  line-height: 0.96;
-  letter-spacing: -0.05em;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .lead {
-  max-width: 860px;
-  margin: 22px 0 0;
-  font-size: clamp(18px, 1.4vw, 21px);
-  line-height: 1.56;
+  max-width: 920px;
+  margin: 20px 0 0;
+  font-size: clamp(17px, 1.25vw, 20px);
+  line-height: 1.55;
   color: rgb(var(--ink-600));
 }
 
@@ -155,7 +157,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  margin-top: 22px;
+  margin-top: 20px;
 }
 
 .tags span {
@@ -246,8 +248,8 @@
 .readCard p {
   max-width: 680px;
   margin: 0;
-  font-size: 17px;
-  line-height: 1.56;
+  font-size: 16px;
+  line-height: 1.58;
   color: rgb(var(--ink-700));
 }
 
@@ -255,8 +257,8 @@
   margin-top: 12px;
   padding: 22px 28px;
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  gap: 34px;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 30px;
   align-items: center;
   border-radius: 22px;
   color: rgb(var(--page));
@@ -267,7 +269,7 @@
 
 .takeawayLabel {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: clamp(13px, 1vw, 15px);
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0.13em;
@@ -279,8 +281,9 @@
   max-width: 1040px;
   margin: 0;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(25px, 2.35vw, 34px);
-  line-height: 1.16;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
 .deepPrompt {
@@ -357,6 +360,10 @@
     grid-template-columns: 1fr;
   }
 
+  .readCard {
+    min-height: auto;
+  }
+
   .takeaway {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -401,7 +408,8 @@
   }
 
   .title {
-    font-size: clamp(44px, 13vw, 68px);
+    font-size: clamp(40px, 11vw, 60px);
+    line-height: 1.02;
   }
 
   .impact {
@@ -415,10 +423,6 @@
 
   .executiveBody {
     padding: 28px 0 40px;
-  }
-
-  .readCard {
-    min-height: auto;
   }
 
   .deepPrompt {
