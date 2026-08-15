@@ -210,45 +210,17 @@
 }
 
 .executiveBody {
-  padding: 42px 0 50px;
-}
-
-.sectionIntro {
-  display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  gap: 34px;
-  margin-bottom: 22px;
-  align-items: center;
-}
-
-.eyebrow {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: clamp(13px, 1vw, 15px);
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: rgb(var(--accent));
-}
-
-.sectionIntro h2 {
-  max-width: 1040px;
-  margin: 0;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(38px, 4vw, 58px);
-  font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.042em;
+  padding: 30px 0 42px;
 }
 
 .readGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
 .readCard {
-  min-height: 196px;
+  min-height: 172px;
   padding: 22px 24px;
   border: 1px solid rgb(var(--ink-200));
   border-radius: 20px;
@@ -261,29 +233,22 @@
 }
 
 .cardLabel {
+  display: block;
+  margin-bottom: 14px;
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10.5px;
+  font-size: 11.5px;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgb(var(--accent));
 }
 
-.readCard h3 {
-  max-width: 590px;
-  margin: 12px 0 9px;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(24px, 2.2vw, 32px);
-  font-weight: 500;
-  line-height: 1.04;
-  letter-spacing: -0.025em;
-}
-
 .readCard p {
-  max-width: 660px;
+  max-width: 680px;
   margin: 0;
-  font-size: 15px;
-  line-height: 1.58;
-  color: rgb(var(--ink-600));
+  font-size: 17px;
+  line-height: 1.56;
+  color: rgb(var(--ink-700));
 }
 
 .takeaway {
@@ -388,14 +353,16 @@
     border-right: 0;
   }
 
-  .sectionIntro,
+  .readGrid {
+    grid-template-columns: 1fr;
+  }
+
   .takeaway {
     grid-template-columns: 1fr;
     gap: 10px;
     align-items: start;
   }
 
-  .eyebrow,
   .takeawayLabel {
     font-size: 12px;
   }
@@ -437,8 +404,7 @@
     font-size: clamp(44px, 13vw, 68px);
   }
 
-  .impact,
-  .readGrid {
+  .impact {
     grid-template-columns: 1fr;
   }
 
@@ -448,7 +414,7 @@
   }
 
   .executiveBody {
-    padding: 42px 0 50px;
+    padding: 28px 0 40px;
   }
 
   .readCard {
