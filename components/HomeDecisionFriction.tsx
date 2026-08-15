@@ -79,7 +79,7 @@ export function HomeDecisionFriction() {
             id="decision-friction-title"
             style={{ gridColumn: "1 / -1", maxWidth: "none" }}
           >
-            Most growing companies already have the teams. What they often lack is one owner connecting them.
+            The decisions that matter most rarely belong to one team.
           </h2>
         </div>
 
