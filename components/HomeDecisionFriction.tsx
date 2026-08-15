@@ -13,6 +13,7 @@ import {
   Users,
 } from "lucide-react";
 import styles from "./HomeDecisionFriction.module.css";
+import motion from "./HomeDecisionFrictionMotion.module.css";
 
 const teams = [
   {
@@ -89,7 +90,7 @@ export function HomeDecisionFriction() {
           </h2>
         </div>
 
-        <div className={styles.diagram}>
+        <div className={`${styles.diagram} ${motion.motionDiagram}`}>
           <div className={styles.diagramGlow} aria-hidden />
 
           <div className={styles.diagramBody}>
@@ -97,7 +98,7 @@ export function HomeDecisionFriction() {
               <div className={styles.columnLabel}>Teams</div>
               <div className={styles.teamStack}>
                 {teams.map(({ name, owns, signals, Icon }) => (
-                  <article key={name} className={styles.teamNode}>
+                  <article key={name} className={styles.teamNode} data-flow-node="team">
                     <span className={styles.teamIcon} aria-hidden>
                       <Icon size={18} strokeWidth={1.7} />
                     </span>
@@ -113,14 +114,14 @@ export function HomeDecisionFriction() {
               </div>
             </div>
 
-            <div className={styles.leftRail} aria-hidden />
+            <div className={styles.leftRail} data-flow-rail="left" aria-hidden />
 
-            <div className={styles.hubColumn}>
-              <div className={styles.hubOrbit} aria-hidden>
+            <div className={styles.hubColumn} data-flow-hub-column>
+              <div className={styles.hubOrbit} data-flow-orbit aria-hidden>
                 <span className={styles.orbitOne} />
                 <span className={styles.orbitTwo} />
               </div>
-              <div className={styles.hub}>
+              <div className={styles.hub} data-flow-hub>
                 <span className={styles.hubIcon} aria-hidden>
                   <DatabaseZap size={25} strokeWidth={1.6} />
                 </span>
@@ -135,13 +136,13 @@ export function HomeDecisionFriction() {
               </div>
             </div>
 
-            <div className={styles.rightRail} aria-hidden />
+            <div className={styles.rightRail} data-flow-rail="right" aria-hidden />
 
             <div className={styles.questionColumn}>
               <div className={styles.columnLabel}>Cross-team questions</div>
               <div className={styles.questionStack}>
                 {businessDecisions.map(({ label, question, Icon }) => (
-                  <article key={label} className={styles.questionNode}>
+                  <article key={label} className={styles.questionNode} data-flow-node="question">
                     <span className={styles.questionIcon} aria-hidden>
                       <Icon size={18} strokeWidth={1.7} />
                     </span>
