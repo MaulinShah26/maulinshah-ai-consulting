@@ -33,7 +33,6 @@
   line-height: 1;
   letter-spacing: -0.035em;
   color: rgb(var(--ink));
-  text-wrap: balance;
 }
 
 .exploreLine {
@@ -51,7 +50,7 @@
 .portal {
   position: relative;
   overflow: hidden;
-  min-height: 320px;
+  min-height: 290px;
   padding: 22px;
   display: flex;
   flex-direction: column;
@@ -131,7 +130,7 @@
 
 .portalContact {
   grid-column: span 7;
-  min-height: 280px;
+  min-height: 260px;
   background: rgb(var(--ink));
   color: rgb(var(--page));
   border-color: rgb(var(--ink));
@@ -216,13 +215,12 @@
 }
 
 .portalMain h3 {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(32px, 2.8vw, 44px);
+  font-size: clamp(30px, 2.6vw, 40px);
   font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.035em;
-  text-wrap: balance;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
 }
 
 .portalMain p {
@@ -243,7 +241,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  margin-top: 22px;
+  margin-top: 18px;
 }
 
 .portalTags span {
@@ -270,7 +268,7 @@
   right: -8px;
   bottom: -18px;
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(72px, 8vw, 118px);
+  font-size: clamp(68px, 7vw, 104px);
   font-style: italic;
   line-height: 0.8;
   letter-spacing: -0.06em;
@@ -312,12 +310,12 @@
   .portalWork,
   .portalServices {
     grid-column: span 6;
-    min-height: 300px;
+    min-height: 270px;
   }
 
   .portalAbout {
     grid-column: span 12;
-    min-height: 260px;
+    min-height: 240px;
   }
 }
 
@@ -333,7 +331,7 @@
   }
 
   .exploreHeader h2 {
-    font-size: 40px;
+    font-size: 38px;
     line-height: 1.02;
   }
 
@@ -352,7 +350,7 @@
   .portalAbout,
   .portalContact {
     grid-column: auto;
-    min-height: 250px;
+    min-height: 230px;
   }
 
   .portal {
@@ -361,16 +359,16 @@
   }
 
   .portalMain h3 {
-    font-size: 36px;
+    font-size: 34px;
   }
 
   .portalMain p {
-    max-width: 92%;
-    font-size: 12px;
+    max-width: 94%;
+    font-size: 12.5px;
   }
 
   .portalGhost {
-    font-size: 82px;
+    font-size: 76px;
   }
 }
 
