@@ -20,16 +20,8 @@
   min-height: 52px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 16px;
-}
-
-.modeLabel {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: rgb(var(--ink-500));
 }
 
 .modeSwitch {
@@ -363,10 +355,6 @@
     align-items: stretch;
     flex-direction: column;
     gap: 7px;
-  }
-
-  .modeLabel {
-    display: none;
   }
 
   .modeSwitch {
