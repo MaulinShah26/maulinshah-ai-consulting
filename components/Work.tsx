@@ -183,9 +183,9 @@ function CorporateCardEl({ card }: { card: CorporateCardData }) {
           </div>
         ))}
       </div>
-      <div className="case-takeaway">
-        <span className="case-takeaway-label">Founder takeaway</span>
-        <p>{card.takeaway}</p>
+      <div className="demo-cta">
+        <span className="demo-link-text">View case study</span>
+        <ArrowRight size={18} className="demo-arrow" aria-hidden />
       </div>
     </Link>
   );
@@ -202,15 +202,15 @@ function PersonalCardEl({ card }: { card: PersonalCardData }) {
       <p className="case-meta">{card.meta}</p>
       <div className="sao">
         <div className="sao-block">
-          <span className="sao-label">Situation</span>
+          <span className="sao-label">Problem</span>
           <p className="sao-text">{card.situation}</p>
         </div>
         <div className="sao-block">
-          <span className="sao-label">Approach</span>
+          <span className="sao-label">What I built</span>
           <p className="sao-text">{card.approach}</p>
         </div>
         <div className="sao-block">
-          <span className="sao-label">Outcome</span>
+          <span className="sao-label">Where it is now</span>
           <p className="sao-text">{card.outcome}</p>
         </div>
       </div>
