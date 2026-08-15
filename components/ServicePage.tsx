@@ -28,7 +28,7 @@ type ServiceData = {
 
 function Bullets({ items, muted = false }: { items: string[]; muted?: boolean }) {
   return (
-    <div className="grid gap-2">
+    <div className="grid gap-2 max-w-[900px]">
       {items.map((t, i) => (
         <div key={i} className="flex gap-2.5 text-[13.5px] text-ink-700 leading-relaxed">
           <span
@@ -48,14 +48,13 @@ export function ServicePage({ service }: { service: ServiceData }) {
     <main className="bg-page text-ink min-h-screen">
       <Nav />
 
-      {/* hero */}
-      <section className="pt-6 pb-4 px-6">
+      <section className="pt-7 pb-5 px-6">
         <div className="max-w-content mx-auto">
           <SectionHeader label={service.eyebrow} />
-          <h1 className="font-serif font-medium text-[clamp(26px,5vw,36px)] leading-[1.18] tracking-tight mb-3.5">
+          <h1 className="max-w-[980px] font-serif font-medium text-[clamp(30px,4vw,44px)] leading-[1.08] tracking-tight mb-4 text-balance">
             {service.heroTitle}
           </h1>
-          <p className="text-[15.5px] text-ink-600 leading-relaxed">{service.heroSub}</p>
+          <p className="max-w-[860px] text-[15.5px] text-ink-600 leading-[1.65]">{service.heroSub}</p>
           <div className="flex flex-wrap gap-2 mt-4">
             {service.meta.map((m) => (
               <span
@@ -69,24 +68,22 @@ export function ServicePage({ service }: { service: ServiceData }) {
         </div>
       </section>
 
-      {/* problem */}
       <section className="py-4 px-6">
         <div className="max-w-content mx-auto">
           <SectionHeader label="What’s usually broken" />
-          <p className="text-[14px] text-ink-700 leading-relaxed">{service.problem}</p>
+          <p className="max-w-[900px] text-[14px] text-ink-700 leading-[1.7]">{service.problem}</p>
         </div>
       </section>
 
-      {/* visual */}
       {service.visual === "audit" && (
         <>
           <section className="py-4 px-6">
             <div className="max-w-content mx-auto">
               <SectionHeader label="Data before AI" />
-              <h2 className="font-serif text-[21px] font-medium tracking-tight mb-2">
+              <h2 className="max-w-[820px] font-serif text-[21px] font-medium tracking-tight mb-2 text-balance">
                 AI only works on top of data you can trust.
               </h2>
-              <p className="text-[14px] text-ink-700 leading-relaxed mb-3">
+              <p className="max-w-[900px] text-[14px] text-ink-700 leading-relaxed mb-3">
                 I check every layer from the bottom up before suggesting anything at the
                 top. Most stuck AI projects are really a broken layer lower down.
               </p>
@@ -99,10 +96,10 @@ export function ServicePage({ service }: { service: ServiceData }) {
           <section className="py-4 px-6">
             <div className="max-w-content mx-auto">
               <SectionHeader label="What you get, not a list" />
-              <h2 className="font-serif text-[21px] font-medium tracking-tight mb-2">
+              <h2 className="max-w-[820px] font-serif text-[21px] font-medium tracking-tight mb-2 text-balance">
                 Every idea sorted by value and readiness.
               </h2>
-              <p className="text-[14px] text-ink-700 leading-relaxed mb-3">
+              <p className="max-w-[900px] text-[14px] text-ink-700 leading-relaxed mb-3">
                 You don’t leave with a list of AI ideas. You leave knowing what to build now,
                 what to set up for later, and what to drop.
               </p>
@@ -116,12 +113,12 @@ export function ServicePage({ service }: { service: ServiceData }) {
         <section className="py-4 px-6">
           <div className="max-w-content mx-auto">
             <SectionHeader label="How I work inside the business" />
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {operatingModel.steps.map((s) => (
-                <div key={s.n}>
+                <div key={s.n} className="min-w-0">
                   <div className="font-mono text-[11px] text-accent mb-2">{s.n}</div>
                   <h4 className="font-serif text-[16px] font-semibold mb-1">{s.title}</h4>
-                  <p className="text-[12px] text-ink-600 leading-relaxed">{s.body}</p>
+                  <p className="text-[12.5px] text-ink-600 leading-relaxed max-w-[250px]">{s.body}</p>
                 </div>
               ))}
             </div>
@@ -133,13 +130,13 @@ export function ServicePage({ service }: { service: ServiceData }) {
         <section className="py-4 px-6">
           <div className="max-w-content mx-auto">
             <SectionHeader label="How the build runs" />
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {service.phases.map((ph, i) => (
-                <div key={ph.label}>
+                <div key={ph.label} className="min-w-0">
                   <div className="font-mono text-[11px] text-accent mb-2">
                     {String(i + 1).padStart(2, "0")} · {ph.label}
                   </div>
-                  <p className="text-[12px] text-ink-600 leading-relaxed">{ph.body}</p>
+                  <p className="text-[12.5px] text-ink-600 leading-relaxed max-w-[250px]">{ph.body}</p>
                 </div>
               ))}
             </div>
@@ -147,7 +144,6 @@ export function ServicePage({ service }: { service: ServiceData }) {
         </section>
       )}
 
-      {/* what I do */}
       <section className="py-4 px-6">
         <div className="max-w-content mx-auto">
           <SectionHeader label={service.whatLabel} />
@@ -155,7 +151,6 @@ export function ServicePage({ service }: { service: ServiceData }) {
         </div>
       </section>
 
-      {/* walk away */}
       <section className="py-4 px-6">
         <div className="max-w-content mx-auto">
           <SectionHeader label="What you walk away with" />
@@ -163,7 +158,6 @@ export function ServicePage({ service }: { service: ServiceData }) {
         </div>
       </section>
 
-      {/* what this is not */}
       <section className="py-4 px-6">
         <div className="max-w-content mx-auto">
           <SectionHeader label="What this is not" />
@@ -171,11 +165,10 @@ export function ServicePage({ service }: { service: ServiceData }) {
         </div>
       </section>
 
-      {/* use cases */}
       <section className="py-4 px-6">
         <div className="max-w-content mx-auto">
           <SectionHeader label="When founders call me for this" />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
             {service.useCases.map((u, i) => (
               <div
                 key={i}
@@ -188,15 +181,14 @@ export function ServicePage({ service }: { service: ServiceData }) {
         </div>
       </section>
 
-      {/* cta */}
-      <section className="py-4 px-6 pb-10">
+      <section className="py-5 px-6 pb-10">
         <div className="max-w-content mx-auto">
-          <h2 className="font-serif text-[21px] font-medium tracking-tight mb-2">
+          <h2 className="max-w-[760px] font-serif text-[21px] font-medium tracking-tight mb-2 text-balance">
             {service.ctaTitle}
           </h2>
-          <p className="text-[14px] text-ink-700 leading-relaxed mb-3.5">{service.ctaSub}</p>
+          <p className="max-w-[760px] text-[14px] text-ink-700 leading-relaxed mb-3.5">{service.ctaSub}</p>
           <Link
-            href="/#contact"
+            href="/contact"
             className="inline-flex items-center gap-1.5 rounded-md bg-ink text-page text-[13px] font-medium px-4 py-2.5 hover:bg-ink-700 transition-colors"
           >
             {service.ctaLabel}
