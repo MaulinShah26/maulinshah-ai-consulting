@@ -10,9 +10,6 @@ import { SectionHeader } from "./SectionHeader";
 export function Contact() {
   const [copied, setCopied] = useState(false);
 
-  // Construct email at runtime from parts. No literal email string exists in
-  // source code or rendered HTML, which defeats Cloudflare-style email
-  // obfuscation extensions and network filters that scan for email patterns.
   const copyEmail = async () => {
     const email = `${social.emailUser}@${social.emailDomain}`;
     try {
@@ -30,8 +27,10 @@ export function Contact() {
         <div className="reveal-child">
           <SectionHeader number={contact.sectionNumber} label={contact.sectionLabel} />
         </div>
-        <h2 className="reveal-child text-[19px] font-medium text-ink mb-4">{contact.heading}</h2>
-        <p className="reveal-child text-[14px] text-ink-600 leading-[1.75] mb-6">
+        <h2 className="reveal-child max-w-[760px] text-[19px] font-medium text-ink mb-3">
+          {contact.heading}
+        </h2>
+        <p className="reveal-child max-w-[760px] text-[14px] text-ink-600 leading-[1.7] mb-6">
           {contact.body}
         </p>
         <div className="reveal-child flex flex-wrap items-center gap-2">
