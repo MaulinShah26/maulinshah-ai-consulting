@@ -1,0 +1,26 @@
+/* Readability guardrails only. These rules do not change typography sizes or fonts. */
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none;
+}
+
+p,
+li {
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+/* Long labels and controls may wrap as whole words rather than overflow a card. */
+button,
+a {
+  word-break: normal;
+  overflow-wrap: break-word;
+}
