@@ -18,31 +18,31 @@ const teams = [
   {
     name: "Marketing",
     owns: "Demand",
-    signals: "Spend · channels · leads · campaigns",
+    signals: "Spend · channels · campaigns",
     Icon: Megaphone,
   },
   {
     name: "Product",
     owns: "Behavior",
-    signals: "Activation · journeys · adoption · retention",
+    signals: "Activation · journeys · retention",
     Icon: Users,
   },
   {
     name: "Engineering",
     owns: "Delivery",
-    signals: "Systems · capacity · reliability · build effort",
+    signals: "Systems · reliability · effort",
     Icon: Code2,
   },
   {
     name: "Finance",
     owns: "Economics",
-    signals: "Revenue · margin · payback · cash",
+    signals: "Revenue · margin · cash",
     Icon: CircleDollarSign,
   },
   {
     name: "Operations",
     owns: "Execution",
-    signals: "Process · service · support · capacity",
+    signals: "Process · support · capacity",
     Icon: PackageCheck,
   },
 ];
@@ -50,22 +50,22 @@ const teams = [
 const businessDecisions = [
   {
     label: "Profitable growth",
-    question: "What is constraining profitable growth, and where should the next unit of capital go?",
+    question: "What is holding back profitable growth, and where should we invest next?",
     Icon: TrendingUp,
   },
   {
     label: "Customer value",
-    question: "Which customers create the most long term value, and what should we change to win more of them?",
+    question: "Which customers are worth the most, and how do we win more like them?",
     Icon: Target,
   },
   {
-    label: "Capital allocation",
-    question: "Which product, growth or operating bet should we fund next, and what should we stop doing?",
+    label: "Priorities",
+    question: "Which bet should we fund next, and what should we stop doing?",
     Icon: BriefcaseBusiness,
   },
   {
-    label: "AI leverage",
-    question: "Where can AI create material business leverage without adding operational risk?",
+    label: "AI",
+    question: "Where can AI save time or create value without adding unnecessary risk?",
     Icon: Sparkles,
   },
 ];
@@ -85,7 +85,7 @@ export function HomeDecisionFriction() {
               letterSpacing: "-0.035em",
             }}
           >
-            The decisions that matter most rarely belong to one team.
+            Important decisions rarely fit inside one team.
           </h2>
         </div>
 
@@ -94,7 +94,7 @@ export function HomeDecisionFriction() {
 
           <div className={styles.diagramBody}>
             <div className={styles.teamColumn}>
-              <div className={styles.columnLabel}>Teams already in place</div>
+              <div className={styles.columnLabel}>Teams</div>
               <div className={styles.teamStack}>
                 {teams.map(({ name, owns, signals, Icon }) => (
                   <article key={name} className={styles.teamNode}>
@@ -124,21 +124,21 @@ export function HomeDecisionFriction() {
                 <span className={styles.hubIcon} aria-hidden>
                   <DatabaseZap size={25} strokeWidth={1.6} />
                 </span>
-                <span className={styles.hubKicker}>The connective owner</span>
+                <span className={styles.hubKicker}>Where I step in</span>
                 <strong>Fractional Head of Data & AI</strong>
                 <div className={styles.hubCapabilities}>
-                  <span>Shared data</span>
-                  <span>Decision logic</span>
+                  <span>Shared facts</span>
+                  <span>Clear tradeoffs</span>
                   <span>Applied AI</span>
                 </div>
-                <p>I connect the functions, challenge assumptions with shared data, and turn CEO level questions into decisions the business can act on.</p>
+                <p>I connect the data, context and tradeoffs so leadership can make one clear call.</p>
               </div>
             </div>
 
             <div className={styles.rightRail} aria-hidden />
 
             <div className={styles.questionColumn}>
-              <div className={styles.columnLabel}>Questions no single team can answer alone</div>
+              <div className={styles.columnLabel}>Cross-team questions</div>
               <div className={styles.questionStack}>
                 {businessDecisions.map(({ label, question, Icon }) => (
                   <article key={label} className={styles.questionNode}>
@@ -156,9 +156,8 @@ export function HomeDecisionFriction() {
           </div>
 
           <div className={styles.diagramFooter}>
-            <p>I become the connective layer between teams, data and the decisions that need one accountable owner.</p>
-            <Link href="/services" className={styles.servicesLink}>
-              See how I work
+            <Link href="/services" className={styles.servicesLink} style={{ marginLeft: "auto" }}>
+              How I work
               <ArrowUpRight size={16} aria-hidden />
             </Link>
           </div>
