@@ -46,7 +46,9 @@ export function BrandLockup({
         </span>
 
         <span
-          className={`${styles.domainLine} ${mutedColor} ${
+          className={`${styles.domainBase} ${
+            animateDomains ? styles.domainAnimated : styles.domainStatic
+          } ${mutedColor} ${
             compact ? "mt-1.5 text-[10px] lg:text-[10.5px]" : "mt-2 text-[11px]"
           }`}
           aria-label="Data, AI and machine learning, Product, Growth"
@@ -60,7 +62,7 @@ export function BrandLockup({
               ))}
             </span>
           ) : (
-            <span className="inline-flex items-center" aria-hidden>
+            <span className={styles.staticPhrase} aria-hidden>
               {staticDomains.map((domain, index) => (
                 <span key={domain} className="contents">
                   <span>{domain}</span>
