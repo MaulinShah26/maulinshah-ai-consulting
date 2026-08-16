@@ -1,122 +1,105 @@
 "use client";
-import { track } from "@/lib/analytics";
 
 import Link from "next/link";
-import { useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { services } from "@/lib/data";
+import { track } from "@/lib/analytics";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
+const situationByTitle: Record<string, string> = {
+  "Data & AI Opportunity Audit": "I’m not sure what to fix, build or automate first.",
+  "Decision System Build": "We know the problem. We need someone senior to own the build.",
+  "Fractional Head of Data & AI": "We need senior Data & AI ownership, but a full-time hire does not make sense yet.",
+};
+
+const priority = (title: string) => {
+  if (title.includes("Opportunity Audit")) return 0;
+  if (title.includes("Decision System Build")) return 1;
+  return 2;
+};
+
 export function ServicesV3() {
-  const [open, setOpen] = useState<number | null>(null);
+  const cards = [...services.cards].sort((a, b) => priority(a.title) - priority(b.title));
 
   return (
-    <Reveal id="services" className="py-4 px-6">
-      <div className="max-w-content mx-auto">
+    <Reveal id="services" className="px-6 py-6 md:py-8">
+      <div className="mx-auto max-w-content">
         <div className="reveal-child">
-          <SectionHeader label={services.sectionLabel} />
+          <SectionHeader label="Choose based on where you are" />
         </div>
 
-        <div className="reveal-child grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 items-start">
-          {services.cards.map((c, i) => {
-            const isOpen = open === i;
-            return (
-              <div
-                key={i}
-                className="flex flex-col bg-surface border border-ink-200 rounded-xl p-5 min-w-0"
-              >
-                <h2 className="font-serif text-[18px] font-semibold text-ink leading-tight mb-2">
-                  {c.title}
-                </h2>
-                <p className="text-[12.5px] text-ink-500 leading-relaxed mb-3">
-                  {c.bestFor}
+        <div className="reveal-child border-b border-ink-200">
+          {cards.map((card, index) => (
+            <article
+              key={card.title}
+              className="grid gap-5 border-t border-ink-200 py-7 md:grid-cols-[52px_minmax(250px,0.8fr)_minmax(0,1.2fr)] md:gap-8 md:py-9"
+            >
+              <div className="font-mono text-[10px] tracking-[0.12em] text-accent">
+                0{index + 1}
+              </div>
+
+              <div className="min-w-0">
+                <div className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-400">
+                  If you’re thinking
+                </div>
+                <p className="max-w-[390px] font-serif text-[22px] font-medium leading-[1.18] tracking-[-0.02em] text-ink md:text-[25px]">
+                  “{situationByTitle[card.title] ?? card.bestFor}”
                 </p>
-                <p className="text-[13.5px] text-ink-700 leading-relaxed mb-4">
-                  {c.outcome}
+              </div>
+
+              <div className="min-w-0 md:pt-0.5">
+                <h2 className="font-serif text-[20px] font-semibold leading-tight text-ink md:text-[22px]">
+                  {card.title}
+                </h2>
+                <p className="mt-2 max-w-[650px] text-[14px] leading-relaxed text-ink-600">
+                  {card.outcome}
                 </p>
 
-                <div
-                  className={`grid transition-all duration-200 ease-out ${
-                    isOpen
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <div className="border-t border-ink-200 pt-4 space-y-3">
-                      <div>
-                        <span className="block font-mono text-[9px] uppercase tracking-wide text-ink-400 mb-1">
-                          Commitment
-                        </span>
-                        <span className="block text-[12px] text-ink-600 leading-relaxed">
-                          {c.commitment}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="block font-mono text-[9px] uppercase tracking-wide text-ink-400 mb-1">
-                          What this is
-                        </span>
-                        <span className="block text-[12px] text-ink-600 leading-relaxed">
-                          {c.whatThisIs}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="block font-mono text-[9px] uppercase tracking-wide text-ink-400 mb-1">
-                          What you leave with
-                        </span>
-                        <span className="block text-[12px] text-ink-600 leading-relaxed">
-                          {c.walkAway}
-                        </span>
-                      </div>
+                <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <div className="mb-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-400">
+                      Typical shape
                     </div>
+                    <p className="text-[12.5px] leading-relaxed text-ink-600">
+                      {card.commitment}
+                    </p>
+                  </div>
+                  <div>
+                    <div className="mb-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-400">
+                      You leave with
+                    </div>
+                    <p className="text-[12.5px] leading-relaxed text-ink-600">
+                      {card.walkAway}
+                    </p>
                   </div>
                 </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-                  {!isOpen && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setOpen(i);
-                        track("service_expand", { service: c.title });
-                      }}
-                      aria-expanded={isOpen}
-                      className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
-                    >
-                      What&apos;s included
-                    </button>
-                  )}
-                  {isOpen && (
-                    <>
-                      <Link
-                        href={c.pageHref}
-                        onClick={() => track("service_details_click", { service: c.title })}
-                        className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
-                      >
-                        Full details
-                      </Link>
-                      <a
-                        href={c.href}
-                        onClick={() => track("service_discuss_click", { service: c.title })}
-                        className="font-mono text-[10.5px] uppercase tracking-wide text-accent hover:text-ink transition-colors"
-                      >
-                        Talk to me
-                      </a>
-                      <button
-                        type="button"
-                        onClick={() => setOpen(null)}
-                        aria-expanded={isOpen}
-                        className="font-mono text-[10.5px] uppercase tracking-wide text-ink-400 hover:text-ink transition-colors"
-                      >
-                        Show less
-                      </button>
-                    </>
-                  )}
+                <div className="mt-5 flex flex-wrap items-center gap-5">
+                  <Link
+                    href={card.pageHref}
+                    onClick={() => track("service_details_click", { service: card.title })}
+                    className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-accent transition-colors hover:text-ink"
+                  >
+                    See full details
+                    <ArrowUpRight size={13} aria-hidden />
+                  </Link>
+                  <a
+                    href={card.href}
+                    onClick={() => track("service_discuss_click", { service: card.title })}
+                    className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-500 transition-colors hover:text-ink"
+                  >
+                    Discuss this
+                  </a>
                 </div>
               </div>
-            );
-          })}
+            </article>
+          ))}
         </div>
+
+        <p className="reveal-child mt-5 max-w-[760px] text-[12.5px] leading-relaxed text-ink-500">
+          Not sure which one fits? That is normal. The first call is for figuring that out, not forcing you into an engagement.
+        </p>
       </div>
     </Reveal>
   );
