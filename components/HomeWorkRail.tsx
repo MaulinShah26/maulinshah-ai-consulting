@@ -9,6 +9,8 @@ type RailItem = {
   href: string;
 };
 
+// Intentionally shuffled so company work and Labs feel like one body of work,
+// without obvious client blocks or an alternating corporate/Lab pattern.
 const items: RailItem[] = [
   {
     client: "Supertails",
@@ -19,22 +21,29 @@ const items: RailItem[] = [
   },
   {
     client: "Independent Lab",
-    project: "NerdyCricket",
-    proof: "Live · IPL 2026",
-    href: "/case-studies/nerdycricket",
+    project: "AI Trading Copilot",
+    proof: "Paper trading · limited access",
+    href: "/case-studies/ai-trading-copilot",
   },
   {
     client: "CricHeroes",
     logo: "/logos/cricheroes.png",
-    project: "Batters & Bowlers Tag",
-    proof: "10M+ players · live product",
-    href: "/case-studies/batters-bowlers-tag",
+    project: "AI Cricket Commentary",
+    proof: "+15% live-commentary engagement",
+    href: "/case-studies/ai-cricket-commentary",
+  },
+  {
+    client: "Supertails",
+    logo: "/logos/supertails.jpg",
+    project: "Customer Affinity Modelling",
+    proof: "Multi-team personalization · live",
+    href: "/case-studies/customer-affinity-modelling",
   },
   {
     client: "Independent Lab",
-    project: "Medicine Helper",
-    proof: "Live in ChatGPT",
-    href: "/case-studies/medicine-helper",
+    project: "NerdyCricket",
+    proof: "Live · IPL 2026",
+    href: "/case-studies/nerdycricket",
   },
   {
     client: "Supertails",
@@ -45,16 +54,16 @@ const items: RailItem[] = [
   },
   {
     client: "Independent Lab",
-    project: "AI Trading Copilot",
-    proof: "Paper trading · limited access",
-    href: "/case-studies/ai-trading-copilot",
+    project: "AI Job Impact Assessor",
+    proof: "Closed beta",
+    href: "/case-studies/ai-job-impact-assessor",
   },
   {
-    client: "Supertails",
-    logo: "/logos/supertails.jpg",
-    project: "Customer Affinity Modelling",
-    proof: "Multi-team personalization · live",
-    href: "/case-studies/customer-affinity-modelling",
+    client: "CricHeroes",
+    logo: "/logos/cricheroes.png",
+    project: "Batters & Bowlers Tag",
+    proof: "10M+ players · live product",
+    href: "/case-studies/batters-bowlers-tag",
   },
   {
     client: "Independent Lab",
@@ -71,16 +80,9 @@ const items: RailItem[] = [
   },
   {
     client: "Independent Lab",
-    project: "AI Job Impact Assessor",
-    proof: "Closed beta",
-    href: "/case-studies/ai-job-impact-assessor",
-  },
-  {
-    client: "CricHeroes",
-    logo: "/logos/cricheroes.png",
-    project: "AI Cricket Commentary",
-    proof: "+15% live-commentary engagement",
-    href: "/case-studies/ai-cricket-commentary",
+    project: "Medicine Helper",
+    proof: "Live in ChatGPT",
+    href: "/case-studies/medicine-helper",
   },
 ];
 
