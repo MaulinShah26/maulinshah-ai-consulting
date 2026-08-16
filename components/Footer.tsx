@@ -1,5 +1,8 @@
+"use client";
+
 import { ArrowUpRight, Calendar, Mail } from "lucide-react";
 import { meta, social } from "@/lib/data";
+import { track } from "@/lib/analytics";
 import { BrandLockup } from "./BrandLockup";
 
 export function Footer() {
@@ -21,6 +24,7 @@ export function Footer() {
               href={social.calendly}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("book_call_click", { placement: "footer" })}
               className="inline-flex min-h-12 w-full items-center justify-between gap-4 rounded-full bg-page px-5 text-[13px] font-medium text-ink transition-transform hover:-translate-y-0.5 sm:w-auto sm:min-w-[250px]"
             >
               <span className="inline-flex items-center gap-2">
@@ -32,6 +36,7 @@ export function Footer() {
 
             <a
               href={`mailto:${email}`}
+              onClick={() => track("contact_click", { channel: "email", placement: "footer" })}
               className="inline-flex min-h-11 w-full items-center justify-between gap-4 rounded-full border border-page/20 px-5 text-[12px] text-page/78 transition-colors hover:border-accent hover:text-page sm:w-auto sm:min-w-[250px]"
             >
               <span className="inline-flex items-center gap-2">
@@ -45,6 +50,7 @@ export function Footer() {
               href={social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("contact_click", { channel: "linkedin", placement: "footer" })}
               className="inline-flex min-h-11 w-full items-center justify-between gap-4 rounded-full border border-page/20 px-5 text-[12px] text-page/78 transition-colors hover:border-accent hover:text-page sm:w-auto sm:min-w-[250px]"
             >
               <span>LinkedIn</span>
