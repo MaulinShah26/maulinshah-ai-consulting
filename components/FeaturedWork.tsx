@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { track } from "@/lib/analytics";
 import { SectionHeader } from "./SectionHeader";
 
 const featuredCases = [
@@ -42,6 +45,13 @@ export function FeaturedWork() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() =>
+                track("case_study_click", {
+                  slug: item.href,
+                  kind: "corporate",
+                  source: "featured_work",
+                })
+              }
               className="group min-w-0 rounded-[18px] border border-ink-200 bg-surface p-5 md:p-6 transition-transform duration-200 hover:-translate-y-1"
             >
               <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent mb-5">
