@@ -12,6 +12,16 @@ export function AnalyticsBridge() {
       const target = event.target as HTMLElement | null;
       if (!target) return;
 
+      if (pathname === "/") {
+        const anchor = target.closest("a");
+        const href = anchor?.getAttribute("href") ?? "";
+        const label = anchor?.textContent?.replace(/\s+/g, " ").trim().toLowerCase() ?? "";
+
+        if (href === "/services" && label.includes("see how i build it")) {
+          track("home_cta_click", { cta: "decision_system_services" });
+        }
+      }
+
       if (pathname.startsWith("/case-studies/")) {
         const button = target.closest("button");
         const label = button?.textContent?.replace(/\s+/g, " ").trim().toLowerCase() ?? "";
