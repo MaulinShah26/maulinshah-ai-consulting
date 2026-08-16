@@ -4,6 +4,10 @@ import styles from "./MediumWriting.module.css";
 const PROFILE_URL = "https://medium.com/@shahmaulin92";
 const FEED_URL = "https://medium.com/feed/@shahmaulin92";
 
+// Medium feeds and image CDNs can remain stale for a short period after a post is
+// deleted. Keep explicit exclusions for posts that should never return to the site.
+const EXCLUDED_POST_IDS = new Set(["2dc3accb1001"]); // DaMENSCH case study
+
 type MediumPost = {
   title: string;
   href: string;
@@ -47,8 +51,13 @@ function stripHtml(value: string) {
 }
 
 function firstImage(html: string) {
-  const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
-  return match?.[1];
+  // Medium puts the current article hero/lead image first in content:encoded.
+  // Prefer a figure image and fall back to the first image for older posts.
+  const figure = html.match(/<figure[\s\S]*?<img[^>]+src=["']([^"']+)["']/i);
+  const image = figure || html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return image?.[1]
+    ?.replace(/&amp;/g, "&")
+    .replace(/^http:\/\//i, "https://");
 }
 
 function makeExcerpt(html: string, title: string) {
@@ -58,6 +67,11 @@ function makeExcerpt(html: string, title: string) {
   }
   if (text.length <= 220) return text;
   return `${text.slice(0, 217).trimEnd()}…`;
+}
+
+function isExcludedPost(href: string) {
+  const lowerHref = href.toLowerCase();
+  return Array.from(EXCLUDED_POST_IDS).some((id) => lowerHref.includes(id));
 }
 
 function parseFeed(xml: string): MediumPost[] {
@@ -82,13 +96,21 @@ function parseFeed(xml: string): MediumPost[] {
         excerpt: makeExcerpt(content, title),
       };
     })
-    .filter((post) => post.title && post.href);
+    .filter(
+      (post) =>
+        post.title &&
+        post.href &&
+        !isExcludedPost(post.href) &&
+        !post.title.toLowerCase().includes("damensch")
+    );
 }
 
 async function getMediumPosts(): Promise<MediumPost[]> {
   try {
     const response = await fetch(FEED_URL, {
-      next: { revalidate: 21600 },
+      // Writing should reflect newly published/deleted posts and newly replaced
+      // Medium cover images without waiting for a portfolio rebuild or ISR window.
+      cache: "no-store",
       headers: {
         Accept: "application/rss+xml, application/xml, text/xml",
         "User-Agent": "Mozilla/5.0",
