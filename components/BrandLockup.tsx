@@ -5,14 +5,17 @@ type BrandLockupProps = {
   compact?: boolean;
   inverse?: boolean;
   className?: string;
+  animateDomains?: boolean;
 };
 
-const domains = ["Data", "AI / ML", "Product", "Growth", "Data"];
+const rotatingDomains = ["Data", "AI / ML", "Product", "Growth", "Data"];
+const staticDomains = ["Data", "AI / ML", "Product", "Growth"];
 
 export function BrandLockup({
   compact = false,
   inverse = false,
   className = "",
+  animateDomains = true,
 }: BrandLockupProps) {
   const textColor = inverse ? "text-page" : "text-ink";
   const mutedColor = inverse ? "text-page/66" : "text-ink-500";
@@ -48,13 +51,26 @@ export function BrandLockup({
           }`}
           aria-label="Data, AI and machine learning, Product, Growth"
         >
-          <span className={styles.domainTrack} aria-hidden>
-            {domains.map((domain, index) => (
-              <span key={`${domain}-${index}`} className={styles.domainItem}>
-                {domain}
-              </span>
-            ))}
-          </span>
+          {animateDomains ? (
+            <span className={styles.domainTrack} aria-hidden>
+              {rotatingDomains.map((domain, index) => (
+                <span key={`${domain}-${index}`} className={styles.domainItem}>
+                  {domain}
+                </span>
+              ))}
+            </span>
+          ) : (
+            <span className="inline-flex items-center" aria-hidden>
+              {staticDomains.map((domain, index) => (
+                <span key={domain} className="contents">
+                  <span>{domain}</span>
+                  {index < staticDomains.length - 1 && (
+                    <span className={styles.separator}>·</span>
+                  )}
+                </span>
+              ))}
+            </span>
+          )}
         </span>
       </span>
     </Link>
