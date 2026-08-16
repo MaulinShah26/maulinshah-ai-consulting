@@ -84,13 +84,9 @@ export function ServicePage({ service }: { service: ServiceData }) {
                 AI only works on top of data you can trust.
               </h2>
               <p className="max-w-[900px] text-[14px] text-ink-700 leading-relaxed mb-3">
-                I check every layer from the bottom up before suggesting anything at the
-                top. Most stuck AI projects are really a broken layer lower down.
+                I start with the business decision, then check whether the data, metrics and operating logic underneath it are strong enough to support AI.
               </p>
               <DataTrustPyramid />
-              <p className="max-w-[900px] text-center text-[12px] text-ink-500 italic mt-2.5">
-                Read bottom to top. AI can’t make a decision your business hasn’t defined yet.
-              </p>
             </div>
           </section>
           <section className="py-4 px-6">
