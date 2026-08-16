@@ -3,6 +3,7 @@ import { ArrowUpRight, Calendar } from "lucide-react";
 import { experience, social } from "@/lib/data";
 import { HomeDecisionFriction } from "./HomeDecisionFriction";
 import { HomeWorkRail } from "./HomeWorkRail";
+import { MediumWriting } from "./MediumWriting";
 import styles from "./HomeMinimal.module.css";
 import problemStyles from "./HomeCapabilitySignals.module.css";
 import portalStyles from "./HomePortals.module.css";
@@ -170,6 +171,8 @@ export function HomeMinimal() {
       <HomeWorkRail />
 
       <HomeDecisionFriction />
+
+      <MediumWriting />
 
       <section className={`${portalStyles.exploreSection} ${spacingStyles.portalsCompact}`}>
         <div className={portalStyles.exploreInner} style={{ width: "min(1440px, 100%)" }}>
