@@ -98,7 +98,7 @@ export function HomeMinimal() {
               </h1>
 
               <p className={styles.subhead}>
-                I step in when data and AI have become important to the business, but no one senior owns what to trust, what to build or what to do next.
+                I work with growing companies when important business decisions need stronger data, smarter systems or applied AI.
               </p>
 
               <div className={styles.actions}>
