@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Calendar, Menu, X } from "lucide-react";
-import { meta, social } from "@/lib/data";
+import { social } from "@/lib/data";
+import { BrandLockup } from "./BrandLockup";
 import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
@@ -18,17 +19,8 @@ export function Nav() {
 
   return (
     <nav className="sticky top-0 z-40 border-b border-ink-200/70 bg-page/88 backdrop-blur-xl">
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 py-4">
-        <Link
-          href="/"
-          className="group flex items-baseline"
-          aria-label={`${meta.author}, home`}
-          onClick={() => setOpen(false)}
-        >
-          <span className="font-serif text-[23px] font-semibold tracking-tight text-ink group-hover:text-accent transition-colors">
-            Maulin Shah
-          </span>
-        </Link>
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between px-6 py-3.5">
+        <BrandLockup compact className="min-w-0" />
 
         <div className="hidden md:flex items-center gap-6">
           <ul className="flex items-center gap-6 text-[13px] text-ink-600">
