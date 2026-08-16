@@ -82,7 +82,13 @@ export function ServicesV3() {
 
               <Link
                 href={option.href}
-                onClick={() => track("service_details_click", { service: option.title })}
+                onClick={() =>
+                  track("service_details_click", {
+                    service: option.title,
+                    need: option.need,
+                    source: "services_grid",
+                  })
+                }
                 className="mt-auto inline-flex items-center gap-1.5 pt-7 font-mono text-[10px] uppercase tracking-[0.08em] text-accent transition-colors hover:text-ink"
               >
                 View details
