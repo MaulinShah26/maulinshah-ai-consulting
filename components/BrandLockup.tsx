@@ -12,7 +12,7 @@ export function BrandLockup({
   className = "",
 }: BrandLockupProps) {
   const textColor = inverse ? "text-page" : "text-ink";
-  const mutedColor = inverse ? "text-page/58" : "text-ink-500";
+  const mutedColor = inverse ? "text-page/66" : "text-ink-500";
   const markSurface = inverse ? "bg-page text-ink" : "bg-ink text-page";
 
   return (
@@ -23,33 +23,39 @@ export function BrandLockup({
     >
       <span
         aria-hidden
-        className={`${markSurface} relative grid shrink-0 place-items-center rounded-full font-serif font-medium tracking-[-0.05em] transition-transform duration-200 group-hover:-rotate-3 ${
+        className={`${markSurface} grid shrink-0 place-items-center rounded-full font-serif font-medium tracking-[-0.05em] transition-transform duration-200 group-hover:-rotate-3 ${
           compact ? "h-9 w-9 text-[16px]" : "h-12 w-12 text-[21px]"
         }`}
       >
         MS
-        <span className="absolute bottom-[22%] right-[15%] h-1.5 w-1.5 rounded-full bg-accent" />
       </span>
 
-      <span className="flex min-w-0 flex-col">
+      <span
+        className={`min-w-0 ${
+          compact
+            ? "flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
+            : "flex flex-wrap items-baseline gap-x-4 gap-y-1"
+        }`}
+      >
         <span
-          className={`font-serif font-semibold tracking-[-0.025em] leading-none transition-colors group-hover:text-accent ${textColor} ${
+          className={`shrink-0 font-serif font-semibold tracking-[-0.025em] leading-none transition-colors group-hover:text-accent ${textColor} ${
             compact ? "text-[18px]" : "text-[23px]"
           }`}
         >
           Maulin Shah
         </span>
+
         <span
-          className={`mt-1.5 flex items-center whitespace-nowrap font-mono uppercase tracking-[0.14em] ${mutedColor} ${
-            compact ? "text-[6.5px] sm:text-[7px]" : "text-[8px]"
+          className={`flex items-center whitespace-nowrap font-mono uppercase tracking-[0.11em] ${mutedColor} ${
+            compact ? "mt-1 sm:mt-0 text-[9px] lg:text-[9.5px]" : "text-[10px]"
           }`}
         >
           <span>Data</span>
-          <span className="mx-1 text-accent">·</span>
+          <span className="mx-1.5 text-accent">·</span>
           <span>AI</span>
-          <span className="mx-1 text-accent">·</span>
+          <span className="mx-1.5 text-accent">·</span>
           <span>Product</span>
-          <span className="mx-1 text-accent">·</span>
+          <span className="mx-1.5 text-accent">·</span>
           <span>Growth</span>
         </span>
       </span>
