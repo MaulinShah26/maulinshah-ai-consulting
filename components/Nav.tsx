@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Calendar, Menu, X } from "lucide-react";
 import { social } from "@/lib/data";
+import { track } from "@/lib/analytics";
 import { BrandLockup } from "./BrandLockup";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -36,6 +37,7 @@ export function Nav() {
             href={social.calendly}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track("book_call_click", { placement: "nav_desktop" })}
             className="inline-flex items-center gap-1.5 rounded-full border border-ink-300 px-3.5 py-2 text-[12px] font-medium text-ink hover:border-accent hover:text-accent transition-colors"
           >
             <Calendar size={13} aria-hidden />
@@ -76,6 +78,7 @@ export function Nav() {
               href={social.calendly}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("book_call_click", { placement: "nav_mobile" })}
               className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-ink px-4 py-3 text-[13px] font-medium text-page"
             >
               <Calendar size={14} aria-hidden />

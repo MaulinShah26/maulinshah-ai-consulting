@@ -153,6 +153,66 @@ const personalCases: Record<string, ExecutiveCase> = {
   },
 };
 
+const flagshipExecutiveOverrides: Record<string, Partial<ExecutiveCase>> = {
+  "customer-retention-probability": {
+    title: "Customer Retention Probability Score",
+    lead:
+      "A daily customer score used to target retention actions before lapse. The test group converted roughly 60% better than the existing approach.",
+    tags: ["Retention", "Customer scoring", "Production ML"],
+    businessProblem:
+      "Retention spend was being used without a reliable view of which customers were likely to stop buying.",
+    decision:
+      "Score repurchase probability every day and connect the score directly to retention actions instead of treating churn as a reporting metric after the customer was already lost.",
+    change:
+      "Retention moved from broad targeting to a daily customer level decision input that teams could use across campaigns and product actions.",
+    metrics: [
+      { value: "~60%", label: "Lift on test conversion" },
+      { value: "Daily", label: "Customer scoring" },
+      { value: "Live", label: "Production system" },
+    ],
+    takeaway:
+      "Prediction creates value only when it changes who the business acts on and what it does next.",
+  },
+  "food-replenishment": {
+    title: "Food Replenishment Framework",
+    lead:
+      "A customer level timing model that estimates when pet food is likely to run out and when to trigger the next reorder reminder.",
+    tags: ["Replenishment", "Customer timing", "Retention"],
+    businessProblem:
+      "Reorder reminders were generic and often mistimed. Customers could run out and buy elsewhere, or receive a reminder too early to be useful.",
+    decision:
+      "Make timing the core decision. Estimate each customer’s likely run out window, then decide whether to remind now instead of using one fixed schedule for everyone.",
+    change:
+      "Replenishment moved from generic reminders to customer level timing using purchase history, consumption logic and live intent signals.",
+    metrics: [
+      { value: "~60%", label: "Precision for dry food" },
+      { value: "~75%", label: "Precision for wet food" },
+      { value: "±7 days", label: "Prediction window" },
+    ],
+    takeaway:
+      "Replenishment performance depends on timing as much as targeting.",
+  },
+  "batters-bowlers-tag": {
+    title: "Batters & Bowlers Tag",
+    lead:
+      "A player classification product that turned performance data into nine recognizable playing styles used across CricHeroes.",
+    tags: ["Player intelligence", "Consumer data product", "Product analytics"],
+    businessProblem:
+      "CricHeroes had years of player performance data, but players had no simple way to understand or express their playing style.",
+    decision:
+      "Turn complex performance data into a small set of recognizable player identities instead of adding another analytics screen.",
+    change:
+      "Nine archetypes became a platform wide language used by more than 10 million players and later extended into branded merchandise.",
+    metrics: [
+      { value: "10M+", label: "Players" },
+      { value: "9", label: "Playing styles" },
+      { value: "Merch", label: "Extended into products" },
+    ],
+    takeaway:
+      "A data product can create more value when users can recognize themselves in the output, not only inspect a statistic.",
+  },
+};
+
 function corporateCase(slug: string): ExecutiveCase | null {
   const narrative = caseNarratives[slug];
   if (!narrative) return null;
@@ -161,7 +221,7 @@ function corporateCase(slug: string): ExecutiveCase | null {
     card.href.endsWith(`/${slug}`),
   );
 
-  return {
+  const base: ExecutiveCase = {
     title: narrative.heroTitle,
     company: narrative.company,
     year: narrative.year,
@@ -177,6 +237,11 @@ function corporateCase(slug: string): ExecutiveCase | null {
       label: metric.k,
     })),
     takeaway: workCard?.takeaway ?? narrative.playbook,
+  };
+
+  return {
+    ...base,
+    ...(flagshipExecutiveOverrides[slug] ?? {}),
   };
 }
 
@@ -238,12 +303,12 @@ function ExecutiveView({
             </article>
 
             <article className={`${styles.readCard} ${styles.readCardDecision}`}>
-              <span className={styles.cardLabel}>Decision</span>
+              <span className={styles.cardLabel}>Key decision</span>
               <p>{data.decision}</p>
             </article>
 
             <article className={styles.readCard}>
-              <span className={styles.cardLabel}>Business change</span>
+              <span className={styles.cardLabel}>What changed</span>
               <p>{data.change}</p>
             </article>
           </div>

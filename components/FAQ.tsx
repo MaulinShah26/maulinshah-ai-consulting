@@ -1,65 +1,47 @@
-"use client";
-import { track } from "@/lib/analytics";
-
-import { useState } from "react";
 import { faq } from "@/lib/data";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
-export function FAQ() {
-  const [open, setOpen] = useState<number | null>(null);
+const shortAnswers: Record<string, string> = {
+  "When should we work together?":
+    "When important data or AI decisions need clearer ownership.",
+  "What if our data is a mess?":
+    "We first identify what can be trusted, what needs fixing, and what can wait.",
+  "Do you only advise, or do you build?":
+    "I can diagnose, design and build. The engagement depends on what you need.",
+  "How is this different from hiring a data scientist?":
+    "I own priorities, tradeoffs and outcomes across the function, not only execution.",
+  "Do you only work with consumer startups?":
+    "Consumer businesses are my strongest fit, but the same decision problems exist in other growth businesses.",
+  "What happens after the first call?":
+    "We decide whether the next step is an audit, a build, ongoing ownership, or no engagement.",
+};
 
+export function FAQ() {
   return (
-    <Reveal id="faq" className="py-4 px-6">
-      <div className="max-w-content mx-auto">
+    <Reveal id="faq" className="px-6 py-8 md:py-10">
+      <div className="mx-auto max-w-content">
         <div className="reveal-child">
           <SectionHeader label={faq.sectionLabel} />
         </div>
-        <h2 className="reveal-child max-w-[760px] font-serif text-[22px] font-medium tracking-tight text-ink mb-5">
-          {faq.heading}
-        </h2>
-        <div className="reveal-child border-t border-ink-200">
-          {faq.items.map((item, i) => {
-            const isOpen = open === i;
-            return (
-              <div key={i} className="border-b border-ink-200">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(isOpen ? null : i);
-                    if (!isOpen) track("faq_open", { question: item.question });
-                  }}
-                  aria-expanded={isOpen}
-                  className="w-full flex items-center justify-between gap-4 py-4 text-left"
-                >
-                  <span className="max-w-[900px] text-[15px] font-medium text-ink leading-snug">
-                    {item.question}
-                  </span>
-                  <span
-                    className={`shrink-0 text-accent text-xl leading-none transition-transform duration-200 ${
-                      isOpen ? "rotate-45" : ""
-                    }`}
-                    aria-hidden
-                  >
-                    +
-                  </span>
-                </button>
-                <div
-                  className={`grid transition-all duration-200 ease-out ${
-                    isOpen
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <p className="max-w-[860px] text-[13.5px] text-ink-600 leading-relaxed pb-4 pr-6">
-                      {item.answer}
-                    </p>
-                  </div>
-                </div>
+
+        <div className="reveal-child grid gap-3 md:grid-cols-2">
+          {faq.items.map((item, index) => (
+            <article
+              key={item.question}
+              className="rounded-2xl border border-ink-200 bg-surface p-5 md:p-6"
+            >
+              <div className="font-mono text-[9px] tracking-[0.12em] text-accent">
+                0{index + 1}
               </div>
-            );
-          })}
+              <h2 className="mt-4 font-serif text-[18px] font-semibold leading-[1.2] text-ink md:text-[19px]">
+                {item.question}
+              </h2>
+              <p className="mt-3 max-w-[620px] text-[13px] leading-[1.6] text-ink-600">
+                {shortAnswers[item.question] ?? item.answer}
+              </p>
+            </article>
+          ))}
         </div>
       </div>
     </Reveal>

@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "About | Maulin Shah",
-  description: "My background and experience as a Fractional Head of Data and AI.",
+  description: "How I work with data, AI, product and business teams.",
 };
 
 export default function AboutPage() {
@@ -13,14 +13,16 @@ export default function AboutPage() {
     <>
       <Nav />
       <main>
-        <section className="px-6 pt-12 pb-6">
-          <div className="max-w-content mx-auto">
-            <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent mb-3">About me</div>
-            <h1 className="max-w-[1080px] font-serif text-[38px] md:text-[52px] font-medium leading-[1.06] text-ink mb-4">
-              I turn business questions into working systems.
+        <section className="px-6 pb-7 pt-12 md:pb-9 md:pt-14">
+          <div className="mx-auto max-w-content">
+            <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-accent">
+              About me
+            </div>
+            <h1 className="mb-4 max-w-[980px] font-serif text-[38px] font-medium leading-[1.05] tracking-[-0.03em] text-ink md:text-[52px]">
+              I help companies make better decisions with data and AI.
             </h1>
-            <p className="max-w-[900px] text-[15px] md:text-[16px] text-ink-600 leading-relaxed">
-              I’ve spent 10+ years moving from infrastructure and analytics into ML products, customer intelligence, decision systems and Data and AI leadership.
+            <p className="max-w-[820px] text-[15px] leading-relaxed text-ink-600 md:text-[16px]">
+              10+ years across analytics, ML products, customer intelligence and decision systems at ISRO, CricHeroes and Supertails.
             </p>
           </div>
         </section>

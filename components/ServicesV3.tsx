@@ -1,121 +1,101 @@
 "use client";
-import { track } from "@/lib/analytics";
 
 import Link from "next/link";
-import { useState } from "react";
-import { services } from "@/lib/data";
+import { ArrowUpRight } from "lucide-react";
+import { track } from "@/lib/analytics";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
-export function ServicesV3() {
-  const [open, setOpen] = useState<number | null>(null);
+const options = [
+  {
+    number: "01",
+    need: "Need clarity",
+    question: "What should we fix or build first?",
+    title: "Data & AI Opportunity Audit",
+    summary: "A focused review of your data, AI opportunities and priorities.",
+    timing: "2 to 4 weeks",
+    format: "Fixed scope",
+    href: "/services/opportunity-audit",
+  },
+  {
+    number: "02",
+    need: "Need a build",
+    question: "We know what needs solving.",
+    title: "Decision System Build",
+    summary: "One business critical system designed, built and handed over.",
+    timing: "15 to 25 hrs per week",
+    format: "Scope based timeline",
+    href: "/services/decision-system-build",
+  },
+  {
+    number: "03",
+    need: "Need ownership",
+    question: "We need senior Data & AI leadership.",
+    title: "Fractional Head of Data & AI",
+    summary: "Ongoing senior ownership of the roadmap, systems and team.",
+    timing: "About 10 hrs per week",
+    format: "3 month minimum",
+    href: "/services/fractional-head",
+  },
+];
 
+export function ServicesV3() {
   return (
-    <Reveal id="services" className="py-4 px-6">
-      <div className="max-w-content mx-auto">
+    <Reveal id="services" className="px-6 py-6 md:py-8">
+      <div className="mx-auto max-w-content">
         <div className="reveal-child">
-          <SectionHeader label={services.sectionLabel} />
+          <SectionHeader label="Three ways to work together" />
         </div>
 
-        <div className="reveal-child grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 items-start">
-          {services.cards.map((c, i) => {
-            const isOpen = open === i;
-            return (
-              <div
-                key={i}
-                className="flex flex-col bg-surface border border-ink-200 rounded-xl p-5 min-w-0"
-              >
-                <h2 className="font-serif text-[18px] font-semibold text-ink leading-tight mb-2">
-                  {c.title}
-                </h2>
-                <p className="text-[12.5px] text-ink-500 leading-relaxed mb-3">
-                  {c.bestFor}
-                </p>
-                <p className="text-[13.5px] text-ink-700 leading-relaxed mb-4">
-                  {c.outcome}
-                </p>
-
-                <div
-                  className={`grid transition-all duration-200 ease-out ${
-                    isOpen
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <div className="border-t border-ink-200 pt-4 space-y-3">
-                      <div>
-                        <span className="block font-mono text-[9px] uppercase tracking-wide text-ink-400 mb-1">
-                          Commitment
-                        </span>
-                        <span className="block text-[12px] text-ink-600 leading-relaxed">
-                          {c.commitment}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="block font-mono text-[9px] uppercase tracking-wide text-ink-400 mb-1">
-                          What this is
-                        </span>
-                        <span className="block text-[12px] text-ink-600 leading-relaxed">
-                          {c.whatThisIs}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="block font-mono text-[9px] uppercase tracking-wide text-ink-400 mb-1">
-                          What you leave with
-                        </span>
-                        <span className="block text-[12px] text-ink-600 leading-relaxed">
-                          {c.walkAway}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-                  {!isOpen && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setOpen(i);
-                        track("service_expand", { service: c.title });
-                      }}
-                      aria-expanded={isOpen}
-                      className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
-                    >
-                      What&apos;s included
-                    </button>
-                  )}
-                  {isOpen && (
-                    <>
-                      <Link
-                        href={c.pageHref}
-                        onClick={() => track("service_details_click", { service: c.title })}
-                        className="font-mono text-[10.5px] uppercase tracking-wide text-accent"
-                      >
-                        Full details
-                      </Link>
-                      <a
-                        href={c.href}
-                        onClick={() => track("service_discuss_click", { service: c.title })}
-                        className="font-mono text-[10.5px] uppercase tracking-wide text-accent hover:text-ink transition-colors"
-                      >
-                        Talk to me
-                      </a>
-                      <button
-                        type="button"
-                        onClick={() => setOpen(null)}
-                        aria-expanded={isOpen}
-                        className="font-mono text-[10.5px] uppercase tracking-wide text-ink-400 hover:text-ink transition-colors"
-                      >
-                        Show less
-                      </button>
-                    </>
-                  )}
-                </div>
+        <div className="reveal-child grid gap-3 md:grid-cols-3">
+          {options.map((option) => (
+            <article
+              key={option.title}
+              className="flex min-h-[330px] flex-col rounded-2xl border border-ink-200 bg-surface p-6 md:p-7"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-accent">
+                  {option.need}
+                </span>
+                <span className="font-mono text-[9px] tracking-[0.12em] text-ink-400">
+                  {option.number}
+                </span>
               </div>
-            );
-          })}
+
+              <p className="mt-6 max-w-[330px] font-serif text-[23px] font-medium leading-[1.15] tracking-[-0.02em] text-ink">
+                {option.question}
+              </p>
+
+              <div className="mt-7 border-t border-ink-200 pt-5">
+                <h2 className="font-serif text-[18px] font-semibold leading-tight text-ink">
+                  {option.title}
+                </h2>
+                <p className="mt-2 text-[13px] leading-[1.6] text-ink-600">
+                  {option.summary}
+                </p>
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[9.5px] uppercase tracking-[0.06em] text-ink-400">
+                <span>{option.timing}</span>
+                <span>{option.format}</span>
+              </div>
+
+              <Link
+                href={option.href}
+                onClick={() =>
+                  track("service_details_click", {
+                    service: option.title,
+                    need: option.need,
+                    source: "services_grid",
+                  })
+                }
+                className="mt-auto inline-flex items-center gap-1.5 pt-7 font-mono text-[10px] uppercase tracking-[0.08em] text-accent transition-colors hover:text-ink"
+              >
+                View details
+                <ArrowUpRight size={13} aria-hidden />
+              </Link>
+            </article>
+          ))}
         </div>
       </div>
     </Reveal>

@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import { experience, social } from "@/lib/data";
+import { track } from "@/lib/analytics";
 import { HomeDecisionFriction } from "./HomeDecisionFriction";
 import { HomeWorkRail } from "./HomeWorkRail";
 import styles from "./HomeMinimal.module.css";
@@ -113,7 +116,11 @@ export function HomeMinimal() {
               </p>
 
               <div className={styles.actions}>
-                <Link href="/work" className={styles.primaryAction}>
+                <Link
+                  href="/work"
+                  onClick={() => track("home_cta_click", { cta: "explore_work" })}
+                  className={styles.primaryAction}
+                >
                   Explore my work
                   <ArrowUpRight size={14} aria-hidden />
                 </Link>
@@ -121,6 +128,7 @@ export function HomeMinimal() {
                   href={social.calendly}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => track("book_call_click", { placement: "home_hero" })}
                   className={styles.secondaryAction}
                 >
                   <Calendar size={14} aria-hidden />
@@ -163,6 +171,12 @@ export function HomeMinimal() {
                   <Link
                     key={item.label}
                     href={item.href}
+                    onClick={() =>
+                      track("home_problem_click", {
+                        problem: item.label,
+                        destination: item.href,
+                      })
+                    }
                     className={`${problemStyles.capabilityCard} ${item.cardClass}`}
                   >
                     <span className={problemStyles.capabilityLabel}>{item.label}</span>
@@ -188,6 +202,12 @@ export function HomeMinimal() {
               <Link
                 key={chapter.href}
                 href={chapter.href}
+                onClick={() =>
+                  track("home_portal_click", {
+                    portal: chapter.label,
+                    destination: chapter.href,
+                  })
+                }
                 className={`${portalStyles.portal} ${chapter.cardClass}`}
               >
                 <span className={portalStyles.portalGhost} aria-hidden>{chapter.ghost}</span>
