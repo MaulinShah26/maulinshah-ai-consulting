@@ -2,104 +2,95 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { services } from "@/lib/data";
 import { track } from "@/lib/analytics";
 import { Reveal } from "./Reveal";
 import { SectionHeader } from "./SectionHeader";
 
-const situationByTitle: Record<string, string> = {
-  "Data & AI Opportunity Audit": "I’m not sure what to fix, build or automate first.",
-  "Decision System Build": "We know the problem. We need someone senior to own the build.",
-  "Fractional Head of Data & AI": "We need senior Data & AI ownership, but a full-time hire does not make sense yet.",
-};
-
-const priority = (title: string) => {
-  if (title.includes("Opportunity Audit")) return 0;
-  if (title.includes("Decision System Build")) return 1;
-  return 2;
-};
+const options = [
+  {
+    number: "01",
+    need: "Need clarity",
+    question: "What should we fix or build first?",
+    title: "Data & AI Opportunity Audit",
+    summary: "A focused review of your data, AI opportunities and priorities.",
+    timing: "2 to 4 weeks",
+    format: "Fixed scope",
+    href: "/services/opportunity-audit",
+  },
+  {
+    number: "02",
+    need: "Need a build",
+    question: "We know what needs solving.",
+    title: "Decision System Build",
+    summary: "One business critical system designed, built and handed over.",
+    timing: "15 to 25 hrs per week",
+    format: "Scope based timeline",
+    href: "/services/decision-system-build",
+  },
+  {
+    number: "03",
+    need: "Need ownership",
+    question: "We need senior Data & AI leadership.",
+    title: "Fractional Head of Data & AI",
+    summary: "Ongoing senior ownership of the roadmap, systems and team.",
+    timing: "About 10 hrs per week",
+    format: "3 month minimum",
+    href: "/services/fractional-head",
+  },
+];
 
 export function ServicesV3() {
-  const cards = [...services.cards].sort((a, b) => priority(a.title) - priority(b.title));
-
   return (
     <Reveal id="services" className="px-6 py-6 md:py-8">
       <div className="mx-auto max-w-content">
         <div className="reveal-child">
-          <SectionHeader label="Choose based on where you are" />
+          <SectionHeader label="Three ways to work together" />
         </div>
 
-        <div className="reveal-child border-b border-ink-200">
-          {cards.map((card, index) => (
+        <div className="reveal-child grid gap-3 md:grid-cols-3">
+          {options.map((option) => (
             <article
-              key={card.title}
-              className="grid gap-5 border-t border-ink-200 py-7 md:grid-cols-[52px_minmax(250px,0.8fr)_minmax(0,1.2fr)] md:gap-8 md:py-9"
+              key={option.title}
+              className="flex min-h-[330px] flex-col rounded-2xl border border-ink-200 bg-surface p-6 md:p-7"
             >
-              <div className="font-mono text-[10px] tracking-[0.12em] text-accent">
-                0{index + 1}
+              <div className="flex items-center justify-between gap-4">
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-accent">
+                  {option.need}
+                </span>
+                <span className="font-mono text-[9px] tracking-[0.12em] text-ink-400">
+                  {option.number}
+                </span>
               </div>
 
-              <div className="min-w-0">
-                <div className="mb-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ink-400">
-                  If you’re thinking
-                </div>
-                <p className="max-w-[390px] font-serif text-[22px] font-medium leading-[1.18] tracking-[-0.02em] text-ink md:text-[25px]">
-                  “{situationByTitle[card.title] ?? card.bestFor}”
-                </p>
-              </div>
+              <p className="mt-6 max-w-[330px] font-serif text-[23px] font-medium leading-[1.15] tracking-[-0.02em] text-ink">
+                {option.question}
+              </p>
 
-              <div className="min-w-0 md:pt-0.5">
-                <h2 className="font-serif text-[20px] font-semibold leading-tight text-ink md:text-[22px]">
-                  {card.title}
+              <div className="mt-7 border-t border-ink-200 pt-5">
+                <h2 className="font-serif text-[18px] font-semibold leading-tight text-ink">
+                  {option.title}
                 </h2>
-                <p className="mt-2 max-w-[650px] text-[14px] leading-relaxed text-ink-600">
-                  {card.outcome}
+                <p className="mt-2 text-[13px] leading-[1.6] text-ink-600">
+                  {option.summary}
                 </p>
-
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <div className="mb-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-400">
-                      Typical shape
-                    </div>
-                    <p className="text-[12.5px] leading-relaxed text-ink-600">
-                      {card.commitment}
-                    </p>
-                  </div>
-                  <div>
-                    <div className="mb-1 font-mono text-[9px] uppercase tracking-[0.1em] text-ink-400">
-                      You leave with
-                    </div>
-                    <p className="text-[12.5px] leading-relaxed text-ink-600">
-                      {card.walkAway}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-5 flex flex-wrap items-center gap-5">
-                  <Link
-                    href={card.pageHref}
-                    onClick={() => track("service_details_click", { service: card.title })}
-                    className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-accent transition-colors hover:text-ink"
-                  >
-                    See full details
-                    <ArrowUpRight size={13} aria-hidden />
-                  </Link>
-                  <a
-                    href={card.href}
-                    onClick={() => track("service_discuss_click", { service: card.title })}
-                    className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-500 transition-colors hover:text-ink"
-                  >
-                    Discuss this
-                  </a>
-                </div>
               </div>
+
+              <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[9.5px] uppercase tracking-[0.06em] text-ink-400">
+                <span>{option.timing}</span>
+                <span>{option.format}</span>
+              </div>
+
+              <Link
+                href={option.href}
+                onClick={() => track("service_details_click", { service: option.title })}
+                className="mt-auto inline-flex items-center gap-1.5 pt-7 font-mono text-[10px] uppercase tracking-[0.08em] text-accent transition-colors hover:text-ink"
+              >
+                View details
+                <ArrowUpRight size={13} aria-hidden />
+              </Link>
             </article>
           ))}
         </div>
-
-        <p className="reveal-child mt-5 max-w-[760px] text-[12.5px] leading-relaxed text-ink-500">
-          Not sure which one fits? That is normal. The first call is for figuring that out, not forcing you into an engagement.
-        </p>
       </div>
     </Reveal>
   );
