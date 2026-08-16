@@ -17,16 +17,16 @@ export default function ServicesPage() {
     <>
       <Nav />
       <main>
-        <section className="px-6 pt-10 pb-3">
-          <div className="max-w-content mx-auto">
-            <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-accent mb-3">
+        <section className="px-6 pb-5 pt-10 md:pb-7 md:pt-12">
+          <div className="mx-auto max-w-content">
+            <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-accent">
               Services
             </div>
-            <h1 className="max-w-[920px] font-serif text-[34px] md:text-[44px] font-medium leading-[1.08] text-ink mb-3">
-              How I can help.
+            <h1 className="mb-4 max-w-[980px] font-serif text-[36px] font-medium leading-[1.06] tracking-[-0.025em] text-ink md:text-[50px]">
+              Start with the problem you actually have.
             </h1>
-            <p className="max-w-[760px] text-[15px] text-ink-600 leading-relaxed">
-              Start with clarity, one focused build, or ongoing senior ownership. We choose the format after we understand the problem.
+            <p className="max-w-[760px] text-[15px] leading-relaxed text-ink-600 md:text-[16px]">
+              You do not need to know which service to buy. Pick the situation that sounds most like yours. We can work out the right shape from there.
             </p>
           </div>
         </section>
