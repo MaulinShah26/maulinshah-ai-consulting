@@ -1,13 +1,21 @@
-.domainLine {
+.domainBase {
   display: block;
-  width: 7.8em;
-  height: 1.2em;
-  overflow: hidden;
   white-space: nowrap;
   font-family: var(--font-mono), ui-monospace, monospace;
   text-transform: uppercase;
   letter-spacing: 0.11em;
   line-height: 1.2;
+}
+
+.domainAnimated {
+  width: 7.8em;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.domainStatic {
+  width: max-content;
+  overflow: visible;
 }
 
 .domainTrack {
@@ -21,6 +29,16 @@
   flex: 0 0 1.2em;
   height: 1.2em;
   line-height: 1.2em;
+}
+
+.staticPhrase {
+  display: inline-flex;
+  align-items: center;
+}
+
+.separator {
+  margin: 0 0.52rem;
+  color: rgb(var(--accent));
 }
 
 @keyframes domainCycle {
