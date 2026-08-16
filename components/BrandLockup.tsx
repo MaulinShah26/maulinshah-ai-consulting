@@ -9,6 +9,21 @@ type BrandLockupProps = {
 
 const domains = ["Data", "AI", "Product", "Growth"];
 
+function DomainPhrase() {
+  return (
+    <>
+      {domains.map((domain, index) => (
+        <span key={domain} className="contents">
+          <span>{domain}</span>
+          {index < domains.length - 1 && (
+            <span className={styles.separator} aria-hidden>·</span>
+          )}
+        </span>
+      ))}
+    </>
+  );
+}
+
 export function BrandLockup({
   compact = false,
   inverse = false,
@@ -48,22 +63,9 @@ export function BrandLockup({
           }`}
           aria-label="Data, AI, Product, Growth"
         >
-          {domains.map((domain, index) => (
-            <span key={domain} className="contents">
-              <span className={styles.domainSlot} aria-hidden>
-                <span
-                  className={styles.domainRoll}
-                  style={{ animationDelay: `${index * 0.62}s` }}
-                >
-                  <span>{domain}</span>
-                  <span>{domain}</span>
-                </span>
-              </span>
-              {index < domains.length - 1 && (
-                <span className={styles.separator} aria-hidden>·</span>
-              )}
-            </span>
-          ))}
+          <span className={styles.domainPhrase} aria-hidden>
+            <DomainPhrase />
+          </span>
         </span>
       </span>
     </Link>
