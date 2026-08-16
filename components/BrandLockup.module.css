@@ -1,48 +1,19 @@
 .domainLine {
-  display: flex;
-  align-items: center;
+  display: block;
+  height: 1.18em;
+  overflow: hidden;
   white-space: nowrap;
   font-family: var(--font-mono), ui-monospace, monospace;
   text-transform: uppercase;
   letter-spacing: 0.11em;
-  line-height: 1;
+  line-height: 1.18;
 }
 
-.domainSlot {
-  display: inline-block;
-  height: 1.12em;
-  overflow: hidden;
-  vertical-align: middle;
-}
-
-.domainRoll {
-  display: flex;
-  flex-direction: column;
-  will-change: transform;
-  animation: domainRoll 7.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-}
-
-.domainRoll > span {
-  display: block;
-  flex: 0 0 1.12em;
-  height: 1.12em;
-  line-height: 1.12em;
-}
-
-.domainRoll:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.domainRoll:nth-child(2) {
-  animation-delay: 0.62s;
-}
-
-.domainRoll:nth-child(3) {
-  animation-delay: 1.24s;
-}
-
-.domainRoll:nth-child(4) {
-  animation-delay: 1.86s;
+.domainPhrase {
+  display: inline-flex;
+  align-items: center;
+  will-change: transform, opacity;
+  animation: domainPhraseRoll 7.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
 .separator {
@@ -50,24 +21,30 @@
   color: rgb(var(--accent));
 }
 
-@keyframes domainRoll {
-  0%, 7% {
+@keyframes domainPhraseRoll {
+  0%, 68% {
     transform: translateY(0);
+    opacity: 1;
   }
-  13%, 15% {
-    transform: translateY(-50%);
+
+  75% {
+    transform: translateY(-115%);
+    opacity: 0;
   }
-  15.01%, 100% {
+
+  76% {
+    transform: translateY(115%);
+    opacity: 0;
+  }
+
+  84%, 100% {
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .domainRoll {
+  .domainPhrase {
     animation: none;
-  }
-
-  .domainRoll > span:last-child {
-    display: none;
   }
 }
