@@ -11,8 +11,8 @@ export function Footer() {
         <div className="grid gap-10 px-6 py-8 sm:px-8 sm:py-9 lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.85fr)] lg:items-end lg:px-10 lg:py-10">
           <div className="min-w-0">
             <BrandLockup inverse animateDomains={false} />
-            <p className="mt-7 max-w-[700px] font-serif text-[clamp(26px,3vw,42px)] font-medium leading-[1.06] tracking-[-0.03em] text-page">
-              Have an important decision that needs better data or AI behind it?
+            <p className="mt-7 max-w-[760px] font-serif text-[clamp(26px,3vw,42px)] font-medium leading-[1.06] tracking-[-0.03em] text-page">
+              Important decisions deserve more than a dashboard and a guess.
             </p>
           </div>
 
