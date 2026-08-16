@@ -12,7 +12,7 @@ export function Footer() {
           <div className="min-w-0">
             <BrandLockup inverse animateDomains={false} />
             <p className="mt-7 max-w-[760px] font-serif text-[clamp(26px,3vw,42px)] font-medium leading-[1.06] tracking-[-0.03em] text-page">
-              Important decisions deserve more than a dashboard and a guess.
+              Your next important decision deserves a system behind it.
             </p>
           </div>
 
