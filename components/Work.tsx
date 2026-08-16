@@ -14,6 +14,11 @@ import { SectionHeader } from "./SectionHeader";
 
 type TabKey = "corporate" | "personal";
 
+type WorkProps = {
+  sectionLabel?: string;
+  excludeCorporateHrefs?: string[];
+};
+
 const labCaseStudyRoutes: Record<string, string> = {
   NerdyCricket: "/case-studies/nerdycricket",
   "Medicine Helper": "/case-studies/medicine-helper",
@@ -22,13 +27,18 @@ const labCaseStudyRoutes: Record<string, string> = {
   "AI Job Impact Assessor": "/case-studies/ai-job-impact-assessor",
 };
 
-export function Work() {
+export function Work({ sectionLabel, excludeCorporateHrefs = [] }: WorkProps = {}) {
   const [activeTab, setActiveTab] = useState<TabKey>("corporate");
   const trackRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(2);
 
-  const cards = work.tabs[activeTab].cards;
+  const cards =
+    activeTab === "corporate"
+      ? work.tabs.corporate.cards.filter(
+          (card) => !excludeCorporateHrefs.includes(card.href)
+        )
+      : work.tabs.personal.cards;
   const totalCards = cards.length;
   const totalPages = Math.max(1, Math.ceil(totalCards / Math.max(1, visibleCount)));
   const currentPage = Math.floor(currentIndex / Math.max(1, visibleCount));
@@ -87,7 +97,10 @@ export function Work() {
     <Reveal id="work" className="py-4 px-6">
       <div className="max-w-content mx-auto">
         <div className="reveal-child">
-          <SectionHeader number={work.sectionNumber} label={work.sectionLabel} />
+          <SectionHeader
+            number={sectionLabel ? undefined : work.sectionNumber}
+            label={sectionLabel ?? work.sectionLabel}
+          />
         </div>
 
         <div className="reveal-child tabs-row">

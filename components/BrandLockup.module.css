@@ -1,0 +1,74 @@
+.domainBase {
+  display: block;
+  white-space: nowrap;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  line-height: 1.2;
+}
+
+.domainAnimated {
+  width: 7.8em;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.domainStatic {
+  width: max-content;
+  overflow: visible;
+}
+
+.domainTrack {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  animation: domainCycle 10s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.domainItem {
+  flex: 0 0 1.2em;
+  height: 1.2em;
+  line-height: 1.2em;
+}
+
+.staticPhrase {
+  display: inline-flex;
+  align-items: center;
+}
+
+.separator {
+  margin: 0 0.52rem;
+  color: rgb(var(--accent));
+}
+
+@keyframes domainCycle {
+  0%, 17% {
+    transform: translateY(0);
+  }
+
+  25%, 42% {
+    transform: translateY(-20%);
+  }
+
+  50%, 67% {
+    transform: translateY(-40%);
+  }
+
+  75%, 92% {
+    transform: translateY(-60%);
+  }
+
+  100% {
+    transform: translateY(-80%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .domainTrack {
+    animation: none;
+  }
+
+  .domainItem:not(:first-child) {
+    display: none;
+  }
+}

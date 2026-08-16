@@ -107,25 +107,48 @@
   background: rgb(var(--accent) / 0.14);
 }
 
-.portalWork,
-.portalServices,
-.portalAbout {
-  grid-column: span 4;
-}
-
 .portalWork {
+  grid-column: span 7;
+  min-height: 310px;
   background:
-    linear-gradient(145deg, rgb(var(--accent-soft) / 0.7), transparent 55%),
+    linear-gradient(145deg, rgb(var(--accent-soft) / 0.72), transparent 56%),
     rgb(var(--surface));
 }
 
 .portalServices {
+  grid-column: span 5;
+  min-height: 310px;
   background: rgb(var(--surface));
 }
 
 .portalAbout {
+  grid-column: span 5;
+  min-height: 270px;
   background:
     linear-gradient(160deg, rgb(var(--subtle) / 0.78), rgb(var(--surface)) 70%);
+}
+
+.portalWriting {
+  grid-column: span 7;
+  min-height: 270px;
+  color: rgb(var(--page));
+  border-color: rgb(var(--ink));
+  background:
+    radial-gradient(circle at 88% 16%, rgb(var(--accent) / 0.32), transparent 34%),
+    linear-gradient(135deg, rgb(var(--ink)), rgb(var(--ink) / 0.94));
+}
+
+.portalWriting::before {
+  border-color: rgb(var(--page) / 0.15);
+}
+
+.portalWriting::after {
+  background: rgb(var(--accent) / 0.38);
+}
+
+.portalWriting:hover {
+  border-color: rgb(var(--accent));
+  box-shadow: 0 24px 60px rgb(var(--ink) / 0.16);
 }
 
 .portalContact {
@@ -175,12 +198,14 @@
   color: rgb(var(--accent));
 }
 
+.portalWriting .portalNum,
 .portalContact .portalNum {
   color: rgb(var(--page) / 0.5);
 }
 
+.portalWriting .portalEyebrow,
 .portalContact .portalEyebrow {
-  color: rgb(var(--page) / 0.7);
+  color: rgb(var(--page) / 0.72);
 }
 
 .portalArrow {
@@ -194,6 +219,7 @@
   transition: transform 220ms ease, background-color 220ms ease;
 }
 
+.portalWriting .portalArrow,
 .portalContact .portalArrow {
   border-color: rgb(var(--page) / 0.22);
   color: rgb(var(--page));
@@ -204,6 +230,7 @@
   background: rgb(var(--accent-soft) / 0.65);
 }
 
+.portalWriting:hover .portalArrow,
 .portalContact:hover .portalArrow {
   background: rgb(var(--page) / 0.1);
 }
@@ -231,8 +258,9 @@
   color: rgb(var(--ink-600));
 }
 
+.portalWriting .portalMain p,
 .portalContact .portalMain p {
-  color: rgb(var(--page) / 0.72);
+  color: rgb(var(--page) / 0.74);
 }
 
 .portalTags {
@@ -256,10 +284,11 @@
   background: rgb(var(--page) / 0.32);
 }
 
+.portalWriting .portalTags span,
 .portalContact .portalTags span {
   border-color: rgb(var(--page) / 0.2);
-  color: rgb(var(--page) / 0.68);
-  background: rgb(var(--page) / 0.04);
+  color: rgb(var(--page) / 0.72);
+  background: rgb(var(--page) / 0.045);
 }
 
 .portalGhost {
@@ -278,8 +307,9 @@
   transition: transform 420ms ease, color 220ms ease;
 }
 
+.portalWriting .portalGhost,
 .portalContact .portalGhost {
-  color: rgb(var(--page) / 0.045);
+  color: rgb(var(--page) / 0.05);
 }
 
 .portal:hover .portalGhost {
@@ -287,8 +317,19 @@
   color: rgb(var(--accent) / 0.085);
 }
 
+.portalWriting:hover .portalGhost,
 .portalContact:hover .portalGhost {
-  color: rgb(var(--page) / 0.075);
+  color: rgb(var(--page) / 0.08);
+}
+
+@media (max-width: 1100px) {
+  .portalWork,
+  .portalServices,
+  .portalAbout,
+  .portalWriting {
+    grid-column: span 6;
+    min-height: 270px;
+  }
 }
 
 @media (max-width: 1040px) {
@@ -303,19 +344,6 @@
 
   .exploreLine {
     grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 900px) {
-  .portalWork,
-  .portalServices {
-    grid-column: span 6;
-    min-height: 270px;
-  }
-
-  .portalAbout {
-    grid-column: span 12;
-    min-height: 240px;
   }
 }
 
@@ -348,6 +376,7 @@
   .portalWork,
   .portalServices,
   .portalAbout,
+  .portalWriting,
   .portalContact {
     grid-column: auto;
     min-height: 230px;
