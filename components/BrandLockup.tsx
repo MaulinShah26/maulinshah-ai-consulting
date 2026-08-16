@@ -7,22 +7,7 @@ type BrandLockupProps = {
   className?: string;
 };
 
-const domains = ["Data", "AI", "Product", "Growth"];
-
-function DomainPhrase() {
-  return (
-    <>
-      {domains.map((domain, index) => (
-        <span key={domain} className="contents">
-          <span>{domain}</span>
-          {index < domains.length - 1 && (
-            <span className={styles.separator} aria-hidden>·</span>
-          )}
-        </span>
-      ))}
-    </>
-  );
-}
+const domains = ["Data", "AI / ML", "Product", "Growth", "Data"];
 
 export function BrandLockup({
   compact = false,
@@ -61,10 +46,14 @@ export function BrandLockup({
           className={`${styles.domainLine} ${mutedColor} ${
             compact ? "mt-1.5 text-[10px] lg:text-[10.5px]" : "mt-2 text-[11px]"
           }`}
-          aria-label="Data, AI, Product, Growth"
+          aria-label="Data, AI and machine learning, Product, Growth"
         >
-          <span className={styles.domainPhrase} aria-hidden>
-            <DomainPhrase />
+          <span className={styles.domainTrack} aria-hidden>
+            {domains.map((domain, index) => (
+              <span key={`${domain}-${index}`} className={styles.domainItem}>
+                {domain}
+              </span>
+            ))}
           </span>
         </span>
       </span>
