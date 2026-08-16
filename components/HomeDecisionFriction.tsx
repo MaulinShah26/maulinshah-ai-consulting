@@ -50,23 +50,23 @@ const teams = [
 
 const businessDecisions = [
   {
-    label: "Profitable growth",
-    question: "What is holding back profitable growth, and where should we invest next?",
+    label: "Growth leakage",
+    question: "Where are we losing growth right now, and what is actually causing it?",
     Icon: TrendingUp,
   },
   {
-    label: "Customer value",
-    question: "Which customers are worth the most, and how do we win more like them?",
+    label: "Growth quality",
+    question: "Which customers, channels and products are creating growth that actually pays back?",
     Icon: Target,
   },
   {
-    label: "Priorities",
-    question: "Which bet should we fund next, and what should we stop doing?",
+    label: "Next bet",
+    question: "Where should our next ₹1 and our next month of team capacity go?",
     Icon: BriefcaseBusiness,
   },
   {
-    label: "AI",
-    question: "Where can AI save time or create value without adding unnecessary risk?",
+    label: "AI leverage",
+    question: "Where can AI materially increase revenue, margin or speed right now?",
     Icon: Sparkles,
   },
 ];
