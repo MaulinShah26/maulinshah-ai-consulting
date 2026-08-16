@@ -214,14 +214,14 @@ export function HomeDecisionFriction() {
                 <span className={styles.hubIcon} aria-hidden>
                   <DatabaseZap size={25} strokeWidth={1.6} />
                 </span>
-                <span className={styles.hubKicker}>Where I step in</span>
-                <strong>Fractional Head of Data & AI</strong>
+                <span className={styles.hubKicker}>The solution</span>
+                <strong>Decision System</strong>
                 <div className={styles.hubCapabilities}>
                   <span>Shared facts</span>
-                  <span>Clear tradeoffs</span>
+                  <span>Decision logic</span>
                   <span>Applied AI</span>
                 </div>
-                <p>I connect the data, context and tradeoffs so leadership can make one clear call.</p>
+                <p>Connects signals across teams and turns them into one clear decision the business can act on.</p>
               </div>
             </div>
 
@@ -246,8 +246,9 @@ export function HomeDecisionFriction() {
           </div>
 
           <div className={styles.diagramFooter}>
-            <Link href="/services" className={styles.servicesLink} style={{ marginLeft: "auto" }}>
-              How I work
+            <p>I design and build these systems with your team, then hand them over so you can run them.</p>
+            <Link href="/services" className={styles.servicesLink}>
+              See how I build it
               <ArrowUpRight size={16} aria-hidden />
             </Link>
           </div>
