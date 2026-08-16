@@ -36,7 +36,13 @@ export function BrandLockup({
         MS
       </span>
 
-      <span className="flex min-w-0 flex-col">
+      <span
+        className={
+          animateDomains
+            ? "flex min-w-0 items-center gap-3"
+            : "flex min-w-0 flex-col"
+        }
+      >
         <span
           className={`shrink-0 font-serif font-semibold tracking-[-0.025em] leading-none transition-colors group-hover:text-accent ${textColor} ${
             compact ? "text-[18px]" : "text-[23px]"
@@ -45,11 +51,24 @@ export function BrandLockup({
           Maulin Shah
         </span>
 
+        {animateDomains && (
+          <span
+            aria-hidden
+            className={`h-5 w-px shrink-0 ${inverse ? "bg-page/18" : "bg-ink-200"}`}
+          />
+        )}
+
         <span
           className={`${styles.domainBase} ${
             animateDomains ? styles.domainAnimated : styles.domainStatic
           } ${mutedColor} ${
-            compact ? "mt-1.5 text-[10px] lg:text-[10.5px]" : "mt-2 text-[11px]"
+            animateDomains
+              ? compact
+                ? "text-[10px] lg:text-[10.5px]"
+                : "text-[11px]"
+              : compact
+                ? "mt-1.5 text-[10px] lg:text-[10.5px]"
+                : "mt-2 text-[11px]"
           }`}
           aria-label="Data, AI and machine learning, Product, Growth"
         >
