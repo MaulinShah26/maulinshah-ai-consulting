@@ -37,12 +37,12 @@ export function BrandLockup({
     <Link
       href="/"
       aria-label="Maulin Shah, home"
-      className={`group inline-flex items-center ${compact ? "gap-2.5" : "gap-3.5"} ${className}`}
+      className={`group inline-flex items-center ${compact ? "gap-3" : "gap-3.5"} ${className}`}
     >
       <span
         aria-hidden
         className={`${markSurface} grid shrink-0 place-items-center rounded-full font-serif font-medium tracking-[-0.05em] transition-transform duration-200 group-hover:-rotate-3 ${
-          compact ? "h-9 w-9 text-[16px]" : "h-12 w-12 text-[21px]"
+          compact ? "h-10 w-10 text-[18px]" : "h-[52px] w-[52px] text-[23px]"
         }`}
       >
         MS
