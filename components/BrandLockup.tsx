@@ -45,7 +45,7 @@ export function BrandLockup({
       >
         <span
           className={`shrink-0 font-serif font-semibold tracking-[-0.025em] leading-none transition-colors group-hover:text-accent ${textColor} ${
-            compact ? "text-[18px]" : "text-[23px]"
+            compact ? "text-[20px]" : "text-[24px]"
           }`}
         >
           Maulin Shah
@@ -54,7 +54,7 @@ export function BrandLockup({
         {animateDomains && (
           <span
             aria-hidden
-            className={`h-5 w-px shrink-0 ${inverse ? "bg-page/18" : "bg-ink-200"}`}
+            className={`h-[22px] w-px shrink-0 ${inverse ? "bg-page/18" : "bg-ink-200"}`}
           />
         )}
 
@@ -64,8 +64,8 @@ export function BrandLockup({
           } ${mutedColor} ${
             animateDomains
               ? compact
-                ? "text-[10px] lg:text-[10.5px]"
-                : "text-[11px]"
+                ? "text-[11.5px] lg:text-[12px]"
+                : "text-[12px]"
               : compact
                 ? "mt-1.5 text-[10px] lg:text-[10.5px]"
                 : "mt-2 text-[11px]"
