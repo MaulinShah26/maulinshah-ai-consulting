@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { track } from "@/lib/analytics";
 import styles from "./HomeWorkRail.module.css";
 
 type RailItem = {
@@ -93,6 +96,13 @@ function RailGroup({ duplicate = false }: { duplicate?: boolean }) {
         <Link
           key={`${duplicate ? "dup-" : ""}${item.href}`}
           href={item.href}
+          onClick={() =>
+            track("case_study_click", {
+              slug: item.href,
+              kind: item.client === "Independent Lab" ? "personal" : "corporate",
+              source: "home_work_rail",
+            })
+          }
           className={styles.item}
           tabIndex={duplicate ? -1 : undefined}
         >
