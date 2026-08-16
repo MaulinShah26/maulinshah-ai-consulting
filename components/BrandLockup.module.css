@@ -1,50 +1,56 @@
 .domainLine {
   display: block;
-  height: 1.18em;
+  width: 7.8em;
+  height: 1.2em;
   overflow: hidden;
   white-space: nowrap;
   font-family: var(--font-mono), ui-monospace, monospace;
   text-transform: uppercase;
   letter-spacing: 0.11em;
-  line-height: 1.18;
+  line-height: 1.2;
 }
 
-.domainPhrase {
-  display: inline-flex;
-  align-items: center;
-  will-change: transform, opacity;
-  animation: domainPhraseRoll 7.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+.domainTrack {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  animation: domainCycle 10s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
-.separator {
-  margin: 0 0.52rem;
-  color: rgb(var(--accent));
+.domainItem {
+  flex: 0 0 1.2em;
+  height: 1.2em;
+  line-height: 1.2em;
 }
 
-@keyframes domainPhraseRoll {
-  0%, 68% {
+@keyframes domainCycle {
+  0%, 17% {
     transform: translateY(0);
-    opacity: 1;
   }
 
-  75% {
-    transform: translateY(-115%);
-    opacity: 0;
+  25%, 42% {
+    transform: translateY(-20%);
   }
 
-  76% {
-    transform: translateY(115%);
-    opacity: 0;
+  50%, 67% {
+    transform: translateY(-40%);
   }
 
-  84%, 100% {
-    transform: translateY(0);
-    opacity: 1;
+  75%, 92% {
+    transform: translateY(-60%);
+  }
+
+  100% {
+    transform: translateY(-80%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .domainPhrase {
+  .domainTrack {
     animation: none;
+  }
+
+  .domainItem:not(:first-child) {
+    display: none;
   }
 }
