@@ -35,17 +35,7 @@ export function FeaturedWork() {
   return (
     <section className="px-6 pt-5 pb-3">
       <div className="max-w-content mx-auto">
-        <SectionHeader label="Start here" />
-        <div className="flex items-end justify-between gap-6 mb-5">
-          <div>
-            <h1 className="font-serif text-[30px] md:text-[40px] font-medium leading-[1.08] text-ink mb-2">
-              Three cases that best show how I work.
-            </h1>
-            <p className="max-w-[760px] text-[14px] md:text-[15px] text-ink-600 leading-relaxed">
-              Different problems, same pattern: find the decision that matters, build the system behind it, and measure what changed.
-            </p>
-          </div>
-        </div>
+        <SectionHeader label="Selected proof" />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
           {featuredCases.map((item) => (
