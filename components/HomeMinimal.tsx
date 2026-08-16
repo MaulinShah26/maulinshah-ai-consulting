@@ -3,7 +3,6 @@ import { ArrowUpRight, Calendar } from "lucide-react";
 import { experience, social } from "@/lib/data";
 import { HomeDecisionFriction } from "./HomeDecisionFriction";
 import { HomeWorkRail } from "./HomeWorkRail";
-import { MediumWriting } from "./MediumWriting";
 import styles from "./HomeMinimal.module.css";
 import problemStyles from "./HomeCapabilitySignals.module.css";
 import portalStyles from "./HomePortals.module.css";
@@ -78,6 +77,16 @@ const chapters = [
     statement: "From infrastructure and analytics to ML products, decision systems and leadership.",
     tags: ["Experience", "Approach", "Principles"],
     cardClass: portalStyles.portalAbout,
+  },
+  {
+    number: "04",
+    label: "Writing",
+    ghost: "Ideas",
+    eyebrow: "What I am thinking through",
+    href: "/writing",
+    statement: "Essays on data, AI, product strategy, growth and the decisions behind them.",
+    tags: ["Data", "AI", "Product"],
+    cardClass: portalStyles.portalWriting,
   },
 ];
 
@@ -171,8 +180,6 @@ export function HomeMinimal() {
       <HomeWorkRail />
 
       <HomeDecisionFriction />
-
-      <MediumWriting />
 
       <section className={`${portalStyles.exploreSection} ${spacingStyles.portalsCompact}`}>
         <div className={portalStyles.exploreInner} style={{ width: "min(1440px, 100%)" }}>
