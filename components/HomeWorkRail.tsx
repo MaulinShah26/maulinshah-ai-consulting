@@ -18,11 +18,23 @@ const items: RailItem[] = [
     href: "/case-studies/customer-retention-probability",
   },
   {
+    client: "Independent Lab",
+    project: "NerdyCricket",
+    proof: "Live · IPL 2026",
+    href: "/case-studies/nerdycricket",
+  },
+  {
     client: "CricHeroes",
     logo: "/logos/cricheroes.png",
     project: "Batters & Bowlers Tag",
     proof: "10M+ players · live product",
     href: "/case-studies/batters-bowlers-tag",
+  },
+  {
+    client: "Independent Lab",
+    project: "Medicine Helper",
+    proof: "Live in ChatGPT",
+    href: "/case-studies/medicine-helper",
   },
   {
     client: "Supertails",
@@ -32,11 +44,23 @@ const items: RailItem[] = [
     href: "/case-studies/food-replenishment",
   },
   {
+    client: "Independent Lab",
+    project: "AI Trading Copilot",
+    proof: "Paper trading · limited access",
+    href: "/case-studies/ai-trading-copilot",
+  },
+  {
     client: "Supertails",
     logo: "/logos/supertails.jpg",
     project: "Customer Affinity Modelling",
     proof: "Multi-team personalization · live",
     href: "/case-studies/customer-affinity-modelling",
+  },
+  {
+    client: "Independent Lab",
+    project: "Food Label Analyzer",
+    proof: "Live in ChatGPT",
+    href: "/case-studies/packaged-food-label-analyzer",
   },
   {
     client: "Supertails",
@@ -46,41 +70,17 @@ const items: RailItem[] = [
     href: "/case-studies/adaptive-nudge-decision-engine",
   },
   {
+    client: "Independent Lab",
+    project: "AI Job Impact Assessor",
+    proof: "Closed beta",
+    href: "/case-studies/ai-job-impact-assessor",
+  },
+  {
     client: "CricHeroes",
     logo: "/logos/cricheroes.png",
     project: "AI Cricket Commentary",
     proof: "+15% live-commentary engagement",
     href: "/case-studies/ai-cricket-commentary",
-  },
-  {
-    client: "Independent Lab",
-    project: "NerdyCricket",
-    proof: "Live · IPL 2026",
-    href: "/case-studies/nerdycricket",
-  },
-  {
-    client: "Independent Lab",
-    project: "Medicine Helper",
-    proof: "Live in ChatGPT",
-    href: "/case-studies/medicine-helper",
-  },
-  {
-    client: "Independent Lab",
-    project: "Food Label Analyzer",
-    proof: "Live in ChatGPT",
-    href: "/case-studies/packaged-food-label-analyzer",
-  },
-  {
-    client: "Independent Lab",
-    project: "AI Trading Copilot",
-    proof: "Paper trading · limited access",
-    href: "/case-studies/ai-trading-copilot",
-  },
-  {
-    client: "Independent Lab",
-    project: "AI Job Impact Assessor",
-    proof: "Closed beta",
-    href: "/case-studies/ai-job-impact-assessor",
   },
 ];
 
