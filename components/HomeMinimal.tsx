@@ -46,6 +46,27 @@ const founderProblems = [
   },
 ];
 
+const proofSignals = [
+  {
+    label: "Retention",
+    value: "~60%",
+    copy: "lift on test conversion",
+    href: "/case-studies/customer-retention-probability",
+  },
+  {
+    label: "Product intelligence",
+    value: "10M+",
+    copy: "players adopted a live data product",
+    href: "/case-studies/batters-bowlers-tag",
+  },
+  {
+    label: "Experience",
+    value: "10+ years",
+    copy: "across data, ML and business systems",
+    href: "/about",
+  },
+];
+
 const chapters = [
   {
     number: "01",
@@ -163,6 +184,30 @@ export function HomeMinimal() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-4 border-y border-ink-200 bg-surface/40" aria-label="Selected proof from my work">
+        <div className="max-w-content mx-auto grid grid-cols-1 sm:grid-cols-3">
+          {proofSignals.map((item, index) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={`group py-3 sm:px-6 first:sm:pl-0 last:sm:pr-0 ${
+                index > 0 ? "border-t sm:border-t-0 sm:border-l border-ink-200" : ""
+              }`}
+            >
+              <div className="font-mono text-[9.5px] uppercase tracking-[0.12em] text-accent mb-1.5">
+                {item.label}
+              </div>
+              <div className="font-serif text-[27px] md:text-[31px] leading-none text-ink mb-1.5">
+                {item.value}
+              </div>
+              <div className="text-[12.5px] md:text-[13px] text-ink-600 leading-snug">
+                {item.copy}
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
