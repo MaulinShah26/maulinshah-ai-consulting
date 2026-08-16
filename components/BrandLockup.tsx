@@ -1,10 +1,13 @@
 import Link from "next/link";
+import styles from "./BrandLockup.module.css";
 
 type BrandLockupProps = {
   compact?: boolean;
   inverse?: boolean;
   className?: string;
 };
+
+const domains = ["Data", "AI", "Product", "Growth"];
 
 export function BrandLockup({
   compact = false,
@@ -30,13 +33,7 @@ export function BrandLockup({
         MS
       </span>
 
-      <span
-        className={`min-w-0 ${
-          compact
-            ? "flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
-            : "flex flex-wrap items-baseline gap-x-4 gap-y-1"
-        }`}
-      >
+      <span className="flex min-w-0 flex-col">
         <span
           className={`shrink-0 font-serif font-semibold tracking-[-0.025em] leading-none transition-colors group-hover:text-accent ${textColor} ${
             compact ? "text-[18px]" : "text-[23px]"
@@ -46,17 +43,27 @@ export function BrandLockup({
         </span>
 
         <span
-          className={`flex items-center whitespace-nowrap font-mono uppercase tracking-[0.11em] ${mutedColor} ${
-            compact ? "mt-1 sm:mt-0 text-[9px] lg:text-[9.5px]" : "text-[10px]"
+          className={`${styles.domainLine} ${mutedColor} ${
+            compact ? "mt-1.5 text-[10px] lg:text-[10.5px]" : "mt-2 text-[11px]"
           }`}
+          aria-label="Data, AI, Product, Growth"
         >
-          <span>Data</span>
-          <span className="mx-1.5 text-accent">·</span>
-          <span>AI</span>
-          <span className="mx-1.5 text-accent">·</span>
-          <span>Product</span>
-          <span className="mx-1.5 text-accent">·</span>
-          <span>Growth</span>
+          {domains.map((domain, index) => (
+            <span key={domain} className="contents">
+              <span className={styles.domainSlot} aria-hidden>
+                <span
+                  className={styles.domainRoll}
+                  style={{ animationDelay: `${index * 0.62}s` }}
+                >
+                  <span>{domain}</span>
+                  <span>{domain}</span>
+                </span>
+              </span>
+              {index < domains.length - 1 && (
+                <span className={styles.separator} aria-hidden>·</span>
+              )}
+            </span>
+          ))}
         </span>
       </span>
     </Link>
