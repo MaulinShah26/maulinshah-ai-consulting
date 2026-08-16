@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { ServicesV3 } from "@/components/ServicesV3";
 import { FAQ } from "@/components/FAQ";
-import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -32,7 +31,6 @@ export default function ServicesPage() {
 
         <ServicesV3 />
         <FAQ />
-        <Contact />
       </main>
       <Footer />
     </>
