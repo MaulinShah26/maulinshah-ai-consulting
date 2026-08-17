@@ -3,7 +3,8 @@ export type TestimonialKey = "vineet" | "kuntal" | "jay" | "satyajit";
 export type Testimonial = {
   name: string;
   initials: string;
-  image?: string;
+  image: string;
+  logo: string;
   role: string;
   company: string;
   maulinRole: string;
@@ -16,6 +17,9 @@ export const testimonials: Record<TestimonialKey, Testimonial> = {
   vineet: {
     name: "Vineet Khanna",
     initials: "VK",
+    image:
+      "https://media.assettype.com/outlookbusiness/2026-02-10/1ed7h28m/WhatsApp-Image-2026-02-10-at-19.26.20.jpeg?auto=format%2Ccompress&dpr=1.0&fit=max&format=webp&w=801",
+    logo: "/logos/supertails.jpg",
     role: "Co Founder",
     company: "Supertails",
     maulinRole: "EIR, Data & AI Initiatives",
@@ -27,6 +31,9 @@ export const testimonials: Record<TestimonialKey, Testimonial> = {
   kuntal: {
     name: "Kuntal Shah",
     initials: "KS",
+    image:
+      "https://media.cricheroes.in/user_profile/1734891594288_nDqRpQWUo4fJ.jpg?format=auto&quality=75&width=3840",
+    logo: "/logos/cricheroes.png",
     role: "Co Founder",
     company: "CricHeroes",
     maulinRole: "Senior Data Scientist",
@@ -38,6 +45,9 @@ export const testimonials: Record<TestimonialKey, Testimonial> = {
   jay: {
     name: "Jay Shah",
     initials: "JS",
+    image:
+      "https://lericoninfo.com/wp-content/uploads/2025/08/1661016483330-removebg-preview.png",
+    logo: "https://lericoninfo.com/wp-content/uploads/2025/07/logo-removebg-preview.png",
     role: "CEO",
     company: "Lericon Informatics",
     maulinRole: "Associate Analytics Consultant",
@@ -49,6 +59,10 @@ export const testimonials: Record<TestimonialKey, Testimonial> = {
   satyajit: {
     name: "Satyajit Dwivedi",
     initials: "SD",
+    image:
+      "https://lh3.googleusercontent.com/litbGVCHcdg7729OB1xr4NKfpliJstc0E-i7bx9nRNRfDg2t1MwXZO7CjVkZdzFiNbxSHQisb9ecx1tDRgYapleU105swJHiynex",
+    logo:
+      "https://www.sas.com/en/news/media-gallery/all-images/sas-logo-midnight/_jcr_content/par/image_360101046.img.png/1694533953092.png",
     role: "Regional Director",
     company: "SAS",
     maulinRole: "Analytics project, Malaysia",
