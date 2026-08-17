@@ -30,37 +30,40 @@ function TestimonialGroup({ duplicate = false }: { duplicate?: boolean }) {
                   }}
                 />
               </div>
+            </div>
 
-              <a
-                href={testimonial.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={duplicate ? -1 : undefined}
-                aria-label={`${testimonial.company} website`}
-                onClick={() =>
-                  track("testimonial_link_click", {
-                    person: testimonial.name,
-                    destination: "company",
-                  })
-                }
-                className={styles.companyMark}
-              >
+            <a
+              href={testimonial.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              tabIndex={duplicate ? -1 : undefined}
+              aria-label={`${testimonial.company} website`}
+              onClick={() =>
+                track("testimonial_link_click", {
+                  person: testimonial.name,
+                  destination: "company_brand",
+                })
+              }
+              className={styles.companyBrand}
+            >
+              <span className={styles.companyLogoWrap} aria-hidden>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={testimonial.logo}
-                  alt={duplicate ? "" : `${testimonial.company} logo`}
+                  alt=""
                   className={styles.companyLogo}
                 />
-              </a>
-            </div>
+              </span>
+              <span className={styles.companyCopy}>
+                <span className={styles.companyName}>{testimonial.company}</span>
+                <span className={styles.companyRole}>{testimonial.role}</span>
+              </span>
+            </a>
 
             <blockquote className={styles.quote}>“{testimonial.quote}”</blockquote>
 
             <div className={styles.person}>
               <div className={styles.name}>{testimonial.name}</div>
-              <div className={styles.role}>
-                {testimonial.role}, {testimonial.company}
-              </div>
               <div className={styles.context}>
                 Worked with Maulin as {testimonial.maulinRole}
               </div>
@@ -96,7 +99,7 @@ function TestimonialGroup({ duplicate = false }: { duplicate?: boolean }) {
                   }
                   className={styles.link}
                 >
-                  {testimonial.company}
+                  Website
                   <ArrowUpRight size={10} aria-hidden />
                 </a>
               </div>
