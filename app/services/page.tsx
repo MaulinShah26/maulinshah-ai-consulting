@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { ServicesV3 } from "@/components/ServicesV3";
-import { TestimonialProof } from "@/components/TestimonialProof";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
 
@@ -31,7 +30,6 @@ export default function ServicesPage() {
         </section>
 
         <ServicesV3 />
-        <TestimonialProof person="satyajit" label="Senior stakeholder perspective" />
         <FAQ />
       </main>
       <Footer />
