@@ -115,9 +115,8 @@ export function TestimonialsCarousel() {
   return (
     <section id="testimonials" className={styles.section} aria-labelledby="testimonials-title">
       <div className={styles.heading}>
-        <div className={styles.label}>Testimonials</div>
-        <h2 id="testimonials-title" className={styles.title}>
-          From people who have worked with me.
+        <h2 id="testimonials-title" className={styles.mergedTitle}>
+          Testimonials · From people who have worked with me
         </h2>
       </div>
 
