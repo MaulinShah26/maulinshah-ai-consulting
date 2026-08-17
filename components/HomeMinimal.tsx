@@ -6,7 +6,7 @@ import { experience, social } from "@/lib/data";
 import { track } from "@/lib/analytics";
 import { HomeDecisionFriction } from "./HomeDecisionFriction";
 import { HomeWorkRail } from "./HomeWorkRail";
-import { TestimonialProof } from "./TestimonialProof";
+import { TestimonialsCarousel } from "./TestimonialsCarousel";
 import styles from "./HomeMinimal.module.css";
 import problemStyles from "./HomeCapabilitySignals.module.css";
 import portalStyles from "./HomePortals.module.css";
@@ -196,7 +196,7 @@ export function HomeMinimal() {
 
       <HomeDecisionFriction />
 
-      <TestimonialProof person="vineet" label="Founder perspective" featured />
+      <TestimonialsCarousel />
 
       <section className={`${portalStyles.exploreSection} ${spacingStyles.portalsCompact}`}>
         <div className={portalStyles.exploreInner} style={{ width: "min(1440px, 100%)" }}>
