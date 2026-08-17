@@ -3,6 +3,7 @@ export type TestimonialKey = "vineet" | "kuntal" | "jay" | "satyajit";
 export type Testimonial = {
   name: string;
   initials: string;
+  image?: string;
   role: string;
   company: string;
   maulinRole: string;
