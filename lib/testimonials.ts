@@ -32,14 +32,14 @@ export const testimonials: Record<TestimonialKey, Testimonial> = {
     name: "Kuntal Shah",
     initials: "KS",
     image:
-      "https://media.cricheroes.in/user_profile/1734891594288_nDqRpQWUo4fJ.jpg?format=auto&quality=75&width=3840",
+      "https://static.wixstatic.com/media/7796cb_621d0328c55a434eaea04519b3955ac2~mv2.jpg",
     logo: "/logos/cricheroes.png",
     role: "Co Founder",
     company: "CricHeroes",
     maulinRole: "Senior Data Scientist",
     quote:
       "Maulin has always looked at data as a product and business capability, not just an analytics function. He is comfortable taking ownership of open ended problems, working through ambiguity and turning data into something useful for both the business and the user.",
-    linkedin: "https://in.linkedin.com/in/kuntalshah37",
+    linkedin: "https://www.linkedin.com/in/kuntalshah37/",
     website: "https://cricheroes.in/",
   },
   jay: {
