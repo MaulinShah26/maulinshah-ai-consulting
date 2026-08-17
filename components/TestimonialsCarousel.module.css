@@ -6,19 +6,31 @@
 }
 
 .heading {
+  display: flex;
   width: min(1240px, calc(100% - 48px));
-  margin: 0 auto 12px;
+  margin: 0 auto 14px;
+  align-items: center;
+  gap: 16px;
 }
 
-.mergedTitle {
+.sectionLabel {
   margin: 0;
+  flex: 0 0 auto;
   color: rgb(var(--accent));
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.08em;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   white-space: nowrap;
+}
+
+.headingRule {
+  display: block;
+  height: 1px;
+  flex: 1 1 auto;
+  background: rgb(var(--ink-200));
 }
 
 .rail {
@@ -267,12 +279,13 @@
 
   .heading {
     width: calc(100% - 36px);
-    margin-bottom: 10px;
+    margin-bottom: 11px;
+    gap: 12px;
   }
 
-  .mergedTitle {
+  .sectionLabel {
     font-size: 9px;
-    letter-spacing: 0.045em;
+    letter-spacing: 0.18em;
   }
 
   .rail::before,
