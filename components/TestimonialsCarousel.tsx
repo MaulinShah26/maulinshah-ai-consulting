@@ -115,9 +115,10 @@ export function TestimonialsCarousel() {
   return (
     <section id="testimonials" className={styles.section} aria-labelledby="testimonials-title">
       <div className={styles.heading}>
-        <h2 id="testimonials-title" className={styles.mergedTitle}>
-          Testimonials · From people who have worked with me
+        <h2 id="testimonials-title" className={styles.sectionLabel}>
+          Testimonials
         </h2>
+        <span className={styles.headingRule} aria-hidden />
       </div>
 
       <div className={styles.rail} aria-label="Testimonials. Hover or focus to pause.">
