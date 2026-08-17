@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { About } from "@/components/About";
-import { TestimonialProof } from "@/components/TestimonialProof";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -28,7 +27,6 @@ export default function AboutPage() {
           </div>
         </section>
         <About />
-        <TestimonialProof person="jay" label="Leadership perspective" />
       </main>
       <Footer />
     </>
