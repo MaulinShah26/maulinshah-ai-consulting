@@ -57,6 +57,9 @@ function TestimonialGroup({ duplicate = false }: { duplicate?: boolean }) {
               <span className={styles.companyCopy}>
                 <span className={styles.companyName}>{testimonial.company}</span>
                 <span className={styles.companyRole}>{testimonial.role}</span>
+                {testimonial.location ? (
+                  <span className={styles.companyLocation}>{testimonial.location}</span>
+                ) : null}
               </span>
             </a>
 
