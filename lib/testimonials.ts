@@ -7,6 +7,7 @@ export type Testimonial = {
   logo: string;
   role: string;
   company: string;
+  location?: string;
   maulinRole: string;
   quote: string;
   linkedin: string;
@@ -57,17 +58,18 @@ export const testimonials: Record<TestimonialKey, Testimonial> = {
     website: "https://lericoninfo.com/",
   },
   satyajit: {
-    name: "Satyajit Dwivedi",
+    name: "Dr Satyajit Dwivedi",
     initials: "SD",
     image:
       "https://lh3.googleusercontent.com/litbGVCHcdg7729OB1xr4NKfpliJstc0E-i7bx9nRNRfDg2t1MwXZO7CjVkZdzFiNbxSHQisb9ecx1tDRgYapleU105swJHiynex",
     logo:
       "https://www.sas.com/en/news/media-gallery/all-images/sas-logo-midnight/_jcr_content/par/image_360101046.img.png/1694533953092.png",
-    role: "Regional Director",
-    company: "SAS",
-    maulinRole: "Analytics project, Malaysia",
+    role: "Regional Director - Customer Advisory",
+    company: "SAS Institute",
+    location: "New Delhi, India",
+    maulinRole: "Client engagement, Malaysia",
     quote:
-      "I worked with Maulin on a project in Malaysia where he had to operate across technical requirements, client expectations and business context. He was dependable, quick to understand the problem and clear with stakeholders. I would trust him with complex analytical engagements that require ownership and judgement.",
+      "I worked with Maulin on a client engagement in Malaysia where he had to operate across technical requirements, client expectations and business context. He was dependable, quick to understand the problem and clear with stakeholders. I would trust him with complex analytical engagements that require ownership and judgement.",
     linkedin: "https://in.linkedin.com/in/satyajitdwivedi",
     website: "https://www.sas.com/",
   },
