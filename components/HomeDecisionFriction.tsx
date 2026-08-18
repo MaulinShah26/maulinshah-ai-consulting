@@ -162,19 +162,41 @@ export function HomeDecisionFriction() {
   return (
     <section className={styles.section} aria-labelledby="decision-friction-title">
       <div className={styles.inner} style={{ width: "min(1440px, 100%)" }}>
-        <div className={styles.intro}>
+        <div
+          className={styles.intro}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            marginBottom: 14,
+          }}
+        >
           <h2
             id="decision-friction-title"
             style={{
-              gridColumn: "1 / -1",
-              maxWidth: "none",
-              fontSize: "clamp(32px, 3vw, 41px)",
+              margin: 0,
+              flex: "0 0 auto",
+              color: "rgb(var(--accent))",
+              fontFamily: "var(--font-mono), ui-monospace, monospace",
+              fontSize: 10,
+              fontWeight: 600,
               lineHeight: 1,
-              letterSpacing: "-0.035em",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              whiteSpace: "nowrap",
             }}
           >
-            Important decisions rarely fit inside one team.
+            Decisions
           </h2>
+          <span
+            aria-hidden
+            style={{
+              display: "block",
+              height: 1,
+              flex: "1 1 auto",
+              background: "rgb(var(--ink-200))",
+            }}
+          />
         </div>
 
         <div className={`${styles.diagram} ${motion.motionDiagram}`}>
