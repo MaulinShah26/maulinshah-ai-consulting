@@ -196,6 +196,13 @@
   white-space: nowrap;
 }
 
+.companyLocation {
+  color: rgb(var(--ink-400));
+  font-size: 9.5px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
 .companyBrand:hover .companyLogoWrap,
 .companyBrand:focus-visible .companyLogoWrap {
   border-color: rgb(var(--accent));
@@ -335,6 +342,10 @@
 
   .companyRole {
     font-size: 10px;
+  }
+
+  .companyLocation {
+    font-size: 8.5px;
   }
 
   .quote {
