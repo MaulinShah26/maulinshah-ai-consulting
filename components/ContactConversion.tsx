@@ -1,36 +1,82 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Calendar, Linkedin, Mail } from "lucide-react";
+import {
+  ArrowUpRight,
+  Calendar,
+  DatabaseZap,
+  Linkedin,
+  Mail,
+  Repeat2,
+  Sparkles,
+  Target,
+  Users,
+} from "lucide-react";
 import { social } from "@/lib/data";
 import { track } from "@/lib/analytics";
 import styles from "./ContactConversion.module.css";
 
-const problemRows = [
-  [
-    "Retention leakage",
-    "Customer intelligence",
-    "Trusted metrics",
-    "Product analytics",
-    "Growth diagnosis",
-    "Forecasting",
-    "Personalization",
-    "AI adoption",
-    "Decision automation",
-    "Roadmap priorities",
-  ],
-  [
-    "Replenishment timing",
-    "Customer segmentation",
-    "Experimentation",
-    "Data quality",
-    "Recommendations",
-    "Marketing efficiency",
-    "AI prioritisation",
-    "Next best action",
-    "Customer lifetime value",
-    "Senior ownership",
-  ],
+const problems = [
+  {
+    label: "Retention",
+    line: "Who is about to lapse?",
+    Icon: Repeat2,
+    bars: [42, 72, 54, 86, 66],
+  },
+  {
+    label: "Trusted numbers",
+    line: "Which number is right?",
+    Icon: DatabaseZap,
+    bars: [64, 48, 76, 58, 88],
+  },
+  {
+    label: "Customer decisions",
+    line: "What should happen next?",
+    Icon: Users,
+    bars: [36, 62, 82, 70, 92],
+  },
+  {
+    label: "Growth diagnosis",
+    line: "What actually moved growth?",
+    Icon: Target,
+    bars: [30, 48, 44, 74, 90],
+  },
+  {
+    label: "AI priorities",
+    line: "What is worth building?",
+    Icon: Sparkles,
+    bars: [78, 54, 68, 40, 84],
+  },
+  {
+    label: "Forecasting",
+    line: "What is likely to happen next?",
+    Icon: Target,
+    bars: [34, 46, 58, 72, 86],
+  },
+  {
+    label: "Personalization",
+    line: "What should each customer see?",
+    Icon: Users,
+    bars: [60, 44, 78, 66, 90],
+  },
+  {
+    label: "Experimentation",
+    line: "What actually worked?",
+    Icon: Sparkles,
+    bars: [42, 82, 52, 76, 64],
+  },
+  {
+    label: "Product analytics",
+    line: "Where are users dropping?",
+    Icon: DatabaseZap,
+    bars: [88, 74, 62, 48, 34],
+  },
+  {
+    label: "Senior ownership",
+    line: "Who owns the roadmap?",
+    Icon: Target,
+    bars: [40, 52, 66, 78, 92],
+  },
 ];
 
 const needs = [
@@ -53,14 +99,24 @@ const needs = [
 
 type NeedKey = (typeof needs)[number]["key"];
 
-function ProblemGroup({ items, duplicate = false }: { items: string[]; duplicate?: boolean }) {
+function ProblemGroup({ duplicate = false }: { duplicate?: boolean }) {
   return (
     <div className={styles.problemGroup} aria-hidden={duplicate || undefined}>
-      {items.map((item) => (
-        <span className={styles.problemWord} key={`${duplicate ? "dup-" : ""}${item}`}>
-          {item}
-          <span className={styles.problemDot} aria-hidden />
-        </span>
+      {problems.map(({ label, line, Icon, bars }) => (
+        <article className={styles.problemCard} key={`${duplicate ? "dup-" : ""}${label}`}>
+          <div className={styles.problemTop}>
+            <span className={styles.problemIcon} aria-hidden>
+              <Icon size={16} strokeWidth={1.7} />
+            </span>
+            <span className={styles.problemLabel}>{label}</span>
+          </div>
+          <strong>{line}</strong>
+          <div className={styles.signal} aria-hidden>
+            {bars.map((height, index) => (
+              <span key={index} style={{ height: `${height}%` }} />
+            ))}
+          </div>
+        </article>
       ))}
     </div>
   );
@@ -71,7 +127,7 @@ export function ContactConversion() {
   const [selectedNeed, setSelectedNeed] = useState<NeedKey>("clarity");
 
   return (
-    <main className="px-6 pb-5 pt-10 md:pb-7 md:pt-12">
+    <main className="px-6 pb-8 pt-10 md:pb-10 md:pt-12">
       <div className="mx-auto max-w-[1440px]">
         <div className="mb-8 flex items-center gap-4">
           <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
@@ -81,7 +137,7 @@ export function ContactConversion() {
         </div>
 
         <section className="grid gap-8 lg:grid-cols-[minmax(0,1.16fr)_minmax(390px,0.84fr)] lg:items-stretch">
-          <div className="flex min-h-[520px] min-w-0 flex-col justify-center overflow-hidden border-b border-ink-200 py-8 lg:border-b-0 lg:border-r lg:pr-14">
+          <div className="flex min-h-[500px] min-w-0 flex-col justify-center overflow-hidden border-b border-ink-200 py-8 lg:border-b-0 lg:border-r lg:pr-14">
             <h1 className="max-w-[780px] font-serif text-[clamp(42px,5vw,72px)] font-medium leading-[0.98] tracking-[-0.04em] text-ink">
               Tell me what you are trying to solve.
             </h1>
@@ -89,26 +145,15 @@ export function ContactConversion() {
               Start with the business problem. We can work out whether the right next step is an audit, a focused build, ongoing ownership, or no engagement.
             </p>
 
-            <div className={styles.problemCanvas} aria-label="Examples of problems I work on">
-              <div className={styles.problemCanvasLabel}>Problems I work on</div>
-
-              <div className={styles.marqueeRow}>
-                <div className={styles.problemTrack}>
-                  <ProblemGroup items={problemRows[0]} />
-                  <ProblemGroup items={problemRows[0]} duplicate />
-                </div>
-              </div>
-
-              <div className={styles.marqueeRow}>
-                <div className={`${styles.problemTrack} ${styles.problemTrackReverse}`}>
-                  <ProblemGroup items={problemRows[1]} />
-                  <ProblemGroup items={problemRows[1]} duplicate />
-                </div>
+            <div className={styles.problemRail} aria-label="Examples of problems I work on">
+              <div className={styles.problemTrack}>
+                <ProblemGroup />
+                <ProblemGroup duplicate />
               </div>
             </div>
           </div>
 
-          <aside className="flex min-h-[520px] flex-col rounded-[28px] bg-ink p-7 text-page md:p-9">
+          <aside className="flex min-h-[500px] flex-col rounded-[28px] bg-ink p-7 text-page md:p-9">
             <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-page/45">
               What do you need?
             </div>
