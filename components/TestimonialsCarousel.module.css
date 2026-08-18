@@ -1,0 +1,375 @@
+.section {
+  position: relative;
+  padding: 30px 0 38px;
+  overflow: hidden;
+  scroll-margin-top: 96px;
+}
+
+.heading {
+  display: flex;
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto 14px;
+  align-items: center;
+  gap: 16px;
+}
+
+.sectionLabel {
+  margin: 0;
+  flex: 0 0 auto;
+  color: rgb(var(--accent));
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.headingRule {
+  display: block;
+  height: 1px;
+  flex: 1 1 auto;
+  background: rgb(var(--ink-200));
+}
+
+.rail {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgb(var(--ink-200));
+  border-bottom: 1px solid rgb(var(--ink-200));
+  background:
+    radial-gradient(circle at 18% 25%, rgb(var(--accent) / 0.12), transparent 30%),
+    radial-gradient(circle at 78% 70%, rgb(var(--accent) / 0.07), transparent 34%),
+    linear-gradient(105deg, rgb(var(--surface)) 0%, rgb(var(--subtle) / 0.8) 48%, rgb(var(--surface)) 100%);
+}
+
+.rail::before,
+.rail::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  width: 76px;
+  pointer-events: none;
+}
+
+.rail::before {
+  left: 0;
+  background: linear-gradient(90deg, rgb(var(--surface) / 0.98), transparent);
+}
+
+.rail::after {
+  right: 0;
+  background: linear-gradient(270deg, rgb(var(--surface) / 0.98), transparent);
+}
+
+.viewport {
+  overflow: hidden;
+  padding: 14px 0;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: testimonialRail 58s linear infinite;
+}
+
+.rail:hover .track,
+.rail:focus-within .track {
+  animation-play-state: paused;
+}
+
+.group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 14px;
+  padding-right: 14px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  column-gap: 18px;
+  row-gap: 14px;
+  width: min(580px, 88vw);
+  min-height: 304px;
+  padding: 20px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 22px;
+  background: rgb(var(--surface) / 0.96);
+  color: rgb(var(--ink));
+  box-shadow: 0 14px 34px rgb(var(--ink) / 0.04);
+}
+
+.identity {
+  grid-row: 1 / span 3;
+  align-self: start;
+}
+
+.portraitWrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 96px;
+  overflow: hidden;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 17px;
+  background: rgb(var(--ink));
+  color: rgb(var(--page));
+}
+
+.initials {
+  position: absolute;
+  z-index: 0;
+  font-family: var(--font-serif);
+  font-size: 26px;
+}
+
+.portrait {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  background: rgb(var(--surface));
+}
+
+.companyBrand {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 10px;
+  color: rgb(var(--ink));
+  text-decoration: none;
+}
+
+.companyLogoWrap {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 36px;
+  flex: 0 0 48px;
+  overflow: hidden;
+  padding: 5px 6px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 10px;
+  background: #fff;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.companyLogo {
+  display: block;
+  max-width: 100%;
+  max-height: 26px;
+  object-fit: contain;
+}
+
+.companyCopy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.companyName {
+  overflow: hidden;
+  color: rgb(var(--accent));
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.1;
+  letter-spacing: 0.1em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.companyRole {
+  color: rgb(var(--ink-600));
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.companyLocation {
+  color: rgb(var(--ink-400));
+  font-size: 9.5px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.companyBrand:hover .companyLogoWrap,
+.companyBrand:focus-visible .companyLogoWrap {
+  border-color: rgb(var(--accent));
+  transform: translateY(-1px);
+}
+
+.companyBrand:focus-visible {
+  outline: none;
+}
+
+.quote {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.36;
+  letter-spacing: -0.015em;
+}
+
+.person {
+  align-self: end;
+  padding-top: 14px;
+  border-top: 1px solid rgb(var(--ink-200));
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.context {
+  margin-top: 5px;
+  color: rgb(var(--ink-400));
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  line-height: 1.45;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 999px;
+  color: rgb(var(--ink-600));
+  font-size: 9.5px;
+  text-decoration: none;
+  transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  border-color: rgb(var(--accent));
+  color: rgb(var(--accent));
+  transform: translateY(-1px);
+  outline: none;
+}
+
+@keyframes testimonialRail {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding: 26px 0 32px;
+  }
+
+  .heading {
+    width: calc(100% - 36px);
+    margin-bottom: 11px;
+    gap: 12px;
+  }
+
+  .sectionLabel {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+  }
+
+  .rail::before,
+  .rail::after {
+    width: 26px;
+  }
+
+  .viewport {
+    padding: 11px 0;
+  }
+
+  .group {
+    gap: 10px;
+    padding-right: 10px;
+  }
+
+  .card {
+    grid-template-columns: 68px minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 12px;
+    width: 90vw;
+    min-height: 310px;
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .portraitWrap {
+    width: 68px;
+    height: 80px;
+    border-radius: 14px;
+  }
+
+  .companyLogoWrap {
+    width: 42px;
+    height: 32px;
+    flex-basis: 42px;
+    padding: 4px 5px;
+  }
+
+  .companyLogo {
+    max-height: 23px;
+  }
+
+  .companyName {
+    font-size: 8px;
+  }
+
+  .companyRole {
+    font-size: 10px;
+  }
+
+  .companyLocation {
+    font-size: 8.5px;
+  }
+
+  .quote {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+  }
+
+  .track {
+    animation: none;
+  }
+
+  .group:last-child {
+    display: none;
+  }
+
+  .card {
+    scroll-snap-align: start;
+  }
+}

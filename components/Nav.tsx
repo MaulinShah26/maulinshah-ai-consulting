@@ -11,12 +11,19 @@ import { ThemeToggle } from "./ThemeToggle";
 const links = [
   { label: "Work", href: "/work" },
   { label: "Services", href: "/services" },
+  { label: "Testimonials", href: "/#testimonials" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+
+  const handleNavClick = (label: string) => {
+    if (label === "Testimonials") {
+      track("nav_testimonials_click", { placement: "top_nav" });
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-40 border-b border-ink-200/70 bg-page/88 backdrop-blur-xl">
@@ -27,7 +34,11 @@ export function Nav() {
           <ul className="flex items-center gap-6 text-[13px] text-ink-600">
             {links.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="hover:text-accent transition-colors">
+                <Link
+                  href={item.href}
+                  onClick={() => handleNavClick(item.label)}
+                  className="hover:text-accent transition-colors"
+                >
                   {item.label}
                 </Link>
               </li>
@@ -67,7 +78,10 @@ export function Nav() {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  handleNavClick(item.label);
+                  setOpen(false);
+                }}
                 className="flex items-baseline justify-between py-4 border-b border-ink-200"
               >
                 <span className="font-serif text-[28px] text-ink">{item.label}</span>
