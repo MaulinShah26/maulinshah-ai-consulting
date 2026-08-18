@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { ContactConversion } from "@/components/ContactConversion";
-import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Contact | Maulin Shah",
@@ -13,7 +12,6 @@ export default function ContactPage() {
     <>
       <Nav />
       <ContactConversion />
-      <Footer />
     </>
   );
 }
