@@ -1,0 +1,126 @@
+.problemRail {
+  position: relative;
+  margin-top: 34px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+.problemTrack {
+  display: flex;
+  width: max-content;
+  animation: problemMarquee 26s linear infinite;
+  will-change: transform;
+}
+
+.problemRail:hover .problemTrack,
+.problemRail:focus-within .problemTrack {
+  animation-play-state: paused;
+}
+
+.problemGroup {
+  display: flex;
+  gap: 12px;
+  padding-right: 12px;
+}
+
+.problemCard {
+  position: relative;
+  width: 210px;
+  min-height: 126px;
+  overflow: hidden;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 92% 12%, rgb(var(--accent) / 0.12), transparent 34%),
+    rgb(var(--surface));
+  padding: 16px;
+}
+
+.problemTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.problemIcon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgb(var(--accent) / 0.22);
+  border-radius: 50%;
+  color: rgb(var(--accent));
+  background: rgb(var(--accent) / 0.06);
+}
+
+.problemLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 8.5px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+.problemCard strong {
+  display: block;
+  max-width: 165px;
+  margin-top: 13px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: rgb(var(--ink));
+}
+
+.signal {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  width: 54px;
+  height: 28px;
+  align-items: flex-end;
+  gap: 4px;
+  opacity: 0.6;
+}
+
+.signal span {
+  flex: 1;
+  min-height: 4px;
+  border-radius: 4px 4px 1px 1px;
+  background: linear-gradient(to top, rgb(var(--ink) / 0.2), rgb(var(--accent) / 0.75));
+}
+
+@keyframes problemMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 1023px) {
+  .problemRail {
+    margin-top: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .problemRail {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    scrollbar-width: thin;
+  }
+
+  .problemTrack {
+    animation: none;
+  }
+
+  .problemGroup[aria-hidden="true"] {
+    display: none;
+  }
+}
