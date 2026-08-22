@@ -1,0 +1,118 @@
+.panel {
+  position: fixed;
+  z-index: 80;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  margin: 0 auto;
+  max-width: 780px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 20px;
+  background: rgb(var(--surface));
+  color: rgb(var(--ink));
+  box-shadow: 0 24px 70px rgb(10 20 18 / 0.22);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+  padding: 20px;
+}
+
+.eyebrow {
+  margin-bottom: 7px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+.copy {
+  max-width: 520px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgb(var(--ink-600));
+}
+
+.privacyLink {
+  color: rgb(var(--ink));
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--accent) / 0.45);
+  text-underline-offset: 3px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.button {
+  min-height: 40px;
+  border: 1px solid rgb(var(--ink-300));
+  border-radius: 999px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgb(var(--ink));
+  transition: border-color 0.15s ease, background-color 0.15s ease,
+    color 0.15s ease, transform 0.15s ease;
+}
+
+.button:hover {
+  border-color: rgb(var(--accent));
+  transform: translateY(-1px);
+}
+
+.primary {
+  border-color: rgb(var(--accent));
+  background: rgb(var(--accent));
+  color: rgb(var(--page));
+}
+
+.primary:hover {
+  background: rgb(var(--accent) / 0.9);
+}
+
+.close {
+  border-color: transparent;
+  color: rgb(var(--ink-500));
+}
+
+@media (max-width: 680px) {
+  .panel {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    border-radius: 17px;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 17px;
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+
+  .button {
+    flex: 1 1 130px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:hover {
+    transform: none;
+  }
+}
