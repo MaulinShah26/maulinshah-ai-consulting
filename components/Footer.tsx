@@ -1,8 +1,10 @@
 "use client";
 
 import { ArrowUpRight, Calendar, Mail } from "lucide-react";
+import Link from "next/link";
 import { meta, social } from "@/lib/data";
 import { track } from "@/lib/analytics";
+import { ANALYTICS_CONSENT_OPEN_EVENT } from "@/lib/consent";
 import { BrandLockup } from "./BrandLockup";
 
 export function Footer() {
@@ -36,7 +38,12 @@ export function Footer() {
 
             <a
               href={`mailto:${email}`}
-              onClick={() => track("contact_click", { channel: "email", placement: "footer" })}
+              onClick={() =>
+                track("contact_click", {
+                  channel: "email",
+                  placement: "footer",
+                })
+              }
               className="inline-flex min-h-10 w-full items-center justify-between gap-4 rounded-full border border-page/20 px-4 text-[11.5px] text-page/78 transition-colors hover:border-accent hover:text-page sm:w-auto sm:min-w-[230px]"
             >
               <span className="inline-flex items-center gap-2">
@@ -50,7 +57,12 @@ export function Footer() {
               href={social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => track("contact_click", { channel: "linkedin", placement: "footer" })}
+              onClick={() =>
+                track("contact_click", {
+                  channel: "linkedin",
+                  placement: "footer",
+                })
+              }
               className="inline-flex min-h-10 w-full items-center justify-between gap-4 rounded-full border border-page/20 px-4 text-[11.5px] text-page/78 transition-colors hover:border-accent hover:text-page sm:w-auto sm:min-w-[230px]"
             >
               <span>LinkedIn</span>
@@ -59,9 +71,25 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mx-6 flex flex-col gap-1.5 border-t border-page/12 py-3 text-[9.5px] text-page/48 sm:mx-8 sm:flex-row sm:items-center sm:justify-between lg:mx-9">
+        <div className="mx-6 flex flex-col gap-2 border-t border-page/12 py-3 text-[9.5px] text-page/48 sm:mx-8 sm:flex-row sm:items-center sm:justify-between lg:mx-9">
           <span>© {new Date().getFullYear()} {meta.author}</span>
-          <span>{meta.location}</span>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <Link className="transition-colors hover:text-page" href="/privacy">
+              Privacy
+            </Link>
+            <button
+              type="button"
+              className="transition-colors hover:text-page"
+              onClick={() =>
+                window.dispatchEvent(
+                  new Event(ANALYTICS_CONSENT_OPEN_EVENT),
+                )
+              }
+            >
+              Analytics preferences
+            </button>
+            <span>{meta.location}</span>
+          </div>
         </div>
       </div>
     </footer>
