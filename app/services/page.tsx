@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Services | Maulin Shah",
   description:
-    "Fractional Data and AI leadership, opportunity audits, and decision system builds for growing companies.",
+    "Decision Systems Diagnostics, focused builds, and fractional Data and AI leadership for growing companies.",
 };
 
 export default function ServicesPage() {
@@ -21,10 +21,10 @@ export default function ServicesPage() {
               Services
             </div>
             <h1 className="mb-4 max-w-[900px] font-serif text-[36px] font-medium leading-[1.06] tracking-[-0.025em] text-ink md:text-[50px]">
-              Choose the support you need.
+              Improve the decisions your business depends on.
             </h1>
             <p className="max-w-[720px] text-[15px] leading-relaxed text-ink-600 md:text-[16px]">
-              Start with clarity, one focused build, or ongoing senior ownership.
+              Start by diagnosing the decision gap, build one focused operating system, or add ongoing senior ownership until your team can run it.
             </p>
           </div>
         </section>

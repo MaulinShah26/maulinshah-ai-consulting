@@ -30,7 +30,7 @@ export default function OpenGraphImage() {
               color: "#0f766e",
             }}
           >
-            Maulin Shah · Fractional Head of Data & AI
+            Maulin Shah · Fractional Data & AI Lead
           </div>
           <div
             style={{
@@ -41,7 +41,7 @@ export default function OpenGraphImage() {
               letterSpacing: -2.5,
             }}
           >
-            Turn messy data and AI into better growth decisions.
+            Turn complex problems into decision systems.
           </div>
         </div>
 

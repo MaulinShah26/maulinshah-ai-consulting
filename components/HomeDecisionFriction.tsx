@@ -1,279 +1,253 @@
 import Link from "next/link";
 import {
-  ArrowUpRight,
-  BriefcaseBusiness,
-  CircleDollarSign,
-  Code2,
-  DatabaseZap,
-  Megaphone,
-  PackageCheck,
-  Sparkles,
-  Target,
-  TrendingUp,
-  Users,
+  ArrowRight,
+  Bot,
+  BrainCircuit,
+  CircleAlert,
+  Gauge,
+  LayoutDashboard,
+  UserRoundCheck,
 } from "lucide-react";
 import styles from "./HomeDecisionFriction.module.css";
-import motion from "./HomeDecisionFrictionMotion.module.css";
 
-const teams = [
+const founderSymptoms = [
   {
-    name: "Marketing",
-    owns: "Demand",
-    signals: "Spend · channels · campaigns",
-    Icon: Megaphone,
+    title: "Key-person dependency",
+    text: "Only one person really knows how an important decision gets made.",
   },
   {
-    name: "Product",
-    owns: "Behavior",
-    signals: "Activation · journeys · retention",
-    Icon: Users,
+    title: "Conflicting numbers",
+    text: "Dashboards exist, but teams still disagree on what is true and what to do.",
   },
   {
-    name: "Engineering",
-    owns: "Delivery",
-    signals: "Systems · reliability · effort",
-    Icon: Code2,
+    title: "Manual judgement",
+    text: "Customer and operating data exists, but action still waits for repeated human interpretation.",
   },
   {
-    name: "Finance",
-    owns: "Economics",
-    signals: "Revenue · margin · cash",
-    Icon: CircleDollarSign,
-  },
-  {
-    name: "Operations",
-    owns: "Execution",
-    signals: "Process · support · capacity",
-    Icon: PackageCheck,
+    title: "Prototype limbo",
+    text: "The AI demo worked. The operating model, ownership and economics did not.",
   },
 ];
 
-const businessDecisions = [
+const scaleStages = [
   {
-    label: "Growth leakage",
-    question: "Where are we losing growth right now, and what is actually causing it?",
-    Icon: TrendingUp,
+    volume: "20/day",
+    model: "Founder or expert judgement",
+    state: "Works",
   },
   {
-    label: "Growth quality",
-    question: "Which customers, channels and products are creating growth that actually pays back?",
-    Icon: Target,
+    volume: "200/day",
+    model: "Spreadsheets, analysts and informal rules",
+    state: "Friction",
   },
   {
-    label: "Next bet",
-    question: "Where should our next ₹1 and our next month of team capacity go?",
-    Icon: BriefcaseBusiness,
-  },
-  {
-    label: "AI leverage",
-    question: "Where can AI materially increase revenue, margin or speed right now?",
-    Icon: Sparkles,
+    volume: "2,000/day",
+    model: "The same decision model",
+    state: "Decision Gap",
   },
 ];
 
-const inboundPaths = [
-  "M 296 72 C 350 72 365 266 430 266",
-  "M 296 160 C 354 160 372 266 430 266",
-  "M 296 248 C 360 248 378 266 430 266",
-  "M 296 336 C 354 336 372 266 430 266",
-  "M 296 424 C 350 424 365 266 430 266",
+const analyticsFlow = ["Data", "Dashboard", "?", "Action"];
+const decisionFlow = ["Data", "Context", "Decision", "Action", "Outcome", "Learning"];
+
+const solutionOptions = [
+  "A clear rule",
+  "Better data",
+  "A redesigned workflow",
+  "Purpose-built software",
+  "Machine learning",
+  "An LLM or agent",
+  "Human judgement",
+  "No build at all",
 ];
 
-const outboundPaths = [
-  "M 570 266 C 635 266 648 92 704 92",
-  "M 570 266 C 632 266 650 218 704 218",
-  "M 570 266 C 632 266 650 344 704 344",
-  "M 570 266 C 635 266 648 470 704 470",
+const readinessChecks = [
+  "Reliable data",
+  "Exception handling",
+  "Human override",
+  "Workflow integration",
+  "Clear ownership",
+  "Monitoring",
+  "Viable economics",
+  "Feedback and learning",
 ];
 
-function DecisionFlowOverlay() {
+const operatingBoundaries = [
+  {
+    label: "Acts",
+    note: "Low-risk, reversible decisions within clear limits.",
+    Icon: Bot,
+  },
+  {
+    label: "Recommends",
+    note: "The system surfaces a decision and the evidence behind it.",
+    Icon: BrainCircuit,
+  },
+  {
+    label: "Human review",
+    note: "Ambiguous, high-impact or exceptional cases stay with people.",
+    Icon: UserRoundCheck,
+  },
+  {
+    label: "Not allowed",
+    note: "Decisions outside policy, trust or economic boundaries are blocked.",
+    Icon: CircleAlert,
+  },
+];
+
+function Flow({ items, emphasized = false }: { items: string[]; emphasized?: boolean }) {
   return (
-    <svg
-      className={motion.flowOverlay}
-      viewBox="0 0 1000 520"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <defs>
-        <filter id="flow-glow-mint" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="3.2" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <filter id="flow-glow-violet" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="3.6" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
-      <circle cx="500" cy="266" r="86" className={motion.flowCoreGlow} />
-
-      {inboundPaths.map((d, index) => (
-        <g key={`in-${index}`}>
-          <path id={`flow-in-${index}`} d={d} className={`${motion.flowBase} ${motion.flowMint}`} />
-          <path
-            d={d}
-            pathLength="100"
-            className={`${motion.flowStream} ${motion.flowStreamMint}`}
-            style={{ animationDelay: `${index * -0.42}s` }}
-          />
-          <circle r="3.4" className={`${motion.flowParticle} ${motion.flowParticleMint}`} filter="url(#flow-glow-mint)">
-            <animateMotion
-              dur="3.6s"
-              begin={`${index * 0.34}s`}
-              repeatCount="indefinite"
-            >
-              <mpath href={`#flow-in-${index}`} />
-            </animateMotion>
-          </circle>
-        </g>
+    <div className={styles.flow}>
+      {items.map((item, index) => (
+        <div className={styles.flowStep} key={`${item}-${index}`}>
+          <span className={emphasized ? styles.flowPillStrong : styles.flowPill}>{item}</span>
+          {index < items.length - 1 ? <ArrowRight size={14} aria-hidden /> : null}
+        </div>
       ))}
-
-      {outboundPaths.map((d, index) => (
-        <g key={`out-${index}`}>
-          <path id={`flow-out-${index}`} d={d} className={`${motion.flowBase} ${motion.flowViolet}`} />
-          <path
-            d={d}
-            pathLength="100"
-            className={`${motion.flowStream} ${motion.flowStreamViolet}`}
-            style={{ animationDelay: `${0.9 + index * 0.34}s` }}
-          />
-          <circle r="3.6" className={`${motion.flowParticle} ${motion.flowParticleViolet}`} filter="url(#flow-glow-violet)">
-            <animateMotion
-              dur="3.5s"
-              begin={`${0.9 + index * 0.34}s`}
-              repeatCount="indefinite"
-            >
-              <mpath href={`#flow-out-${index}`} />
-            </animateMotion>
-          </circle>
-        </g>
-      ))}
-    </svg>
+    </div>
   );
 }
 
 export function HomeDecisionFriction() {
   return (
-    <section className={styles.section} aria-labelledby="decision-friction-title">
-      <div className={styles.inner} style={{ width: "min(1440px, 100%)" }}>
-        <div
-          className={styles.intro}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-            marginBottom: 14,
-          }}
-        >
-          <h2
-            id="decision-friction-title"
-            style={{
-              margin: 0,
-              flex: "0 0 auto",
-              color: "rgb(var(--accent))",
-              fontFamily: "var(--font-mono), ui-monospace, monospace",
-              fontSize: 10,
-              fontWeight: 600,
-              lineHeight: 1,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Decisions
-          </h2>
-          <span
-            aria-hidden
-            style={{
-              display: "block",
-              height: 1,
-              flex: "1 1 auto",
-              background: "rgb(var(--ink-200))",
-            }}
-          />
+    <section className={styles.section} aria-labelledby="decision-gap-title">
+      <div className={styles.inner}>
+        <div className={styles.sectionLabel}>
+          <span>The problem</span>
+          <i aria-hidden />
         </div>
 
-        <div className={`${styles.diagram} ${motion.motionDiagram}`}>
-          <div className={styles.diagramGlow} aria-hidden />
+        <div className={styles.intro}>
+          <h2 id="decision-gap-title">
+            Growth creates a <em>Decision Gap.</em>
+          </h2>
+          <div className={styles.introCopy}>
+            <p>
+              Companies often scale faster than their ability to make important decisions consistently.
+              What worked through founder instinct, expert judgement and informal coordination starts to
+              slow the business down.
+            </p>
+            <p>
+              I identify the decisions caught in that gap, then design the data and AI systems that make
+              them repeatable, measurable and scalable.
+            </p>
+          </div>
+        </div>
 
-          <div className={styles.diagramBody}>
-            <DecisionFlowOverlay />
+        <div className={styles.symptomGrid} aria-label="Common signs of the Decision Gap">
+          {founderSymptoms.map((symptom, index) => (
+            <article className={styles.symptomCard} key={symptom.title}>
+              <span>0{index + 1}</span>
+              <h3>{symptom.title}</h3>
+              <p>{symptom.text}</p>
+            </article>
+          ))}
+        </div>
 
-            <div className={styles.teamColumn}>
-              <div className={styles.columnLabel}>Teams</div>
-              <div className={styles.teamStack}>
-                {teams.map(({ name, owns, signals, Icon }) => (
-                  <article key={name} className={styles.teamNode} data-flow-node="team">
-                    <span className={styles.teamIcon} aria-hidden>
-                      <Icon size={18} strokeWidth={1.7} />
-                    </span>
-                    <div className={styles.teamCopy}>
-                      <div className={styles.teamTopline}>
-                        <strong>{name}</strong>
-                        <span>{owns}</span>
-                      </div>
-                      <p>{signals}</p>
-                    </div>
-                  </article>
-                ))}
+        <div className={styles.conceptGrid}>
+          <article className={styles.scaleCard}>
+            <div className={styles.cardHeading}>
+              <Gauge size={20} aria-hidden />
+              <div>
+                <span>Why it appears</span>
+                <h3>The decision model did not scale with the business.</h3>
               </div>
             </div>
-
-            <div className={styles.leftRail} data-flow-rail="left" aria-hidden />
-
-            <div className={styles.hubColumn} data-flow-hub-column>
-              <div className={styles.hubOrbit} data-flow-orbit aria-hidden>
-                <span className={styles.orbitOne} />
-                <span className={styles.orbitTwo} />
-              </div>
-              <div className={styles.hub} data-flow-hub>
-                <span className={styles.hubIcon} aria-hidden>
-                  <DatabaseZap size={25} strokeWidth={1.6} />
-                </span>
-                <span className={styles.hubKicker}>The solution</span>
-                <strong>Decision System</strong>
-                <div className={styles.hubCapabilities}>
-                  <span>Shared facts</span>
-                  <span>Decision logic</span>
-                  <span>Applied AI</span>
+            <div className={styles.scaleTable}>
+              {scaleStages.map((stage) => (
+                <div className={styles.scaleRow} key={stage.volume}>
+                  <strong>{stage.volume}</strong>
+                  <p>{stage.model}</p>
+                  <span>{stage.state}</span>
                 </div>
-                <p>Connects signals across teams and turns them into one clear decision the business can act on.</p>
+              ))}
+            </div>
+          </article>
+
+          <article className={styles.flowCard}>
+            <div className={styles.cardHeading}>
+              <LayoutDashboard size={20} aria-hidden />
+              <div>
+                <span>What changes</span>
+                <h3>Analytics describes. A decision system closes the loop.</h3>
               </div>
             </div>
 
-            <div className={styles.rightRail} data-flow-rail="right" aria-hidden />
-
-            <div className={styles.questionColumn}>
-              <div className={styles.columnLabel}>Cross-team questions</div>
-              <div className={styles.questionStack}>
-                {businessDecisions.map(({ label, question, Icon }) => (
-                  <article key={label} className={styles.questionNode} data-flow-node="question">
-                    <span className={styles.questionIcon} aria-hidden>
-                      <Icon size={18} strokeWidth={1.7} />
-                    </span>
-                    <div>
-                      <span>{label}</span>
-                      <strong>{question}</strong>
-                    </div>
-                  </article>
-                ))}
-              </div>
+            <div className={styles.flowGroup}>
+              <span>Typical analytics</span>
+              <Flow items={analyticsFlow} />
             </div>
-          </div>
+            <div className={styles.flowGroup}>
+              <span>Decision system</span>
+              <Flow items={decisionFlow} emphasized />
+            </div>
+          </article>
+        </div>
 
-          <div className={styles.diagramFooter}>
-            <p>I design and build these systems with your team, then hand them over so you can run them.</p>
-            <Link href="/services" className={styles.servicesLink}>
-              See how I build it
-              <ArrowUpRight size={16} aria-hidden />
-            </Link>
+        <article className={styles.philosophyCard}>
+          <div>
+            <span className={styles.kicker}>The principle</span>
+            <h3>Not every problem needs AI.</h3>
+            <p>
+              I use the simplest reliable solution that improves the decision. Technical feasibility is
+              not the same as business viability—and sometimes the right recommendation is to wait or not
+              build at all.
+            </p>
           </div>
+          <div className={styles.optionCloud} aria-label="Possible solution types">
+            {solutionOptions.map((option) => (
+              <span key={option}>{option}</span>
+            ))}
+          </div>
+        </article>
+
+        <div className={styles.operationsGrid}>
+          <article className={styles.readinessCard}>
+            <span className={styles.kicker}>Prototype to operations</span>
+            <h3>A working demo is only the beginning.</h3>
+            <p>
+              A decision system becomes operational only when it can survive real workflows, exceptions,
+              ownership and economic scrutiny.
+            </p>
+            <div className={styles.readinessGrid}>
+              {readinessChecks.map((check, index) => (
+                <span key={check}>
+                  <i>0{index + 1}</i>
+                  {check}
+                </span>
+              ))}
+            </div>
+          </article>
+
+          <article className={styles.boundaryCard}>
+            <span className={styles.kicker}>AI operating boundaries</span>
+            <h3>Autonomy should be designed, not assumed.</h3>
+            <p>
+              Every system needs an explicit boundary for what AI can do—and a clear path for everything
+              it cannot.
+            </p>
+            <div className={styles.boundaryList}>
+              {operatingBoundaries.map(({ label, note, Icon }) => (
+                <div key={label}>
+                  <Icon size={18} strokeWidth={1.7} aria-hidden />
+                  <span>
+                    <strong>{label}</strong>
+                    <small>{note}</small>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
+
+        <div className={styles.sectionClose}>
+          <p>
+            The result is not another dashboard or isolated prototype. It is an operating capability the
+            team can understand, own and improve.
+          </p>
+          <Link href="/services">
+            See how I work <ArrowRight size={15} aria-hidden />
+          </Link>
         </div>
       </div>
     </section>
