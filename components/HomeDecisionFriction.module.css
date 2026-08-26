@@ -1,5 +1,5 @@
 .section {
-  padding: 58px 24px 72px;
+  padding: 58px 24px 68px;
 }
 
 .inner {
@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 40px;
+  margin-bottom: 38px;
   color: rgb(var(--accent));
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10px;
@@ -30,10 +30,10 @@
 
 .intro {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
-  gap: clamp(44px, 8vw, 120px);
-  align-items: start;
-  margin-bottom: 42px;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+  gap: clamp(40px, 8vw, 118px);
+  align-items: end;
+  margin-bottom: 34px;
 }
 
 .intro h2 {
@@ -41,7 +41,7 @@
   margin: 0;
   color: rgb(var(--ink));
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(40px, 5.2vw, 68px);
+  font-size: clamp(40px, 5vw, 66px);
   font-weight: 500;
   line-height: 0.98;
   letter-spacing: -0.048em;
@@ -53,351 +53,242 @@
   font-weight: 500;
 }
 
-.introCopy {
-  display: grid;
-  gap: 16px;
-  padding-top: 7px;
-}
-
-.introCopy p {
-  margin: 0;
-  color: rgb(var(--ink-600));
-  font-size: 15px;
-  line-height: 1.72;
-}
-
-.introCopy p:last-child {
+.intro > p {
+  max-width: 430px;
+  margin: 0 0 4px;
   color: rgb(var(--ink));
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 500;
+  line-height: 1.24;
+  letter-spacing: -0.025em;
+}
+
+.scaleVisual {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 30px 34px 28px;
+  border: 1px solid rgb(132 93 255 / 0.38);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 7% 4%, rgb(61 213 187 / 0.15), transparent 31%),
+    radial-gradient(circle at 94% 82%, rgb(132 93 255 / 0.22), transparent 34%),
+    linear-gradient(135deg, #091618 0%, #0c1218 48%, #120d20 100%);
+  box-shadow: 0 24px 70px rgb(7 12 18 / 0.13);
+}
+
+.visualHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.visualHeading span {
+  color: rgb(102 228 202);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.visualHeading p {
+  margin: 0;
+  color: rgb(255 255 255 / 0.64);
+  font-size: 12px;
+}
+
+.scaleTrack {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 50px;
+  padding: 34px 8px 30px;
+}
+
+.trackLine {
+  position: absolute;
+  top: 45px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(102 228 202 / 0.55), rgb(132 93 255 / 0.82));
+}
+
+.scaleStage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.stageDot {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 18px;
+  border: 6px solid #0b1519;
+  border-radius: 50%;
+  background: rgb(102 228 202);
+  box-shadow: 0 0 0 1px rgb(102 228 202 / 0.55), 0 0 18px rgb(102 228 202 / 0.22);
+}
+
+.scaleStage strong {
+  color: #fff;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.scaleStage p {
+  margin: 10px 0 11px;
+  color: rgb(255 255 255 / 0.72);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.scaleStage small {
+  padding: 5px 9px;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 999px;
+  color: rgb(255 255 255 / 0.56);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scaleStageCritical .stageDot {
+  background: rgb(139 99 255);
+  box-shadow: 0 0 0 1px rgb(139 99 255 / 0.75), 0 0 24px rgb(139 99 255 / 0.36);
+}
+
+.scaleStageCritical small {
+  border-color: rgb(139 99 255 / 0.7);
+  color: rgb(190 169 255);
+  background: rgb(139 99 255 / 0.08);
+}
+
+.visualOutcome {
+  margin: 0;
+  padding-top: 22px;
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+  color: rgb(255 255 255 / 0.7);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.visualOutcome strong {
+  color: #fff;
   font-weight: 600;
 }
 
-.symptomGrid {
+.signalStrip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin-top: 10px;
 }
 
-.symptomCard {
-  min-height: 220px;
-  padding: 22px;
+.signalStrip > div {
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 9px;
+  align-items: start;
+  padding: 18px;
+  border: 1px solid rgb(var(--ink-200));
+  border-radius: 14px;
+  background: rgb(var(--surface));
+}
+
+.signalStrip span {
+  padding-top: 2px;
+  color: rgb(var(--accent));
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.signalStrip p {
+  margin: 0;
+  color: rgb(var(--ink));
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.distinction {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: clamp(36px, 7vw, 100px);
+  align-items: center;
+  margin-top: 10px;
+  padding: 30px 32px;
   border: 1px solid rgb(var(--ink-200));
   border-radius: 18px;
   background: rgb(var(--surface));
 }
 
-.symptomCard > span {
-  display: block;
-  margin-bottom: 50px;
-  color: rgb(var(--accent));
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-}
-
-.symptomCard h3 {
-  margin: 0 0 8px;
-  color: rgb(var(--ink));
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.12;
-}
-
-.symptomCard p {
+.distinction > p {
   margin: 0;
   color: rgb(var(--ink-600));
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.conceptGrid,
-.operationsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.scaleCard,
-.flowCard,
-.philosophyCard,
-.boundaryCard {
-  border: 1px solid rgb(var(--ink-200));
-  border-radius: 22px;
-  background: rgb(var(--surface));
-}
-
-.scaleCard,
-.flowCard,
-.boundaryCard {
-  padding: 28px;
-}
-
-.cardHeading {
-  display: grid;
-  grid-template-columns: 38px minmax(0, 1fr);
-  gap: 13px;
-  align-items: start;
-  margin-bottom: 28px;
-}
-
-.cardHeading > svg {
-  margin-top: 2px;
-  color: rgb(var(--accent));
-}
-
-.cardHeading span,
-.flowGroup > span,
-.kicker {
-  display: block;
-  margin-bottom: 6px;
-  color: rgb(var(--accent));
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.cardHeading h3,
-.philosophyCard h3,
-.readinessCard h3,
-.boundaryCard h3 {
-  margin: 0;
-  color: rgb(var(--ink));
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(22px, 2vw, 28px);
-  font-weight: 600;
-  line-height: 1.08;
+  font-size: clamp(21px, 2.3vw, 30px);
+  font-weight: 500;
+  line-height: 1.2;
   letter-spacing: -0.025em;
 }
 
-.scaleTable {
-  border-top: 1px solid rgb(var(--ink-200));
-}
-
-.scaleRow {
-  display: grid;
-  grid-template-columns: 90px minmax(0, 1fr) auto;
-  gap: 18px;
-  align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid rgb(var(--ink-200));
-}
-
-.scaleRow strong {
+.distinction > p strong {
   color: rgb(var(--ink));
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 20px;
   font-weight: 600;
 }
 
-.scaleRow p {
-  margin: 0;
-  color: rgb(var(--ink-600));
-  font-size: 12.5px;
-  line-height: 1.45;
-}
-
-.scaleRow > span {
-  padding: 5px 8px;
-  border: 1px solid rgb(var(--ink-200));
-  border-radius: 999px;
-  color: rgb(var(--ink-600));
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 8px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.scaleRow:last-child > span {
-  border-color: rgb(var(--accent) / 0.35);
-  color: rgb(var(--accent));
-  background: rgb(var(--accent) / 0.05);
-}
-
-.flowGroup + .flowGroup {
-  margin-top: 24px;
-  padding-top: 22px;
-  border-top: 1px solid rgb(var(--ink-200));
-}
-
-.flow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 7px 5px;
-}
-
-.flowStep {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: rgb(var(--ink-400));
-}
-
-.flowPill,
-.flowPillStrong {
-  padding: 8px 9px;
-  border: 1px solid rgb(var(--ink-200));
-  border-radius: 8px;
-  color: rgb(var(--ink-600));
-  background: rgb(var(--paper));
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 8.5px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.flowPillStrong {
-  border-color: rgb(var(--accent) / 0.3);
-  color: rgb(var(--ink));
-  background: rgb(var(--accent) / 0.055);
-}
-
-.philosophyCard {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-  gap: clamp(44px, 8vw, 120px);
-  align-items: center;
-  margin-bottom: 12px;
-  padding: clamp(30px, 4vw, 48px);
-}
-
-.philosophyCard p,
-.readinessCard > p,
-.boundaryCard > p {
-  max-width: 590px;
-  margin: 13px 0 0;
-  color: rgb(var(--ink-600));
-  font-size: 13.5px;
-  line-height: 1.65;
-}
-
-.optionCloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-.optionCloud span {
-  padding: 10px 13px;
-  border: 1px solid rgb(var(--ink-200));
-  border-radius: 999px;
-  color: rgb(var(--ink));
-  background: rgb(var(--paper));
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.readinessCard {
-  position: relative;
-  overflow: hidden;
-  padding: 32px;
-  border: 1px solid rgb(132 93 255 / 0.38);
-  border-radius: 22px;
-  background:
-    radial-gradient(circle at 10% 0%, rgb(61 213 187 / 0.14), transparent 34%),
-    radial-gradient(circle at 95% 85%, rgb(132 93 255 / 0.2), transparent 38%),
-    linear-gradient(135deg, #0a1718, #10101c);
-}
-
-.readinessCard .kicker {
-  color: rgb(102 228 202);
-}
-
-.readinessCard h3 {
-  max-width: 500px;
-  color: #fff;
-}
-
-.readinessCard > p {
-  color: rgb(255 255 255 / 0.68);
-}
-
-.readinessGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: 26px;
-}
-
-.readinessGrid span {
-  min-height: 46px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  border: 1px solid rgb(255 255 255 / 0.12);
-  border-radius: 10px;
-  color: rgb(255 255 255 / 0.86);
-  background: rgb(255 255 255 / 0.045);
-  font-size: 11.5px;
-}
-
-.readinessGrid i {
-  color: rgb(102 228 202);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 8px;
-  font-style: normal;
-}
-
-.boundaryList {
+.distinction > div {
   display: grid;
   gap: 7px;
-  margin-top: 24px;
+  padding-left: 24px;
+  border-left: 2px solid rgb(var(--accent));
 }
 
-.boundaryList > div {
-  min-height: 62px;
-  display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
-  gap: 10px;
-  align-items: start;
-  padding: 11px 12px;
-  border: 1px solid rgb(var(--ink-200));
-  border-radius: 11px;
-  background: rgb(var(--paper));
-}
-
-.boundaryList svg {
-  margin-top: 2px;
+.distinction span {
   color: rgb(var(--accent));
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.boundaryList span {
-  display: grid;
-  gap: 2px;
-}
-
-.boundaryList strong {
-  color: rgb(var(--ink));
-  font-size: 12px;
-}
-
-.boundaryList small {
+.distinction small {
+  max-width: 430px;
   color: rgb(var(--ink-600));
-  font-size: 10.5px;
-  line-height: 1.45;
+  font-size: 12.5px;
+  line-height: 1.55;
 }
 
 .sectionClose {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 36px;
-  padding: 22px 4px 0;
+  gap: 30px;
+  padding: 20px 4px 0;
 }
 
 .sectionClose p {
-  max-width: 750px;
   margin: 0;
   color: rgb(var(--ink-600));
-  font-size: 13.5px;
-  line-height: 1.6;
+  font-size: 13px;
 }
 
 .sectionClose a {
@@ -418,37 +309,29 @@
   color: rgb(var(--ink));
 }
 
-@media (max-width: 980px) {
+@media (max-width: 920px) {
   .intro {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 18px;
   }
 
-  .introCopy {
-    max-width: 760px;
+  .intro > p {
+    max-width: 660px;
   }
 
-  .symptomGrid {
+  .signalStrip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .symptomCard {
-    min-height: 190px;
-  }
-
-  .symptomCard > span {
-    margin-bottom: 34px;
-  }
-
-  .conceptGrid,
-  .operationsGrid {
+  .distinction {
     grid-template-columns: 1fr;
+    gap: 26px;
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 650px) {
   .section {
-    padding: 40px 18px 54px;
+    padding: 40px 18px 52px;
   }
 
   .sectionLabel {
@@ -456,60 +339,107 @@
   }
 
   .intro {
-    margin-bottom: 30px;
+    margin-bottom: 26px;
   }
 
   .intro h2 {
     font-size: clamp(38px, 12vw, 52px);
   }
 
-  .symptomGrid {
+  .intro > p {
+    font-size: 20px;
+  }
+
+  .scaleVisual {
+    padding: 24px 20px;
+  }
+
+  .visualHeading {
+    display: grid;
+    gap: 6px;
+    padding-bottom: 18px;
+  }
+
+  .scaleTrack {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 12px 0 10px;
+  }
+
+  .trackLine {
+    top: 28px;
+    bottom: 28px;
+    left: 10px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(180deg, rgb(102 228 202 / 0.55), rgb(132 93 255 / 0.82));
+  }
+
+  .scaleStage {
+    grid-template-columns: 22px 82px minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    justify-items: start;
+    min-height: 78px;
+    text-align: left;
+  }
+
+  .stageDot {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+
+  .scaleStage strong {
+    font-size: 25px;
+  }
+
+  .scaleStage p {
+    margin: 0;
+    font-size: 11.5px;
+  }
+
+  .scaleStage small {
+    padding: 4px 7px;
+  }
+
+  .visualOutcome {
+    padding-top: 18px;
+    font-size: 13px;
+    text-align: left;
+  }
+
+  .signalStrip {
     grid-template-columns: 1fr;
   }
 
-  .symptomCard {
-    min-height: 0;
+  .signalStrip > div {
+    min-height: 70px;
   }
 
-  .symptomCard > span {
-    margin-bottom: 24px;
+  .distinction {
+    padding: 24px 21px;
   }
 
-  .scaleCard,
-  .flowCard,
-  .boundaryCard,
-  .readinessCard {
-    padding: 22px;
-  }
-
-  .scaleRow {
-    grid-template-columns: 76px minmax(0, 1fr);
-    gap: 8px 12px;
-  }
-
-  .scaleRow > span {
-    grid-column: 2;
-    justify-self: start;
-  }
-
-  .philosophyCard {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    padding: 26px 22px;
-  }
-
-  .optionCloud {
-    justify-content: flex-start;
-  }
-
-  .readinessGrid {
-    grid-template-columns: 1fr;
+  .distinction > div {
+    padding-left: 17px;
   }
 
   .sectionClose {
     align-items: flex-start;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .scaleStage {
+    grid-template-columns: 20px 76px minmax(0, 1fr);
+  }
+
+  .scaleStage small {
+    grid-column: 3;
   }
 }
 
