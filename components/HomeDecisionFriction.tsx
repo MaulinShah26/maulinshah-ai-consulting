@@ -4,19 +4,22 @@ import styles from "./HomeDecisionFriction.module.css";
 
 const scaleStages = [
   {
-    volume: "20/day",
-    model: "Founder instinct",
-    state: "Works",
+    volume: "5–10",
+    unit: "decisions / week",
+    model: "Founder decides directly",
+    state: "Manageable",
   },
   {
-    volume: "200/day",
-    model: "Spreadsheets and handoffs",
-    state: "Slows",
+    volume: "25–50",
+    unit: "decisions / week",
+    model: "Spreadsheets + handoffs",
+    state: "Slowing",
   },
   {
-    volume: "2,000/day",
-    model: "The same way of deciding",
-    state: "Breaks",
+    volume: "100+",
+    unit: "decisions / week",
+    model: "Informal judgement becomes the bottleneck",
+    state: "Decision Gap",
   },
 ];
 
@@ -41,33 +44,34 @@ export function HomeDecisionFriction() {
             Growth creates a <em>Decision Gap.</em>
           </h2>
           <p>
-            The business scales. The way important decisions get made does not.
+            The business scales, but the way important decisions get made does not.
           </p>
         </div>
 
-        <article className={styles.scaleVisual} aria-label="How the Decision Gap appears as decision volume grows">
+        <article className={styles.scaleVisual} aria-label="An illustrative example of how repeated weekly decisions become harder to manage as a business scales">
           <div className={styles.visualHeading}>
-            <span>What changes with scale</span>
-            <p>More customers. More exceptions. More decisions.</p>
+            <span>Illustrative weekly volume</span>
+            <p>As repeated decisions multiply, informal methods stop scaling.</p>
           </div>
 
           <div className={styles.scaleTrack}>
-            <div className={styles.trackLine} aria-hidden />
             {scaleStages.map((stage, index) => (
               <div
                 className={`${styles.scaleStage} ${index === scaleStages.length - 1 ? styles.scaleStageCritical : ""}`}
                 key={stage.volume}
               >
-                <span className={styles.stageDot} aria-hidden />
-                <strong>{stage.volume}</strong>
-                <p>{stage.model}</p>
                 <small>{stage.state}</small>
+                <div className={styles.stageVolume}>
+                  <strong>{stage.volume}</strong>
+                  <span>{stage.unit}</span>
+                </div>
+                <p>{stage.model}</p>
               </div>
             ))}
           </div>
 
           <p className={styles.visualOutcome}>
-            Decisions become <strong>slow</strong>, <strong>inconsistent</strong> and dependent on <strong>key people</strong>.
+            The result: <strong>slow</strong>, <strong>inconsistent</strong> decisions that depend on <strong>key people</strong>.
           </p>
         </article>
 
