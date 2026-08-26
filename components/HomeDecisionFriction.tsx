@@ -1,6 +1,19 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  CircleDollarSign,
+  Code2,
+  DatabaseZap,
+  Megaphone,
+  PackageCheck,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Users,
+} from "lucide-react";
 import styles from "./HomeDecisionFriction.module.css";
+import motion from "./HomeDecisionFrictionMotion.module.css";
 
 const scaleStages = [
   {
@@ -18,17 +31,145 @@ const scaleStages = [
   {
     volume: "100+",
     unit: "decisions / week",
-    model: "Informal judgement becomes the bottleneck",
+    model: "A repeatable system is needed",
     state: "Decision Gap",
   },
 ];
 
-const recognitionSignals = [
-  "Every important answer waits for one person",
-  "Teams still debate which number is right",
-  "Each decision needs another spreadsheet",
-  "The AI pilot never reached the real workflow",
+const teams = [
+  {
+    name: "Marketing",
+    owns: "Demand",
+    signals: "Spend · channels · campaigns",
+    Icon: Megaphone,
+  },
+  {
+    name: "Product",
+    owns: "Behavior",
+    signals: "Activation · journeys · retention",
+    Icon: Users,
+  },
+  {
+    name: "Engineering",
+    owns: "Delivery",
+    signals: "Systems · reliability · effort",
+    Icon: Code2,
+  },
+  {
+    name: "Finance",
+    owns: "Economics",
+    signals: "Revenue · margin · cash",
+    Icon: CircleDollarSign,
+  },
+  {
+    name: "Operations",
+    owns: "Execution",
+    signals: "Process · support · capacity",
+    Icon: PackageCheck,
+  },
 ];
+
+const businessDecisions = [
+  {
+    label: "Growth leakage",
+    question: "Where are we losing growth right now, and what is actually causing it?",
+    Icon: TrendingUp,
+  },
+  {
+    label: "Growth quality",
+    question: "Which customers, channels and products are creating growth that actually pays back?",
+    Icon: Target,
+  },
+  {
+    label: "Next bet",
+    question: "Where should our next ₹1 and our next month of team capacity go?",
+    Icon: BriefcaseBusiness,
+  },
+  {
+    label: "AI leverage",
+    question: "Where can AI materially increase revenue, margin or speed right now?",
+    Icon: Sparkles,
+  },
+];
+
+const inboundPaths = [
+  "M 296 72 C 350 72 365 266 430 266",
+  "M 296 160 C 354 160 372 266 430 266",
+  "M 296 248 C 360 248 378 266 430 266",
+  "M 296 336 C 354 336 372 266 430 266",
+  "M 296 424 C 350 424 365 266 430 266",
+];
+
+const outboundPaths = [
+  "M 570 266 C 635 266 648 92 704 92",
+  "M 570 266 C 632 266 650 218 704 218",
+  "M 570 266 C 632 266 650 344 704 344",
+  "M 570 266 C 635 266 648 470 704 470",
+];
+
+function DecisionFlowOverlay() {
+  return (
+    <svg
+      className={motion.flowOverlay}
+      viewBox="0 0 1000 520"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <filter id="flow-glow-mint" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="3.2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <filter id="flow-glow-violet" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="3.6" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="500" cy="266" r="86" className={motion.flowCoreGlow} />
+
+      {inboundPaths.map((d, index) => (
+        <g key={`in-${index}`}>
+          <path id={`flow-in-${index}`} d={d} className={`${motion.flowBase} ${motion.flowMint}`} />
+          <path
+            d={d}
+            pathLength="100"
+            className={`${motion.flowStream} ${motion.flowStreamMint}`}
+            style={{ animationDelay: `${index * -0.42}s` }}
+          />
+          <circle r="3.4" className={`${motion.flowParticle} ${motion.flowParticleMint}`} filter="url(#flow-glow-mint)">
+            <animateMotion dur="3.6s" begin={`${index * 0.34}s`} repeatCount="indefinite">
+              <mpath href={`#flow-in-${index}`} />
+            </animateMotion>
+          </circle>
+        </g>
+      ))}
+
+      {outboundPaths.map((d, index) => (
+        <g key={`out-${index}`}>
+          <path id={`flow-out-${index}`} d={d} className={`${motion.flowBase} ${motion.flowViolet}`} />
+          <path
+            d={d}
+            pathLength="100"
+            className={`${motion.flowStream} ${motion.flowStreamViolet}`}
+            style={{ animationDelay: `${0.9 + index * 0.34}s` }}
+          />
+          <circle r="3.6" className={`${motion.flowParticle} ${motion.flowParticleViolet}`} filter="url(#flow-glow-violet)">
+            <animateMotion dur="3.5s" begin={`${0.9 + index * 0.34}s`} repeatCount="indefinite">
+              <mpath href={`#flow-out-${index}`} />
+            </animateMotion>
+          </circle>
+        </g>
+      ))}
+    </svg>
+  );
+}
 
 export function HomeDecisionFriction() {
   return (
@@ -43,62 +184,112 @@ export function HomeDecisionFriction() {
           <h2 id="decision-gap-title">
             Growth creates a <em>Decision Gap.</em>
           </h2>
-          <p>
-            The business scales, but the way important decisions get made does not.
-          </p>
+          <p>The business scales, but the way important decisions get made does not.</p>
         </div>
 
-        <article className={styles.scaleVisual} aria-label="An illustrative example of how repeated weekly decisions become harder to manage as a business scales">
-          <div className={styles.visualHeading}>
-            <span>Illustrative weekly volume</span>
-            <p>As repeated decisions multiply, informal methods stop scaling.</p>
-          </div>
+        <div className={`${styles.diagram} ${motion.motionDiagram}`}>
+          <div className={styles.diagramGlow} aria-hidden />
 
-          <div className={styles.scaleTrack}>
-            {scaleStages.map((stage, index) => (
-              <div
-                className={`${styles.scaleStage} ${index === scaleStages.length - 1 ? styles.scaleStageCritical : ""}`}
-                key={stage.volume}
-              >
-                <small>{stage.state}</small>
-                <div className={styles.stageVolume}>
-                  <strong>{stage.volume}</strong>
-                  <span>{stage.unit}</span>
-                </div>
-                <p>{stage.model}</p>
-              </div>
-            ))}
-          </div>
-
-          <p className={styles.visualOutcome}>
-            The result: <strong>slow</strong>, <strong>inconsistent</strong> decisions that depend on <strong>key people</strong>.
-          </p>
-        </article>
-
-        <div className={styles.signalStrip} aria-label="Common signs of the Decision Gap">
-          {recognitionSignals.map((signal, index) => (
-            <div key={signal}>
-              <span>0{index + 1}</span>
-              <p>{signal}</p>
+          <div className={styles.scalePrelude} aria-label="Illustrative weekly volume of repeated business decisions as a company grows">
+            <div className={styles.preludeHeading}>
+              <span>As the business grows</span>
+              <p>Illustrative volume—the exact threshold varies by business.</p>
             </div>
-          ))}
-        </div>
 
-        <div className={styles.distinction}>
-          <p>
-            A dashboard shows what happened. <strong>A decision system makes what happens next repeatable.</strong>
-          </p>
-          <div>
-            <span>Not every problem needs AI.</span>
-            <small>Use the simplest reliable answer: a rule, workflow, software, data, AI—or no build at all.</small>
+            <div className={styles.scaleTrack}>
+              {scaleStages.map((stage, index) => (
+                <div
+                  className={`${styles.scaleStage} ${index === scaleStages.length - 1 ? styles.scaleStageCritical : ""}`}
+                  key={stage.volume}
+                >
+                  <small>{stage.state}</small>
+                  <div className={styles.stageVolume}>
+                    <strong>{stage.volume}</strong>
+                    <span>{stage.unit}</span>
+                  </div>
+                  <p>{stage.model}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className={styles.sectionClose}>
-          <p>I diagnose the decision first, then design the system around it.</p>
-          <Link href="/services">
-            See how I work <ArrowRight size={15} aria-hidden />
-          </Link>
+          <div className={styles.diagramIntro}>
+            <span>What must scale with it</span>
+            <p>A decision system connects signals across teams to the questions the business needs to answer.</p>
+          </div>
+
+          <div className={styles.diagramBody}>
+            <DecisionFlowOverlay />
+
+            <div className={styles.teamColumn}>
+              <div className={styles.columnLabel}>Teams</div>
+              <div className={styles.teamStack}>
+                {teams.map(({ name, owns, signals, Icon }) => (
+                  <article key={name} className={styles.teamNode} data-flow-node="team">
+                    <span className={styles.teamIcon} aria-hidden>
+                      <Icon size={18} strokeWidth={1.7} />
+                    </span>
+                    <div className={styles.teamCopy}>
+                      <div className={styles.teamTopline}>
+                        <strong>{name}</strong>
+                        <span>{owns}</span>
+                      </div>
+                      <p>{signals}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.leftRail} data-flow-rail="left" aria-hidden />
+
+            <div className={styles.hubColumn} data-flow-hub-column>
+              <div className={styles.hubOrbit} data-flow-orbit aria-hidden>
+                <span className={styles.orbitOne} />
+                <span className={styles.orbitTwo} />
+              </div>
+              <div className={styles.hub} data-flow-hub>
+                <span className={styles.hubIcon} aria-hidden>
+                  <DatabaseZap size={25} strokeWidth={1.6} />
+                </span>
+                <span className={styles.hubKicker}>The solution</span>
+                <strong>Decision System</strong>
+                <div className={styles.hubCapabilities}>
+                  <span>Shared facts</span>
+                  <span>Decision logic</span>
+                  <span>Applied AI</span>
+                </div>
+                <p>Connects signals across teams and turns them into one clear decision the business can act on.</p>
+              </div>
+            </div>
+
+            <div className={styles.rightRail} data-flow-rail="right" aria-hidden />
+
+            <div className={styles.questionColumn}>
+              <div className={styles.columnLabel}>Cross-team questions</div>
+              <div className={styles.questionStack}>
+                {businessDecisions.map(({ label, question, Icon }) => (
+                  <article key={label} className={styles.questionNode} data-flow-node="question">
+                    <span className={styles.questionIcon} aria-hidden>
+                      <Icon size={18} strokeWidth={1.7} />
+                    </span>
+                    <div>
+                      <span>{label}</span>
+                      <strong>{question}</strong>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.diagramFooter}>
+            <p>I design and build these systems with your team, then hand them over so you can run them.</p>
+            <Link href="/services" className={styles.servicesLink}>
+              See how I build it
+              <ArrowUpRight size={16} aria-hidden />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
