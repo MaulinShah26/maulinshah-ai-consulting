@@ -3,7 +3,7 @@ import { getServicePage } from "@/lib/data";
 import { ServicePage } from "@/components/ServicePage";
 
 export const metadata = {
-  title: "Fractional Head of Data & AI · Maulin Shah",
+  title: "Fractional Data & AI Lead · Maulin Shah",
   description:
     "Senior data and AI leadership embedded in your team, before you’re ready to hire a full-time executive.",
 };

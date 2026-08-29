@@ -29,9 +29,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? meta.siteUrl;
-const title = "Maulin Shah | Fractional Head of Data & AI";
+const title = "Maulin Shah | Fractional Data & AI Lead";
 const description =
-  "I help growing companies turn important business questions into better decisions, working data systems and practical AI.";
+  "I help growing companies identify decisions that are slow, inconsistent or poorly informed, then build the data and AI systems that improve them.";
 
 export const metadata: Metadata = {
   title,
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Maulin Shah, Fractional Head of Data & AI",
+        alt: "Maulin Shah, Fractional Data & AI Lead",
       },
     ],
   },
@@ -81,7 +81,7 @@ const structuredData = [
     "@id": `${siteUrl}/#maulin-shah`,
     name: "Maulin Shah",
     url: siteUrl,
-    jobTitle: "Fractional Head of Data & AI",
+    jobTitle: "Fractional Data & AI Lead",
     sameAs: [social.linkedin],
     knowsAbout: [
       "Data strategy",
@@ -103,7 +103,7 @@ const structuredData = [
     areaServed: "Worldwide",
     serviceType: [
       "Fractional Data & AI Leadership",
-      "Data & AI Opportunity Audit",
+      "Decision Systems Diagnostic",
       "Decision System Build",
     ],
     description,

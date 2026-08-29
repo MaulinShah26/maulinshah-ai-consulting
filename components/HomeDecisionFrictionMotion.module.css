@@ -7,9 +7,6 @@
     background-color 180ms ease;
 }
 
-/* The SVG overlay owns the connector story on desktop. The original grid
-   rails remain in the DOM for layout, but their straight-line graphics are
-   suppressed so every visible connector actually converges on the hub. */
 .motionDiagram [data-flow-node]::after,
 .motionDiagram [data-flow-rail]::before,
 .motionDiagram [data-flow-rail]::after,
@@ -172,9 +169,7 @@
     opacity: 0.78;
   }
   50% {
-    box-shadow:
-      0 0 18px rgb(var(--diagram-mint) / 0.88),
-      0 0 0 5px rgb(var(--diagram-mint) / 0.08);
+    box-shadow: 0 0 18px rgb(var(--diagram-mint) / 0.88), 0 0 0 5px rgb(var(--diagram-mint) / 0.08);
     opacity: 1;
   }
 }
@@ -185,9 +180,7 @@
     opacity: 0.78;
   }
   50% {
-    box-shadow:
-      0 0 18px rgb(var(--diagram-violet) / 0.92),
-      0 0 0 5px rgb(var(--diagram-violet) / 0.09);
+    box-shadow: 0 0 18px rgb(var(--diagram-violet) / 0.92), 0 0 0 5px rgb(var(--diagram-violet) / 0.09);
     opacity: 1;
   }
 }
@@ -205,20 +198,13 @@
 
 @keyframes hubHeartbeat {
   0%, 100% {
-    box-shadow:
-      0 0 0 10px rgb(var(--diagram-violet) / 0.035),
-      0 0 42px rgb(var(--diagram-violet) / 0.15);
+    box-shadow: 0 0 0 10px rgb(var(--diagram-violet) / 0.035), 0 0 42px rgb(var(--diagram-violet) / 0.15);
   }
   42% {
-    box-shadow:
-      0 0 0 13px rgb(var(--diagram-violet) / 0.065),
-      0 0 72px rgb(var(--diagram-violet) / 0.32),
-      0 0 34px rgb(var(--diagram-mint) / 0.13);
+    box-shadow: 0 0 0 13px rgb(var(--diagram-violet) / 0.065), 0 0 72px rgb(var(--diagram-violet) / 0.32), 0 0 34px rgb(var(--diagram-mint) / 0.13);
   }
   62% {
-    box-shadow:
-      0 0 0 11px rgb(var(--diagram-violet) / 0.045),
-      0 0 54px rgb(var(--diagram-violet) / 0.22);
+    box-shadow: 0 0 0 11px rgb(var(--diagram-violet) / 0.045), 0 0 54px rgb(var(--diagram-violet) / 0.22);
   }
 }
 

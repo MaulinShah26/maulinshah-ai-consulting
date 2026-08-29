@@ -79,12 +79,12 @@ export function ServicePage({ service }: { service: ServiceData }) {
         <>
           <section className="py-4 px-6">
             <div className="max-w-content mx-auto">
-              <SectionHeader label="Data before AI" />
+              <SectionHeader label="Decision before solution" />
               <h2 className="max-w-[820px] font-serif text-[21px] font-medium tracking-tight mb-2">
-                AI only works on top of data you can trust.
+                Start with the decision, then test what can support it.
               </h2>
               <p className="max-w-[900px] text-[14px] text-ink-700 leading-relaxed mb-3">
-                I start with the business decision, then check whether the data, metrics and operating logic underneath it are strong enough to support AI.
+                Data quality matters, but so do the workflow, ownership, economics and consequences of being wrong. AI is one possible solution—not the starting assumption.
               </p>
               <DataTrustPyramid />
             </div>
@@ -93,11 +93,11 @@ export function ServicePage({ service }: { service: ServiceData }) {
             <div className="max-w-content mx-auto">
               <SectionHeader label="What you get" />
               <h2 className="max-w-[820px] font-serif text-[21px] font-medium tracking-tight mb-2">
-                Every idea sorted by value and readiness.
+                Every option sorted by value, readiness and operating risk.
               </h2>
               <p className="max-w-[900px] text-[14px] text-ink-700 leading-relaxed mb-3">
-                You don’t leave with a list of AI ideas. You leave knowing what to build now,
-                what to set up for later, and what to drop.
+                You leave with explicit choices: what to fix now, build next, experiment with,
+                wait on, or not build at all.
               </p>
               <AIPrioritizationMatrix />
             </div>

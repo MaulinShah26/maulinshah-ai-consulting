@@ -15,6 +15,27 @@ import {
 import styles from "./HomeDecisionFriction.module.css";
 import motion from "./HomeDecisionFrictionMotion.module.css";
 
+const scaleStages = [
+  {
+    volume: "5–10",
+    unit: "decisions / week",
+    model: "Founder decides directly",
+    state: "Manageable",
+  },
+  {
+    volume: "25–50",
+    unit: "decisions / week",
+    model: "Spreadsheets + handoffs",
+    state: "Slowing",
+  },
+  {
+    volume: "100+",
+    unit: "decisions / week",
+    model: "A repeatable system is needed",
+    state: "Decision Gap",
+  },
+];
+
 const teams = [
   {
     name: "Marketing",
@@ -123,11 +144,7 @@ function DecisionFlowOverlay() {
             style={{ animationDelay: `${index * -0.42}s` }}
           />
           <circle r="3.4" className={`${motion.flowParticle} ${motion.flowParticleMint}`} filter="url(#flow-glow-mint)">
-            <animateMotion
-              dur="3.6s"
-              begin={`${index * 0.34}s`}
-              repeatCount="indefinite"
-            >
+            <animateMotion dur="3.6s" begin={`${index * 0.34}s`} repeatCount="indefinite">
               <mpath href={`#flow-in-${index}`} />
             </animateMotion>
           </circle>
@@ -144,11 +161,7 @@ function DecisionFlowOverlay() {
             style={{ animationDelay: `${0.9 + index * 0.34}s` }}
           />
           <circle r="3.6" className={`${motion.flowParticle} ${motion.flowParticleViolet}`} filter="url(#flow-glow-violet)">
-            <animateMotion
-              dur="3.5s"
-              begin={`${0.9 + index * 0.34}s`}
-              repeatCount="indefinite"
-            >
+            <animateMotion dur="3.5s" begin={`${0.9 + index * 0.34}s`} repeatCount="indefinite">
               <mpath href={`#flow-out-${index}`} />
             </animateMotion>
           </circle>
@@ -160,47 +173,50 @@ function DecisionFlowOverlay() {
 
 export function HomeDecisionFriction() {
   return (
-    <section className={styles.section} aria-labelledby="decision-friction-title">
-      <div className={styles.inner} style={{ width: "min(1440px, 100%)" }}>
-        <div
-          className={styles.intro}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-            marginBottom: 14,
-          }}
-        >
-          <h2
-            id="decision-friction-title"
-            style={{
-              margin: 0,
-              flex: "0 0 auto",
-              color: "rgb(var(--accent))",
-              fontFamily: "var(--font-mono), ui-monospace, monospace",
-              fontSize: 10,
-              fontWeight: 600,
-              lineHeight: 1,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Decisions
+    <section className={styles.section} aria-labelledby="decision-gap-title">
+      <div className={styles.inner}>
+        <div className={styles.sectionLabel}>
+          <span>The problem</span>
+          <i aria-hidden />
+        </div>
+
+        <div className={styles.intro}>
+          <h2 id="decision-gap-title">
+            Growth creates a <em>Decision Gap.</em>
           </h2>
-          <span
-            aria-hidden
-            style={{
-              display: "block",
-              height: 1,
-              flex: "1 1 auto",
-              background: "rgb(var(--ink-200))",
-            }}
-          />
+          <p>The business scales, but the way important decisions get made does not.</p>
         </div>
 
         <div className={`${styles.diagram} ${motion.motionDiagram}`}>
           <div className={styles.diagramGlow} aria-hidden />
+
+          <div className={styles.scalePrelude} aria-label="Illustrative weekly volume of repeated business decisions as a company grows">
+            <div className={styles.preludeHeading}>
+              <span>As the business grows</span>
+              <p>Illustrative volume—the exact threshold varies by business.</p>
+            </div>
+
+            <div className={styles.scaleTrack}>
+              {scaleStages.map((stage, index) => (
+                <div
+                  className={`${styles.scaleStage} ${index === scaleStages.length - 1 ? styles.scaleStageCritical : ""}`}
+                  key={stage.volume}
+                >
+                  <small>{stage.state}</small>
+                  <div className={styles.stageVolume}>
+                    <strong>{stage.volume}</strong>
+                    <span>{stage.unit}</span>
+                  </div>
+                  <p>{stage.model}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.diagramIntro}>
+            <span>What must scale with it</span>
+            <p>A decision system connects signals across teams to the questions the business needs to answer.</p>
+          </div>
 
           <div className={styles.diagramBody}>
             <DecisionFlowOverlay />
