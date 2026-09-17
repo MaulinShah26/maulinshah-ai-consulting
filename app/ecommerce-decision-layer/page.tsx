@@ -1,9 +1,9 @@
 import EcommerceDecisionLayer from "@/components/EcommerceDecisionLayer";
 
 export const metadata = {
-  title: "E-commerce Decision Layer | Maulin Shah",
+  title: "Guided Shopping Prototype | Maulin Shah",
   description:
-    "An interactive prototype exploring how e-commerce can move from product recommendations to visible decision support.",
+    "An interactive shopping prototype that helps customers narrow choices, compare what matters and understand why an option fits.",
 };
 
 export default function EcommerceDecisionLayerPage() {
