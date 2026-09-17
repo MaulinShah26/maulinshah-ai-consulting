@@ -1,0 +1,249 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
+const products = [
+  { id: "a", brand: "ErgoForm", name: "Axis Pro", price: 19490, mrp: 22990, rating: "4.5", reviews: "1,842", tag: "Bestseller" },
+  { id: "b", brand: "WorkNest", name: "AirFlex", price: 17990, mrp: 20990, rating: "4.4", reviews: "986", tag: "Popular" },
+  { id: "c", brand: "SeatLab", name: "Core Mesh", price: 14990, mrp: 18490, rating: "4.3", reviews: "2,104", tag: "Value pick" },
+  { id: "d", brand: "ErgoForm", name: "Axis Lite", price: 13490, mrp: 16990, rating: "4.2", reviews: "740", tag: "Limited deal" },
+  { id: "e", brand: "WorkNest", name: "Frame+", price: 21990, mrp: 25990, rating: "4.6", reviews: "612", tag: "Top rated" },
+  { id: "f", brand: "SeatLab", name: "Compact Air", price: 16490, mrp: 19990, rating: "4.4", reviews: "1,124", tag: "Compact" },
+];
+
+type Scenario = "comfort" | "strictBudget" | "lightUse" | "warranty";
+
+const decisionSets: Record<Scenario, Array<{ id: string; label: string; fit: number; confidence: string; win: string; tradeoff: string; why: string }>> = {
+  comfort: [
+    { id: "a", label: "Strongest fit", fit: 94, confidence: "High", win: "Long-hours comfort", tradeoff: "₹1,490 above preferred budget", why: "Long-duration comfort and lumbar support were marked critical, while the budget was flexible rather than absolute." },
+    { id: "b", label: "Best balance", fit: 89, confidence: "High", win: "Budget + compact size", tradeoff: "Less seat-depth adjustment", why: "This preserves most comfort requirements while staying inside the preferred budget and fitting a smaller room." },
+    { id: "c", label: "Lower-cost option", fit: 78, confidence: "Medium", win: "Price + core support", tradeoff: "Mixed 8+ hour comfort evidence", why: "This remains useful because it meets the core brief at lower cost, but evidence for very long sessions is weaker." },
+  ],
+  strictBudget: [
+    { id: "b", label: "Best fit under cap", fit: 91, confidence: "High", win: "Comfort within ₹18k", tradeoff: "Fewer premium adjustments", why: "With ₹18k made a hard limit, AirFlex becomes the strongest remaining balance." },
+    { id: "f", label: "Compact alternative", fit: 84, confidence: "High", win: "Small-room fit", tradeoff: "Lower long-session evidence", why: "Compact Air becomes more attractive because it protects both space and budget." },
+    { id: "c", label: "Lowest-cost viable", fit: 80, confidence: "Medium", win: "Lowest cost", tradeoff: "Comfort uncertainty", why: "Core Mesh survives as the lowest-cost option that still meets the hard constraints." },
+  ],
+  lightUse: [
+    { id: "c", label: "Best fit for lighter use", fit: 92, confidence: "High", win: "Value for 3-hour use", tradeoff: "Less premium adjustment", why: "Once daily usage falls, paying more for long-session comfort creates less value." },
+    { id: "d", label: "Lowest cost", fit: 87, confidence: "Medium", win: "Price", tradeoff: "Basic lumbar range", why: "Axis Lite becomes more reasonable when extended sitting is no longer central." },
+    { id: "b", label: "Comfort buffer", fit: 84, confidence: "High", win: "More adjustment", tradeoff: "Higher cost than needed", why: "AirFlex remains for shoppers willing to pay for extra adjustment even with lighter usage." },
+  ],
+  warranty: [
+    { id: "e", label: "Warranty-led choice", fit: 93, confidence: "High", win: "Warranty + service", tradeoff: "Highest price", why: "When warranty becomes critical, Frame+ earns its place despite the higher price." },
+    { id: "a", label: "Comfort + warranty", fit: 90, confidence: "High", win: "Support + coverage", tradeoff: "Above preferred budget", why: "Axis Pro remains because it combines stronger long-session fit with dependable coverage." },
+    { id: "b", label: "Budget compromise", fit: 82, confidence: "High", win: "Price", tradeoff: "Shorter coverage", why: "AirFlex remains the lower-cost compromise when warranty matters but budget still matters too." },
+  ],
+};
+
+const mapCoords: Record<string, [number, number]> = {
+  a: [35, 27],
+  b: [55, 42],
+  c: [75, 61],
+  d: [84, 74],
+  e: [23, 20],
+  f: [66, 49],
+};
+
+function money(v: number) {
+  return `₹${v.toLocaleString("en-IN")}`;
+}
+
+function ChairArt({ index = 0 }: { index?: number }) {
+  const fills = ["from-emerald-950 to-emerald-700", "from-stone-700 to-stone-500", "from-slate-700 to-slate-500", "from-violet-900 to-violet-600", "from-zinc-700 to-stone-500", "from-emerald-800 to-emerald-600"];
+  return (
+    <div className="relative h-36 w-28 drop-shadow-xl">
+      <div className={`absolute left-5 top-1 h-20 w-16 rounded-[28px] bg-gradient-to-br ${fills[index % fills.length]}`} />
+      <div className={`absolute left-3 top-[78px] h-7 w-20 rounded-2xl bg-gradient-to-br ${fills[index % fills.length]}`} />
+      <div className="absolute left-[49px] top-[101px] h-10 w-3 rounded-full bg-slate-700" />
+      <div className="absolute left-[52px] top-[136px] h-1.5 w-14 origin-left rotate-[24deg] rounded-full bg-slate-700" />
+      <div className="absolute left-[53px] top-[136px] h-1.5 w-14 origin-left -rotate-[24deg] rounded-full bg-slate-700" />
+      <div className="absolute left-3 top-[82px] h-1.5 w-6 -rotate-12 rounded-full bg-slate-700" />
+      <div className="absolute right-1 top-[82px] h-1.5 w-6 rotate-12 rounded-full bg-slate-700" />
+    </div>
+  );
+}
+
+export default function EcommerceDecisionLayer() {
+  const [stage, setStage] = useState<"browse" | "capture" | "decision">("browse");
+  const [need, setNeed] = useState("I work 8–9 hours a day. Back support matters most. My room is small. I prefer to stay near ₹18,000 but can stretch for a meaningful improvement.");
+  const [scenario, setScenario] = useState<Scenario>("comfort");
+  const [showRemoved, setShowRemoved] = useState(false);
+  const [selectedWhy, setSelectedWhy] = useState<string | null>(null);
+
+  const inferred = useMemo(() => {
+    const t = need.toLowerCase();
+    const usage = /3\s*(hours?|hrs?)/.test(t) ? "~3 hours/day" : /9\s*(hours?|hrs?)/.test(t) ? "~9 hours/day" : "8–9 hours/day";
+    const priority = /warranty|service/.test(t) ? "Warranty" : /cheap|cheapest|price|budget/.test(t) && !/comfort.*more|comfort matters more/.test(t) ? "Price" : "Comfort";
+    const budget = /18000|18,000/.test(t) ? "~₹18,000" : /20000|20,000/.test(t) ? "~₹20,000" : "Flexible";
+    const space = /small|compact|tight/.test(t) ? "Small room" : "No hard constraint";
+    return { usage, priority, budget, space };
+  }, [need]);
+
+  function chooseScenario() {
+    const t = need.toLowerCase();
+    if (/warranty|service/.test(t)) return "warranty" as Scenario;
+    if (/3\s*(hours?|hrs?)/.test(t)) return "lightUse" as Scenario;
+    if (/hard limit|strict|under ₹?18|under 18|cheapest/.test(t)) return "strictBudget" as Scenario;
+    return "comfort" as Scenario;
+  }
+
+  function buildDecision() {
+    setScenario(chooseScenario());
+    setStage("decision");
+    setShowRemoved(false);
+  }
+
+  function reset() {
+    setStage("browse");
+    setScenario("comfort");
+    setShowRemoved(false);
+    setSelectedWhy(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  const decisionSet = decisionSets[scenario];
+  const selectedDecision = selectedWhy ? decisionSet.find((x) => x.id === selectedWhy) : null;
+  const selectedProduct = selectedWhy ? products.find((x) => x.id === selectedWhy) : null;
+
+  const priorities: Record<Scenario, Array<[string, string]>> = {
+    comfort: [["Back support", "Critical"], ["Long-session comfort", "Critical"], ["Budget", "Flexible"], ["Space", "Small room"], ["Warranty", "Medium"], ["Appearance", "Low"]],
+    strictBudget: [["Budget", "Hard limit"], ["Back support", "High"], ["Comfort", "High"], ["Space", "Small room"], ["Warranty", "Medium"], ["Appearance", "Low"]],
+    lightUse: [["Daily use", "~3 hours"], ["Budget", "High"], ["Back support", "Medium"], ["Space", "Small room"], ["Warranty", "Medium"], ["Appearance", "Low"]],
+    warranty: [["Warranty", "Critical"], ["Service", "Critical"], ["Comfort", "High"], ["Budget", "Flexible"], ["Space", "Medium"], ["Appearance", "Low"]],
+  };
+
+  const removed = scenario === "strictBudget"
+    ? ["Over ₹18k hard limit", "Weak lumbar evidence", "Too large for room", "No clear value advantage"]
+    : scenario === "warranty"
+      ? ["Short warranty", "Weak service coverage", "Over budget without warranty gain", "Poor compact fit"]
+      : ["Weak long-session evidence", "Limited lumbar range", "Too large for room", "No meaningful gain for price"];
+
+  return (
+    <div className="min-h-screen bg-[rgb(var(--page))] text-[rgb(var(--ink))]">
+      <header className="sticky top-0 z-40 border-b border-[rgb(var(--ink-200))] bg-[rgb(var(--surface))]/95 backdrop-blur">
+        <div className="mx-auto grid h-[68px] w-[min(1240px,calc(100%-36px))] grid-cols-[auto_1fr_auto] items-center gap-4 px-5">
+          <div className="font-medium tracking-tight">Arc <span className="text-[rgb(var(--accent))]">Home</span></div>
+          <div className="mx-auto w-full max-w-2xl rounded-full border border-[rgb(var(--ink-200))] bg-[rgb(var(--subtle))] px-4 py-2.5 text-xs text-[rgb(var(--ink-500))]">Search: ergonomic office chair</div>
+          <div className="flex gap-2">
+            {stage === "decision" && <button onClick={reset} className="rounded-full border border-[rgb(var(--ink-200))] bg-white px-3 py-2 text-xs font-medium">↺ Reset</button>}
+            <a href="https://maulinshah.vercel.app" target="_blank" rel="noreferrer" className="hidden rounded-full border border-[rgb(var(--ink-200))] bg-white px-3 py-2 text-xs font-medium sm:block">Maulin Shah ↗</a>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto w-full max-w-[1240px] px-5 pb-16">
+        <div className="pt-5 text-xs text-[rgb(var(--ink-500))]">Home / Furniture / Office Chairs</div>
+        <div className="flex items-end justify-between gap-4 py-4">
+          <div>
+            <h1 className="font-serif text-5xl tracking-tight">Office Chairs</h1>
+            <p className="mt-2 text-sm text-[rgb(var(--ink-500))]">Ergonomic chairs for work, study and long sitting hours.</p>
+          </div>
+          <div className="text-xs text-[rgb(var(--ink-500))]"><b>{stage === "decision" ? 3 : 23}</b> {stage === "decision" ? "meaningful choices" : "relevant products"}</div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[250px_1fr]">
+          <aside className="hidden h-max rounded-2xl border border-[rgb(var(--ink-200))] bg-[rgb(var(--surface))] p-4 lg:block">
+            <div className="text-sm font-medium">Filters</div>
+            {["₹10,000–₹20,000", "Lumbar support", "4★ & above"].map((x) => <div key={x} className="mt-4 flex items-center gap-2 text-xs text-[rgb(var(--ink-600))]"><span className="h-4 w-4 rounded border border-[rgb(var(--ink-300))] bg-[rgb(var(--accent))] shadow-[inset_0_0_0_3px_white]" />{x}</div>)}
+            {["₹20,000+", "Adjustable arms", "Headrest"].map((x) => <div key={x} className="mt-3 flex items-center gap-2 text-xs text-[rgb(var(--ink-600))]"><span className="h-4 w-4 rounded border border-[rgb(var(--ink-300))] bg-white" />{x}</div>)}
+          </aside>
+
+          <section>
+            <div className="mb-3 flex items-center justify-between">
+              <div className="flex gap-2"><button className="rounded-full bg-[rgb(var(--ink))] px-3 py-2 text-xs text-[rgb(var(--page))]">Recommended</button><button className="rounded-full border border-[rgb(var(--ink-200))] bg-white px-3 py-2 text-xs text-[rgb(var(--ink-500))]">Top rated</button></div>
+              <button className="rounded-full border border-[rgb(var(--ink-200))] bg-white px-3 py-2 text-xs text-[rgb(var(--ink-500))]">Sort ▾</button>
+            </div>
+
+            {stage === "browse" && (
+              <>
+                <div className="mb-4 flex items-center justify-between gap-4 rounded-2xl border border-violet-200 bg-white p-4 shadow-sm">
+                  <div className="flex items-center gap-3"><div className="grid h-9 w-9 place-items-center rounded-full bg-violet-100 text-violet-700">✦</div><div><div className="text-sm font-medium">23 options still feel like a lot?</div><div className="mt-0.5 text-xs text-[rgb(var(--ink-500))]">Tell us what matters and we’ll make the trade-offs visible.</div></div></div>
+                  <button onClick={() => setStage("capture")} className="rounded-full bg-violet-700 px-4 py-2.5 text-xs font-medium text-white">Help me choose</button>
+                </div>
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                  {products.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
+                </div>
+              </>
+            )}
+
+            {stage === "capture" && (
+              <div className="mb-4 overflow-hidden rounded-3xl border border-violet-200 bg-white shadow-lg">
+                <div className="flex items-start justify-between bg-gradient-to-r from-violet-50 to-white p-5"><div><div className="text-[10px] font-semibold uppercase tracking-[.18em] text-violet-700">Start with your situation</div><h2 className="mt-1 text-xl font-medium">What would make this a good decision for you?</h2><p className="mt-1 text-xs text-[rgb(var(--ink-500))]">Describe the use case, constraints and what matters most.</p></div><button onClick={() => setStage("browse")} className="rounded-full border border-[rgb(var(--ink-200))] px-3 py-2 text-xs">Close</button></div>
+                <div className="grid gap-4 p-5 md:grid-cols-[1.35fr_1fr]">
+                  <div className="rounded-2xl border border-[rgb(var(--ink-200))] p-4"><div className="text-[10px] font-semibold uppercase tracking-wider text-[rgb(var(--ink-500))]">Your requirement</div><textarea value={need} onChange={(e) => setNeed(e.target.value)} className="mt-2 min-h-28 w-full resize-none border-0 bg-transparent text-sm leading-6 outline-none" /><div className="flex flex-wrap gap-2"><button onClick={() => setNeed("I want the cheapest reliable option under ₹18,000.")} className="rounded-full bg-[rgb(var(--subtle))] px-3 py-2 text-[10px]">Price first</button><button onClick={() => setNeed("I sit 9 hours a day and comfort matters more than price.")} className="rounded-full bg-[rgb(var(--subtle))] px-3 py-2 text-[10px]">Comfort first</button><button onClick={() => setNeed("Warranty and service matter most to me.")} className="rounded-full bg-[rgb(var(--subtle))] px-3 py-2 text-[10px]">Warranty first</button></div></div>
+                  <div className="rounded-2xl border border-[rgb(var(--ink-200))] p-4"><div className="text-[10px] font-semibold uppercase tracking-wider text-[rgb(var(--ink-500))]">What we understood</div><div className="mt-3 grid grid-cols-2 gap-2">{Object.entries(inferred).map(([k, v]) => <div key={k} className="rounded-xl bg-[rgb(var(--subtle))] p-3"><div className="text-[9px] uppercase text-[rgb(var(--ink-500))]">{k}</div><div className="mt-1 text-xs font-medium">{v}</div></div>)}</div></div>
+                </div>
+                <div className="flex items-center justify-between px-5 pb-5"><div className="text-[10px] text-[rgb(var(--ink-500))]">Illustrative prototype · not a production recommendation model</div><button onClick={buildDecision} className="rounded-full bg-[rgb(var(--ink))] px-4 py-2.5 text-xs font-medium text-[rgb(var(--page))]">Build my decision view →</button></div>
+              </div>
+            )}
+
+            {stage === "decision" && (
+              <>
+                <div className="mb-4 rounded-3xl border border-[rgb(var(--ink-200))] bg-white p-5">
+                  <div className="flex flex-col justify-between gap-4 md:flex-row"><div><div className="text-[10px] font-semibold uppercase tracking-[.18em] text-violet-700">Your decision model</div><h2 className="mt-1 text-xl font-medium">The decision, not just the recommendations</h2><p className="mt-1 text-xs text-[rgb(var(--ink-500))]">Priorities, constraints, eliminations and uncertainty are visible.</p></div><div className="flex gap-2"><button onClick={() => setStage("capture")} className="rounded-full border border-[rgb(var(--ink-200))] px-3 py-2 text-xs">Edit requirement</button><button onClick={reset} className="rounded-full border border-[rgb(var(--ink-200))] px-3 py-2 text-xs">↺ Back to all products</button></div></div>
+                  <div className="mt-4 grid gap-3 md:grid-cols-[1.3fr_.9fr]">
+                    <div className="rounded-2xl bg-[rgb(var(--subtle))] p-4"><div className="mb-2 text-[9px] font-semibold uppercase tracking-wider text-[rgb(var(--ink-500))]">What matters in this decision</div><div className="grid grid-cols-2 gap-2 md:grid-cols-3">{priorities[scenario].map(([a, b]) => <div key={a} className={`rounded-xl border p-3 ${b === "Critical" || b === "Hard limit" ? "border-violet-200 bg-violet-50" : "border-[rgb(var(--ink-200))] bg-white"}`}><div className="text-[8px] uppercase text-[rgb(var(--ink-500))]">{a}</div><div className="mt-1 text-xs font-medium">{b}</div></div>)}</div></div>
+                    <div className="rounded-2xl bg-[rgb(var(--ink))] p-4 text-[rgb(var(--page))]"><div className="mb-3 text-[9px] font-semibold uppercase tracking-wider text-[rgb(var(--ink-500))]">How the catalogue narrowed</div><div className="flex items-center justify-between text-center"><div><div className="text-lg font-semibold">23</div><div className="text-[8px] text-[rgb(var(--ink-500))]">relevant</div></div><span>→</span><div><div className="text-lg font-semibold">{scenario === "strictBudget" ? 14 : scenario === "warranty" ? 13 : 12}</div><div className="text-[8px] text-[rgb(var(--ink-500))]">ruled out</div></div><span>→</span><div><div className="text-lg font-semibold">8</div><div className="text-[8px] text-[rgb(var(--ink-500))]">plausible</div></div><span>→</span><div><div className="text-lg font-semibold">3</div><div className="text-[8px] text-[rgb(var(--ink-500))]">meaningful</div></div></div><button onClick={() => setShowRemoved(!showRemoved)} className="mt-3 w-full rounded-xl border border-emerald-900 bg-emerald-950 px-3 py-2 text-[9px]">Why were products ruled out? ↓</button>{showRemoved && <div className="mt-2 flex flex-wrap gap-1.5">{removed.map((x) => <span key={x} className="rounded-full bg-amber-50 px-2 py-1 text-[8px] text-amber-800">{x}</span>)}</div>}</div>
+                  </div>
+                </div>
+
+                <div className="mb-3 flex items-end justify-between"><div><div className="text-sm font-medium">Your decision frontier</div><div className="mt-1 text-[10px] text-[rgb(var(--ink-500))]">Three choices remain because each wins on a different trade-off.</div></div><div className="text-[10px] text-[rgb(var(--ink-500))]">Not “best to worst”</div></div>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">{decisionSet.map((d, i) => { const p = products.find((x) => x.id === d.id)!; return <div key={d.id} className={`overflow-hidden rounded-2xl border bg-white ${i === 0 ? "border-violet-300 shadow-lg" : "border-[rgb(var(--ink-200))]"}`}><div className="relative flex h-40 items-center justify-center bg-gradient-to-br from-slate-50 to-emerald-50"><span className={`absolute left-3 top-3 rounded-full px-2 py-1 text-[9px] font-medium ${i === 0 ? "bg-violet-100 text-violet-700" : "bg-white"}`}>{d.label}</span><ChairArt index={products.indexOf(p)} /></div><div className="p-4"><div className="text-[9px] uppercase tracking-wider text-[rgb(var(--ink-500))]">{p.brand}</div><div className="mt-1 text-sm font-medium">{p.name}</div><div className="mt-2 text-lg font-semibold">{money(p.price)} <span className="text-[9px] font-normal text-[rgb(var(--ink-500))] line-through">{money(p.mrp)}</span></div><div className="mt-3 flex items-center justify-between text-[9px] font-medium"><span>{d.fit}% fit</span><span className="rounded-full bg-emerald-50 px-2 py-1 text-emerald-700">{d.confidence} confidence</span></div><div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[rgb(var(--subtle))]"><div className="h-full rounded-full bg-[rgb(var(--accent))]" style={{ width: `${d.fit}%` }} /></div><div className="mt-3 grid grid-cols-2 gap-2"><div className="rounded-xl bg-emerald-50 p-3"><div className="text-[8px] uppercase text-[rgb(var(--ink-500))]">Wins on</div><div className="mt-1 text-[10px]">{d.win}</div></div><div className="rounded-xl bg-amber-50 p-3"><div className="text-[8px] uppercase text-[rgb(var(--ink-500))]">Trade-off</div><div className="mt-1 text-[10px]">{d.tradeoff}</div></div></div><button onClick={() => setSelectedWhy(d.id)} className="mt-3 w-full rounded-xl border border-[rgb(var(--ink-200))] py-2 text-[9px] font-medium text-violet-700">Why this remains →</button></div></div> })}</div>
+
+                <div className="my-4 rounded-2xl border border-[rgb(var(--ink-200))] bg-white p-4"><div className="flex flex-col justify-between gap-3 md:flex-row"><div><div className="text-sm font-medium">What would change the decision?</div><div className="mt-1 text-[10px] text-[rgb(var(--ink-500))]">Change one constraint and watch the frontier move.</div></div><button onClick={() => setScenario("comfort")} className="rounded-full border border-[rgb(var(--ink-200))] px-3 py-2 text-[9px]">Baseline</button></div><div className="mt-3 flex flex-wrap gap-2">{([["strictBudget", "Make ₹18k a hard limit"], ["lightUse", "Only 3 hours/day"], ["warranty", "Warranty becomes critical"], ["comfort", "Comfort above everything"]] as Array<[Scenario, string]>).map(([key, label]) => <button key={key} onClick={() => setScenario(key)} className={`rounded-full border px-3 py-2 text-[9px] ${scenario === key ? "border-violet-700 bg-violet-700 text-white" : "border-[rgb(var(--ink-200))] bg-white"}`}>{label}</button>)}</div></div>
+
+                <DecisionLandscape set={decisionSet.map((x) => x.id)} />
+              </>
+            )}
+          </section>
+        </div>
+
+        <section className="mt-12 rounded-3xl bg-[rgb(var(--ink))] p-6 text-[rgb(var(--page))]">
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="text-[10px] font-semibold uppercase tracking-[.18em] text-violet-300">Why this is not another shopping chatbot</div><h2 className="mt-2 font-serif text-3xl">Conversation can be the input. It should not hide the decision.</h2></div><p className="max-w-xl text-xs leading-6 text-[rgb(var(--ink-500))]">A shopping assistant can answer questions and recommend products. A decision layer makes the priorities, eliminations, trade-offs, evidence and uncertainty visible — and lets the shopper change them.</p></div>
+          <div className="mt-5 grid gap-3 md:grid-cols-2"><div className="rounded-2xl border border-emerald-900 bg-emerald-950 p-4"><div className="text-[9px] uppercase tracking-wider text-violet-300">AI shopping assistant</div><div className="mt-2 text-sm font-medium">“What should I buy?”</div><div className="mt-2 text-xs leading-5 text-[rgb(var(--ink-500))]">Conversation → answer → recommendation. Helpful, but much of the reasoning can remain inside the assistant.</div></div><div className="rounded-2xl border border-violet-800 bg-violet-950/40 p-4"><div className="text-[9px] uppercase tracking-wider text-violet-300">Decision layer</div><div className="mt-2 text-sm font-medium">“What makes this right for me?”</div><div className="mt-2 text-xs leading-5 text-[rgb(var(--ink-500))]">Context → decision model → ruled-out options → trade-off frontier → evidence → what changes the answer.</div></div></div>
+        </section>
+
+        <section className="relative mt-5 overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-emerald-950 to-violet-950 p-7 text-white shadow-xl">
+          <div className="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-violet-500/20 blur-3xl" />
+          <div className="relative z-10 grid gap-6 md:grid-cols-[1fr_auto] md:items-center"><div><div className="text-[10px] font-semibold uppercase tracking-[.18em] text-violet-300">Built as a public concept by Maulin Shah</div><h2 className="mt-2 font-serif text-3xl">Want to apply this thinking to a real customer decision?</h2><p className="mt-3 max-w-3xl text-xs leading-6 text-slate-300">The prototype shows the experience. The real work is diagnosing the decision bottleneck, defining what “suitable” means in your category, connecting trustworthy data and AI, and building the operating logic around it.</p><div className="mt-4 flex max-w-2xl items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-[10px]"><span className="text-slate-300">Data · AI · Product · Decision Systems</span><strong>maulinshah.vercel.app ↗</strong></div></div><div className="flex flex-col gap-2"><a href="https://maulinshah.vercel.app" target="_blank" rel="noreferrer" className="rounded-full bg-white px-5 py-3 text-center text-xs font-medium text-slate-900">Visit my portfolio →</a><a href="https://maulinshah.vercel.app/contact" target="_blank" rel="noreferrer" className="rounded-full border border-white/20 px-5 py-3 text-center text-xs font-medium">Discuss this problem</a></div></div>
+        </section>
+
+        <footer className="py-8 text-center text-[10px] text-[rgb(var(--ink-500))]">Illustrative prototype · product names, evidence and outcomes are fictional · Maulin Shah</footer>
+      </main>
+
+      {selectedDecision && selectedProduct && (
+        <div onClick={() => setSelectedWhy(null)} className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4"><div onClick={(e) => e.stopPropagation()} className="w-full max-w-xl rounded-3xl bg-white p-6"><div className="flex items-start justify-between"><div><div className="text-[10px] font-semibold uppercase tracking-wider text-violet-700">Why this option remains</div><h3 className="mt-1 text-xl font-medium">{selectedProduct.name}</h3></div><button onClick={() => setSelectedWhy(null)} className="grid h-8 w-8 place-items-center rounded-full bg-[rgb(var(--subtle))]">×</button></div><p className="mt-3 text-xs leading-6 text-[rgb(var(--ink-500))]">{selectedDecision.why}</p><div className="mt-4 grid gap-2 sm:grid-cols-3"><div className="rounded-xl bg-emerald-50 p-3"><div className="text-[8px] uppercase text-[rgb(var(--ink-500))]">Strong match</div><div className="mt-1 text-[10px]">{selectedDecision.win}</div></div><div className="rounded-xl bg-amber-50 p-3"><div className="text-[8px] uppercase text-[rgb(var(--ink-500))]">Trade-off</div><div className="mt-1 text-[10px]">{selectedDecision.tradeoff}</div></div><div className="rounded-xl bg-[rgb(var(--subtle))] p-3"><div className="text-[8px] uppercase text-[rgb(var(--ink-500))]">Confidence</div><div className="mt-1 text-[10px]">{selectedDecision.confidence}</div></div></div></div></div>
+      )}
+    </div>
+  );
+}
+
+function ProductCard({ product, index }: { product: (typeof products)[number]; index: number }) {
+  return <article className="overflow-hidden rounded-2xl border border-[rgb(var(--ink-200))] bg-white"><div className="relative flex h-48 items-center justify-center bg-gradient-to-br from-slate-50 to-emerald-50"><span className="absolute left-3 top-3 rounded-full bg-white px-2 py-1 text-[9px] font-medium shadow-sm">{product.tag}</span><ChairArt index={index} /></div><div className="p-4"><div className="text-[9px] uppercase tracking-wider text-[rgb(var(--ink-500))]">{product.brand}</div><div className="mt-1 text-sm font-medium">{product.name}</div><div className="mt-1 text-[10px] text-[rgb(var(--ink-500))]"><span className="text-amber-500">★★★★★</span> {product.rating} ({product.reviews})</div><div className="mt-3 text-lg font-semibold">{money(product.price)} <span className="text-[9px] font-normal text-[rgb(var(--ink-500))] line-through">{money(product.mrp)}</span></div><div className="mt-1 text-[9px] text-[rgb(var(--ink-500))]">Free delivery · easy returns</div></div></article>;
+}
+
+function DecisionLandscape({ set }: { set: string[] }) {
+  const frontier = [...set].sort((a, b) => mapCoords[a][0] - mapCoords[b][0]);
+  const points = frontier.map((id) => ({ id, x: mapCoords[id][0], y: mapCoords[id][1] }));
+  const path = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x * 10} ${p.y * 3.3}`).join(" ");
+  return (
+    <section className="mb-5 grid gap-5 rounded-3xl border border-[rgb(var(--ink-200))] bg-white p-5 shadow-sm lg:grid-cols-[1.5fr_.75fr]">
+      <div className="relative h-[330px] overflow-hidden rounded-2xl border border-[rgb(var(--ink-200))] bg-gradient-to-b from-white to-[rgb(var(--subtle))]">
+        <div className="absolute inset-x-[52px] bottom-[42px] top-[30px] bg-[linear-gradient(to_right,rgba(90,110,102,.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(90,110,102,.08)_1px,transparent_1px)] bg-[size:25%_25%]" />
+        <div className="absolute left-4 top-3 text-[10px] font-semibold text-[rgb(var(--ink-600))]">More long-session comfort ↑</div>
+        <div className="absolute bottom-3 right-4 text-[10px] font-semibold text-[rgb(var(--ink-600))]">Lower total cost →</div>
+        <div className="absolute bottom-11 left-4 text-[8px] text-[rgb(var(--ink-500))]">Less suitable for long sessions</div>
+        <div className="absolute bottom-[42px] left-[52px] right-7 border-t border-[rgb(var(--ink-300))]" />
+        <div className="absolute bottom-[42px] left-[52px] top-[30px] border-l border-[rgb(var(--ink-300))]" />
+        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 330" preserveAspectRatio="none"><path d={path} fill="none" stroke="rgb(var(--accent))" strokeWidth="2.5" strokeDasharray="7 6" opacity=".5" /></svg>
+        {products.map((p) => {
+          const [x, y] = mapCoords[p.id];
+          const active = set.includes(p.id);
+          return <div key={p.id} className={`absolute flex h-10 -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-xl px-3 text-[9px] font-medium shadow-md ${active ? "border-2 border-violet-600 bg-violet-50 text-violet-800" : "border border-[rgb(var(--ink-300))] bg-white text-[rgb(var(--ink-500))] opacity-50"}`} style={{ left: `${x}%`, top: `${y}%` }}><span className={`h-2.5 w-2.5 rounded-full ${active ? "bg-violet-600 ring-4 ring-violet-100" : "bg-[rgb(var(--ink-300))]"}`} />{p.name}</div>;
+        })}
+      </div>
+      <div className="flex flex-col justify-center"><div className="text-[10px] font-semibold uppercase tracking-[.18em] text-violet-700">The decision landscape</div><h3 className="mt-2 font-serif text-2xl leading-tight">Different good choices — not a ranking.</h3><p className="mt-3 text-xs leading-6 text-[rgb(var(--ink-500))]">Each highlighted chair earns its place for a different reason: one maximises comfort, one balances the brief, and one protects cost. Faded options can still be relevant, but another option offers an equal or better trade-off for what matters here.</p><div className="mt-4 rounded-2xl border border-violet-200 bg-violet-50 p-4"><div className="text-[10px] font-medium text-violet-800">This is the important difference.</div><div className="mt-1 text-[10px] leading-5 text-violet-700">The system does not simply return “Top 3”. It exposes the trade-off boundary and lets you change the decision.</div></div><div className="mt-4 space-y-2 text-[10px]"><div className="flex items-center gap-2"><span className="h-3 w-3 rounded border-2 border-violet-600 bg-violet-50" />Meaningful trade-off choice</div><div className="flex items-center gap-2"><span className="h-3 w-3 rounded border border-[rgb(var(--ink-300))] bg-white opacity-60" />Relevant, but does not improve this decision</div></div></div>
+    </section>
+  );
+}
