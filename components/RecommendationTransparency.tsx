@@ -328,7 +328,7 @@ export default function RecommendationTransparency() {
             </span>
           </label>
           <div className="ml-auto flex items-center gap-1">
-            <Link href="/contact" className="mr-1 inline-flex shrink-0 items-center justify-center gap-1 rounded-full bg-[#17211f] px-3 py-2.5 text-[10px] font-semibold text-white transition hover:bg-violet-800 sm:px-4"><span className="hidden xl:inline">Improve your recommendations</span><span className="xl:hidden">Consulting</span><span aria-hidden="true">→</span></Link>
+            <Link href="/contact" className="mr-1 inline-flex shrink-0 items-center justify-center gap-1 rounded-full bg-[#17211f] px-3 py-2.5 text-[10px] font-semibold text-white transition hover:bg-violet-800 sm:px-4"><span className="hidden xl:inline">Want to discuss this? Talk to me</span><span className="xl:hidden">Talk to me</span><span aria-hidden="true">→</span></Link>
             <button onClick={() => setSavedOnly((value) => !value)} aria-pressed={savedOnly} className={`relative grid h-10 w-10 place-items-center rounded-full transition ${savedOnly ? "bg-rose-50 text-rose-600" : "text-slate-600 hover:bg-slate-100"}`} aria-label="Show saved products">
               <Heart className={`h-[18px] w-[18px] ${savedOnly ? "fill-current" : ""}`} />
               {saved.length > 0 ? <CountBadge>{saved.length}</CountBadge> : null}
@@ -420,7 +420,7 @@ export default function RecommendationTransparency() {
             <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">I help teams redesign product discovery so recommendations balance customer fit, commercial goals and clear evidence.</p>
           </div>
           <div className="lg:text-right">
-            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-xs font-semibold text-[#17211f] transition hover:bg-violet-100">Discuss your recommendation experience <span aria-hidden="true">→</span></Link>
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-xs font-semibold text-[#17211f] transition hover:bg-violet-100">Want to discuss this? Talk to me <span aria-hidden="true">→</span></Link>
             <p className="mt-2 text-[10px] text-slate-400">Strategy, product design and implementation support.</p>
           </div>
         </div>
