@@ -353,8 +353,8 @@ export default function RecommendationTransparency() {
                   <button onClick={() => setShowNeeds(true)} className="text-[10px] font-semibold text-violet-700 underline decoration-violet-200 underline-offset-4 hover:text-violet-900">Edit needs</button>
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1.5 text-[11px] text-slate-600">
-                  {preferences.budget ? <PriorityChip onRemove={() => setPreferences((current) => ({ ...current, budget: null }))}>Under {money(preferences.budget)}</PriorityChip> : null}
-                  {preferences.needs.map((need) => <PriorityChip key={need} onRemove={() => removeNeed(need)}>{needOptions[need].label}</PriorityChip>)}
+                  {preferences.budget ? <PriorityChip removeLabel={`Under ${money(preferences.budget)}`} onRemove={() => setPreferences((current) => ({ ...current, budget: null }))}>Under {money(preferences.budget)}</PriorityChip> : null}
+                  {preferences.needs.map((need) => <PriorityChip key={need} removeLabel={needOptions[need].label} onRemove={() => removeNeed(need)}>{needOptions[need].label}</PriorityChip>)}
                   <button onClick={() => setShowNeeds(true)} className="rounded-full border border-dashed border-violet-300 bg-violet-50 px-2.5 py-1 font-semibold text-violet-700 hover:border-violet-500">+ Add need</button>
                 </div>
               </div>
@@ -583,8 +583,8 @@ function NeedsPanel({ preferences, setPreferences, rankMode, setRankMode, onClos
       <div className="mt-6">
         <div className="flex items-center justify-between gap-3"><div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Your active needs</div>{preferences.budget || preferences.needs.length ? <button onClick={() => setPreferences({ budget: null, needs: [] })} className="text-[10px] font-semibold text-slate-500 hover:text-slate-900">Clear all</button> : null}</div>
         <div className="mt-2 flex flex-wrap gap-2">
-          {preferences.budget ? <PriorityChip onRemove={() => setPreferences({ ...preferences, budget: null })}>Under {money(preferences.budget)}</PriorityChip> : null}
-          {preferences.needs.map((need) => <PriorityChip key={need} onRemove={() => removeNeed(need)}>{needOptions[need].label}</PriorityChip>)}
+          {preferences.budget ? <PriorityChip removeLabel={`Under ${money(preferences.budget)}`} onRemove={() => setPreferences({ ...preferences, budget: null })}>Under {money(preferences.budget)}</PriorityChip> : null}
+          {preferences.needs.map((need) => <PriorityChip key={need} removeLabel={needOptions[need].label} onRemove={() => removeNeed(need)}>{needOptions[need].label}</PriorityChip>)}
           {!preferences.budget && !preferences.needs.length ? <span className="text-xs text-slate-400">No needs added yet.</span> : null}
         </div>
       </div>
@@ -646,8 +646,8 @@ function CountBadge({ children }: { children: React.ReactNode }) {
   return <span className="absolute right-0 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-violet-700 px-1 text-[8px] font-bold text-white">{children}</span>;
 }
 
-function PriorityChip({ children, onRemove }: { children: React.ReactNode; onRemove?: () => void }) {
-  return <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1">{children}{onRemove ? <button onClick={onRemove} aria-label={`Remove ${String(children)}`} className="grid h-4 w-4 place-items-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-900"><X className="h-2.5 w-2.5" /></button> : null}</span>;
+function PriorityChip({ children, onRemove, removeLabel }: { children: React.ReactNode; onRemove?: () => void; removeLabel?: string }) {
+  return <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1">{children}{onRemove ? <button onClick={onRemove} aria-label={`Remove ${removeLabel ?? "need"}`} className="grid h-4 w-4 place-items-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-900"><X className="h-2.5 w-2.5" /></button> : null}</span>;
 }
 
 function Feature({ children }: { children: React.ReactNode }) {
