@@ -21,14 +21,12 @@ type Badge = "Recommended" | "Best Seller" | "Top Rated" | "Popular" | "Sponsore
 type RankMode = "match" | "popular" | "rating" | "price";
 type PriceFilter = "all" | "under8" | "under12" | "over12";
 type FeatureFilter = "anc" | "multipoint" | "calls" | "battery" | "gaming";
+type ProductType = "Over-ear" | "On-ear" | "In-ear" | "Open-ear" | "Neckband";
+type NeedKey = "calls" | "multipoint" | "anc" | "battery" | "gaming" | "comfort" | "workout" | "overEar" | "inEar" | "openEar";
 
 type Preferences = {
-  budget: number;
-  calls: boolean;
-  multipoint: boolean;
-  anc: boolean;
-  battery: boolean;
-  gaming: boolean;
+  budget: number | null;
+  needs: NeedKey[];
 };
 
 type Product = {
@@ -40,16 +38,20 @@ type Product = {
   rating: number;
   reviews: number;
   sold: number;
-  badge: Badge;
+  badge?: Badge;
   sponsored: boolean;
   image: string;
-  imagePosition?: string;
+  imageTile: number;
+  productType: ProductType;
+  description: string;
   color: string;
   callScore: number;
   ancScore: number;
   multipoint: boolean;
   battery: number;
   lowLatency: boolean;
+  comfortScore: number;
+  sportFit: boolean;
   waterResistance: string;
   delivery: string;
   returnRate: number;
@@ -57,38 +59,33 @@ type Product = {
   recommendationMix: string[];
 };
 
-const images = {
-  navy: "/products/earbuds/aurora-navy.webp",
-  sage: "/products/earbuds/rhythm-sage.webp",
-  white: "/products/earbuds/clarity-white.webp",
-  burgundy: "/products/earbuds/volt-burgundy.webp",
-};
+const catalogueImage = "/products/wireless-headphones-catalogue-v2.webp";
 
 const products: Product[] = [
-  { id: "p01", brand: "Auraloop", name: "Focus Pro", price: 10999, mrp: 14999, rating: 4.6, reviews: 2184, sold: 8200, badge: "Recommended", sponsored: false, image: images.navy, color: "Midnight", callScore: 5, ancScore: 5, multipoint: true, battery: 36, lowLatency: false, waterResistance: "IPX5", delivery: "Tomorrow", returnRate: 2.1, sellerScore: 96, recommendationMix: ["Strong match for your search", "High seller reliability", "Low return rate"] },
-  { id: "p02", brand: "Kite Audio", name: "Air Mini 2", price: 5999, mrp: 7999, rating: 4.4, reviews: 4910, sold: 18400, badge: "Best Seller", sponsored: false, image: images.white, color: "Pearl", callScore: 4, ancScore: 3, multipoint: true, battery: 28, lowLatency: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 3.7, sellerScore: 94, recommendationMix: ["Highest unit sales in this category", "Available for next-day delivery", "Frequent repeat purchase"] },
-  { id: "p03", brand: "Sona Labs", name: "Clarity One", price: 12999, mrp: 16999, rating: 4.8, reviews: 782, sold: 3900, badge: "Top Rated", sponsored: false, image: images.sage, color: "Sage", callScore: 5, ancScore: 4, multipoint: true, battery: 34, lowLatency: false, waterResistance: "IPX5", delivery: "2 days", returnRate: 1.8, sellerScore: 98, recommendationMix: ["Highest verified-buyer rating", "Strong call quality feedback", "Consistent recent reviews"] },
-  { id: "p04", brand: "Vektor", name: "Play Neo", price: 8999, mrp: 11999, rating: 4.3, reviews: 1740, sold: 7100, badge: "Sponsored", sponsored: true, image: images.burgundy, color: "Wine", callScore: 4, ancScore: 4, multipoint: false, battery: 40, lowLatency: true, waterResistance: "IPX5", delivery: "Tomorrow", returnRate: 4.2, sellerScore: 91, recommendationMix: ["Seller paid for placement", "Meets the relevance threshold", "Strong gaming feature match"] },
-  { id: "p05", brand: "Nimbo", name: "Everyday ANC", price: 7499, mrp: 9999, rating: 4.2, reviews: 3290, sold: 12600, badge: "Popular", sponsored: false, image: images.navy, imagePosition: "52% 48%", color: "Ink", callScore: 3, ancScore: 4, multipoint: true, battery: 32, lowLatency: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 5.1, sellerScore: 90, recommendationMix: ["Most viewed this week", "High add-to-bag rate", "Discount is driving attention"] },
-  { id: "p06", brand: "Auraloop", name: "Workday Lite", price: 8499, mrp: 10999, rating: 4.5, reviews: 1264, sold: 5400, badge: "Best Match", sponsored: false, image: images.sage, imagePosition: "50% 46%", color: "Moss", callScore: 5, ancScore: 4, multipoint: true, battery: 38, lowLatency: false, waterResistance: "IPX5", delivery: "2 days", returnRate: 2.4, sellerScore: 97, recommendationMix: ["Matches your declared priorities", "Inside your budget", "No paid placement"] },
-  { id: "p07", brand: "Kite Audio", name: "Bass Sprint", price: 4499, mrp: 6499, rating: 4.1, reviews: 6480, sold: 22300, badge: "Best Seller", sponsored: false, image: images.burgundy, imagePosition: "48% 52%", color: "Merlot", callScore: 3, ancScore: 2, multipoint: false, battery: 30, lowLatency: true, waterResistance: "IPX6", delivery: "Tomorrow", returnRate: 6.4, sellerScore: 89, recommendationMix: ["Highest sales volume", "Strong discount conversion", "Broad entry-level appeal"] },
-  { id: "p08", brand: "Sona Labs", name: "Quiet Form", price: 15999, mrp: 19999, rating: 4.7, reviews: 1106, sold: 4700, badge: "Top Rated", sponsored: false, image: images.navy, imagePosition: "47% 50%", color: "Graphite", callScore: 5, ancScore: 5, multipoint: true, battery: 42, lowLatency: false, waterResistance: "IPX5", delivery: "3 days", returnRate: 1.6, sellerScore: 98, recommendationMix: ["Strongest ANC score", "Excellent verified reviews", "Lowest return rate"] },
-  { id: "p09", brand: "Vektor", name: "Commute X", price: 11999, mrp: 14999, rating: 4.4, reviews: 950, sold: 4300, badge: "Sponsored", sponsored: true, image: images.white, imagePosition: "50% 54%", color: "Cloud", callScore: 4, ancScore: 5, multipoint: true, battery: 30, lowLatency: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 3.9, sellerScore: 92, recommendationMix: ["Seller paid for placement", "Matches 4 common commuter needs", "In stock near you"] },
-  { id: "p10", brand: "Morrow", name: "Studio Buds", price: 13999, mrp: 17999, rating: 4.6, reviews: 680, sold: 2800, badge: "Recommended", sponsored: false, image: images.burgundy, imagePosition: "54% 50%", color: "Bordeaux", callScore: 4, ancScore: 4, multipoint: true, battery: 35, lowLatency: true, waterResistance: "IPX5", delivery: "2 days", returnRate: 2.8, sellerScore: 95, recommendationMix: ["Similar shoppers kept this item", "Balanced feature set", "Low return rate"] },
-  { id: "p11", brand: "Nimbo", name: "Pocket Air", price: 3999, mrp: 5499, rating: 4.0, reviews: 7860, sold: 20800, badge: "Popular", sponsored: false, image: images.white, imagePosition: "47% 48%", color: "Ice", callScore: 3, ancScore: 1, multipoint: false, battery: 24, lowLatency: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 7.2, sellerScore: 87, recommendationMix: ["High traffic this week", "Low price drives clicks", "Often compared with sale products"] },
-  { id: "p12", brand: "Morrow", name: "Link Duo", price: 9999, mrp: 12999, rating: 4.5, reviews: 1430, sold: 6700, badge: "Best Match", sponsored: false, image: images.sage, imagePosition: "53% 50%", color: "Olive", callScore: 5, ancScore: 4, multipoint: true, battery: 40, lowLatency: true, waterResistance: "IPX5", delivery: "Tomorrow", returnRate: 2.5, sellerScore: 96, recommendationMix: ["Matches your work and travel needs", "Inside your budget", "No payment influenced rank"] },
-  { id: "p13", brand: "Auraloop", name: "Halo 3", price: 6799, mrp: 8999, rating: 4.3, reviews: 2480, sold: 9400, badge: "Recommended", sponsored: false, image: images.navy, imagePosition: "50% 55%", color: "Navy", callScore: 4, ancScore: 3, multipoint: true, battery: 34, lowLatency: false, waterResistance: "IPX5", delivery: "2 days", returnRate: 4.1, sellerScore: 93, recommendationMix: ["Relevant to your recent browsing", "Good value for the feature mix", "Reliable availability"] },
-  { id: "p14", brand: "Kite Audio", name: "Game Arc", price: 7999, mrp: 10499, rating: 4.4, reviews: 1990, sold: 8900, badge: "Sponsored", sponsored: true, image: images.burgundy, imagePosition: "50% 46%", color: "Garnet", callScore: 3, ancScore: 3, multipoint: false, battery: 45, lowLatency: true, waterResistance: "IPX6", delivery: "Tomorrow", returnRate: 4.8, sellerScore: 90, recommendationMix: ["Seller paid for placement", "Strong latency match", "High stock availability"] },
-  { id: "p15", brand: "Sona Labs", name: "Voice Clear", price: 11499, mrp: 13999, rating: 4.7, reviews: 870, sold: 3600, badge: "Top Rated", sponsored: false, image: images.white, imagePosition: "52% 52%", color: "Silver", callScore: 5, ancScore: 4, multipoint: true, battery: 31, lowLatency: false, waterResistance: "IPX4", delivery: "2 days", returnRate: 1.9, sellerScore: 97, recommendationMix: ["Top call-quality ratings", "Verified review threshold met", "High seller reliability"] },
-  { id: "p16", brand: "Vektor", name: "Motion 5", price: 5499, mrp: 7499, rating: 4.2, reviews: 4150, sold: 15100, badge: "Popular", sponsored: false, image: images.sage, imagePosition: "46% 50%", color: "Fern", callScore: 3, ancScore: 2, multipoint: true, battery: 37, lowLatency: true, waterResistance: "IPX6", delivery: "Tomorrow", returnRate: 5.9, sellerScore: 88, recommendationMix: ["Trending in fitness audio", "High add-to-bag rate", "Recent price drop"] },
-  { id: "p17", brand: "Morrow", name: "Calm Mini", price: 9299, mrp: 11999, rating: 4.5, reviews: 1210, sold: 4900, badge: "Best Match", sponsored: false, image: images.navy, imagePosition: "53% 47%", color: "Slate", callScore: 4, ancScore: 5, multipoint: true, battery: 36, lowLatency: false, waterResistance: "IPX5", delivery: "2 days", returnRate: 2.7, sellerScore: 96, recommendationMix: ["Strong needs match", "Better ANC at this price", "No paid placement"] },
-  { id: "p18", brand: "Nimbo", name: "Pods Go", price: 3499, mrp: 4999, rating: 4.1, reviews: 9200, sold: 26000, badge: "Best Seller", sponsored: false, image: images.white, imagePosition: "54% 48%", color: "White", callScore: 3, ancScore: 1, multipoint: false, battery: 22, lowLatency: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 8.1, sellerScore: 86, recommendationMix: ["Most units sold", "Lowest entry price", "Broad availability"] },
-  { id: "p19", brand: "Auraloop", name: "Deep Quiet", price: 17999, mrp: 21999, rating: 4.8, reviews: 540, sold: 2100, badge: "Top Rated", sponsored: false, image: images.burgundy, imagePosition: "48% 48%", color: "Plum", callScore: 5, ancScore: 5, multipoint: true, battery: 46, lowLatency: true, waterResistance: "IPX5", delivery: "3 days", returnRate: 1.4, sellerScore: 99, recommendationMix: ["Highest satisfaction score", "Premium feature coverage", "Very low return rate"] },
-  { id: "p20", brand: "Kite Audio", name: "Metro Plus", price: 10499, mrp: 13499, rating: 4.4, reviews: 1520, sold: 6100, badge: "Recommended", sponsored: false, image: images.sage, imagePosition: "51% 54%", color: "Willow", callScore: 4, ancScore: 4, multipoint: true, battery: 33, lowLatency: false, waterResistance: "IPX5", delivery: "Tomorrow", returnRate: 3.2, sellerScore: 94, recommendationMix: ["Good query relevance", "Often chosen in this price range", "Dependable seller score"] },
-  { id: "p21", brand: "Sona Labs", name: "Sync Air", price: 12499, mrp: 15999, rating: 4.6, reviews: 910, sold: 4100, badge: "Best Match", sponsored: false, image: images.white, imagePosition: "48% 52%", color: "Frost", callScore: 5, ancScore: 4, multipoint: true, battery: 39, lowLatency: true, waterResistance: "IPX5", delivery: "2 days", returnRate: 2.0, sellerScore: 98, recommendationMix: ["Matches all key feature needs", "Slightly above budget", "No payment influenced rank"] },
-  { id: "p22", brand: "Vektor", name: "Rush ANC", price: 6999, mrp: 9499, rating: 4.2, reviews: 2750, sold: 11200, badge: "Sponsored", sponsored: true, image: images.navy, imagePosition: "46% 54%", color: "Black", callScore: 3, ancScore: 4, multipoint: false, battery: 41, lowLatency: true, waterResistance: "IPX6", delivery: "Tomorrow", returnRate: 5.4, sellerScore: 89, recommendationMix: ["Seller paid for placement", "Price and ANC are relevant", "High campaign budget"] },
-  { id: "p23", brand: "Morrow", name: "Daylong 44", price: 8999, mrp: 11499, rating: 4.5, reviews: 1680, sold: 7200, badge: "Popular", sponsored: false, image: images.sage, imagePosition: "54% 46%", color: "Sage", callScore: 4, ancScore: 3, multipoint: true, battery: 48, lowLatency: false, waterResistance: "IPX5", delivery: "Tomorrow", returnRate: 3.4, sellerScore: 95, recommendationMix: ["High engagement this week", "Battery-life searches are rising", "Strong availability"] },
-  { id: "p24", brand: "Nimbo", name: "Daily Talk", price: 6499, mrp: 8499, rating: 4.3, reviews: 3070, sold: 10100, badge: "Recommended", sponsored: false, image: images.white, imagePosition: "50% 46%", color: "Pearl", callScore: 4, ancScore: 3, multipoint: true, battery: 30, lowLatency: false, waterResistance: "IPX4", delivery: "2 days", returnRate: 4.6, sellerScore: 92, recommendationMix: ["Strong match for calls", "Inside your usual price range", "Consistent stock"] },
+  { id: "p01", brand: "Auraloop", name: "Focus Pro", price: 10999, mrp: 14999, rating: 4.6, reviews: 2184, sold: 8200, badge: "Recommended", sponsored: false, image: catalogueImage, imageTile: 0, productType: "Over-ear", description: "Comfortable over-ear headphones with strong ANC, clear work calls and multipoint switching.", color: "Midnight", callScore: 5, ancScore: 5, multipoint: true, battery: 36, lowLatency: false, comfortScore: 5, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 2.1, sellerScore: 96, recommendationMix: ["Strong match for your search", "High seller reliability", "Low return rate"] },
+  { id: "p02", brand: "Kite Audio", name: "Air Mini 2", price: 5999, mrp: 7999, rating: 4.4, reviews: 4910, sold: 18400, badge: "Best Seller", sponsored: false, image: catalogueImage, imageTile: 4, productType: "In-ear", description: "Compact in-ear earbuds for calls, commuting and easy switching between phone and laptop.", color: "Pearl", callScore: 4, ancScore: 3, multipoint: true, battery: 28, lowLatency: false, comfortScore: 4, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 3.7, sellerScore: 94, recommendationMix: ["Highest unit sales in this category", "Available for next-day delivery", "Frequent repeat purchase"] },
+  { id: "p03", brand: "Sona Labs", name: "Clarity One", price: 12999, mrp: 16999, rating: 4.8, reviews: 782, sold: 3900, badge: "Top Rated", sponsored: false, image: catalogueImage, imageTile: 1, productType: "Over-ear", description: "Lightweight over-ear design with clear microphones, balanced sound and all-day comfort.", color: "Pearl", callScore: 5, ancScore: 4, multipoint: true, battery: 34, lowLatency: false, comfortScore: 5, sportFit: false, waterResistance: "IPX4", delivery: "2 days", returnRate: 1.8, sellerScore: 98, recommendationMix: ["Highest verified-buyer rating", "Strong call quality feedback", "Consistent recent reviews"] },
+  { id: "p04", brand: "Vektor", name: "Play Neo", price: 8999, mrp: 11999, rating: 4.3, reviews: 1740, sold: 7100, badge: "Sponsored", sponsored: true, image: catalogueImage, imageTile: 11, productType: "Over-ear", description: "Low-latency over-ear wireless headphones for gaming with long battery life.", color: "Black", callScore: 4, ancScore: 4, multipoint: false, battery: 40, lowLatency: true, comfortScore: 4, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 4.2, sellerScore: 91, recommendationMix: ["Seller paid for placement", "Meets the relevance threshold", "Strong gaming feature match"] },
+  { id: "p05", brand: "Nimbo", name: "Everyday ANC", price: 7499, mrp: 9999, rating: 4.2, reviews: 3290, sold: 12600, sponsored: false, image: catalogueImage, imageTile: 5, productType: "In-ear", description: "Small in-ear earbuds with noise cancellation and multipoint for everyday commuting.", color: "Ink", callScore: 3, ancScore: 4, multipoint: true, battery: 32, lowLatency: false, comfortScore: 4, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 5.1, sellerScore: 90, recommendationMix: ["Good feature relevance", "High add-to-bag rate", "Discount is driving attention"] },
+  { id: "p06", brand: "Auraloop", name: "Workday Max", price: 8499, mrp: 10999, rating: 4.5, reviews: 1264, sold: 5400, badge: "Best Match", sponsored: false, image: catalogueImage, imageTile: 3, productType: "Over-ear", description: "Comfortable over-ear headphones built for meetings, clear calls and switching devices.", color: "Moss", callScore: 5, ancScore: 4, multipoint: true, battery: 38, lowLatency: false, comfortScore: 5, sportFit: false, waterResistance: "IPX4", delivery: "2 days", returnRate: 2.4, sellerScore: 97, recommendationMix: ["Matches your declared priorities", "Inside your budget", "No paid placement"] },
+  { id: "p07", brand: "Kite Audio", name: "Bass Loop", price: 4499, mrp: 6499, rating: 4.1, reviews: 6480, sold: 22300, sponsored: false, image: catalogueImage, imageTile: 8, productType: "Neckband", description: "Secure neckband earphones for running and workouts with sweat resistance and punchy bass.", color: "Black", callScore: 3, ancScore: 2, multipoint: false, battery: 30, lowLatency: true, comfortScore: 3, sportFit: true, waterResistance: "IPX6", delivery: "Tomorrow", returnRate: 6.4, sellerScore: 89, recommendationMix: ["Strong price relevance", "Secure workout fit", "Broad entry-level appeal"] },
+  { id: "p08", brand: "Sona Labs", name: "Quiet Form", price: 15999, mrp: 19999, rating: 4.7, reviews: 1106, sold: 4700, sponsored: false, image: catalogueImage, imageTile: 2, productType: "Over-ear", description: "Premium over-ear headphones with powerful ANC, soft cushions and long-flight comfort.", color: "Burgundy", callScore: 5, ancScore: 5, multipoint: true, battery: 42, lowLatency: false, comfortScore: 5, sportFit: false, waterResistance: "IPX4", delivery: "3 days", returnRate: 1.6, sellerScore: 98, recommendationMix: ["Strongest ANC score", "Excellent verified reviews", "Lowest return rate"] },
+  { id: "p09", brand: "Vektor", name: "Commute X", price: 11999, mrp: 14999, rating: 4.4, reviews: 950, sold: 4300, badge: "Sponsored", sponsored: true, image: catalogueImage, imageTile: 0, productType: "Over-ear", description: "Over-ear commuter headphones with strong noise cancellation, calls and multipoint.", color: "Graphite", callScore: 4, ancScore: 5, multipoint: true, battery: 30, lowLatency: false, comfortScore: 4, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 3.9, sellerScore: 92, recommendationMix: ["Seller paid for placement", "Matches common commuter needs", "In stock near you"] },
+  { id: "p10", brand: "Morrow", name: "Studio Air", price: 13999, mrp: 17999, rating: 4.6, reviews: 680, sold: 2800, sponsored: false, image: catalogueImage, imageTile: 9, productType: "On-ear", description: "Lightweight on-ear headphones with balanced audio, low latency and multipoint.", color: "Charcoal", callScore: 4, ancScore: 3, multipoint: true, battery: 35, lowLatency: true, comfortScore: 4, sportFit: false, waterResistance: "IPX4", delivery: "2 days", returnRate: 2.8, sellerScore: 95, recommendationMix: ["Similar shoppers kept this item", "Balanced feature set", "Low return rate"] },
+  { id: "p11", brand: "Nimbo", name: "Pocket Air", price: 3999, mrp: 5499, rating: 4.0, reviews: 7860, sold: 20800, badge: "Popular", sponsored: false, image: catalogueImage, imageTile: 4, productType: "In-ear", description: "Compact in-ear earbuds for music and casual calls at an entry-level price.", color: "White", callScore: 3, ancScore: 1, multipoint: false, battery: 24, lowLatency: false, comfortScore: 3, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 7.2, sellerScore: 87, recommendationMix: ["High traffic this week", "Low price drives clicks", "Often compared with sale products"] },
+  { id: "p12", brand: "Morrow", name: "Link Duo Max", price: 9999, mrp: 12999, rating: 4.5, reviews: 1430, sold: 6700, sponsored: false, image: catalogueImage, imageTile: 1, productType: "Over-ear", description: "Comfortable work headphones with excellent calls, ANC, multipoint and 40-hour battery.", color: "Cloud", callScore: 5, ancScore: 4, multipoint: true, battery: 40, lowLatency: true, comfortScore: 5, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 2.5, sellerScore: 96, recommendationMix: ["Matches work and travel needs", "Inside your budget", "No payment influenced rank"] },
+  { id: "p13", brand: "Auraloop", name: "Halo Clip", price: 6799, mrp: 8999, rating: 4.3, reviews: 2480, sold: 9400, sponsored: false, image: catalogueImage, imageTile: 7, productType: "Open-ear", description: "Open-ear clip headphones that keep surroundings audible during walking and office use.", color: "Pearl", callScore: 4, ancScore: 1, multipoint: true, battery: 34, lowLatency: false, comfortScore: 4, sportFit: true, waterResistance: "IPX5", delivery: "2 days", returnRate: 4.1, sellerScore: 93, recommendationMix: ["Relevant to open-ear searches", "Good value for the feature mix", "Reliable availability"] },
+  { id: "p14", brand: "Kite Audio", name: "Game Arc", price: 7999, mrp: 10499, rating: 4.4, reviews: 1990, sold: 8900, badge: "Sponsored", sponsored: true, image: catalogueImage, imageTile: 11, productType: "Over-ear", description: "Wireless gaming over-ear headphones with low latency and a 45-hour battery.", color: "Black", callScore: 3, ancScore: 3, multipoint: false, battery: 45, lowLatency: true, comfortScore: 4, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 4.8, sellerScore: 90, recommendationMix: ["Seller paid for placement", "Strong latency match", "High stock availability"] },
+  { id: "p15", brand: "Sona Labs", name: "Voice Clear", price: 11499, mrp: 13999, rating: 4.7, reviews: 870, sold: 3600, sponsored: false, image: catalogueImage, imageTile: 5, productType: "In-ear", description: "In-ear earbuds tuned for calls with strong microphones, ANC and multipoint.", color: "Black", callScore: 5, ancScore: 4, multipoint: true, battery: 31, lowLatency: false, comfortScore: 4, sportFit: false, waterResistance: "IPX4", delivery: "2 days", returnRate: 1.9, sellerScore: 97, recommendationMix: ["Top call-quality feedback", "Strong query relevance", "High seller reliability"] },
+  { id: "p16", brand: "Vektor", name: "Motion Hook", price: 5499, mrp: 7499, rating: 4.2, reviews: 4150, sold: 15100, sponsored: false, image: catalogueImage, imageTile: 6, productType: "In-ear", description: "Secure sport ear-hook earbuds for running, workouts and low-latency audio.", color: "Black", callScore: 3, ancScore: 2, multipoint: true, battery: 37, lowLatency: true, comfortScore: 3, sportFit: true, waterResistance: "IPX6", delivery: "Tomorrow", returnRate: 5.9, sellerScore: 88, recommendationMix: ["Strong workout fit", "High add-to-bag rate", "Recent price drop"] },
+  { id: "p17", brand: "Morrow", name: "Calm Studio", price: 9299, mrp: 11999, rating: 4.5, reviews: 1210, sold: 4900, sponsored: false, image: catalogueImage, imageTile: 3, productType: "Over-ear", description: "Soft over-ear headphones with strong ANC, multipoint and comfortable cushions.", color: "Sage", callScore: 4, ancScore: 5, multipoint: true, battery: 36, lowLatency: false, comfortScore: 5, sportFit: false, waterResistance: "IPX4", delivery: "2 days", returnRate: 2.7, sellerScore: 96, recommendationMix: ["Strong needs match", "Better ANC at this price", "No paid placement"] },
+  { id: "p18", brand: "Nimbo", name: "Pods Loop", price: 3499, mrp: 4999, rating: 4.1, reviews: 9200, sold: 26000, badge: "Best Seller", sponsored: false, image: catalogueImage, imageTile: 8, productType: "Neckband", description: "Affordable neckband earphones with a secure workout fit and sweat resistance.", color: "Black", callScore: 3, ancScore: 1, multipoint: false, battery: 22, lowLatency: false, comfortScore: 3, sportFit: true, waterResistance: "IPX5", delivery: "Tomorrow", returnRate: 8.1, sellerScore: 86, recommendationMix: ["Most units sold", "Lowest entry price", "Broad availability"] },
+  { id: "p19", brand: "Auraloop", name: "Deep Quiet", price: 17999, mrp: 21999, rating: 4.8, reviews: 540, sold: 2100, sponsored: false, image: catalogueImage, imageTile: 2, productType: "Over-ear", description: "Premium over-ear headphones with maximum ANC, clear calls and 46-hour battery.", color: "Burgundy", callScore: 5, ancScore: 5, multipoint: true, battery: 46, lowLatency: true, comfortScore: 5, sportFit: false, waterResistance: "IPX4", delivery: "3 days", returnRate: 1.4, sellerScore: 99, recommendationMix: ["Highest satisfaction score", "Premium feature coverage", "Very low return rate"] },
+  { id: "p20", brand: "Kite Audio", name: "Metro Lite", price: 10499, mrp: 13499, rating: 4.4, reviews: 1520, sold: 6100, sponsored: false, image: catalogueImage, imageTile: 9, productType: "On-ear", description: "Lightweight on-ear headphones for commuting, calls and easy multipoint switching.", color: "Charcoal", callScore: 4, ancScore: 3, multipoint: true, battery: 33, lowLatency: false, comfortScore: 4, sportFit: false, waterResistance: "IPX4", delivery: "Tomorrow", returnRate: 3.2, sellerScore: 94, recommendationMix: ["Good query relevance", "Often chosen in this price range", "Dependable seller score"] },
+  { id: "p21", brand: "Sona Labs", name: "Sync Open", price: 12499, mrp: 15999, rating: 4.6, reviews: 910, sold: 4100, sponsored: false, image: catalogueImage, imageTile: 7, productType: "Open-ear", description: "Open-ear clip headphones for calls and workouts while keeping surroundings audible.", color: "Pearl", callScore: 5, ancScore: 1, multipoint: true, battery: 39, lowLatency: true, comfortScore: 4, sportFit: true, waterResistance: "IPX5", delivery: "2 days", returnRate: 2.0, sellerScore: 98, recommendationMix: ["Matches open-ear searches", "Strong call quality", "No payment influenced rank"] },
+  { id: "p22", brand: "Vektor", name: "Rush Sport", price: 6999, mrp: 9499, rating: 4.2, reviews: 2750, sold: 11200, badge: "Sponsored", sponsored: true, image: catalogueImage, imageTile: 6, productType: "In-ear", description: "Sport ear-hook earbuds for running with sweat resistance, ANC and low latency.", color: "Black", callScore: 3, ancScore: 4, multipoint: false, battery: 41, lowLatency: true, comfortScore: 3, sportFit: true, waterResistance: "IPX6", delivery: "Tomorrow", returnRate: 5.4, sellerScore: 89, recommendationMix: ["Seller paid for placement", "Price and workout fit are relevant", "High campaign budget"] },
+  { id: "p23", brand: "Morrow", name: "Daylong Open", price: 8999, mrp: 11499, rating: 4.5, reviews: 1680, sold: 7200, sponsored: false, image: catalogueImage, imageTile: 10, productType: "Open-ear", description: "Open-ear sport headphones with a stable fit and 48-hour battery life.", color: "Graphite", callScore: 4, ancScore: 1, multipoint: true, battery: 48, lowLatency: false, comfortScore: 4, sportFit: true, waterResistance: "IPX5", delivery: "Tomorrow", returnRate: 3.4, sellerScore: 95, recommendationMix: ["Strong battery match", "Stable workout fit", "Strong availability"] },
+  { id: "p24", brand: "Nimbo", name: "Daily Move", price: 6499, mrp: 8499, rating: 4.3, reviews: 3070, sold: 10100, sponsored: false, image: catalogueImage, imageTile: 10, productType: "Open-ear", description: "Light open-ear headphones for walking, everyday calls and awareness outdoors.", color: "Graphite", callScore: 4, ancScore: 1, multipoint: true, battery: 30, lowLatency: false, comfortScore: 4, sportFit: true, waterResistance: "IPX5", delivery: "2 days", returnRate: 4.6, sellerScore: 92, recommendationMix: ["Strong match for outdoor use", "Inside your usual price range", "Consistent stock"] },
 ];
 
 const labelLogic: Record<Badge, { means: string; optimizedFor: string; canBeDistortedBy: string; doesNotMean: string }> = {
@@ -99,7 +96,7 @@ const labelLogic: Record<Badge, { means: string; optimizedFor: string; canBeDist
     doesNotMean: "Best product, best value or best fit for you.",
   },
   "Best Seller": {
-    means: "One of the highest unit-selling products in wireless earbuds during the last 30 days.",
+    means: "One of the highest unit-selling products in wireless headphones during the last 30 days.",
     optimizedFor: "Sales volume and marketplace turnover.",
     canBeDistortedBy: "Discounts, stock levels, category boundaries and earlier visibility.",
     doesNotMean: "Highest quality or most suitable for your needs.",
@@ -130,13 +127,24 @@ const labelLogic: Record<Badge, { means: string; optimizedFor: string; canBeDist
   },
 };
 
+const needOptions: Record<NeedKey, { label: string; detail: string; matches: (product: Product) => boolean }> = {
+  calls: { label: "Clear calls", detail: "Good microphones for work and meetings", matches: (product) => product.callScore >= 4 && /call|meeting|work|microphone/.test(product.description.toLowerCase()) },
+  multipoint: { label: "Multipoint", detail: "Switch between phone and laptop", matches: (product) => product.multipoint && /multipoint|switch/.test(product.description.toLowerCase()) },
+  anc: { label: "Strong ANC", detail: "Reduce noise while commuting or travelling", matches: (product) => product.ancScore >= 4 && /anc|noise cancellation/.test(product.description.toLowerCase()) },
+  battery: { label: "32h+ battery", detail: "Long battery life for full-day use", matches: (product) => product.battery >= 32 },
+  gaming: { label: "Low latency", detail: "Faster audio response for games", matches: (product) => product.lowLatency && /gaming|low.latency/.test(product.description.toLowerCase()) },
+  comfort: { label: "Comfortable for long use", detail: "Lightweight or cushioned for long sessions", matches: (product) => product.comfortScore >= 4 && /comfort|lightweight|soft/.test(product.description.toLowerCase()) },
+  workout: { label: "Secure for workouts", detail: "Stable fit with sweat resistance", matches: (product) => product.sportFit && /workout|running|sport|walking|outdoor/.test(product.description.toLowerCase()) },
+  overEar: { label: "Over-ear", detail: "Full-size headphones around the ears", matches: (product) => product.productType === "Over-ear" },
+  inEar: { label: "In-ear", detail: "Compact earbuds worn inside the ear", matches: (product) => product.productType === "In-ear" },
+  openEar: { label: "Open-ear", detail: "Keep awareness of your surroundings", matches: (product) => product.productType === "Open-ear" },
+};
+
+const suggestedNeeds: NeedKey[] = ["calls", "anc", "multipoint", "battery", "comfort", "workout", "gaming", "overEar", "inEar", "openEar"];
+
 const defaultPreferences: Preferences = {
   budget: 12000,
-  calls: true,
-  multipoint: true,
-  anc: true,
-  battery: true,
-  gaming: false,
+  needs: ["calls", "multipoint", "anc", "battery"],
 };
 
 const rankCopy: Record<RankMode, { label: string; optimized: string; detail: string }> = {
@@ -152,17 +160,39 @@ function money(value: number) {
 
 function getFit(product: Product, preferences: Preferences) {
   const checks = [
-    { active: true, label: `Under ${money(preferences.budget)}`, pass: product.price <= preferences.budget },
-    { active: preferences.calls, label: "Clear calls", pass: product.callScore >= 4 },
-    { active: preferences.multipoint, label: "Multipoint", pass: product.multipoint },
-    { active: preferences.anc, label: "Strong ANC", pass: product.ancScore >= 4 },
-    { active: preferences.battery, label: "32h+ battery", pass: product.battery >= 32 },
-    { active: preferences.gaming, label: "Low latency", pass: product.lowLatency },
-  ].filter((check) => check.active);
+    ...(preferences.budget ? [{ label: `Under ${money(preferences.budget)}`, pass: product.price <= preferences.budget }] : []),
+    ...preferences.needs.map((need) => ({ label: needOptions[need].label, pass: needOptions[need].matches(product) })),
+  ];
   const matches = checks.filter((check) => check.pass);
   const misses = checks.filter((check) => !check.pass);
-  const score = Math.round((matches.length / checks.length) * 90 + (product.rating / 5) * 10);
+  const needScore = checks.length ? matches.length / checks.length : 0.5;
+  const score = Math.round(needScore * 90 + (product.rating / 5) * 10);
   return { checks, matches, misses, score: Math.min(100, score) };
+}
+
+function extractPreferences(input: string) {
+  const normalized = input.toLowerCase();
+  const needs = new Set<NeedKey>();
+  const keywordGroups: Array<[NeedKey, RegExp]> = [
+    ["calls", /\b(call|calls|meeting|meetings|microphone|mic|office|work)\b/],
+    ["multipoint", /\b(multipoint|multiple devices?|two devices?|phone and laptop|switch devices?)\b/],
+    ["anc", /\b(anc|noise cancellation|noise cancelling|commute|commuting|flight|travel)\b/],
+    ["battery", /\b(battery|long lasting|long-lasting|all day|full day)\b/],
+    ["gaming", /\b(gaming|games?|low latency|lag)\b/],
+    ["comfort", /\b(comfort|comfortable|lightweight|long hours?|soft cushions?)\b/],
+    ["workout", /\b(workout|gym|running|run|sport|exercise|sweat|walking)\b/],
+    ["overEar", /\b(over ear|over-ear|headband|full size|full-size)\b/],
+    ["inEar", /\b(in ear|in-ear|earbuds?|compact buds?)\b/],
+    ["openEar", /\b(open ear|open-ear|bone conduction|surroundings|awareness)\b/],
+  ];
+  keywordGroups.forEach(([key, pattern]) => {
+    if (pattern.test(normalized)) needs.add(key);
+  });
+
+  const budgetMatch = normalized.match(/(?:under|below|within|up to|budget(?: of| is| around)?)[^\d]{0,12}(?:₹|rs\.?|inr)?\s*([\d,.]+)\s*(k)?/) ?? normalized.match(/(?:₹|rs\.?|inr)\s*([\d,.]+)\s*(k)?/);
+  const budgetNumber = budgetMatch ? Number(budgetMatch[1].replace(/[,]/g, "")) * (budgetMatch[2] ? 1000 : 1) : null;
+  const budget = budgetNumber && budgetNumber >= 1000 && budgetNumber <= 100000 ? Math.round(budgetNumber) : null;
+  return { needs: Array.from(needs), budget };
 }
 
 function badgeStyle(badge: Badge) {
@@ -200,7 +230,7 @@ export default function RecommendationTransparency() {
   const visibleProducts = useMemo(() => {
     const query = search.trim().toLowerCase();
     const list = products.filter((product) => {
-      if (query && !`${product.brand} ${product.name} ${product.badge} ${product.color}`.toLowerCase().includes(query)) return false;
+      if (query && !`${product.brand} ${product.name} ${product.badge ?? ""} ${product.color} ${product.productType} ${product.description}`.toLowerCase().includes(query)) return false;
       if (priceFilter === "under8" && product.price >= 8000) return false;
       if (priceFilter === "under12" && product.price >= 12000) return false;
       if (priceFilter === "over12" && product.price < 12000) return false;
@@ -235,6 +265,10 @@ export default function RecommendationTransparency() {
     setSaved((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
   }
 
+  function removeNeed(need: NeedKey) {
+    setPreferences((current) => ({ ...current, needs: current.needs.filter((item) => item !== need) }));
+  }
+
   function addToBag(product: Product) {
     setBag((current) => [...current, product.id]);
     setToast(`${product.name} added to bag`);
@@ -261,7 +295,8 @@ export default function RecommendationTransparency() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  const hasChanges = search || activeFilterCount > 0 || savedOnly || rankMode !== "match";
+  const needsChanged = preferences.budget !== defaultPreferences.budget || preferences.needs.join("|") !== defaultPreferences.needs.join("|");
+  const hasChanges = search || activeFilterCount > 0 || savedOnly || rankMode !== "match" || needsChanged;
 
   return (
     <main className="min-h-screen bg-[#f6f7fb] text-[#17211f]">
@@ -270,16 +305,17 @@ export default function RecommendationTransparency() {
           <div className="flex shrink-0 items-center gap-2 text-[15px] font-semibold tracking-[-0.02em]">
             <span className="grid h-8 w-8 place-items-center rounded-xl bg-[#17211f] text-xs text-white">A</span>
             <span>Arc Audio</span>
-            <span className="rounded-full border border-violet-200 bg-violet-50 px-2 py-1 text-[8px] font-bold uppercase tracking-[0.12em] text-violet-700">Prototype</span>
+            <span className="hidden rounded-full border border-violet-200 bg-violet-50 px-2 py-1 text-[8px] font-bold uppercase tracking-[0.12em] text-violet-700 sm:inline-flex">Prototype</span>
           </div>
           <label className="mx-auto hidden w-full max-w-2xl md:block">
-            <span className="sr-only">Search wireless earbuds</span>
+            <span className="sr-only">Search wireless headphones</span>
             <span className="relative block">
               <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
-              <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search wireless earbuds" className="w-full rounded-full border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-4 text-sm outline-none transition focus:border-violet-400 focus:bg-white focus:ring-4 focus:ring-violet-100" />
+              <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search wireless headphones" className="w-full rounded-full border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-4 text-sm outline-none transition focus:border-violet-400 focus:bg-white focus:ring-4 focus:ring-violet-100" />
             </span>
           </label>
           <div className="ml-auto flex items-center gap-1">
+            <Link href="/contact" className="mr-1 inline-flex shrink-0 items-center justify-center gap-1 rounded-full bg-[#17211f] px-3 py-2.5 text-[10px] font-semibold text-white transition hover:bg-violet-800 sm:px-4"><span className="hidden xl:inline">Improve your recommendations</span><span className="xl:hidden">Consulting</span><span aria-hidden="true">→</span></Link>
             <button onClick={() => setSavedOnly((value) => !value)} aria-pressed={savedOnly} className={`relative grid h-10 w-10 place-items-center rounded-full transition ${savedOnly ? "bg-rose-50 text-rose-600" : "text-slate-600 hover:bg-slate-100"}`} aria-label="Show saved products">
               <Heart className={`h-[18px] w-[18px] ${savedOnly ? "fill-current" : ""}`} />
               {saved.length > 0 ? <CountBadge>{saved.length}</CountBadge> : null}
@@ -293,7 +329,7 @@ export default function RecommendationTransparency() {
         <div className="border-t border-slate-100 px-4 py-2 md:hidden">
           <label className="relative block">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
-            <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search wireless earbuds" className="w-full rounded-full border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm outline-none focus:border-violet-400" />
+            <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search wireless headphones" className="w-full rounded-full border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm outline-none focus:border-violet-400" />
           </label>
         </div>
       </header>
@@ -302,10 +338,10 @@ export default function RecommendationTransparency() {
         <div className="mx-auto max-w-[1500px] px-4 py-5 sm:px-6">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-xl font-semibold tracking-[-0.03em] sm:text-2xl">Wireless earbuds</h1>
+              <h1 className="text-xl font-semibold tracking-[-0.03em] sm:text-2xl">Wireless headphones</h1>
               <span className="text-xs text-slate-500">24 products</span>
             </div>
-            <p className="mt-1 max-w-3xl text-xs leading-5 text-slate-500 sm:text-sm">Open the explanation inside any product card to see what its label means, whether placement is paid and how well it fits your needs.</p>
+            <p className="mt-1 max-w-3xl text-xs leading-5 text-slate-500 sm:text-sm">Some products carry a marketplace label; many do not. Open any product explanation to see its placement and how it fits your needs.</p>
           </div>
 
           <div className="mt-4 grid gap-4 rounded-2xl border border-slate-200 bg-[#fbfbfd] p-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
@@ -313,16 +349,13 @@ export default function RecommendationTransparency() {
               <div className="hidden h-11 w-11 shrink-0 place-items-center rounded-xl bg-violet-100 text-violet-700 sm:grid"><Check className="h-5 w-5" /></div>
               <div className="min-w-0">
                 <div className="flex items-center gap-3">
-                  <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Your priorities</div>
+                  <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Your needs</div>
                   <button onClick={() => setShowNeeds(true)} className="text-[10px] font-semibold text-violet-700 underline decoration-violet-200 underline-offset-4 hover:text-violet-900">Edit needs</button>
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1.5 text-[11px] text-slate-600">
-                  <PriorityChip>Under {money(preferences.budget)}</PriorityChip>
-                  {preferences.calls ? <PriorityChip>Clear calls</PriorityChip> : null}
-                  {preferences.multipoint ? <PriorityChip>Multipoint</PriorityChip> : null}
-                  {preferences.anc ? <PriorityChip>Strong ANC</PriorityChip> : null}
-                  {preferences.battery ? <PriorityChip>32h+ battery</PriorityChip> : null}
-                  {preferences.gaming ? <PriorityChip>Low latency</PriorityChip> : null}
+                  {preferences.budget ? <PriorityChip onRemove={() => setPreferences((current) => ({ ...current, budget: null }))}>Under {money(preferences.budget)}</PriorityChip> : null}
+                  {preferences.needs.map((need) => <PriorityChip key={need} onRemove={() => removeNeed(need)}>{needOptions[need].label}</PriorityChip>)}
+                  <button onClick={() => setShowNeeds(true)} className="rounded-full border border-dashed border-violet-300 bg-violet-50 px-2.5 py-1 font-semibold text-violet-700 hover:border-violet-500">+ Add need</button>
                 </div>
               </div>
             </div>
@@ -360,7 +393,7 @@ export default function RecommendationTransparency() {
             </div>
           ) : (
             <div className="grid min-h-[420px] place-items-center rounded-3xl border border-dashed border-slate-300 bg-white p-8 text-center">
-              <div><div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-slate-100"><Search className="h-5 w-5 text-slate-500" /></div><h2 className="mt-4 text-lg font-semibold">No earbuds match these filters</h2><p className="mt-2 text-sm text-slate-500">Clear a filter or reset the catalogue to see all 24 products.</p><button onClick={resetAll} className="mt-4 rounded-full bg-[#17211f] px-4 py-2.5 text-xs font-semibold text-white">Show all products</button></div>
+              <div><div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-slate-100"><Search className="h-5 w-5 text-slate-500" /></div><h2 className="mt-4 text-lg font-semibold">No headphones match these filters</h2><p className="mt-2 text-sm text-slate-500">Clear a filter or reset the catalogue to see all 24 products.</p><button onClick={resetAll} className="mt-4 rounded-full bg-[#17211f] px-4 py-2.5 text-xs font-semibold text-white">Show all products</button></div>
             </div>
           )}
         </section>
@@ -394,21 +427,21 @@ function ProductCard({ product, index, fit, saved, onSave, onWhy, onDetails, onA
   const discount = Math.round((1 - product.price / product.mrp) * 100);
   return (
     <article className="group flex min-h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_16px_40px_rgba(23,33,31,0.08)]">
-      <div className="relative aspect-[1.12/1] overflow-hidden bg-slate-100">
-        <Image src={product.image} alt={`${product.brand} ${product.name} wireless earbuds`} fill sizes="(min-width: 1536px) 280px, (min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw" priority={index < 4} className="object-cover transition duration-500 group-hover:scale-[1.025]" style={{ objectPosition: product.imagePosition ?? "50% 50%" }} />
-        <span className={`absolute left-3 top-3 rounded-full border px-2.5 py-1.5 text-[9px] font-bold shadow-sm ${badgeStyle(product.badge)}`}>{product.badge}</span>
+      <div className="relative aspect-square overflow-hidden bg-slate-100">
+        <CatalogueProductImage product={product} priority={index < 4} />
+        {product.badge ? <span className={`absolute left-3 top-3 rounded-full border px-2.5 py-1.5 text-[9px] font-bold shadow-sm ${badgeStyle(product.badge)}`}>{product.badge}</span> : null}
         <button onClick={onSave} aria-label={saved ? `Remove ${product.name} from saved` : `Save ${product.name}`} className={`absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border shadow-sm transition ${saved ? "border-rose-200 bg-rose-50 text-rose-600" : "border-white bg-white/95 text-slate-600 hover:text-rose-600"}`}><Heart className={`h-4 w-4 ${saved ? "fill-current" : ""}`} /></button>
-        <div className="absolute bottom-3 left-3 rounded-full border border-white/70 bg-white/90 px-2.5 py-1 text-[9px] font-bold text-emerald-800 shadow-sm backdrop-blur">{fit.matches.length}/{fit.checks.length} needs matched</div>
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <div className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-400">{product.brand} · {product.color}</div>
+        <div className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-400">{product.brand} · {product.productType} · {product.color}</div>
         <h2 className="mt-1 text-[15px] font-semibold tracking-[-0.02em] text-slate-900">{product.name}</h2>
+        <p className="mt-1 line-clamp-2 min-h-8 text-[10px] leading-4 text-slate-500">{product.description}</p>
         <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-slate-500"><span className="flex items-center gap-0.5 font-semibold text-slate-800"><Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" /> {product.rating.toFixed(1)}</span><span>({product.reviews.toLocaleString("en-IN")})</span><span>· {product.sold >= 1000 ? `${(product.sold / 1000).toFixed(1)}k` : product.sold} bought</span></div>
         <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-lg font-bold tracking-[-0.03em]">{money(product.price)}</span><span className="text-[10px] text-slate-400 line-through">{money(product.mrp)}</span><span className="text-[10px] font-semibold text-emerald-700">{discount}% off</span></div>
         <div className="mt-1 text-[10px] text-slate-500">Free delivery · {product.delivery}</div>
         <div className="mt-3 flex flex-wrap gap-1.5 text-[9px] text-slate-600"><Feature>{product.battery}h battery</Feature>{product.ancScore >= 4 ? <Feature>Strong ANC</Feature> : null}{product.multipoint ? <Feature>Multipoint</Feature> : null}{product.lowLatency ? <Feature>Low latency</Feature> : null}</div>
-        <button onClick={onWhy} aria-label={`Explain ${product.badge} label for ${product.name}`} className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-violet-200 bg-violet-50 px-3 py-2.5 text-left transition hover:border-violet-400 hover:bg-violet-100">
-          <span><span className="block text-[10px] font-bold text-violet-900">Explain this label</span><span className="mt-0.5 block text-[9px] text-violet-700">{product.badge} · {product.sponsored ? "Paid" : "Organic"} · {fit.matches.length}/{fit.checks.length} needs</span></span>
+        <button onClick={onWhy} aria-label={product.badge ? `Explain ${product.badge} label for ${product.name}` : `Explain why ${product.name} appears`} className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-violet-200 bg-violet-50 px-3 py-2.5 text-left transition hover:border-violet-400 hover:bg-violet-100">
+          <span><span className="block text-[10px] font-bold text-violet-900">{product.badge ? `Explain ${product.badge}` : "Why this result?"}</span><span className="mt-0.5 block text-[9px] text-violet-700">{product.sponsored ? "Paid placement" : "Organic result"} · {fit.checks.length ? `${fit.matches.length}/${fit.checks.length} needs matched` : "No needs set"}</span></span>
           <span className="text-sm text-violet-700" aria-hidden="true">→</span>
         </button>
         <div className="mt-auto grid grid-cols-2 gap-2 pt-4"><button onClick={onDetails} className="rounded-xl border border-slate-200 py-2.5 text-[10px] font-semibold text-slate-700 transition hover:border-slate-400">View details</button><button onClick={onAdd} className="rounded-xl bg-[#17211f] py-2.5 text-[10px] font-semibold text-white transition hover:bg-violet-800">Add to bag</button></div>
@@ -417,31 +450,55 @@ function ProductCard({ product, index, fit, saved, onSave, onWhy, onDetails, onA
   );
 }
 
+function CatalogueProductImage({ product, priority = false }: { product: Product; priority?: boolean }) {
+  const column = product.imageTile % 4;
+  const row = Math.floor(product.imageTile / 4);
+  return (
+    <Image
+      src={product.image}
+      alt={`${product.brand} ${product.name} ${product.productType.toLowerCase()} wireless headphones`}
+      width={1448}
+      height={1086}
+      sizes="(min-width: 1536px) 280px, (min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
+      priority={priority}
+      className="absolute h-auto max-w-none"
+      style={{ width: "400%", left: `-${column * 100}%`, top: `-${row * 100}%` }}
+    />
+  );
+}
+
 function WhyPanel({ product, preferences, onClose, onAdd }: { product: Product; preferences: Preferences; onClose: () => void; onAdd: () => void }) {
   const fit = getFit(product, preferences);
-  const logic = labelLogic[product.badge];
+  const logic = product.badge ? labelLogic[product.badge] : null;
   return (
     <Modal onClose={onClose} maxWidth="max-w-3xl">
       <div className="flex items-start justify-between gap-4 border-b border-slate-200 p-5 sm:p-6">
-        <div><div className="text-[10px] font-bold uppercase tracking-[0.15em] text-violet-700">Why you are seeing this</div><h2 className="mt-1 text-xl font-semibold tracking-[-0.03em] sm:text-2xl">{product.brand} {product.name}</h2><p className="mt-1 text-xs text-slate-500">The label, the placement and the product fit are three different signals.</p></div>
+        <div><div className="text-[10px] font-bold uppercase tracking-[0.15em] text-violet-700">Why you are seeing this</div><h2 className="mt-1 text-xl font-semibold tracking-[-0.03em] sm:text-2xl">{product.brand} {product.name}</h2><p className="mt-1 text-xs text-slate-500">The badge, placement and fit are separate signals. A product may appear without a badge.</p></div>
         <CloseButton onClick={onClose} />
       </div>
       <div className="max-h-[78vh] overflow-y-auto p-5 sm:p-6">
         <div className="grid gap-3 sm:grid-cols-3">
-          <SignalCard label="Label" value={product.badge} tone={product.sponsored ? "amber" : "violet"} />
+          <SignalCard label="Badge" value={product.badge ?? "No badge"} tone={product.sponsored ? "amber" : product.badge ? "violet" : "slate"} />
           <SignalCard label="Placement" value={product.sponsored ? "Paid" : "Organic"} tone={product.sponsored ? "amber" : "green"} />
           <SignalCard label="Your fit" value={`${fit.matches.length} of ${fit.checks.length} needs`} tone={fit.misses.length <= 1 ? "green" : "slate"} />
         </div>
 
-        <section className="mt-5 rounded-2xl border border-slate-200 p-4">
-          <div className="flex items-center gap-2"><span className={`rounded-full border px-2.5 py-1 text-[9px] font-bold ${badgeStyle(product.badge)}`}>{product.badge}</span><h3 className="text-sm font-semibold">What this label actually means</h3></div>
-          <p className="mt-3 text-sm leading-6 text-slate-600">{logic.means}</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <ExplanationBlock label="Optimized for" text={logic.optimizedFor} />
-            <ExplanationBlock label="What can shape it" text={logic.canBeDistortedBy} warning />
-          </div>
-          <div className="mt-3 rounded-xl bg-slate-100 px-3 py-2.5 text-[11px] text-slate-600"><strong className="text-slate-900">It does not mean:</strong> {logic.doesNotMean}</div>
-        </section>
+        {logic && product.badge ? (
+          <section className="mt-5 rounded-2xl border border-slate-200 p-4">
+            <div className="flex items-center gap-2"><span className={`rounded-full border px-2.5 py-1 text-[9px] font-bold ${badgeStyle(product.badge)}`}>{product.badge}</span><h3 className="text-sm font-semibold">What this badge actually means</h3></div>
+            <p className="mt-3 text-sm leading-6 text-slate-600">{logic.means}</p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <ExplanationBlock label="Optimized for" text={logic.optimizedFor} />
+              <ExplanationBlock label="What can shape it" text={logic.canBeDistortedBy} warning />
+            </div>
+            <div className="mt-3 rounded-xl bg-slate-100 px-3 py-2.5 text-[11px] text-slate-600"><strong className="text-slate-900">It does not mean:</strong> {logic.doesNotMean}</div>
+          </section>
+        ) : (
+          <section className="mt-5 rounded-2xl border border-slate-200 p-4">
+            <h3 className="text-sm font-semibold">Why there is no badge</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-600">This is a regular catalogue result. It has no “Best Seller,” “Top Rated” or other marketplace claim attached to it, but its position is still shaped by the ranking mode you selected.</p>
+          </section>
+        )}
 
         <section className="mt-4 rounded-2xl border border-slate-200 p-4">
           <div className="flex items-center justify-between gap-3"><h3 className="text-sm font-semibold">How it fits your needs</h3><span className="text-xs font-bold text-emerald-700">{fit.score}% fit score</span></div>
@@ -472,14 +529,15 @@ function ProductDetails({ product, preferences, saved, onClose, onSave, onWhy, o
   const fit = getFit(product, preferences);
   return (
     <Modal onClose={onClose} maxWidth="max-w-4xl">
-      <div className="flex items-start justify-between gap-4 p-5 sm:p-6"><div><div className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">{product.brand}</div><h2 className="mt-1 text-2xl font-semibold tracking-[-0.03em]">{product.name}</h2></div><CloseButton onClick={onClose} /></div>
+      <div className="flex items-start justify-between gap-4 p-5 sm:p-6"><div><div className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">{product.brand} · {product.productType}</div><h2 className="mt-1 text-2xl font-semibold tracking-[-0.03em]">{product.name}</h2></div><CloseButton onClick={onClose} /></div>
       <div className="grid max-h-[78vh] overflow-y-auto border-t border-slate-200 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="relative aspect-square overflow-hidden bg-slate-100 lg:aspect-auto lg:min-h-[520px]"><Image src={product.image} alt={`${product.brand} ${product.name}`} fill sizes="(min-width: 1024px) 420px, 100vw" className="object-cover" style={{ objectPosition: product.imagePosition ?? "50% 50%" }} /><span className={`absolute left-4 top-4 rounded-full border px-3 py-1.5 text-[10px] font-bold shadow-sm ${badgeStyle(product.badge)}`}>{product.badge}</span></div>
+        <div className="relative aspect-square overflow-hidden bg-slate-100"><CatalogueProductImage product={product} />{product.badge ? <span className={`absolute left-4 top-4 rounded-full border px-3 py-1.5 text-[10px] font-bold shadow-sm ${badgeStyle(product.badge)}`}>{product.badge}</span> : null}</div>
         <div className="p-5 sm:p-6">
-          <div className="flex items-center gap-2 text-xs text-slate-500"><span className="flex items-center gap-1 font-semibold text-slate-900"><Star className="h-4 w-4 fill-amber-400 text-amber-400" /> {product.rating}</span><span>{product.reviews.toLocaleString("en-IN")} reviews</span><span>·</span><span>{product.sold.toLocaleString("en-IN")} bought</span></div>
+          <p className="text-sm leading-6 text-slate-600">{product.description}</p>
+          <div className="mt-3 flex items-center gap-2 text-xs text-slate-500"><span className="flex items-center gap-1 font-semibold text-slate-900"><Star className="h-4 w-4 fill-amber-400 text-amber-400" /> {product.rating}</span><span>{product.reviews.toLocaleString("en-IN")} reviews</span><span>·</span><span>{product.sold.toLocaleString("en-IN")} bought</span></div>
           <div className="mt-3 flex items-baseline gap-2"><span className="text-2xl font-bold">{money(product.price)}</span><span className="text-sm text-slate-400 line-through">{money(product.mrp)}</span></div>
           <p className="mt-1 text-xs text-slate-500">Free delivery · {product.delivery} · 7-day returns</p>
-          <button onClick={onWhy} className="mt-5 w-full rounded-2xl border border-violet-200 bg-violet-50 p-4 text-left hover:border-violet-400"><div className="flex items-center justify-between"><span className="text-xs font-bold text-violet-900">Why this product appears here</span><span className="text-violet-700">→</span></div><div className="mt-1 text-[11px] leading-5 text-violet-700">{product.sponsored ? "Paid placement with a relevance check." : "Organic placement based on the selected ranking."} Matches {fit.matches.length} of {fit.checks.length} of your needs.</div></button>
+          <button onClick={onWhy} className="mt-5 w-full rounded-2xl border border-violet-200 bg-violet-50 p-4 text-left hover:border-violet-400"><div className="flex items-center justify-between"><span className="text-xs font-bold text-violet-900">{product.badge ? `Explain ${product.badge}` : "Why this product appears here"}</span><span className="text-violet-700">→</span></div><div className="mt-1 text-[11px] leading-5 text-violet-700">{product.sponsored ? "Paid placement with a relevance check." : "Organic placement based on the selected ranking."} Matches {fit.matches.length} of {fit.checks.length} of your needs.</div></button>
           <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3"><Spec label="Call quality" value={`${product.callScore}/5`} /><Spec label="Noise cancelling" value={`${product.ancScore}/5`} /><Spec label="Battery" value={`${product.battery} hours`} /><Spec label="Multipoint" value={product.multipoint ? "Yes" : "No"} /><Spec label="Low latency" value={product.lowLatency ? "Yes" : "No"} /><Spec label="Water resistance" value={product.waterResistance} /></div>
           <div className="mt-5 rounded-2xl bg-slate-50 p-4"><div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Other marketplace signals</div><div className="mt-3 grid grid-cols-2 gap-3 text-xs"><div><div className="text-slate-400">Return rate</div><div className="mt-1 font-semibold">{product.returnRate}%</div></div><div><div className="text-slate-400">Seller score</div><div className="mt-1 font-semibold">{product.sellerScore}/100</div></div></div></div>
           <div className="mt-6 grid grid-cols-[auto_1fr] gap-2"><button onClick={onSave} aria-label={saved ? "Remove from saved" : "Save product"} className={`grid h-12 w-12 place-items-center rounded-xl border ${saved ? "border-rose-200 bg-rose-50 text-rose-600" : "border-slate-200"}`}><Heart className={`h-5 w-5 ${saved ? "fill-current" : ""}`} /></button><button onClick={onAdd} className="rounded-xl bg-[#17211f] text-sm font-semibold text-white">Add to bag</button></div>
@@ -490,18 +548,60 @@ function ProductDetails({ product, preferences, saved, onClose, onSave, onWhy, o
 }
 
 function NeedsPanel({ preferences, setPreferences, rankMode, setRankMode, onClose }: { preferences: Preferences; setPreferences: (preferences: Preferences) => void; rankMode: RankMode; setRankMode: (mode: RankMode) => void; onClose: () => void }) {
-  const toggles: Array<[keyof Omit<Preferences, "budget">, string, string]> = [
-    ["calls", "Clear calls", "Strong microphones for work and calls"],
-    ["multipoint", "Multipoint", "Switch between phone and laptop"],
-    ["anc", "Strong ANC", "Better noise reduction for commuting"],
-    ["battery", "32h+ battery", "Longer total battery with the case"],
-    ["gaming", "Low latency", "Faster audio response for games"],
-  ];
+  const [request, setRequest] = useState("");
+  const [message, setMessage] = useState("");
+
+  function addNeed(need: NeedKey) {
+    if (preferences.needs.includes(need)) return;
+    setPreferences({ ...preferences, needs: [...preferences.needs, need] });
+  }
+
+  function removeNeed(need: NeedKey) {
+    setPreferences({ ...preferences, needs: preferences.needs.filter((item) => item !== need) });
+  }
+
+  function applyRequest() {
+    const extracted = extractPreferences(request);
+    const nextNeeds = Array.from(new Set([...preferences.needs, ...extracted.needs]));
+    setPreferences({ budget: extracted.budget ?? preferences.budget, needs: nextNeeds });
+    setRankMode("match");
+    const changes = extracted.needs.length + (extracted.budget ? 1 : 0);
+    setMessage(changes ? `Extracted ${extracted.needs.length} need${extracted.needs.length === 1 ? "" : "s"}${extracted.budget ? ` and a ${money(extracted.budget)} budget` : ""}.` : "No known needs found. Try mentioning budget, calls, ANC, battery, comfort, workouts or headphone type.");
+  }
+
   return (
     <Drawer title="What matters to you?" onClose={onClose}>
-      <p className="text-sm leading-6 text-slate-500">These choices power “Best match for me.” Change them and the catalogue re-ranks immediately.</p>
-      <div className="mt-5"><div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Budget</div><div className="mt-2 grid grid-cols-3 gap-2">{[8000, 12000, 16000].map((budget) => <button key={budget} onClick={() => setPreferences({ ...preferences, budget })} className={`rounded-xl border px-2 py-2.5 text-xs font-semibold ${preferences.budget === budget ? "border-violet-600 bg-violet-50 text-violet-800" : "border-slate-200"}`}>Under {money(budget)}</button>)}</div></div>
-      <div className="mt-6 space-y-2">{toggles.map(([key, title, detail]) => <label key={key} className="flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-slate-200 p-3.5"><span><span className="block text-sm font-semibold">{title}</span><span className="mt-0.5 block text-[11px] text-slate-500">{detail}</span></span><input type="checkbox" checked={preferences[key]} onChange={() => setPreferences({ ...preferences, [key]: !preferences[key] })} className="h-5 w-5 shrink-0 accent-violet-700" /></label>)}</div>
+      <p className="text-sm leading-6 text-slate-500">Describe what you need in your own words. The prototype extracts recognised requirements and matches them against each product description and specification.</p>
+
+      <div className="mt-5 rounded-2xl border border-violet-200 bg-violet-50 p-3.5">
+        <label htmlFor="needs-request" className="text-[10px] font-bold uppercase tracking-[0.12em] text-violet-700">Describe what you need</label>
+        <textarea id="needs-request" value={request} onChange={(event) => { setRequest(event.target.value); setMessage(""); }} rows={4} placeholder="Example: Comfortable over-ear headphones for work calls, under ₹10,000, with strong noise cancellation." className="mt-2 w-full resize-none rounded-xl border border-violet-200 bg-white p-3 text-sm leading-5 outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-100" />
+        <button onClick={applyRequest} disabled={!request.trim()} className="mt-2 w-full rounded-xl bg-violet-700 px-4 py-3 text-xs font-semibold text-white transition hover:bg-violet-800 disabled:cursor-not-allowed disabled:opacity-40">Extract and add needs</button>
+        {message ? <p role="status" className="mt-2 text-[11px] leading-4 text-violet-800">{message}</p> : null}
+      </div>
+
+      <div className="mt-6">
+        <div className="flex items-center justify-between gap-3"><div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Your active needs</div>{preferences.budget || preferences.needs.length ? <button onClick={() => setPreferences({ budget: null, needs: [] })} className="text-[10px] font-semibold text-slate-500 hover:text-slate-900">Clear all</button> : null}</div>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {preferences.budget ? <PriorityChip onRemove={() => setPreferences({ ...preferences, budget: null })}>Under {money(preferences.budget)}</PriorityChip> : null}
+          {preferences.needs.map((need) => <PriorityChip key={need} onRemove={() => removeNeed(need)}>{needOptions[need].label}</PriorityChip>)}
+          {!preferences.budget && !preferences.needs.length ? <span className="text-xs text-slate-400">No needs added yet.</span> : null}
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Budget</div>
+        <div className="mt-2 grid grid-cols-3 gap-2">{[8000, 12000, 16000].map((budget) => <button key={budget} onClick={() => setPreferences({ ...preferences, budget })} className={`rounded-xl border px-2 py-2.5 text-xs font-semibold ${preferences.budget === budget ? "border-violet-600 bg-violet-50 text-violet-800" : "border-slate-200 hover:border-violet-300"}`}>Under {money(budget)}</button>)}</div>
+      </div>
+
+      <div className="mt-6">
+        <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Recommended needs</div>
+        <div className="mt-2 space-y-2">{suggestedNeeds.map((need) => {
+          const selected = preferences.needs.includes(need);
+          return <button key={need} onClick={() => selected ? removeNeed(need) : addNeed(need)} className={`flex w-full items-center justify-between gap-4 rounded-2xl border p-3.5 text-left transition ${selected ? "border-violet-200 bg-violet-50" : "border-slate-200 hover:border-violet-300"}`}><span><span className="block text-sm font-semibold">{needOptions[need].label}</span><span className="mt-0.5 block text-[11px] text-slate-500">{needOptions[need].detail}</span></span><span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-base font-medium ${selected ? "bg-violet-700 text-white" : "border border-slate-200 text-violet-700"}`}>{selected ? <Check className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}</span></button>;
+        })}</div>
+      </div>
+
       {rankMode !== "match" ? <button onClick={() => setRankMode("match")} className="mt-5 w-full rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-xs font-semibold text-violet-800">Use these needs to rank products</button> : null}
       <button onClick={onClose} className="mt-3 w-full rounded-xl bg-[#17211f] py-3 text-sm font-semibold text-white">Show my best options</button>
     </Drawer>
@@ -511,7 +611,7 @@ function NeedsPanel({ preferences, setPreferences, rankMode, setRankMode, onClos
 function BagPanel({ bag, products: bagProducts, subtotal, onRemove, onAdd, onClose }: { bag: string[]; products: Product[]; subtotal: number; onRemove: (id: string) => void; onAdd: (product: Product) => void; onClose: () => void }) {
   return (
     <Drawer title={`Your bag · ${bag.length}`} onClose={onClose}>
-      {bag.length ? <><div className="space-y-3">{bagProducts.map((product) => { const quantity = bag.filter((id) => id === product.id).length; return <div key={product.id} className="flex gap-3 rounded-2xl border border-slate-200 p-3"><div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-100"><Image src={product.image} alt="" fill sizes="80px" className="object-cover" /></div><div className="min-w-0 flex-1"><div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{product.brand}</div><div className="mt-0.5 truncate text-sm font-semibold">{product.name}</div><div className="mt-1 text-xs font-semibold">{money(product.price)}</div><div className="mt-2 flex items-center gap-2"><button onClick={() => onRemove(product.id)} className="grid h-7 w-7 place-items-center rounded-full border border-slate-200" aria-label={`Remove one ${product.name}`}><Minus className="h-3 w-3" /></button><span className="text-xs">{quantity}</span><button onClick={() => onAdd(product)} className="grid h-7 w-7 place-items-center rounded-full border border-slate-200 text-slate-600 hover:border-violet-300 hover:text-violet-700" aria-label={`Add one ${product.name}`}><Plus className="h-3 w-3" /></button></div></div></div>; })}</div><div className="mt-6 border-t border-slate-200 pt-4"><div className="flex items-center justify-between text-sm"><span className="text-slate-500">Subtotal</span><strong>{money(subtotal)}</strong></div><button onClick={onClose} className="mt-4 w-full rounded-xl bg-[#17211f] py-3 text-sm font-semibold text-white">Continue shopping</button><p className="mt-2 text-center text-[10px] text-slate-400">Checkout is outside this prototype.</p></div></> : <div className="grid min-h-[320px] place-items-center text-center"><div><div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-slate-100"><ShoppingBag className="h-5 w-5 text-slate-500" /></div><h3 className="mt-4 font-semibold">Your bag is empty</h3><p className="mt-1 text-sm text-slate-500">Add an option to keep exploring the flow.</p></div></div>}
+      {bag.length ? <><div className="space-y-3">{bagProducts.map((product) => { const quantity = bag.filter((id) => id === product.id).length; return <div key={product.id} className="flex gap-3 rounded-2xl border border-slate-200 p-3"><div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-slate-100"><CatalogueProductImage product={product} /></div><div className="min-w-0 flex-1"><div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{product.brand}</div><div className="mt-0.5 truncate text-sm font-semibold">{product.name}</div><div className="mt-1 text-xs font-semibold">{money(product.price)}</div><div className="mt-2 flex items-center gap-2"><button onClick={() => onRemove(product.id)} className="grid h-7 w-7 place-items-center rounded-full border border-slate-200" aria-label={`Remove one ${product.name}`}><Minus className="h-3 w-3" /></button><span className="text-xs">{quantity}</span><button onClick={() => onAdd(product)} className="grid h-7 w-7 place-items-center rounded-full border border-slate-200 text-slate-600 hover:border-violet-300 hover:text-violet-700" aria-label={`Add one ${product.name}`}><Plus className="h-3 w-3" /></button></div></div></div>; })}</div><div className="mt-6 border-t border-slate-200 pt-4"><div className="flex items-center justify-between text-sm"><span className="text-slate-500">Subtotal</span><strong>{money(subtotal)}</strong></div><button onClick={onClose} className="mt-4 w-full rounded-xl bg-[#17211f] py-3 text-sm font-semibold text-white">Continue shopping</button><p className="mt-2 text-center text-[10px] text-slate-400">Checkout is outside this prototype.</p></div></> : <div className="grid min-h-[320px] place-items-center text-center"><div><div className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-slate-100"><ShoppingBag className="h-5 w-5 text-slate-500" /></div><h3 className="mt-4 font-semibold">Your bag is empty</h3><p className="mt-1 text-sm text-slate-500">Add an option to keep exploring the flow.</p></div></div>}
     </Drawer>
   );
 }
@@ -546,8 +646,8 @@ function CountBadge({ children }: { children: React.ReactNode }) {
   return <span className="absolute right-0 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-violet-700 px-1 text-[8px] font-bold text-white">{children}</span>;
 }
 
-function PriorityChip({ children }: { children: React.ReactNode }) {
-  return <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1">{children}</span>;
+function PriorityChip({ children, onRemove }: { children: React.ReactNode; onRemove?: () => void }) {
+  return <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1">{children}{onRemove ? <button onClick={onRemove} aria-label={`Remove ${String(children)}`} className="grid h-4 w-4 place-items-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-900"><X className="h-2.5 w-2.5" /></button> : null}</span>;
 }
 
 function Feature({ children }: { children: React.ReactNode }) {
