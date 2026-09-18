@@ -1,18 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   AlertTriangle,
   Check,
   Heart,
-  Info,
   Minus,
   Plus,
   RotateCcw,
   Search,
   ShoppingBag,
   SlidersHorizontal,
-  Sparkles,
   Star,
   X,
 } from "lucide-react";
@@ -20,7 +19,6 @@ import { useEffect, useMemo, useState } from "react";
 
 type Badge = "Recommended" | "Best Seller" | "Top Rated" | "Popular" | "Sponsored" | "Best Match";
 type RankMode = "match" | "popular" | "rating" | "price";
-type ExperienceMode = "typical" | "explained";
 type PriceFilter = "all" | "under8" | "under12" | "over12";
 type FeatureFilter = "anc" | "multipoint" | "calls" | "battery" | "gaming";
 
@@ -177,7 +175,6 @@ function badgeStyle(badge: Badge) {
 }
 
 export default function RecommendationTransparency() {
-  const [experience, setExperience] = useState<ExperienceMode>("typical");
   const [rankMode, setRankMode] = useState<RankMode>("match");
   const [preferences, setPreferences] = useState(defaultPreferences);
   const [search, setSearch] = useState("");
@@ -251,7 +248,6 @@ export default function RecommendationTransparency() {
   }
 
   function resetAll() {
-    setExperience("typical");
     setRankMode("match");
     setPreferences(defaultPreferences);
     setSearch("");
@@ -265,7 +261,7 @@ export default function RecommendationTransparency() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  const hasChanges = search || activeFilterCount > 0 || savedOnly || rankMode !== "match" || experience !== "typical";
+  const hasChanges = search || activeFilterCount > 0 || savedOnly || rankMode !== "match";
 
   return (
     <main className="min-h-screen bg-[#f6f7fb] text-[#17211f]">
@@ -304,28 +300,23 @@ export default function RecommendationTransparency() {
 
       <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-[1500px] px-4 py-5 sm:px-6">
-          <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl font-semibold tracking-[-0.03em] sm:text-2xl">Wireless earbuds</h1>
-                <span className="text-xs text-slate-500">24 products</span>
-              </div>
-              <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-500 sm:text-sm">The same products. The same labels. One switch reveals what each label is actually optimized for.</p>
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="text-xl font-semibold tracking-[-0.03em] sm:text-2xl">Wireless earbuds</h1>
+              <span className="text-xs text-slate-500">24 products</span>
             </div>
-            <div className="flex w-full flex-col gap-2 sm:flex-row xl:w-auto">
-              <div className="grid grid-cols-2 rounded-2xl border border-slate-200 bg-slate-100 p-1" aria-label="Recommendation explanation view">
-                <button onClick={() => setExperience("typical")} className={`rounded-xl px-4 py-2 text-xs font-semibold transition ${experience === "typical" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500"}`}>Typical view</button>
-                <button onClick={() => setExperience("explained")} className={`flex items-center justify-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold transition ${experience === "explained" ? "bg-[#17211f] text-white shadow-sm" : "text-slate-500"}`}><Sparkles className="h-3.5 w-3.5" /> Explain the labels</button>
-              </div>
-            </div>
+            <p className="mt-1 max-w-3xl text-xs leading-5 text-slate-500 sm:text-sm">Open the explanation inside any product card to see what its label means, whether placement is paid and how well it fits your needs.</p>
           </div>
 
-          <div className="mt-4 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-[#fbfbfd] p-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="hidden h-10 w-10 shrink-0 place-items-center rounded-xl bg-violet-100 text-violet-700 sm:grid"><Check className="h-5 w-5" /></div>
+          <div className="mt-4 grid gap-4 rounded-2xl border border-slate-200 bg-[#fbfbfd] p-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+            <div className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-3">
+              <div className="hidden h-11 w-11 shrink-0 place-items-center rounded-xl bg-violet-100 text-violet-700 sm:grid"><Check className="h-5 w-5" /></div>
               <div className="min-w-0">
-                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Your priorities</div>
-                <div className="mt-1 flex flex-wrap gap-1.5 text-[11px] text-slate-600">
+                <div className="flex items-center gap-3">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Your priorities</div>
+                  <button onClick={() => setShowNeeds(true)} className="text-[10px] font-semibold text-violet-700 underline decoration-violet-200 underline-offset-4 hover:text-violet-900">Edit needs</button>
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1.5 text-[11px] text-slate-600">
                   <PriorityChip>Under {money(preferences.budget)}</PriorityChip>
                   {preferences.calls ? <PriorityChip>Clear calls</PriorityChip> : null}
                   {preferences.multipoint ? <PriorityChip>Multipoint</PriorityChip> : null}
@@ -334,23 +325,15 @@ export default function RecommendationTransparency() {
                   {preferences.gaming ? <PriorityChip>Low latency</PriorityChip> : null}
                 </div>
               </div>
-              <button onClick={() => setShowNeeds(true)} className="ml-auto shrink-0 rounded-full border border-slate-200 bg-white px-3 py-2 text-[11px] font-semibold text-slate-700 hover:border-violet-300 hover:text-violet-700">Edit needs</button>
             </div>
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0">
-              <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Rank by</span>
-              {(Object.keys(rankCopy) as RankMode[]).map((mode) => <button key={mode} onClick={() => setRankMode(mode)} className={`shrink-0 rounded-full px-3 py-2 text-[11px] font-semibold transition ${rankMode === mode ? "bg-violet-700 text-white" : "border border-slate-200 bg-white text-slate-600 hover:border-violet-300"}`}>{rankCopy[mode].label}</button>)}
+            <div className="min-w-0 border-t border-slate-200 pt-4 lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0">
+                <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Rank products by</span>
+                {(Object.keys(rankCopy) as RankMode[]).map((mode) => <button key={mode} onClick={() => setRankMode(mode)} className={`shrink-0 rounded-full px-3 py-2.5 text-[11px] font-semibold transition ${rankMode === mode ? "bg-violet-700 text-white" : "border border-slate-200 bg-white text-slate-600 hover:border-violet-300"}`}>{rankCopy[mode].label}</button>)}
+              </div>
+              <p className="mt-2 text-[10px] leading-4 text-slate-500"><span className="font-semibold text-slate-700">Optimized for {rankCopy[rankMode].optimized}.</span> {rankCopy[rankMode].detail}</p>
             </div>
           </div>
-
-          {experience === "explained" ? (
-            <div className="mt-3 flex flex-col gap-2 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-start gap-2.5">
-                <Info className="mt-0.5 h-4 w-4 shrink-0 text-violet-700" />
-                <div><span className="text-xs font-semibold text-violet-950">This order is optimized for {rankCopy[rankMode].optimized}.</span><span className="ml-1 text-xs text-violet-700">{rankCopy[rankMode].detail}</span></div>
-              </div>
-              <span className="shrink-0 text-[10px] font-semibold text-violet-700">No ranking is neutral.</span>
-            </div>
-          ) : null}
         </div>
       </section>
 
@@ -372,7 +355,7 @@ export default function RecommendationTransparency() {
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" data-testid="product-grid">
               {visibleProducts.map((product, index) => {
                 const fit = getFit(product, preferences);
-                return <ProductCard key={product.id} product={product} index={index} fit={fit} explained={experience === "explained"} saved={saved.includes(product.id)} onSave={() => toggleSaved(product.id)} onWhy={() => setReasonId(product.id)} onDetails={() => setDetailId(product.id)} onAdd={() => addToBag(product)} />;
+                return <ProductCard key={product.id} product={product} index={index} fit={fit} saved={saved.includes(product.id)} onSave={() => toggleSaved(product.id)} onWhy={() => setReasonId(product.id)} onDetails={() => setDetailId(product.id)} onAdd={() => addToBag(product)} />;
               })}
             </div>
           ) : (
@@ -382,6 +365,20 @@ export default function RecommendationTransparency() {
           )}
         </section>
       </div>
+
+      <section className="mx-auto max-w-[1500px] px-4 pb-8 sm:px-6">
+        <div className="grid gap-6 overflow-hidden rounded-3xl bg-[#17211f] px-6 py-7 text-white shadow-[0_20px_60px_rgba(23,33,31,0.16)] sm:px-8 sm:py-9 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div>
+            <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-violet-300">For ecommerce and marketplace teams</div>
+            <h2 className="mt-2 max-w-3xl text-xl font-semibold tracking-[-0.03em] sm:text-2xl">Customers should not have to decode why a product is being pushed.</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">I help teams redesign product discovery so recommendations balance customer fit, commercial goals and clear evidence.</p>
+          </div>
+          <div className="lg:text-right">
+            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-xs font-semibold text-[#17211f] transition hover:bg-violet-100">Discuss your recommendation experience <span aria-hidden="true">→</span></Link>
+            <p className="mt-2 text-[10px] text-slate-400">Strategy, product design and implementation support.</p>
+          </div>
+        </div>
+      </section>
 
       {reasonProduct ? <WhyPanel product={reasonProduct} preferences={preferences} onClose={() => setReasonId(null)} onAdd={() => addToBag(reasonProduct)} /> : null}
       {detailProduct ? <ProductDetails product={detailProduct} preferences={preferences} saved={saved.includes(detailProduct.id)} onClose={() => setDetailId(null)} onSave={() => toggleSaved(detailProduct.id)} onWhy={() => { setDetailId(null); setReasonId(detailProduct.id); }} onAdd={() => addToBag(detailProduct)} /> : null}
@@ -393,15 +390,15 @@ export default function RecommendationTransparency() {
   );
 }
 
-function ProductCard({ product, index, fit, explained, saved, onSave, onWhy, onDetails, onAdd }: { product: Product; index: number; fit: ReturnType<typeof getFit>; explained: boolean; saved: boolean; onSave: () => void; onWhy: () => void; onDetails: () => void; onAdd: () => void }) {
+function ProductCard({ product, index, fit, saved, onSave, onWhy, onDetails, onAdd }: { product: Product; index: number; fit: ReturnType<typeof getFit>; saved: boolean; onSave: () => void; onWhy: () => void; onDetails: () => void; onAdd: () => void }) {
   const discount = Math.round((1 - product.price / product.mrp) * 100);
   return (
     <article className="group flex min-h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_16px_40px_rgba(23,33,31,0.08)]">
       <div className="relative aspect-[1.12/1] overflow-hidden bg-slate-100">
         <Image src={product.image} alt={`${product.brand} ${product.name} wireless earbuds`} fill sizes="(min-width: 1536px) 280px, (min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw" priority={index < 4} className="object-cover transition duration-500 group-hover:scale-[1.025]" style={{ objectPosition: product.imagePosition ?? "50% 50%" }} />
-        <button onClick={explained ? onWhy : undefined} aria-label={explained ? `Explain ${product.badge} label for ${product.name}` : undefined} className={`absolute left-3 top-3 rounded-full border px-2.5 py-1.5 text-[9px] font-bold shadow-sm ${badgeStyle(product.badge)} ${explained ? "cursor-pointer ring-offset-2 hover:ring-2 hover:ring-violet-300" : "cursor-default"}`}>{product.badge}{explained ? " · Why?" : ""}</button>
+        <span className={`absolute left-3 top-3 rounded-full border px-2.5 py-1.5 text-[9px] font-bold shadow-sm ${badgeStyle(product.badge)}`}>{product.badge}</span>
         <button onClick={onSave} aria-label={saved ? `Remove ${product.name} from saved` : `Save ${product.name}`} className={`absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border shadow-sm transition ${saved ? "border-rose-200 bg-rose-50 text-rose-600" : "border-white bg-white/95 text-slate-600 hover:text-rose-600"}`}><Heart className={`h-4 w-4 ${saved ? "fill-current" : ""}`} /></button>
-        {explained ? <div className="absolute bottom-3 left-3 rounded-full border border-white/70 bg-white/90 px-2.5 py-1 text-[9px] font-bold text-emerald-800 shadow-sm backdrop-blur">{fit.matches.length}/{fit.checks.length} needs matched</div> : null}
+        <div className="absolute bottom-3 left-3 rounded-full border border-white/70 bg-white/90 px-2.5 py-1 text-[9px] font-bold text-emerald-800 shadow-sm backdrop-blur">{fit.matches.length}/{fit.checks.length} needs matched</div>
       </div>
       <div className="flex flex-1 flex-col p-4">
         <div className="text-[9px] font-bold uppercase tracking-[0.13em] text-slate-400">{product.brand} · {product.color}</div>
@@ -410,12 +407,10 @@ function ProductCard({ product, index, fit, explained, saved, onSave, onWhy, onD
         <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-lg font-bold tracking-[-0.03em]">{money(product.price)}</span><span className="text-[10px] text-slate-400 line-through">{money(product.mrp)}</span><span className="text-[10px] font-semibold text-emerald-700">{discount}% off</span></div>
         <div className="mt-1 text-[10px] text-slate-500">Free delivery · {product.delivery}</div>
         <div className="mt-3 flex flex-wrap gap-1.5 text-[9px] text-slate-600"><Feature>{product.battery}h battery</Feature>{product.ancScore >= 4 ? <Feature>Strong ANC</Feature> : null}{product.multipoint ? <Feature>Multipoint</Feature> : null}{product.lowLatency ? <Feature>Low latency</Feature> : null}</div>
-        {explained ? (
-          <button onClick={onWhy} className="mt-3 rounded-xl border border-violet-200 bg-violet-50 p-3 text-left transition hover:border-violet-400">
-            <div className="flex items-center justify-between gap-2 text-[10px] font-bold text-violet-900"><span>Why this is here</span><span aria-hidden="true">→</span></div>
-            <div className="mt-1 line-clamp-2 text-[10px] leading-4 text-violet-700">{product.sponsored ? "Paid placement, then checked for relevance." : product.recommendationMix[0] + "."} {fit.misses.length ? `Misses ${fit.misses[0].label.toLowerCase()}.` : "Matches every selected need."}</div>
-          </button>
-        ) : null}
+        <button onClick={onWhy} aria-label={`Explain ${product.badge} label for ${product.name}`} className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-violet-200 bg-violet-50 px-3 py-2.5 text-left transition hover:border-violet-400 hover:bg-violet-100">
+          <span><span className="block text-[10px] font-bold text-violet-900">Explain this label</span><span className="mt-0.5 block text-[9px] text-violet-700">{product.badge} · {product.sponsored ? "Paid" : "Organic"} · {fit.matches.length}/{fit.checks.length} needs</span></span>
+          <span className="text-sm text-violet-700" aria-hidden="true">→</span>
+        </button>
         <div className="mt-auto grid grid-cols-2 gap-2 pt-4"><button onClick={onDetails} className="rounded-xl border border-slate-200 py-2.5 text-[10px] font-semibold text-slate-700 transition hover:border-slate-400">View details</button><button onClick={onAdd} className="rounded-xl bg-[#17211f] py-2.5 text-[10px] font-semibold text-white transition hover:bg-violet-800">Add to bag</button></div>
       </div>
     </article>
