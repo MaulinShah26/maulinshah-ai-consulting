@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowRight,
   Battery,
   Check,
   ChevronDown,
@@ -10,8 +9,6 @@ import {
   CircleHelp,
   Gift,
   Heart,
-  Info,
-  Layers3,
   PackageCheck,
   Search,
   ShieldCheck,
@@ -26,7 +23,7 @@ import {
 import { FormEvent, ReactNode, useMemo, useState } from "react";
 
 type RecipientId = "myself" | "dad" | "mom" | "riya" | "gift";
-type Screen = "home" | "board" | "library";
+type Screen = "home" | "results" | "profiles";
 type MemoryMode = "remember" | "session" | "none";
 type PriorityKey =
   | "battery"
@@ -72,6 +69,7 @@ type Product = {
   chargingText: string;
   scores: PriorityWeights;
   unknown?: string;
+  badge?: string;
 };
 
 type CartItem = {
@@ -80,14 +78,14 @@ type CartItem = {
 };
 
 const priorityLabels: Record<PriorityKey, string> = {
-  battery: "Battery",
-  display: "Display",
-  ease: "Ease of use",
-  support: "Software support",
-  camera: "Camera",
+  battery: "Strong battery",
+  display: "Large display",
+  ease: "Easy to use",
+  support: "Long software support",
+  camera: "Camera quality",
   performance: "Performance",
-  charging: "Charging",
-  delivery: "Delivery",
+  charging: "Fast charging",
+  delivery: "Fast delivery",
   reliability: "Reliability"
 };
 
@@ -124,7 +122,7 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 2,
       reliability: 3
     },
-    avatarStyle: "bg-[#171816] text-white"
+    avatarStyle: "bg-[#1d1f1d] text-white"
   },
   dad: {
     id: "dad",
@@ -146,7 +144,7 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 2,
       reliability: 4
     },
-    avatarStyle: "bg-[#DFFD67] text-[#171816]"
+    avatarStyle: "bg-[#e9f7bf] text-[#2e3c12]"
   },
   mom: {
     id: "mom",
@@ -168,7 +166,7 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 2,
       reliability: 5
     },
-    avatarStyle: "bg-[#FFD8D2] text-[#5E2F2A]"
+    avatarStyle: "bg-[#ffe4df] text-[#7c3d34]"
   },
   riya: {
     id: "riya",
@@ -190,12 +188,12 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 2,
       reliability: 3
     },
-    avatarStyle: "bg-[#D8D1FF] text-[#443B78]"
+    avatarStyle: "bg-[#e8e2ff] text-[#524681]"
   },
   gift: {
     id: "gift",
     label: "One-time gift",
-    relation: "Disposable context",
+    relation: "Temporary recipient",
     initials: "G",
     mission:
       "A phone gift under ₹20,000. Prioritize reliability, strong ratings and quick delivery. Do not learn from this purchase.",
@@ -213,7 +211,7 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 5,
       reliability: 5
     },
-    avatarStyle: "bg-[#FFE7A3] text-[#6A4B00]"
+    avatarStyle: "bg-[#fff0b8] text-[#6e5200]"
   }
 };
 
@@ -245,7 +243,8 @@ const products: Product[] = [
       delivery: 3,
       reliability: 5
     },
-    unknown: "Local service-centre experience"
+    unknown: "Local service-centre experience",
+    badge: "Low return rate"
   },
   {
     id: "nova-pulse",
@@ -273,7 +272,8 @@ const products: Product[] = [
       charging: 5,
       delivery: 5,
       reliability: 4
-    }
+    },
+    badge: "Fast delivery"
   },
   {
     id: "mira-lite",
@@ -301,7 +301,8 @@ const products: Product[] = [
       charging: 3,
       delivery: 5,
       reliability: 5
-    }
+    },
+    badge: "Top rated"
   },
   {
     id: "volt-x",
@@ -329,7 +330,8 @@ const products: Product[] = [
       charging: 5,
       delivery: 5,
       reliability: 3
-    }
+    },
+    badge: "Performance pick"
   },
   {
     id: "luma-max",
@@ -386,7 +388,8 @@ const products: Product[] = [
       charging: 4,
       delivery: 2,
       reliability: 4
-    }
+    },
+    badge: "Camera pick"
   },
   {
     id: "kite-core",
@@ -414,7 +417,8 @@ const products: Product[] = [
       charging: 3,
       delivery: 5,
       reliability: 5
-    }
+    },
+    badge: "Value pick"
   },
   {
     id: "orbit-plus",
@@ -454,10 +458,12 @@ function scoreProduct(product: Product, weights: PriorityWeights) {
   const entries = Object.entries(weights) as Array<[PriorityKey, number]>;
   let earned = 0;
   let total = 0;
+
   entries.forEach(([key, weight]) => {
     earned += product.scores[key] * weight;
     total += 5 * weight;
   });
+
   return Math.round((earned / total) * 100);
 }
 
@@ -465,9 +471,12 @@ function fitDetails(product: Product, weights: PriorityWeights) {
   const important = (Object.entries(weights) as Array<[PriorityKey, number]>)
     .filter(([, weight]) => weight >= 4)
     .sort((a, b) => b[1] - a[1]);
-  const matches = important.filter(([key]) => product.scores[key] >= 4);
-  const misses = important.filter(([key]) => product.scores[key] < 4);
-  return { important, matches, misses };
+
+  return {
+    important,
+    matches: important.filter(([key]) => product.scores[key] >= 4),
+    misses: important.filter(([key]) => product.scores[key] < 4)
+  };
 }
 
 function parseMission(text: string, fallback: Profile) {
@@ -515,15 +524,15 @@ function productById(id: string) {
 export default function RecipientAwareCommerce() {
   const [screen, setScreen] = useState<Screen>("home");
   const [recipientId, setRecipientId] = useState<RecipientId>("dad");
+  const [recipientOpen, setRecipientOpen] = useState(false);
   const [missionText, setMissionText] = useState(profiles.dad.mission);
   const [weights, setWeights] = useState<PriorityWeights>({ ...profiles.dad.weights });
   const [budget, setBudget] = useState(profiles.dad.budget);
-  const [recipientPickerOpen, setRecipientPickerOpen] = useState(false);
-  const [lensEditorOpen, setLensEditorOpen] = useState(false);
+  const [missionOpen, setMissionOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [saved, setSaved] = useState<string[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [trayOpen, setTrayOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [memoryModes, setMemoryModes] = useState<Record<RecipientId, MemoryMode>>({
     myself: "remember",
@@ -555,23 +564,23 @@ export default function RecipientAwareCommerce() {
     setMissionText(next.mission);
     setWeights({ ...next.weights });
     setBudget(next.budget);
-    setRecipientPickerOpen(false);
+    setRecipientOpen(false);
   };
 
   const applyMission = () => {
     const parsed = parseMission(missionText, profile);
     setWeights(parsed.weights);
     setBudget(parsed.budget);
-    setLensEditorOpen(false);
+    setMissionOpen(false);
   };
 
-  const openBoard = (event?: FormEvent) => {
+  const search = (event?: FormEvent) => {
     event?.preventDefault();
     applyMission();
-    setScreen("board");
+    setScreen("results");
   };
 
-  const addToTray = (productId: string) => {
+  const addToCart = (productId: string) => {
     setCart((current) => [...current, { productId, recipientId }]);
   };
 
@@ -584,103 +593,104 @@ export default function RecipientAwareCommerce() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F3F1EA] text-[#171816]">
-      <VelaHeader
+    <main className="min-h-screen bg-[#f6f6f3] text-[#1d1f1d]">
+      <Header
         screen={screen}
         setScreen={setScreen}
         profile={profile}
         recipientId={recipientId}
-        pickerOpen={recipientPickerOpen}
-        setPickerOpen={setRecipientPickerOpen}
+        recipientOpen={recipientOpen}
+        setRecipientOpen={setRecipientOpen}
         onRecipientChange={changeRecipient}
-        trayCount={cart.length}
-        onTray={() => setTrayOpen(true)}
+        onSearch={search}
+        cartCount={cart.length}
+        onCart={() => setCartOpen(true)}
       />
 
-      <LensBar
+      <ContextStrip
         profile={profile}
         budget={budget}
         weights={weights}
-        onEdit={() => setLensEditorOpen(true)}
-        onChangeRecipient={() => setRecipientPickerOpen(true)}
+        onEdit={() => setMissionOpen(true)}
+        onRecipient={() => setRecipientOpen(true)}
       />
 
       {screen === "home" ? (
-        <Home
+        <HomeScreen
           profile={profile}
           recipientId={recipientId}
           ranked={ranked}
           missionText={missionText}
           setMissionText={setMissionText}
-          onOpenBoard={openBoard}
+          onSearch={search}
           onRecipientChange={changeRecipient}
           onProduct={setSelectedProduct}
+          onAdd={addToCart}
           saved={saved}
           onSave={toggleSaved}
-          onAdd={addToTray}
         />
       ) : null}
 
-      {screen === "board" ? (
-        <DecisionBoard
+      {screen === "results" ? (
+        <ResultsScreen
           profile={profile}
           recipientId={recipientId}
           ranked={ranked}
           weights={weights}
           budget={budget}
-          onEditLens={() => setLensEditorOpen(true)}
-          onRecipientChange={changeRecipient}
+          missionText={missionText}
+          onEditMission={() => setMissionOpen(true)}
           onProduct={setSelectedProduct}
+          onAdd={addToCart}
           saved={saved}
           onSave={toggleSaved}
-          onAdd={addToTray}
         />
       ) : null}
 
-      {screen === "library" ? (
-        <LensLibrary
+      {screen === "profiles" ? (
+        <ProfilesScreen
           recipientId={recipientId}
           onRecipientChange={changeRecipient}
           memoryModes={memoryModes}
           onMemoryMode={(id, mode) =>
             setMemoryModes((current) => ({ ...current, [id]: mode }))
           }
-          onOpenBoard={() => setScreen("board")}
+          onShop={() => setScreen("results")}
         />
       ) : null}
 
-      {lensEditorOpen ? (
-        <LensEditor
+      {missionOpen ? (
+        <MissionEditor
           profile={profile}
           missionText={missionText}
           setMissionText={setMissionText}
-          budget={budget}
           weights={weights}
+          budget={budget}
           onApply={applyMission}
-          onClose={() => setLensEditorOpen(false)}
+          onClose={() => setMissionOpen(false)}
         />
       ) : null}
 
       {selectedProduct ? (
-        <ProductView
+        <ProductDetail
           product={selectedProduct}
           recipientId={recipientId}
           weights={weights}
           memoryMode={memoryModes[recipientId]}
           onClose={() => setSelectedProduct(null)}
           onAdd={() => {
-            addToTray(selectedProduct.id);
+            addToCart(selectedProduct.id);
             setSelectedProduct(null);
-            setTrayOpen(true);
+            setCartOpen(true);
           }}
         />
       ) : null}
 
-      {trayOpen ? (
-        <DecisionTray
+      {cartOpen ? (
+        <CartDrawer
           items={cart}
           memoryModes={memoryModes}
-          onClose={() => setTrayOpen(false)}
+          onClose={() => setCartOpen(false)}
           onRemove={(index) =>
             setCart((current) => current.filter((_, itemIndex) => itemIndex !== index))
           }
@@ -691,15 +701,15 @@ export default function RecipientAwareCommerce() {
               )
             )
           }
-          onFinish={() => {
-            setTrayOpen(false);
+          onCheckout={() => {
+            setCartOpen(false);
             setFeedbackOpen(true);
           }}
         />
       ) : null}
 
       {feedbackOpen ? (
-        <OutcomeLoop
+        <OutcomeModal
           items={cart}
           onClose={() => setFeedbackOpen(false)}
         />
@@ -708,71 +718,81 @@ export default function RecipientAwareCommerce() {
   );
 }
 
-function VelaHeader({
+function Header({
   screen,
   setScreen,
   profile,
   recipientId,
-  pickerOpen,
-  setPickerOpen,
+  recipientOpen,
+  setRecipientOpen,
   onRecipientChange,
-  trayCount,
-  onTray
+  onSearch,
+  cartCount,
+  onCart
 }: {
   screen: Screen;
   setScreen: (screen: Screen) => void;
   profile: Profile;
   recipientId: RecipientId;
-  pickerOpen: boolean;
-  setPickerOpen: (value: boolean) => void;
+  recipientOpen: boolean;
+  setRecipientOpen: (value: boolean) => void;
   onRecipientChange: (id: RecipientId) => void;
-  trayCount: number;
-  onTray: () => void;
+  onSearch: (event?: FormEvent) => void;
+  cartCount: number;
+  onCart: () => void;
 }) {
   return (
-    <header className="border-b border-black/10 bg-[#F3F1EA]/95 backdrop-blur">
-      <div className="mx-auto flex max-w-[1440px] items-center gap-5 px-4 py-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-black/[0.06] bg-white/95 backdrop-blur">
+      <div className="mx-auto flex max-w-[1440px] items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <button
           onClick={() => setScreen("home")}
           className="flex shrink-0 items-center gap-2"
         >
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-[#171816] text-xs font-black text-[#DFFD67]">
-            V
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#1d1f1d] text-xs font-black text-white">
+            N
           </span>
-          <span className="text-sm font-black tracking-[0.15em]">VELA</span>
+          <span className="hidden text-sm font-black tracking-[-0.03em] sm:block">
+            NOVA
+          </span>
         </button>
 
-        <nav className="hidden items-center gap-2 rounded-full bg-white/60 p-1 text-xs font-semibold md:flex">
-          <NavPill active={screen === "home"} onClick={() => setScreen("home")}>
-            Discover
-          </NavPill>
-          <NavPill active={screen === "board"} onClick={() => setScreen("board")}>
-            Decision board
-          </NavPill>
-          <NavPill active={screen === "library"} onClick={() => setScreen("library")}>
-            Lens library
-          </NavPill>
-        </nav>
-
-        <div className="relative ml-auto">
+        <form
+          onSubmit={(event) => onSearch(event)}
+          className="flex min-w-0 flex-1 items-center gap-2 rounded-2xl border border-black/[0.08] bg-[#f7f7f4] px-3"
+        >
+          <Search className="h-4 w-4 shrink-0 text-black/35" />
+          <input
+            defaultValue="smartphone under ₹20,000"
+            className="min-w-0 flex-1 bg-transparent py-3 text-sm outline-none"
+            aria-label="Search products"
+          />
           <button
-            onClick={() => setPickerOpen(!pickerOpen)}
-            className="flex items-center gap-2 rounded-full border border-black/10 bg-white px-2 py-1.5"
+            type="submit"
+            className="rounded-xl bg-[#1d1f1d] px-3 py-2 text-[10px] font-black text-white"
           >
-            <span className={"grid h-8 w-8 place-items-center rounded-full text-[10px] font-bold " + profile.avatarStyle}>
+            Search
+          </button>
+        </form>
+
+        <div className="relative">
+          <button
+            onClick={() => setRecipientOpen(!recipientOpen)}
+            className="flex items-center gap-2 rounded-2xl border border-black/[0.08] bg-white px-2.5 py-2"
+          >
+            <span className={"grid h-8 w-8 place-items-center rounded-full text-[10px] font-black " + profile.avatarStyle}>
               {profile.initials}
             </span>
-            <span className="hidden text-left sm:block">
-              <span className="block text-[9px] uppercase tracking-[0.12em] text-black/40">
+            <span className="hidden text-left md:block">
+              <span className="block text-[9px] font-bold uppercase tracking-[0.12em] text-black/35">
                 Shopping for
               </span>
-              <span className="block text-xs font-bold">{profile.label}</span>
+              <span className="block text-xs font-black">{profile.label}</span>
             </span>
-            <ChevronDown className="h-3.5 w-3.5 text-black/40" />
+            <ChevronDown className="h-3.5 w-3.5 text-black/35" />
           </button>
 
-          {pickerOpen ? (
-            <RecipientPicker
+          {recipientOpen ? (
+            <RecipientMenu
               recipientId={recipientId}
               onSelect={onRecipientChange}
             />
@@ -780,45 +800,47 @@ function VelaHeader({
         </div>
 
         <button
-          onClick={onTray}
-          className="relative grid h-11 w-11 place-items-center rounded-full bg-[#171816] text-white"
-          aria-label="Open decision tray"
+          onClick={() => setScreen("profiles")}
+          className={
+            "hidden rounded-xl px-3 py-2 text-xs font-black lg:block " +
+            (screen === "profiles" ? "bg-[#eef6cd]" : "text-black/55")
+          }
+        >
+          Profiles
+        </button>
+
+        <button
+          onClick={onCart}
+          className="relative grid h-11 w-11 place-items-center rounded-2xl bg-[#1d1f1d] text-white"
+          aria-label="Open cart"
         >
           <ShoppingBag className="h-4 w-4" />
-          {trayCount ? (
-            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[#DFFD67] px-1 text-[9px] font-black text-[#171816]">
-              {trayCount}
+          {cartCount ? (
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[#dff168] px-1 text-[9px] font-black text-[#1d1f1d]">
+              {cartCount}
             </span>
           ) : null}
         </button>
+      </div>
+
+      <div className="border-t border-black/[0.04] bg-white">
+        <div className="mx-auto flex max-w-[1440px] items-center gap-5 overflow-x-auto px-4 py-2.5 text-[11px] font-bold text-black/50 sm:px-6 lg:px-8">
+          {["Mobiles", "Audio", "Wearables", "Computing", "Home", "Beauty", "Fashion", "Pet care"].map((item) => (
+            <button
+              key={item}
+              onClick={() => item === "Mobiles" && setScreen("results")}
+              className="whitespace-nowrap hover:text-black"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
       </div>
     </header>
   );
 }
 
-function NavPill({
-  active,
-  onClick,
-  children
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={
-        "rounded-full px-3 py-2 transition " +
-        (active ? "bg-[#171816] text-white" : "text-black/50 hover:text-black")
-      }
-    >
-      {children}
-    </button>
-  );
-}
-
-function RecipientPicker({
+function RecipientMenu({
   recipientId,
   onSelect
 }: {
@@ -826,13 +848,14 @@ function RecipientPicker({
   onSelect: (id: RecipientId) => void;
 }) {
   return (
-    <div className="absolute right-0 top-[56px] z-50 w-[320px] rounded-[24px] border border-black/10 bg-[#FBFAF6] p-3 shadow-2xl">
+    <div className="absolute right-0 top-[56px] z-50 w-[320px] rounded-3xl border border-black/[0.08] bg-white p-3 shadow-2xl">
       <div className="px-2 pb-2">
-        <div className="text-xs font-black">Switch shopping lens</div>
-        <p className="mt-1 text-[10px] leading-4 text-black/45">
-          Same account. Different person, mission and memory.
+        <div className="text-xs font-black">Who are you shopping for?</div>
+        <p className="mt-1 text-[10px] leading-4 text-black/40">
+          Change the person without changing the account.
         </p>
       </div>
+
       <div className="space-y-1">
         {(Object.keys(profiles) as RecipientId[]).map((id) => {
           const item = profiles[id];
@@ -841,17 +864,17 @@ function RecipientPicker({
               key={id}
               onClick={() => onSelect(id)}
               className={
-                "flex w-full items-center gap-3 rounded-[18px] px-3 py-3 text-left transition hover:bg-black/[0.04] " +
-                (id === recipientId ? "bg-[#E8E6DE]" : "")
+                "flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left hover:bg-black/[0.03] " +
+                (id === recipientId ? "bg-[#f1f6df]" : "")
               }
             >
-              <span className={"grid h-9 w-9 shrink-0 place-items-center rounded-full text-[10px] font-bold " + item.avatarStyle}>
+              <span className={"grid h-9 w-9 shrink-0 place-items-center rounded-full text-[10px] font-black " + item.avatarStyle}>
                 {item.initials}
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block text-xs font-bold">{item.label}</span>
-                <span className="block truncate text-[10px] text-black/40">
-                  {item.temporary ? "Disposable lens" : item.saved.join(" · ")}
+                <span className="block text-xs font-black">{item.label}</span>
+                <span className="block truncate text-[10px] text-black/35">
+                  {item.temporary ? "One-time context" : item.saved.join(" · ")}
                 </span>
               </span>
               {id === recipientId ? <Check className="h-4 w-4" /> : null}
@@ -859,7 +882,8 @@ function RecipientPicker({
           );
         })}
       </div>
-      <button className="mt-2 flex w-full items-center gap-2 rounded-[18px] border border-dashed border-black/15 px-3 py-3 text-xs font-bold">
+
+      <button className="mt-2 flex w-full items-center gap-2 rounded-2xl border border-dashed border-black/15 px-3 py-3 text-xs font-black">
         <Users className="h-4 w-4" />
         Add person or pet
       </button>
@@ -867,118 +891,125 @@ function RecipientPicker({
   );
 }
 
-function LensBar({
+function ContextStrip({
   profile,
   budget,
   weights,
   onEdit,
-  onChangeRecipient
+  onRecipient
 }: {
   profile: Profile;
   budget: number;
   weights: PriorityWeights;
   onEdit: () => void;
-  onChangeRecipient: () => void;
+  onRecipient: () => void;
 }) {
   const priorities = (Object.entries(weights) as Array<[PriorityKey, number]>)
     .filter(([, weight]) => weight >= 4)
     .slice(0, 4);
 
   return (
-    <div className="border-b border-black/10 bg-[#FBFAF6]">
-      <div className="mx-auto flex max-w-[1440px] items-center gap-2 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
-        <span className="shrink-0 text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
-          Active lens
+    <div className="border-b border-black/[0.06] bg-[#fbfbf8]">
+      <div className="mx-auto flex max-w-[1440px] items-center gap-2 overflow-x-auto px-4 py-2.5 sm:px-6 lg:px-8">
+        <span className="shrink-0 text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+          Current context
         </span>
+
         <button
-          onClick={onChangeRecipient}
-          className="flex shrink-0 items-center gap-2 rounded-full bg-[#171816] px-3 py-2 text-[10px] font-bold text-white"
+          onClick={onRecipient}
+          className="flex shrink-0 items-center gap-2 rounded-full bg-[#1d1f1d] px-3 py-1.5 text-[10px] font-black text-white"
         >
           <span className={"grid h-5 w-5 place-items-center rounded-full text-[8px] " + profile.avatarStyle}>
             {profile.initials}
           </span>
           {profile.label}
         </button>
-        <LensToken>Smartphone</LensToken>
-        <LensToken>Under {money(budget)}</LensToken>
+
+        <ContextPill>Smartphone</ContextPill>
+        <ContextPill>Under {money(budget)}</ContextPill>
+
         {priorities.map(([key]) => (
-          <LensToken key={key}>{priorityLabels[key]}</LensToken>
+          <ContextPill key={key}>{priorityLabels[key]}</ContextPill>
         ))}
+
         <button
           onClick={onEdit}
-          className="ml-auto shrink-0 rounded-full border border-black/15 px-3 py-2 text-[10px] font-bold"
+          className="ml-auto shrink-0 rounded-full border border-black/[0.1] bg-white px-3 py-1.5 text-[10px] font-black"
         >
-          Edit lens
+          Edit needs
         </button>
       </div>
     </div>
   );
 }
 
-function LensToken({ children }: { children: ReactNode }) {
+function ContextPill({ children }: { children: ReactNode }) {
   return (
-    <span className="shrink-0 rounded-full border border-black/10 bg-white px-3 py-2 text-[10px] font-semibold text-black/65">
+    <span className="shrink-0 rounded-full border border-black/[0.07] bg-white px-3 py-1.5 text-[10px] font-semibold text-black/55">
       {children}
     </span>
   );
 }
 
-function Home({
+function HomeScreen({
   profile,
   recipientId,
   ranked,
   missionText,
   setMissionText,
-  onOpenBoard,
+  onSearch,
   onRecipientChange,
   onProduct,
+  onAdd,
   saved,
-  onSave,
-  onAdd
+  onSave
 }: {
   profile: Profile;
   recipientId: RecipientId;
   ranked: Array<{ product: Product; score: number }>;
   missionText: string;
   setMissionText: (value: string) => void;
-  onOpenBoard: (event?: FormEvent) => void;
+  onSearch: (event?: FormEvent) => void;
   onRecipientChange: (id: RecipientId) => void;
   onProduct: (product: Product) => void;
+  onAdd: (id: string) => void;
   saved: string[];
   onSave: (id: string) => void;
-  onAdd: (id: string) => void;
 }) {
   const top = ranked[0];
-  const alternateIds: RecipientId[] = ["dad", "myself", "riya", "gift"];
 
   return (
-    <div className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
-      <section className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-[36px] bg-[#171816] p-6 text-white sm:p-8 lg:p-10">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold">
-            <Sparkles className="h-3.5 w-3.5 text-[#DFFD67]" />
-            Context-first commerce
+    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+      <section className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="rounded-[34px] bg-[#1d1f1d] p-6 text-white sm:p-8 lg:p-10">
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.14em] text-[#dff168]">
+            <Sparkles className="h-4 w-4" />
+            Shopping for {profile.label}
           </div>
 
-          <h1 className="mt-5 max-w-3xl text-4xl font-black leading-[0.98] tracking-[-0.055em] sm:text-5xl lg:text-6xl">
-            Shopping should know who the decision is for.
+          <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.055em] sm:text-5xl">
+            Tell us who it is for. We will keep the context with the shopping journey.
           </h1>
 
-          <p className="mt-5 max-w-2xl text-sm leading-6 text-white/60">
-            Vela does not start with your account history. It starts with a Shopping Lens:
-            who this is for, what they need now, what is non-negotiable and what should be remembered later.
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-white/55">
+            The account stays the same. The recipient, current need and learning context change.
           </p>
 
-          <form onSubmit={onOpenBoard} className="mt-8 rounded-[28px] bg-[#F7F5EE] p-3 text-[#171816]">
+          <form
+            onSubmit={(event) => onSearch(event)}
+            className="mt-7 rounded-[28px] bg-white p-3 text-[#1d1f1d]"
+          >
             <div className="flex items-center gap-3 px-2 pt-1">
-              <span className={"grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-bold " + profile.avatarStyle}>
+              <span className={"grid h-10 w-10 place-items-center rounded-full text-xs font-black " + profile.avatarStyle}>
                 {profile.initials}
               </span>
               <div>
-                <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
-                  Current mission for {profile.label}
+                <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+                  Shopping need
                 </div>
-                <div className="text-xs font-bold">Say what matters. Not how to filter it.</div>
+                <div className="text-xs font-black">
+                  What does {profile.label} need right now?
+                </div>
               </div>
             </div>
 
@@ -986,120 +1017,110 @@ function Home({
               value={missionText}
               onChange={(event) => setMissionText(event.target.value)}
               rows={4}
-              className="mt-3 w-full resize-none rounded-[20px] border border-black/10 bg-white p-4 text-sm leading-6 outline-none focus:border-black/30"
+              className="mt-3 w-full resize-none rounded-2xl bg-[#f6f6f3] p-4 text-sm leading-6 outline-none"
             />
 
-            <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-              <button
-                type="submit"
-                className="flex flex-1 items-center justify-center gap-2 rounded-[18px] bg-[#DFFD67] px-4 py-3 text-xs font-black text-[#171816]"
-              >
-                Open decision board
-                <ArrowRight className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => onRecipientChange("gift")}
-                className="rounded-[18px] border border-black/10 px-4 py-3 text-xs font-bold"
-              >
-                Start a one-time gift lens
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#dff168] px-4 py-3 text-sm font-black"
+            >
+              Show products for {profile.label}
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </form>
         </div>
 
-        <div className="relative overflow-hidden rounded-[36px] bg-[#DFFD67] p-6 sm:p-8">
-          <div className="absolute right-5 top-5 rounded-full bg-[#171816] px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.14em] text-white">
-            Live lens
-          </div>
-
-          <div className="max-w-sm">
-            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/45">
-              What Vela sees right now
-            </div>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em]">
-              {profile.label} + this mission, not one blended profile.
-            </h2>
-          </div>
-
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <ContextTile label="Person" value={profile.label} />
-            <ContextTile label="Mode" value={profile.temporary ? "Disposable" : "Rememberable"} />
-            <ContextTile label="Budget" value="Under ₹20K" />
-            <ContextTile label="Goal" value="Choose well, not click fast" />
-          </div>
-
+        <div className="overflow-hidden rounded-[34px] bg-[#e9f7bf]">
           {top ? (
-            <button
-              onClick={() => onProduct(top.product)}
-              className="mt-6 grid w-full grid-cols-[120px_1fr] items-center gap-4 rounded-[28px] bg-[#F7F5EE] p-3 text-left"
-            >
-              <img
-                src={top.product.image}
-                alt={top.product.brand + " " + top.product.name}
-                className="aspect-square w-full rounded-[20px] object-contain"
-              />
-              <div>
-                <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
-                  Leading option
+            <div className="grid h-full min-h-[420px] grid-rows-[1fr_auto]">
+              <button
+                onClick={() => onProduct(top.product)}
+                className="relative min-h-[280px]"
+              >
+                <img
+                  src={top.product.image}
+                  alt={top.product.brand + " " + top.product.name}
+                  className="absolute inset-0 h-full w-full object-contain p-5"
+                />
+              </button>
+
+              <div className="m-4 rounded-[24px] bg-white/80 p-4 backdrop-blur">
+                <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+                  Current best fit
                 </div>
-                <div className="mt-1 text-lg font-black">
-                  {top.product.brand} {top.product.name}
-                </div>
-                <div className="mt-2 text-xs text-black/55">
-                  {top.score}% fit to this lens
+                <div className="mt-1 flex items-end justify-between gap-4">
+                  <div>
+                    <div className="text-xl font-black">
+                      {top.product.brand} {top.product.name}
+                    </div>
+                    <div className="mt-1 text-xs text-black/45">
+                      {top.score}% fit for {profile.label}
+                    </div>
+                  </div>
+                  <span className="text-lg font-black">{money(top.product.price)}</span>
                 </div>
               </div>
-            </button>
+            </div>
           ) : null}
         </div>
       </section>
 
-      <section className="mt-8">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <section className="mt-6 rounded-[28px] border border-black/[0.07] bg-white p-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
-              Same catalogue, different lens
-            </div>
-            <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
-              Switching the person changes the decision, not the account.
-            </h2>
+            <div className="text-sm font-black">Switch who you are shopping for</div>
+            <p className="mt-1 text-xs text-black/40">
+              Watch the same category re-rank without mixing everyone into one profile.
+            </p>
           </div>
-          <button
-            onClick={() => onOpenBoard()}
-            className="text-xs font-black underline underline-offset-4"
-          >
-            Open full board
-          </button>
-        </div>
 
-        <div className="mt-4 grid gap-3 lg:grid-cols-4">
-          {alternateIds.map((id) => (
-            <LensPreview
-              key={id}
-              id={id}
-              active={id === recipientId}
-              onSelect={() => onRecipientChange(id)}
-            />
-          ))}
+          <div className="flex flex-wrap gap-2">
+            {(Object.keys(profiles) as RecipientId[]).map((id) => {
+              const item = profiles[id];
+              return (
+                <button
+                  key={id}
+                  onClick={() => onRecipientChange(id)}
+                  className={
+                    "flex items-center gap-2 rounded-full border px-3 py-2 text-[10px] font-black " +
+                    (id === recipientId
+                      ? "border-[#1d1f1d] bg-[#1d1f1d] text-white"
+                      : "border-black/[0.08] bg-[#f8f8f5]")
+                  }
+                >
+                  <span className={"grid h-6 w-6 place-items-center rounded-full text-[8px] " + item.avatarStyle}>
+                    {item.initials}
+                  </span>
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      <section className="mt-10">
-        <div className="flex items-end justify-between">
+      <section className="mt-8">
+        <div className="flex items-end justify-between gap-3">
           <div>
-            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
-              Shortlist for {profile.label}
+            <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+              Recommended for {profile.label}
             </div>
             <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
-              A few options worth looking at
+              Products that fit this need
             </h2>
           </div>
+
+          <button
+            onClick={() => onSearch()}
+            className="text-xs font-black underline underline-offset-4"
+          >
+            View all
+          </button>
         </div>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {ranked.slice(0, 4).map(({ product, score }, index) => (
-            <EditorialProductCard
+            <ProductCard
               key={product.id}
               product={product}
               score={score}
@@ -1115,485 +1136,196 @@ function Home({
         </div>
       </section>
 
-      <section className="mt-10 grid gap-3 md:grid-cols-3">
-        <PrincipleCard
-          number="01"
+      <section className="mt-8 grid gap-4 md:grid-cols-3">
+        <SimpleInfo
+          icon={<User className="h-4 w-4" />}
           title="Profile"
-          text="What may remain useful across purchases."
+          text="Stable preferences that may remain useful next time."
         />
-        <PrincipleCard
-          number="02"
-          title="Mission"
-          text="What matters for this decision right now."
+        <SimpleInfo
+          icon={<Search className="h-4 w-4" />}
+          title="Current need"
+          text="Temporary budget and priorities for this purchase."
         />
-        <PrincipleCard
-          number="03"
-          title="Outcome"
-          text="What actually worked after the purchase."
+        <SimpleInfo
+          icon={<ShieldCheck className="h-4 w-4" />}
+          title="Memory"
+          text="The shopper controls what gets remembered after the purchase."
         />
       </section>
     </div>
   );
 }
 
-function ContextTile({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-[20px] bg-white/60 p-4">
-      <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/35">
-        {label}
-      </div>
-      <div className="mt-1 text-sm font-black">{value}</div>
-    </div>
-  );
-}
-
-function LensPreview({
-  id,
-  active,
-  onSelect
-}: {
-  id: RecipientId;
-  active: boolean;
-  onSelect: () => void;
-}) {
-  const profile = profiles[id];
-  const top = products
-    .filter((product) => product.price <= profile.budget)
-    .map((product) => ({ product, score: scoreProduct(product, profile.weights) }))
-    .sort((a, b) => b.score - a.score)[0];
-
-  return (
-    <button
-      onClick={onSelect}
-      className={
-        "rounded-[28px] border p-4 text-left transition " +
-        (active
-          ? "border-[#171816] bg-[#171816] text-white"
-          : "border-black/10 bg-[#FBFAF6] hover:-translate-y-0.5")
-      }
-    >
-      <div className="flex items-center gap-3">
-        <span className={"grid h-10 w-10 place-items-center rounded-full text-xs font-bold " + profile.avatarStyle}>
-          {profile.initials}
-        </span>
-        <div>
-          <div className="text-sm font-black">{profile.label}</div>
-          <div className={active ? "text-[10px] text-white/45" : "text-[10px] text-black/35"}>
-            {profile.relation}
-          </div>
-        </div>
-      </div>
-
-      {top ? (
-        <div className={"mt-4 rounded-[20px] p-3 " + (active ? "bg-white/10" : "bg-white")}>
-          <div className="flex items-center gap-3">
-            <img
-              src={top.product.image}
-              alt=""
-              className="h-16 w-16 rounded-[14px] object-contain"
-            />
-            <div>
-              <div className="text-[9px] font-black uppercase tracking-[0.12em] opacity-45">
-                Top changes to
-              </div>
-              <div className="mt-1 text-xs font-black">
-                {top.product.brand} {top.product.name}
-              </div>
-              <div className="mt-1 text-[10px] opacity-55">
-                {top.score}% fit
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </button>
-  );
-}
-
-function PrincipleCard({
-  number,
+function SimpleInfo({
+  icon,
   title,
   text
 }: {
-  number: string;
+  icon: ReactNode;
   title: string;
   text: string;
 }) {
   return (
-    <div className="rounded-[28px] border border-black/10 bg-[#FBFAF6] p-5">
-      <div className="text-[10px] font-black text-black/25">{number}</div>
-      <div className="mt-8 text-xl font-black">{title}</div>
-      <p className="mt-2 text-xs leading-5 text-black/45">{text}</p>
+    <div className="rounded-[24px] border border-black/[0.07] bg-white p-5">
+      <div className="flex items-center gap-2 text-sm font-black">
+        {icon}
+        {title}
+      </div>
+      <p className="mt-2 text-xs leading-5 text-black/40">{text}</p>
     </div>
   );
 }
 
-function DecisionBoard({
+function ResultsScreen({
   profile,
   recipientId,
   ranked,
   weights,
   budget,
-  onEditLens,
-  onRecipientChange,
+  missionText,
+  onEditMission,
   onProduct,
+  onAdd,
   saved,
-  onSave,
-  onAdd
+  onSave
 }: {
   profile: Profile;
   recipientId: RecipientId;
   ranked: Array<{ product: Product; score: number }>;
   weights: PriorityWeights;
   budget: number;
-  onEditLens: () => void;
-  onRecipientChange: (id: RecipientId) => void;
+  missionText: string;
+  onEditMission: () => void;
   onProduct: (product: Product) => void;
+  onAdd: (id: string) => void;
   saved: string[];
   onSave: (id: string) => void;
-  onAdd: (id: string) => void;
 }) {
-  const strong = ranked.slice(0, 2);
-  const tradeoffs = ranked.slice(2, 5);
-  const alternatives = ranked.slice(5);
   const excluded = products.length - ranked.length;
 
   return (
-    <div className="mx-auto max-w-[1440px] px-4 py-7 sm:px-6 lg:px-8">
-      <section className="rounded-[32px] border border-black/10 bg-[#FBFAF6] p-5 sm:p-6">
-        <div className="grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
-          <div>
-            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
-              Decision board
-            </div>
-            <h1 className="mt-2 max-w-3xl text-3xl font-black tracking-[-0.045em] sm:text-4xl">
-              Not a results page. A view of the decision.
-            </h1>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-black/45">
-              First remove what clearly fails the lens. Then surface the strongest fits,
-              useful trade-offs and remaining alternatives. The catalogue stays the same;
-              the decision context changes.
-            </p>
+    <div className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+      <div className="grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)]">
+        <aside className="self-start rounded-[28px] border border-black/[0.07] bg-white p-4 lg:sticky lg:top-[148px]">
+          <div className="flex items-center gap-2 text-sm font-black">
+            <SlidersHorizontal className="h-4 w-4" />
+            Refine
           </div>
 
-          <div className="rounded-[24px] bg-[#171816] p-4 text-white">
-            <div className="text-[9px] font-black uppercase tracking-[0.14em] text-white/35">
-              Lens summary
-            </div>
-            <div className="mt-2 text-sm font-black">{profile.label}</div>
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              <TinyToken>{money(budget)} max</TinyToken>
-              {(Object.entries(weights) as Array<[PriorityKey, number]>)
-                .filter(([, weight]) => weight >= 4)
-                .slice(0, 4)
-                .map(([key]) => (
-                  <TinyToken key={key}>{priorityLabels[key]}</TinyToken>
-                ))}
-            </div>
-            <button
-              onClick={onEditLens}
-              className="mt-4 w-full rounded-[16px] bg-[#DFFD67] px-3 py-2.5 text-xs font-black text-[#171816]"
-            >
-              Refine lens
-            </button>
-          </div>
-        </div>
+          <FilterSection title="Budget">
+            <FilterRow checked label={"Under " + money(budget)} />
+            <FilterRow label="₹10,000 – ₹15,000" />
+            <FilterRow label="₹15,000 – ₹20,000" />
+          </FilterSection>
 
-        <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-black/10 pt-4">
-          <span className="mr-1 text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
-            Compare lens
-          </span>
-          {(Object.keys(profiles) as RecipientId[]).map((id) => {
-            const item = profiles[id];
-            return (
+          <FilterSection title={"Important for " + profile.label}>
+            {(Object.entries(weights) as Array<[PriorityKey, number]>)
+              .filter(([, weight]) => weight >= 4)
+              .map(([key]) => (
+                <FilterRow key={key} checked label={priorityLabels[key]} />
+              ))}
+          </FilterSection>
+
+          <FilterSection title="Other filters">
+            <FilterRow label="4.5★ & above" />
+            <FilterRow label="Delivery by tomorrow" />
+            <FilterRow label="In stock" />
+          </FilterSection>
+        </aside>
+
+        <section className="min-w-0">
+          <div className="rounded-[28px] border border-black/[0.07] bg-white p-5">
+            <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+              <div>
+                <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+                  Smartphone recommendations
+                </div>
+                <h1 className="mt-1 text-3xl font-black tracking-[-0.045em]">
+                  Best matches for {profile.label}
+                </h1>
+                <p className="mt-2 max-w-2xl text-xs leading-5 text-black/40">
+                  {missionText}
+                </p>
+              </div>
+
               <button
-                key={id}
-                onClick={() => onRecipientChange(id)}
-                className={
-                  "flex items-center gap-2 rounded-full border px-3 py-2 text-[10px] font-bold " +
-                  (id === recipientId
-                    ? "border-[#171816] bg-[#171816] text-white"
-                    : "border-black/10 bg-white")
-                }
+                onClick={onEditMission}
+                className="rounded-2xl border border-black/[0.1] px-4 py-2.5 text-xs font-black"
               >
-                <span className={"grid h-5 w-5 place-items-center rounded-full text-[8px] " + item.avatarStyle}>
-                  {item.initials}
-                </span>
-                {item.label}
+                Edit this need
               </button>
-            );
-          })}
-        </div>
-      </section>
+            </div>
 
-      <div className="mt-5 flex items-center gap-2 rounded-[20px] bg-[#E8E6DE] px-4 py-3 text-[11px] text-black/55">
-        <ShieldCheck className="h-4 w-4" />
-        {excluded} product{excluded === 1 ? "" : "s"} excluded before ranking because they fail the hard budget.
+            <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-black/[0.06] pt-4">
+              <span className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+                How ranking works
+              </span>
+              <span className="rounded-full bg-[#f3f3ef] px-3 py-1.5 text-[10px] font-semibold text-black/50">
+                {excluded} outside budget removed first
+              </span>
+              <span className="rounded-full bg-[#f3f3ef] px-3 py-1.5 text-[10px] font-semibold text-black/50">
+                Current need
+              </span>
+              <span className="rounded-full bg-[#f3f3ef] px-3 py-1.5 text-[10px] font-semibold text-black/50">
+                Saved context for {profile.label}
+              </span>
+              <span className="rounded-full bg-[#f3f3ef] px-3 py-1.5 text-[10px] font-semibold text-black/50">
+                Quality + availability
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-[24px] border border-[#ecd58c] bg-[#fff8dc] p-4">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex items-start gap-3">
+                <CircleHelp className="mt-0.5 h-4 w-4 shrink-0 text-[#6e5200]" />
+                <div>
+                  <div className="text-xs font-black text-[#5f4900]">
+                    One thing is still unclear
+                  </div>
+                  <p className="mt-1 text-[10px] leading-4 text-[#6e5200]/70">
+                    “Easy to use” could mean a clean interface, larger controls or simpler setup.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {["Clean interface", "Larger controls", "Simple setup"].map((item) => (
+                  <button
+                    key={item}
+                    className="rounded-full bg-white px-3 py-1.5 text-[10px] font-black text-[#5f4900]"
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {ranked.map(({ product, score }, index) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                score={score}
+                rank={index + 1}
+                profile={profile}
+                weights={weights}
+                onOpen={() => onProduct(product)}
+                onAdd={() => onAdd(product.id)}
+                saved={saved.includes(product.id)}
+                onSave={() => onSave(product.id)}
+              />
+            ))}
+          </div>
+        </section>
       </div>
-
-      <BoardLane
-        index="A"
-        eyebrow="Strongest fits"
-        title="These satisfy the lens with the fewest compromises."
-        products={strong}
-        profile={profile}
-        weights={weights}
-        onProduct={onProduct}
-        saved={saved}
-        onSave={onSave}
-        onAdd={onAdd}
-        accent="bg-[#DFFD67]"
-      />
-
-      <BoardLane
-        index="B"
-        eyebrow="Trade-offs worth considering"
-        title="Not perfect fits, but the compromise may be worth it."
-        products={tradeoffs}
-        profile={profile}
-        weights={weights}
-        onProduct={onProduct}
-        saved={saved}
-        onSave={onSave}
-        onAdd={onAdd}
-        accent="bg-[#D8D1FF]"
-      />
-
-      {alternatives.length ? (
-        <BoardLane
-          index="C"
-          eyebrow="Still valid"
-          title="Useful alternatives once the main trade-offs are understood."
-          products={alternatives}
-          profile={profile}
-          weights={weights}
-          onProduct={onProduct}
-          saved={saved}
-          onSave={onSave}
-          onAdd={onAdd}
-          accent="bg-[#FFD8D2]"
-        />
-      ) : null}
     </div>
   );
 }
 
-function TinyToken({ children }: { children: ReactNode }) {
-  return (
-    <span className="rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold text-white/70">
-      {children}
-    </span>
-  );
-}
-
-function BoardLane({
-  index,
-  eyebrow,
-  title,
-  products: laneProducts,
-  profile,
-  weights,
-  onProduct,
-  saved,
-  onSave,
-  onAdd,
-  accent
-}: {
-  index: string;
-  eyebrow: string;
-  title: string;
-  products: Array<{ product: Product; score: number }>;
-  profile: Profile;
-  weights: PriorityWeights;
-  onProduct: (product: Product) => void;
-  saved: string[];
-  onSave: (id: string) => void;
-  onAdd: (id: string) => void;
-  accent: string;
-}) {
-  return (
-    <section className="mt-10">
-      <div className="grid gap-4 lg:grid-cols-[260px_1fr]">
-        <div className="lg:sticky lg:top-6 lg:self-start">
-          <span className={"grid h-10 w-10 place-items-center rounded-full text-xs font-black " + accent}>
-            {index}
-          </span>
-          <div className="mt-4 text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
-            {eyebrow}
-          </div>
-          <h2 className="mt-2 text-2xl font-black tracking-[-0.04em]">
-            {title}
-          </h2>
-        </div>
-
-        <div className="space-y-4">
-          {laneProducts.map(({ product, score }, indexWithinLane) => (
-            <DecisionCard
-              key={product.id}
-              product={product}
-              score={score}
-              order={indexWithinLane + 1}
-              profile={profile}
-              weights={weights}
-              onOpen={() => onProduct(product)}
-              onAdd={() => onAdd(product.id)}
-              saved={saved.includes(product.id)}
-              onSave={() => onSave(product.id)}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function DecisionCard({
-  product,
-  score,
-  order,
-  profile,
-  weights,
-  onOpen,
-  onAdd,
-  saved,
-  onSave
-}: {
-  product: Product;
-  score: number;
-  order: number;
-  profile: Profile;
-  weights: PriorityWeights;
-  onOpen: () => void;
-  onAdd: () => void;
-  saved: boolean;
-  onSave: () => void;
-}) {
-  const fit = fitDetails(product, weights);
-  const topMatches = fit.matches.slice(0, 3);
-  const topMiss = fit.misses[0];
-
-  return (
-    <article className="grid overflow-hidden rounded-[30px] border border-black/10 bg-[#FBFAF6] lg:grid-cols-[260px_minmax(0,1fr)_230px]">
-      <button
-        onClick={onOpen}
-        className="relative bg-[#EEECE5] p-4"
-      >
-        <span className="absolute left-4 top-4 rounded-full bg-[#171816] px-2.5 py-1 text-[9px] font-black text-white">
-          {order}
-        </span>
-        <img
-          src={product.image}
-          alt={product.brand + " " + product.name}
-          className="aspect-square w-full object-contain"
-        />
-      </button>
-
-      <div className="p-5 sm:p-6">
-        <div className="flex items-start gap-3">
-          <div className="min-w-0 flex-1">
-            <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/30">
-              {product.brand}
-            </div>
-            <button
-              onClick={onOpen}
-              className="mt-1 text-left text-xl font-black tracking-[-0.03em]"
-            >
-              {product.name}
-            </button>
-          </div>
-          <button
-            onClick={onSave}
-            className="grid h-9 w-9 place-items-center rounded-full border border-black/10 bg-white"
-            aria-label="Save"
-          >
-            <Heart className={"h-4 w-4 " + (saved ? "fill-rose-500 text-rose-500" : "text-black/35")} />
-          </button>
-        </div>
-
-        <div className="mt-2 flex flex-wrap items-center gap-2 text-[10px] text-black/45">
-          <span className="flex items-center gap-1 font-black text-black/70">
-            <Star className="h-3.5 w-3.5 fill-black text-black" />
-            {product.rating}
-          </span>
-          <span>{product.reviews.toLocaleString("en-IN")} reviews</span>
-          <span>·</span>
-          <span>{product.deliveryDays === 1 ? "tomorrow" : product.deliveryDays + " days"}</span>
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {topMatches.map(([key]) => (
-            <span
-              key={key}
-              className="rounded-full bg-[#E4F4C8] px-2.5 py-1.5 text-[10px] font-bold text-[#2B4A1F]"
-            >
-              ✓ {priorityLabels[key]}
-            </span>
-          ))}
-          {topMiss ? (
-            <span className="rounded-full bg-[#FFE7A3] px-2.5 py-1.5 text-[10px] font-bold text-[#6A4B00]">
-              Trade-off · {priorityLabels[topMiss[0]]}
-            </span>
-          ) : null}
-        </div>
-
-        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-black/45 sm:grid-cols-3">
-          <MiniSpec label="Battery" value={product.batteryText} />
-          <MiniSpec label="Display" value={product.displayText} />
-          <MiniSpec label="Camera" value={product.cameraText} />
-          <MiniSpec label="Support" value={product.supportText} />
-          <MiniSpec label="Processor" value={product.processorText} />
-          <MiniSpec label="Charging" value={product.chargingText} />
-        </div>
-      </div>
-
-      <div className="flex flex-col justify-between border-t border-black/10 bg-white p-5 lg:border-l lg:border-t-0">
-        <div>
-          <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/30">
-            Fit to {profile.label}
-          </div>
-          <div className="mt-1 text-4xl font-black tracking-[-0.06em]">{score}%</div>
-          <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-xl font-black">{money(product.price)}</span>
-            <span className="text-[10px] text-black/30 line-through">{money(product.mrp)}</span>
-          </div>
-          {product.unknown ? (
-            <div className="mt-4 rounded-[16px] bg-[#EEECE5] p-3 text-[10px] leading-4 text-black/50">
-              <strong className="text-black/75">Unknown:</strong> {product.unknown}
-            </div>
-          ) : null}
-        </div>
-
-        <div className="mt-5 grid gap-2">
-          <button
-            onClick={onOpen}
-            className="rounded-[16px] border border-black/15 px-3 py-2.5 text-xs font-black"
-          >
-            Open decision view
-          </button>
-          <button
-            onClick={onAdd}
-            className="rounded-[16px] bg-[#171816] px-3 py-2.5 text-xs font-black text-white"
-          >
-            Add to tray · for {profile.label}
-          </button>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function MiniSpec({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <span className="block text-[8px] font-black uppercase tracking-[0.1em] text-black/25">
-        {label}
-      </span>
-      <span className="mt-0.5 block font-bold text-black/60">{value}</span>
-    </div>
-  );
-}
-
-function EditorialProductCard({
+function ProductCard({
   product,
   score,
   rank,
@@ -1615,10 +1347,12 @@ function EditorialProductCard({
   onSave: () => void;
 }) {
   const fit = fitDetails(product, weights);
+  const best = fit.matches.slice(0, 2);
+  const miss = fit.misses[0];
 
   return (
-    <article className="overflow-hidden rounded-[28px] border border-black/10 bg-[#FBFAF6]">
-      <div className="relative bg-[#EEECE5]">
+    <article className="overflow-hidden rounded-[28px] border border-black/[0.07] bg-white">
+      <div className="relative bg-[#f1f1ed]">
         <button onClick={onOpen} className="block w-full p-3">
           <img
             src={product.image}
@@ -1626,13 +1360,15 @@ function EditorialProductCard({
             className="aspect-square w-full object-contain"
           />
         </button>
-        <span className="absolute left-3 top-3 rounded-full bg-[#171816] px-2.5 py-1 text-[9px] font-black text-white">
-          #{rank}
+
+        <span className="absolute left-3 top-3 rounded-full bg-white px-2.5 py-1 text-[9px] font-black shadow-sm">
+          #{rank} for {profile.label}
         </span>
+
         <button
           onClick={onSave}
-          className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-white"
-          aria-label="Save"
+          className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-white shadow-sm"
+          aria-label="Save product"
         >
           <Heart className={"h-4 w-4 " + (saved ? "fill-rose-500 text-rose-500" : "text-black/35")} />
         </button>
@@ -1642,23 +1378,70 @@ function EditorialProductCard({
         <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
           {product.brand}
         </div>
-        <button onClick={onOpen} className="mt-1 text-left text-lg font-black">
+
+        <button
+          onClick={onOpen}
+          className="mt-1 text-left text-lg font-black tracking-[-0.02em]"
+        >
           {product.name}
         </button>
-        <div className="mt-2 flex items-center justify-between">
-          <span className="text-base font-black">{money(product.price)}</span>
-          <span className="text-[10px] font-black">{score}% fit</span>
+
+        <div className="mt-2 flex items-center gap-2 text-[10px] text-black/40">
+          <span className="flex items-center gap-1 font-black text-black/70">
+            <Star className="h-3.5 w-3.5 fill-[#1d1f1d] text-[#1d1f1d]" />
+            {product.rating}
+          </span>
+          <span>{product.reviews.toLocaleString("en-IN")} reviews</span>
         </div>
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {fit.matches.slice(0, 2).map(([key]) => (
-            <span key={key} className="rounded-full bg-[#E4F4C8] px-2 py-1 text-[9px] font-bold">
-              {priorityLabels[key]}
+
+        <div className="mt-3 flex items-baseline gap-2">
+          <span className="text-xl font-black">{money(product.price)}</span>
+          <span className="text-[10px] text-black/30 line-through">{money(product.mrp)}</span>
+        </div>
+
+        <div className="mt-4 rounded-[18px] bg-[#f4f8e7] p-3">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-xs font-black text-[#31410d]">
+              {score}% fit for {profile.label}
             </span>
-          ))}
+            <Sparkles className="h-4 w-4 text-[#526c1d]" />
+          </div>
+
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {best.map(([key]) => (
+              <span
+                key={key}
+                className="rounded-full bg-white px-2 py-1 text-[9px] font-bold text-[#405418]"
+              >
+                ✓ {priorityLabels[key]}
+              </span>
+            ))}
+
+            {miss ? (
+              <span className="rounded-full bg-[#fff2cb] px-2 py-1 text-[9px] font-bold text-[#725600]">
+                Trade-off · {priorityLabels[miss[0]]}
+              </span>
+            ) : null}
+          </div>
+
+          <button
+            onClick={onOpen}
+            className="mt-2 text-[10px] font-black text-[#405418] underline underline-offset-2"
+          >
+            Why this fits
+          </button>
         </div>
+
+        <div className="mt-4 grid grid-cols-2 gap-2 text-[10px] text-black/45">
+          <MiniSpec label="Battery" value={product.batteryText} />
+          <MiniSpec label="Display" value={product.displayText} />
+          <MiniSpec label="Camera" value={product.cameraText} />
+          <MiniSpec label="Support" value={product.supportText} />
+        </div>
+
         <button
           onClick={onAdd}
-          className="mt-4 w-full rounded-[16px] bg-[#171816] py-2.5 text-xs font-black text-white"
+          className="mt-4 w-full rounded-2xl bg-[#1d1f1d] py-2.5 text-xs font-black text-white"
         >
           Add for {profile.label}
         </button>
@@ -1667,39 +1450,58 @@ function EditorialProductCard({
   );
 }
 
-function LensEditor({
+function MiniSpec({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <span className="block text-[8px] font-black uppercase tracking-[0.1em] text-black/25">
+        {label}
+      </span>
+      <span className="mt-0.5 block font-bold text-black/55">{value}</span>
+    </div>
+  );
+}
+
+function MissionEditor({
   profile,
   missionText,
   setMissionText,
-  budget,
   weights,
+  budget,
   onApply,
   onClose
 }: {
   profile: Profile;
   missionText: string;
   setMissionText: (value: string) => void;
-  budget: number;
   weights: PriorityWeights;
+  budget: number;
   onApply: () => void;
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-[80] grid place-items-center bg-[#171816]/55 p-4 backdrop-blur-sm" onMouseDown={onClose}>
+    <div
+      className="fixed inset-0 z-[80] grid place-items-center bg-black/45 p-4 backdrop-blur-sm"
+      onMouseDown={onClose}
+    >
       <div
-        className="w-full max-w-3xl rounded-[34px] bg-[#F7F5EE] p-5 shadow-2xl sm:p-6"
+        className="w-full max-w-3xl rounded-[32px] bg-white p-5 shadow-2xl sm:p-6"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
-              Edit shopping lens
+            <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+              Current shopping need
             </div>
             <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
-              What matters for {profile.label} today?
+              What matters for {profile.label} right now?
             </h2>
           </div>
-          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
+
+          <button
+            onClick={onClose}
+            className="grid h-9 w-9 place-items-center rounded-full bg-[#f3f3ef]"
+            aria-label="Close"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -1710,69 +1512,66 @@ function LensEditor({
               value={missionText}
               onChange={(event) => setMissionText(event.target.value)}
               rows={7}
-              className="w-full resize-none rounded-[24px] border border-black/10 bg-white p-4 text-sm leading-6 outline-none focus:border-black/30"
+              className="w-full resize-none rounded-3xl border border-black/[0.08] bg-[#f8f8f5] p-4 text-sm leading-6 outline-none"
             />
 
-            <div className="mt-3 rounded-[22px] bg-[#FFE7A3] p-4">
+            <div className="mt-3 rounded-2xl bg-[#fff8dc] p-4">
               <div className="flex items-start gap-3">
-                <CircleHelp className="mt-0.5 h-4 w-4 shrink-0" />
+                <CircleHelp className="mt-0.5 h-4 w-4 shrink-0 text-[#6e5200]" />
                 <div>
-                  <div className="text-xs font-black">One thing may still need clarification</div>
-                  <p className="mt-1 text-[10px] leading-4 text-black/55">
-                    “Easy to use” could mean a cleaner interface, larger controls or simpler setup.
-                    A real system should ask when the answer can change the recommendation.
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {["Clean interface", "Larger controls", "Simple setup"].map((option) => (
-                      <button
-                        key={option}
-                        className="rounded-full bg-white/70 px-3 py-1.5 text-[10px] font-bold"
-                      >
-                        {option}
-                      </button>
-                    ))}
+                  <div className="text-xs font-black text-[#5f4900]">
+                    Ask when the meaning is unclear
                   </div>
+                  <p className="mt-1 text-[10px] leading-4 text-[#6e5200]/70">
+                    “Easy to use” should not silently become a guessed assumption.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-[24px] bg-[#171816] p-4 text-white">
-            <div className="text-[9px] font-black uppercase tracking-[0.14em] text-white/35">
-              Interpreted lens
+          <div className="rounded-3xl bg-[#1d1f1d] p-4 text-white">
+            <div className="text-[9px] font-black uppercase tracking-[0.12em] text-white/30">
+              Interpreted context
             </div>
+
             <div className="mt-3 space-y-2">
-              <LensFact label="Person" value={profile.label} />
-              <LensFact label="Category" value="Smartphone" />
-              <LensFact label="Budget" value={"Under " + money(budget)} />
+              <Fact label="Person" value={profile.label} />
+              <Fact label="Category" value="Smartphone" />
+              <Fact label="Budget" value={"Under " + money(budget)} />
             </div>
+
             <div className="mt-4 flex flex-wrap gap-1.5">
               {(Object.entries(weights) as Array<[PriorityKey, number]>)
                 .filter(([, weight]) => weight >= 4)
                 .map(([key]) => (
-                  <span key={key} className="rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold text-white/70">
+                  <span
+                    key={key}
+                    className="rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold text-white/65"
+                  >
                     {priorityLabels[key]}
                   </span>
                 ))}
             </div>
-            <div className="mt-5 rounded-[18px] bg-white/10 p-3 text-[10px] leading-4 text-white/55">
-              Profile ≠ mission. This budget and category belong to this decision, not permanently to {profile.label}.
+
+            <div className="mt-5 rounded-2xl bg-white/10 p-3 text-[10px] leading-4 text-white/50">
+              This budget belongs to this purchase, not permanently to {profile.label}.
             </div>
           </div>
         </div>
 
         <button
           onClick={onApply}
-          className="mt-5 w-full rounded-[18px] bg-[#DFFD67] py-3 text-sm font-black"
+          className="mt-5 w-full rounded-2xl bg-[#dff168] py-3 text-sm font-black"
         >
-          Apply lens
+          Update recommendations
         </button>
       </div>
     </div>
   );
 }
 
-function LensFact({ label, value }: { label: string; value: string }) {
+function Fact({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-2 text-xs">
       <span className="text-white/35">{label}</span>
@@ -1781,7 +1580,7 @@ function LensFact({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ProductView({
+function ProductDetail({
   product,
   recipientId,
   weights,
@@ -1800,28 +1599,35 @@ function ProductView({
   const fit = fitDetails(product, weights);
   const score = scoreProduct(product, weights);
 
-  const compareIds: RecipientId[] = ["myself", "dad", "riya", "gift"];
-
   return (
-    <div className="fixed inset-0 z-[90] overflow-y-auto bg-[#F3F1EA]">
-      <div className="sticky top-0 z-20 border-b border-black/10 bg-[#F3F1EA]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-4 sm:px-6">
-          <button onClick={onClose} className="flex items-center gap-2 text-xs font-black">
+    <div className="fixed inset-0 z-[90] overflow-y-auto bg-[#f6f6f3]">
+      <div className="sticky top-0 z-20 border-b border-black/[0.06] bg-white/95 backdrop-blur">
+        <div className="mx-auto flex max-w-[1380px] items-center justify-between px-4 py-4 sm:px-6">
+          <button
+            onClick={onClose}
+            className="flex items-center gap-2 text-xs font-black"
+          >
             <ChevronLeft className="h-4 w-4" />
-            Back to board
+            Back
           </button>
-          <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
-            Decision view
+
+          <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+            Product details
           </div>
-          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
+
+          <button
+            onClick={onClose}
+            className="grid h-9 w-9 place-items-center rounded-full bg-[#f3f3ef]"
+            aria-label="Close"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-4 py-7 sm:px-6">
-        <div className="grid gap-5 lg:grid-cols-[560px_minmax(0,1fr)]">
-          <div className="rounded-[36px] bg-[#EEECE5] p-5 lg:sticky lg:top-24 lg:self-start">
+      <div className="mx-auto max-w-[1380px] px-4 py-6 sm:px-6">
+        <div className="grid gap-7 lg:grid-cols-[560px_minmax(0,1fr)]">
+          <div className="self-start rounded-[32px] bg-[#efefeb] p-5 lg:sticky lg:top-24">
             <img
               src={product.image}
               alt={product.brand + " " + product.name}
@@ -1830,21 +1636,22 @@ function ProductView({
           </div>
 
           <div>
-            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+            <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
               {product.brand}
             </div>
-            <h1 className="mt-1 text-4xl font-black tracking-[-0.055em]">
+
+            <h1 className="mt-1 text-4xl font-black tracking-[-0.05em]">
               {product.name}
             </h1>
 
-            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-black/45">
-              <span className="flex items-center gap-1 font-black text-black">
-                <Star className="h-4 w-4 fill-black" />
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-black/40">
+              <span className="flex items-center gap-1 font-black text-black/75">
+                <Star className="h-4 w-4 fill-[#1d1f1d] text-[#1d1f1d]" />
                 {product.rating}
               </span>
               <span>{product.reviews.toLocaleString("en-IN")} reviews</span>
               <span>·</span>
-              <span>{product.deliveryDays === 1 ? "arrives tomorrow" : "arrives in " + product.deliveryDays + " days"}</span>
+              <span>{product.deliveryDays === 1 ? "Delivery tomorrow" : "Delivery in " + product.deliveryDays + " days"}</span>
             </div>
 
             <div className="mt-5 flex items-baseline gap-3">
@@ -1852,100 +1659,81 @@ function ProductView({
               <span className="text-sm text-black/30 line-through">{money(product.mrp)}</span>
             </div>
 
-            <section className="mt-6 rounded-[30px] bg-[#171816] p-5 text-white sm:p-6">
+            <section className="mt-6 rounded-[28px] border border-[#d9e9a6] bg-[#f4f8e7] p-5">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <div className="text-[9px] font-black uppercase tracking-[0.14em] text-[#DFFD67]">
-                    Why it fits this lens
+                  <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.12em] text-[#526c1d]">
+                    <Sparkles className="h-4 w-4" />
+                    Fit for {profile.label}
                   </div>
-                  <div className="mt-1 text-3xl font-black">{score}% fit for {profile.label}</div>
+                  <div className="mt-1 text-3xl font-black tracking-[-0.04em]">
+                    {score}% match
+                  </div>
                 </div>
-                <span className="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold text-white/65">
-                  {profile.temporary ? "Disposable lens" : "Rememberable lens"}
+
+                <span className="rounded-full bg-white px-3 py-1.5 text-[10px] font-black text-[#405418]">
+                  Shopping for {profile.label}
                 </span>
               </div>
 
               <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                <FitColumn
+                <FitPanel
                   title="Matches"
-                  tone="bg-[#DFFD67] text-[#171816]"
                   items={fit.matches.map(([key]) => priorityLabels[key])}
+                  tone="bg-white"
                 />
-                <FitColumn
+                <FitPanel
                   title="Trade-offs"
-                  tone="bg-[#FFE7A3] text-[#171816]"
                   items={fit.misses.map(([key]) => priorityLabels[key])}
+                  tone="bg-[#fff8dc]"
                 />
-                <FitColumn
+                <FitPanel
                   title="Unknown"
-                  tone="bg-white/10 text-white"
-                  items={[product.unknown || "No material unknown flagged"]}
+                  items={[product.unknown || "No important unknown flagged"]}
+                  tone="bg-[#f0f0ec]"
                 />
               </div>
             </section>
 
-            <section className="mt-5 rounded-[30px] border border-black/10 bg-[#FBFAF6] p-5">
-              <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
-                Same phone, different person
-              </div>
-              <div className="mt-3 grid gap-2 sm:grid-cols-4">
-                {compareIds.map((id) => {
-                  const person = profiles[id];
-                  const compareScore = scoreProduct(product, person.weights);
-                  return (
-                    <div
-                      key={id}
-                      className={
-                        "rounded-[20px] border p-3 " +
-                        (id === recipientId ? "border-black bg-[#171816] text-white" : "border-black/10 bg-white")
-                      }
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className={"grid h-6 w-6 place-items-center rounded-full text-[8px] font-bold " + person.avatarStyle}>
-                          {person.initials}
-                        </span>
-                        <span className="text-[10px] font-black">{person.label}</span>
-                      </div>
-                      <div className="mt-3 text-2xl font-black">{compareScore}%</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
+            <section className="mt-5">
+              <h2 className="text-base font-black">Key specifications</h2>
 
-            <section className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              <SpecBlock label="Battery" value={product.batteryText} />
-              <SpecBlock label="Display" value={product.displayText} />
-              <SpecBlock label="Camera" value={product.cameraText} />
-              <SpecBlock label="Processor" value={product.processorText} />
-              <SpecBlock label="Support" value={product.supportText} />
-              <SpecBlock label="Charging" value={product.chargingText} />
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <SpecTile icon={<Battery className="h-4 w-4" />} label="Battery" value={product.batteryText} />
+                <SpecTile icon={<PackageCheck className="h-4 w-4" />} label="Display" value={product.displayText} />
+                <SpecTile icon={<Sparkles className="h-4 w-4" />} label="Camera" value={product.cameraText} />
+                <SpecTile icon={<SlidersHorizontal className="h-4 w-4" />} label="Processor" value={product.processorText} />
+                <SpecTile icon={<ShieldCheck className="h-4 w-4" />} label="Support" value={product.supportText} />
+                <SpecTile icon={<Battery className="h-4 w-4" />} label="Charging" value={product.chargingText} />
+              </div>
             </section>
 
             <section className="mt-5 grid gap-3 sm:grid-cols-[1fr_230px]">
-              <div className="rounded-[26px] border border-black/10 bg-[#FBFAF6] p-4">
+              <div className="rounded-[24px] border border-black/[0.07] bg-white p-4">
                 <div className="flex items-center gap-2 text-xs font-black">
                   <ShieldCheck className="h-4 w-4" />
-                  What happens to the signal?
+                  How this purchase will be learned
                 </div>
-                <p className="mt-2 text-[11px] leading-5 text-black/45">
-                  Views, cart and purchase stay attached to {profile.label}'s lens rather than automatically becoming your own preference history.
+
+                <p className="mt-2 text-[11px] leading-5 text-black/40">
+                  The interaction stays attached to {profile.label} rather than automatically changing your own preference history.
                 </p>
-                <div className="mt-3 inline-flex rounded-full bg-[#EEECE5] px-3 py-1.5 text-[10px] font-bold">
+
+                <div className="mt-3 inline-flex rounded-full bg-[#f3f3ef] px-3 py-1.5 text-[10px] font-black">
                   {memoryMode === "remember"
-                    ? "Can improve future shopping for " + profile.label
+                    ? "Remember useful outcomes for " + profile.label
                     : memoryMode === "session"
-                      ? "Use only for this decision"
+                      ? "Use only for this purchase"
                       : "Do not learn from this purchase"}
                 </div>
               </div>
 
               <button
                 onClick={onAdd}
-                className="rounded-[26px] bg-[#DFFD67] px-5 py-5 text-sm font-black"
+                className="rounded-[24px] bg-[#1d1f1d] p-5 text-sm font-black text-white"
               >
-                Add to decision tray
-                <span className="mt-1 block text-[10px] font-semibold opacity-55">
+                Add to cart
+                <span className="mt-1 block text-[10px] font-semibold text-white/45">
                   for {profile.label}
                 </span>
               </button>
@@ -1957,70 +1745,80 @@ function ProductView({
   );
 }
 
-function FitColumn({
+function FitPanel({
   title,
-  tone,
-  items
+  items,
+  tone
 }: {
   title: string;
-  tone: string;
   items: string[];
+  tone: string;
 }) {
   return (
-    <div className="rounded-[22px] bg-white/5 p-3">
-      <div className={"inline-flex rounded-full px-2.5 py-1 text-[9px] font-black " + tone}>
+    <div className={"rounded-2xl p-3 " + tone}>
+      <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
         {title}
       </div>
-      <div className="mt-3 space-y-2">
+
+      <div className="mt-2 space-y-1.5">
         {items.length ? (
           items.map((item) => (
-            <div key={item} className="text-[11px] leading-4 text-white/70">
+            <div key={item} className="text-[10px] leading-4 text-black/55">
               {item}
             </div>
           ))
         ) : (
-          <div className="text-[11px] text-white/35">None flagged</div>
+          <div className="text-[10px] text-black/30">None flagged</div>
         )}
       </div>
     </div>
   );
 }
 
-function SpecBlock({ label, value }: { label: string; value: string }) {
+function SpecTile({
+  icon,
+  label,
+  value
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+}) {
   return (
-    <div className="rounded-[22px] border border-black/10 bg-[#FBFAF6] p-4">
-      <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
-        {label}
+    <div className="rounded-2xl border border-black/[0.07] bg-white p-4">
+      <div className="flex items-center gap-2 text-black/30">
+        {icon}
+        <span className="text-[9px] font-black uppercase tracking-[0.1em]">{label}</span>
       </div>
-      <div className="mt-1 text-sm font-black">{value}</div>
+      <div className="mt-2 text-sm font-black">{value}</div>
     </div>
   );
 }
 
-function LensLibrary({
+function ProfilesScreen({
   recipientId,
   onRecipientChange,
   memoryModes,
   onMemoryMode,
-  onOpenBoard
+  onShop
 }: {
   recipientId: RecipientId;
   onRecipientChange: (id: RecipientId) => void;
   memoryModes: Record<RecipientId, MemoryMode>;
   onMemoryMode: (id: RecipientId, mode: MemoryMode) => void;
-  onOpenBoard: () => void;
+  onShop: () => void;
 }) {
   return (
-    <div className="mx-auto max-w-[1200px] px-4 py-8 sm:px-6">
+    <div className="mx-auto max-w-[1200px] px-4 py-7 sm:px-6">
       <div className="max-w-3xl">
-        <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
-          Lens library
+        <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+          Shopping profiles
         </div>
-        <h1 className="mt-2 text-4xl font-black tracking-[-0.05em]">
-          Memory you can see, correct and turn off.
+        <h1 className="mt-1 text-4xl font-black tracking-[-0.05em]">
+          What the platform remembers, by person.
         </h1>
-        <p className="mt-3 text-sm leading-6 text-black/45">
-          A recipient profile is not a hidden shadow profile. It is a shopper-controlled memory layer that can be edited, made temporary or disabled.
+        <p className="mt-3 text-sm leading-6 text-black/40">
+          Stable context stays separate from one-time shopping needs. You can see, edit or disable what gets learned.
         </p>
       </div>
 
@@ -2033,35 +1831,46 @@ function LensLibrary({
             <section
               key={id}
               className={
-                "rounded-[30px] border p-5 " +
+                "rounded-[28px] border p-5 " +
                 (active
-                  ? "border-[#171816] bg-[#171816] text-white"
-                  : "border-black/10 bg-[#FBFAF6]")
+                  ? "border-[#1d1f1d] bg-[#1d1f1d] text-white"
+                  : "border-black/[0.07] bg-white")
               }
             >
               <div className="flex items-center gap-3">
                 <span className={"grid h-11 w-11 place-items-center rounded-full text-xs font-black " + profile.avatarStyle}>
                   {profile.initials}
                 </span>
+
                 <div className="min-w-0 flex-1">
                   <div className="text-lg font-black">{profile.label}</div>
-                  <div className={active ? "text-[10px] text-white/35" : "text-[10px] text-black/35"}>
+                  <div className={active ? "text-[10px] text-white/35" : "text-[10px] text-black/30"}>
                     {profile.relation}
                   </div>
                 </div>
-                {profile.temporary ? <Gift className="h-5 w-5 opacity-40" /> : <User className="h-5 w-5 opacity-30" />}
+
+                {profile.temporary ? (
+                  <Gift className="h-5 w-5 opacity-35" />
+                ) : (
+                  <User className="h-5 w-5 opacity-25" />
+                )}
               </div>
 
               {profile.saved.length ? (
                 <div className="mt-5">
                   <div className={active ? "text-[9px] font-black uppercase tracking-[0.12em] text-white/30" : "text-[9px] font-black uppercase tracking-[0.12em] text-black/30"}>
-                    Remembered
+                    Remembered preferences
                   </div>
+
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {profile.saved.map((item) => (
                       <span
                         key={item}
-                        className={active ? "rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold text-white/65" : "rounded-full bg-[#EEECE5] px-2.5 py-1 text-[9px] font-bold text-black/55"}
+                        className={
+                          active
+                            ? "rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold text-white/60"
+                            : "rounded-full bg-[#f3f3ef] px-2.5 py-1 text-[9px] font-bold text-black/50"
+                        }
                       >
                         {item}
                       </span>
@@ -2069,88 +1878,61 @@ function LensLibrary({
                   </div>
                 </div>
               ) : (
-                <div className={active ? "mt-5 rounded-[18px] bg-white/10 p-3 text-[10px] leading-4 text-white/55" : "mt-5 rounded-[18px] bg-[#FFE7A3] p-3 text-[10px] leading-4 text-[#6A4B00]"}>
-                  No permanent recipient memory. This lens disappears after the decision.
+                <div className={active ? "mt-5 rounded-2xl bg-white/10 p-3 text-[10px] leading-4 text-white/50" : "mt-5 rounded-2xl bg-[#fff8dc] p-3 text-[10px] leading-4 text-[#6e5200]"}>
+                  This is a temporary recipient. Nothing needs to become permanent memory.
                 </div>
               )}
 
-              <div className={active ? "mt-5 rounded-[18px] bg-white/10 p-3" : "mt-5 rounded-[18px] border border-black/10 p-3"}>
+              <div className={active ? "mt-5 rounded-2xl bg-white/10 p-3" : "mt-5 rounded-2xl border border-black/[0.07] p-3"}>
                 <div className={active ? "text-[9px] font-black uppercase tracking-[0.12em] text-white/30" : "text-[9px] font-black uppercase tracking-[0.12em] text-black/30"}>
-                  Outcome learning
+                  Learning control
                 </div>
+
                 <select
                   value={memoryModes[id]}
                   onChange={(event) => onMemoryMode(id, event.target.value as MemoryMode)}
                   className={active ? "mt-2 w-full bg-transparent text-xs font-black text-white outline-none" : "mt-2 w-full bg-transparent text-xs font-black outline-none"}
                 >
                   <option className="text-black" value="remember">Remember useful outcomes</option>
-                  <option className="text-black" value="session">Use only for current decision</option>
+                  <option className="text-black" value="session">Use only for current purchase</option>
                   <option className="text-black" value="none">Do not learn from purchases</option>
                 </select>
               </div>
 
-              <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
-                <button
-                  onClick={() => {
-                    onRecipientChange(id);
-                    onOpenBoard();
-                  }}
-                  className={
-                    "rounded-[16px] px-3 py-2.5 text-xs font-black " +
-                    (active ? "bg-[#DFFD67] text-[#171816]" : "bg-[#171816] text-white")
-                  }
-                >
-                  Open lens
-                </button>
-                <button
-                  className={
-                    "rounded-[16px] border px-3 py-2.5 text-xs font-black " +
-                    (active ? "border-white/15" : "border-black/15")
-                  }
-                >
-                  Edit
-                </button>
-              </div>
+              <button
+                onClick={() => {
+                  onRecipientChange(id);
+                  onShop();
+                }}
+                className={
+                  "mt-4 w-full rounded-2xl py-2.5 text-xs font-black " +
+                  (active ? "bg-[#dff168] text-[#1d1f1d]" : "bg-[#1d1f1d] text-white")
+                }
+              >
+                Shop for {profile.label}
+              </button>
             </section>
           );
         })}
       </div>
-
-      <section className="mt-7 grid gap-3 md:grid-cols-3">
-        <PrincipleCard
-          number="A"
-          title="Gift ≠ preference"
-          text="A one-time gift should not permanently change your profile."
-        />
-        <PrincipleCard
-          number="B"
-          title="Mission ≠ profile"
-          text="One budget or one category should not become a permanent assumption."
-        />
-        <PrincipleCard
-          number="C"
-          title="Purchase ≠ success"
-          text="Outcome feedback is a better learning signal than the purchase alone."
-        />
-      </section>
     </div>
   );
 }
 
-function DecisionTray({
+function CartDrawer({
   items,
   memoryModes,
   onClose,
   onRemove,
   onReassign,
-  onFinish
+  onCheckout
 }: {
   items: CartItem[];
   memoryModes: Record<RecipientId, MemoryMode>;
   onClose: () => void;
   onRemove: (index: number) => void;
   onReassign: (index: number, id: RecipientId) => void;
-  onFinish: () => void;
+  onCheckout: () => void;
 }) {
   const subtotal = items.reduce(
     (sum, item) => sum + (productById(item.productId)?.price ?? 0),
@@ -2158,27 +1940,36 @@ function DecisionTray({
   );
 
   return (
-    <div className="fixed inset-0 z-[100] flex justify-end bg-[#171816]/50 backdrop-blur-sm" onMouseDown={onClose}>
+    <div
+      className="fixed inset-0 z-[100] flex justify-end bg-black/45 backdrop-blur-sm"
+      onMouseDown={onClose}
+    >
       <aside
-        className="h-full w-full max-w-lg overflow-y-auto bg-[#F3F1EA] shadow-2xl"
+        className="h-full w-full max-w-lg overflow-y-auto bg-[#f6f6f3] shadow-2xl"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <div className="sticky top-0 z-10 border-b border-black/10 bg-[#F3F1EA]/95 p-5 backdrop-blur">
+        <div className="sticky top-0 z-10 border-b border-black/[0.06] bg-white/95 p-5 backdrop-blur">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
-                Decision tray
+              <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+                Cart
               </div>
-              <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
-                {items.length} option{items.length === 1 ? "" : "s"}
+              <h2 className="mt-1 text-2xl font-black">
+                {items.length} item{items.length === 1 ? "" : "s"}
               </h2>
             </div>
-            <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
+
+            <button
+              onClick={onClose}
+              className="grid h-9 w-9 place-items-center rounded-full bg-[#f3f3ef]"
+              aria-label="Close"
+            >
               <X className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-2 text-xs leading-5 text-black/45">
-            The tray keeps the recipient context attached to each product before purchase.
+
+          <p className="mt-2 text-xs text-black/40">
+            Each item keeps its recipient context into checkout.
           </p>
         </div>
 
@@ -2188,23 +1979,29 @@ function DecisionTray({
               {items.map((item, index) => {
                 const product = productById(item.productId);
                 if (!product) return null;
+
                 const recipient = profiles[item.recipientId];
                 const memoryMode = memoryModes[item.recipientId];
 
                 return (
-                  <div key={item.productId + "-" + index} className="rounded-[28px] border border-black/10 bg-[#FBFAF6] p-4">
+                  <div
+                    key={item.productId + "-" + index}
+                    className="rounded-[26px] border border-black/[0.07] bg-white p-4"
+                  >
                     <div className="flex gap-3">
                       <img
                         src={product.image}
                         alt=""
-                        className="h-24 w-24 rounded-[18px] bg-[#EEECE5] object-contain"
+                        className="h-24 w-24 rounded-2xl bg-[#f1f1ed] object-contain"
                       />
+
                       <div className="min-w-0 flex-1">
                         <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
                           {product.brand}
                         </div>
-                        <div className="text-base font-black">{product.name}</div>
+                        <div className="text-sm font-black">{product.name}</div>
                         <div className="mt-1 text-sm font-black">{money(product.price)}</div>
+
                         <button
                           onClick={() => onRemove(index)}
                           className="mt-2 text-[10px] font-black text-rose-600"
@@ -2214,14 +2011,16 @@ function DecisionTray({
                       </div>
                     </div>
 
-                    <div className="mt-4 rounded-[20px] bg-[#EEECE5] p-3">
+                    <div className="mt-4 rounded-2xl bg-[#f4f4f0] p-3">
                       <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
-                        Lens attached to this item
+                        This item is for
                       </div>
+
                       <div className="mt-2 flex items-center gap-2">
-                        <span className={"grid h-7 w-7 place-items-center rounded-full text-[9px] font-bold " + recipient.avatarStyle}>
+                        <span className={"grid h-7 w-7 place-items-center rounded-full text-[9px] font-black " + recipient.avatarStyle}>
                           {recipient.initials}
                         </span>
+
                         <select
                           value={item.recipientId}
                           onChange={(event) => onReassign(index, event.target.value as RecipientId)}
@@ -2234,13 +2033,14 @@ function DecisionTray({
                           ))}
                         </select>
                       </div>
-                      <div className="mt-2 flex items-center gap-2 text-[10px] text-black/45">
+
+                      <div className="mt-2 flex items-center gap-2 text-[10px] text-black/40">
                         <ShieldCheck className="h-3.5 w-3.5" />
                         {memoryMode === "remember"
-                          ? "Outcome can update " + recipient.label + "'s lens"
+                          ? "Outcome can improve future shopping for " + recipient.label
                           : memoryMode === "session"
-                            ? "Use only for this decision"
-                            : "Do not learn from this purchase"}
+                            ? "Use only for this purchase"
+                            : "Do not learn from this item"}
                       </div>
                     </div>
                   </div>
@@ -2248,19 +2048,21 @@ function DecisionTray({
               })}
             </div>
 
-            <div className="mt-6 rounded-[28px] bg-[#171816] p-5 text-white">
+            <div className="mt-6 rounded-[26px] bg-[#1d1f1d] p-5 text-white">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white/50">Subtotal</span>
+                <span className="text-sm text-white/45">Subtotal</span>
                 <strong className="text-2xl">{money(subtotal)}</strong>
               </div>
+
               <button
-                onClick={onFinish}
-                className="mt-4 w-full rounded-[18px] bg-[#DFFD67] py-3 text-sm font-black text-[#171816]"
+                onClick={onCheckout}
+                className="mt-4 w-full rounded-2xl bg-[#dff168] py-3 text-sm font-black text-[#1d1f1d]"
               >
-                Simulate purchase
+                Simulate checkout
               </button>
-              <p className="mt-2 text-center text-[10px] leading-4 text-white/35">
-                Payment is skipped. The prototype jumps to the outcome loop.
+
+              <p className="mt-2 text-center text-[10px] text-white/30">
+                Payment is skipped in the prototype.
               </p>
             </div>
           </div>
@@ -2268,9 +2070,9 @@ function DecisionTray({
           <div className="grid min-h-[70vh] place-items-center p-6 text-center">
             <div>
               <ShoppingBag className="mx-auto h-8 w-8 text-black/20" />
-              <div className="mt-3 text-lg font-black">Your tray is empty</div>
+              <div className="mt-3 text-lg font-black">Your cart is empty</div>
               <p className="mt-1 text-xs text-black/40">
-                Add a product from the decision board to carry its lens into the next step.
+                Add a product to see recipient context continue into checkout.
               </p>
             </div>
           </div>
@@ -2280,45 +2082,55 @@ function DecisionTray({
   );
 }
 
-function OutcomeLoop({
+function OutcomeModal({
   items,
   onClose
 }: {
   items: CartItem[];
   onClose: () => void;
 }) {
-  const [state, setState] = useState<"ask" | "saved">("ask");
+  const [done, setDone] = useState(false);
+
   const item = items[0];
   const product = item ? productById(item.productId) : undefined;
   const recipient = item ? profiles[item.recipientId] : undefined;
 
   return (
-    <div className="fixed inset-0 z-[110] grid place-items-center bg-[#171816]/55 p-4 backdrop-blur-sm" onMouseDown={onClose}>
+    <div
+      className="fixed inset-0 z-[110] grid place-items-center bg-black/45 p-4 backdrop-blur-sm"
+      onMouseDown={onClose}
+    >
       <div
-        className="w-full max-w-xl rounded-[34px] bg-[#F7F5EE] p-5 shadow-2xl sm:p-6"
+        className="w-full max-w-xl rounded-[32px] bg-white p-5 shadow-2xl sm:p-6"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
-              Outcome loop
+            <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+              After delivery
             </div>
             <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
-              Did this actually work for {recipient?.label ?? "the recipient"}?
+              Did this work for {recipient?.label ?? "the recipient"}?
             </h2>
           </div>
-          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
+
+          <button
+            onClick={onClose}
+            className="grid h-9 w-9 place-items-center rounded-full bg-[#f3f3ef]"
+            aria-label="Close"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
 
         {product ? (
-          <div className="mt-5 flex items-center gap-3 rounded-[22px] border border-black/10 bg-white p-3">
+          <div className="mt-5 flex items-center gap-3 rounded-2xl border border-black/[0.07] p-3">
             <img
               src={product.image}
               alt=""
-              className="h-20 w-20 rounded-[16px] bg-[#EEECE5] object-contain"
+              className="h-20 w-20 rounded-2xl bg-[#f1f1ed] object-contain"
             />
+
             <div>
               <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
                 {product.brand}
@@ -2331,45 +2143,85 @@ function OutcomeLoop({
           </div>
         ) : null}
 
-        {state === "ask" ? (
+        {!done ? (
           <>
-            <p className="mt-5 text-xs leading-5 text-black/45">
-              Purchase only tells the system what was chosen. Outcome tells it whether the decision was actually good.
+            <p className="mt-5 text-xs leading-5 text-black/40">
+              A purchase tells the platform what was chosen. Outcome feedback tells it whether the decision actually worked.
             </p>
+
             <div className="mt-4 grid grid-cols-2 gap-2">
               <button
-                onClick={() => setState("saved")}
-                className="rounded-[18px] bg-[#DFFD67] py-3 text-xs font-black"
+                onClick={() => setDone(true)}
+                className="rounded-2xl bg-[#e9f7bf] py-3 text-xs font-black"
               >
                 Worked well
               </button>
+
               <button
-                onClick={() => setState("saved")}
-                className="rounded-[18px] border border-black/15 py-3 text-xs font-black"
+                onClick={() => setDone(true)}
+                className="rounded-2xl border border-black/[0.08] py-3 text-xs font-black"
               >
-                Some trade-offs
+                Some issues
               </button>
             </div>
           </>
         ) : (
-          <div className="mt-5 rounded-[24px] bg-[#E4F4C8] p-4">
+          <div className="mt-5 rounded-2xl bg-[#f4f8e7] p-4">
             <div className="flex items-center gap-2 text-sm font-black">
               <Check className="h-4 w-4" />
-              Outcome stored in the right place
+              Outcome attached to {recipient?.label}
             </div>
-            <p className="mt-2 text-xs leading-5 text-black/55">
-              The signal belongs to {recipient?.label}'s lens, not automatically to the account holder's own profile.
+
+            <p className="mt-2 text-xs leading-5 text-black/45">
+              This improves the correct recipient context instead of automatically changing the account holder's own preferences.
             </p>
           </div>
         )}
 
         <button
           onClick={onClose}
-          className="mt-5 w-full rounded-[18px] bg-[#171816] py-3 text-sm font-black text-white"
+          className="mt-5 w-full rounded-2xl bg-[#1d1f1d] py-3 text-sm font-black text-white"
         >
           Finish
         </button>
       </div>
     </div>
+  );
+}
+
+function FilterSection({
+  title,
+  children
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="mt-5 border-t border-black/[0.06] pt-4">
+      <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+        {title}
+      </div>
+      <div className="mt-3 space-y-2">{children}</div>
+    </div>
+  );
+}
+
+function FilterRow({
+  label,
+  checked = false
+}: {
+  label: string;
+  checked?: boolean;
+}) {
+  return (
+    <label className="flex items-center gap-2 text-xs text-black/55">
+      <input
+        type="checkbox"
+        checked={checked}
+        readOnly
+        className="h-3.5 w-3.5 accent-[#1d1f1d]"
+      />
+      {label}
+    </label>
   );
 }
