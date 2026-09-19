@@ -1,19 +1,21 @@
 "use client";
 
 import {
+  ArrowRight,
   Battery,
   Check,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
+  CircleHelp,
   Gift,
   Heart,
   Info,
-  MapPin,
-  Menu,
+  Layers3,
   PackageCheck,
   Search,
   ShieldCheck,
-  ShoppingCart,
+  ShoppingBag,
   SlidersHorizontal,
   Sparkles,
   Star,
@@ -21,10 +23,10 @@ import {
   Users,
   X
 } from "lucide-react";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, ReactNode, useMemo, useState } from "react";
 
 type RecipientId = "myself" | "dad" | "mom" | "riya" | "gift";
-type View = "home" | "results" | "people";
+type Screen = "home" | "board" | "library";
 type MemoryMode = "remember" | "session" | "none";
 type PriorityKey =
   | "battery"
@@ -49,7 +51,7 @@ type Profile = {
   budget: number;
   weights: PriorityWeights;
   temporary?: boolean;
-  color: string;
+  avatarStyle: string;
 };
 
 type Product = {
@@ -70,7 +72,6 @@ type Product = {
   chargingText: string;
   scores: PriorityWeights;
   unknown?: string;
-  badge?: string;
 };
 
 type CartItem = {
@@ -80,13 +81,13 @@ type CartItem = {
 
 const priorityLabels: Record<PriorityKey, string> = {
   battery: "Battery",
-  display: "Large display",
-  ease: "Easy to use",
+  display: "Display",
+  ease: "Ease of use",
   support: "Software support",
   camera: "Camera",
   performance: "Performance",
-  charging: "Fast charging",
-  delivery: "Fast delivery",
+  charging: "Charging",
+  delivery: "Delivery",
   reliability: "Reliability"
 };
 
@@ -123,7 +124,7 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 2,
       reliability: 3
     },
-    color: "bg-slate-900 text-white"
+    avatarStyle: "bg-[#171816] text-white"
   },
   dad: {
     id: "dad",
@@ -145,7 +146,7 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 2,
       reliability: 4
     },
-    color: "bg-emerald-100 text-emerald-900"
+    avatarStyle: "bg-[#DFFD67] text-[#171816]"
   },
   mom: {
     id: "mom",
@@ -167,7 +168,7 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 2,
       reliability: 5
     },
-    color: "bg-rose-100 text-rose-900"
+    avatarStyle: "bg-[#FFD8D2] text-[#5E2F2A]"
   },
   riya: {
     id: "riya",
@@ -189,12 +190,12 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 2,
       reliability: 3
     },
-    color: "bg-violet-100 text-violet-900"
+    avatarStyle: "bg-[#D8D1FF] text-[#443B78]"
   },
   gift: {
     id: "gift",
     label: "One-time gift",
-    relation: "Temporary",
+    relation: "Disposable context",
     initials: "G",
     mission:
       "A phone gift under ₹20,000. Prioritize reliability, strong ratings and quick delivery. Do not learn from this purchase.",
@@ -212,7 +213,7 @@ const profiles: Record<RecipientId, Profile> = {
       delivery: 5,
       reliability: 5
     },
-    color: "bg-amber-100 text-amber-900"
+    avatarStyle: "bg-[#FFE7A3] text-[#6A4B00]"
   }
 };
 
@@ -244,8 +245,7 @@ const products: Product[] = [
       delivery: 3,
       reliability: 5
     },
-    unknown: "Local service-centre experience",
-    badge: "Low return rate"
+    unknown: "Local service-centre experience"
   },
   {
     id: "nova-pulse",
@@ -273,8 +273,7 @@ const products: Product[] = [
       charging: 5,
       delivery: 5,
       reliability: 4
-    },
-    badge: "Fast delivery"
+    }
   },
   {
     id: "mira-lite",
@@ -302,8 +301,7 @@ const products: Product[] = [
       charging: 3,
       delivery: 5,
       reliability: 5
-    },
-    badge: "Top rated"
+    }
   },
   {
     id: "volt-x",
@@ -331,8 +329,7 @@ const products: Product[] = [
       charging: 5,
       delivery: 5,
       reliability: 3
-    },
-    badge: "Performance pick"
+    }
   },
   {
     id: "luma-max",
@@ -389,8 +386,7 @@ const products: Product[] = [
       charging: 4,
       delivery: 2,
       reliability: 4
-    },
-    badge: "Camera pick"
+    }
   },
   {
     id: "kite-core",
@@ -418,8 +414,7 @@ const products: Product[] = [
       charging: 3,
       delivery: 5,
       reliability: 5
-    },
-    badge: "Value pick"
+    }
   },
   {
     id: "orbit-plus",
@@ -496,18 +491,18 @@ function parseMission(text: string, fallback: Profile) {
   if (/camera.{0,28}(not important|low priority)|not important.{0,28}camera/.test(lower)) {
     next.camera = 1;
   }
-  if (/battery.{0,28}(average|not important|low priority)/.test(lower)) {
-    next.battery = 2;
-  }
 
   const detected = (Object.keys(next) as PriorityKey[]).some((key) => next[key] > 1);
   const weights = detected ? next : { ...fallback.weights };
 
   const match = text.match(/(?:₹|rs\.?\s*)?(\d{1,2})(?:[,\s]?000|k)\b/i);
   let budget = fallback.budget;
+
   if (match) {
     const base = Number(match[1]);
-    if (Number.isFinite(base) && base >= 5 && base <= 99) budget = base * 1000;
+    if (Number.isFinite(base) && base >= 5 && base <= 99) {
+      budget = base * 1000;
+    }
   }
 
   return { weights, budget };
@@ -518,19 +513,17 @@ function productById(id: string) {
 }
 
 export default function RecipientAwareCommerce() {
-  const [view, setView] = useState<View>("home");
+  const [screen, setScreen] = useState<Screen>("home");
   const [recipientId, setRecipientId] = useState<RecipientId>("dad");
-  const [recipientMenuOpen, setRecipientMenuOpen] = useState(false);
-  const [query, setQuery] = useState("smartphone under 20000");
   const [missionText, setMissionText] = useState(profiles.dad.mission);
   const [weights, setWeights] = useState<PriorityWeights>({ ...profiles.dad.weights });
   const [budget, setBudget] = useState(profiles.dad.budget);
-  const [missionOpen, setMissionOpen] = useState(true);
-  const [clarification, setClarification] = useState<string | null>(null);
+  const [recipientPickerOpen, setRecipientPickerOpen] = useState(false);
+  const [lensEditorOpen, setLensEditorOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [saved, setSaved] = useState<string[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [cartOpen, setCartOpen] = useState(false);
+  const [trayOpen, setTrayOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [memoryModes, setMemoryModes] = useState<Record<RecipientId, MemoryMode>>({
     myself: "remember",
@@ -545,7 +538,10 @@ export default function RecipientAwareCommerce() {
   const ranked = useMemo(() => {
     return products
       .filter((product) => product.price <= budget)
-      .map((product) => ({ product, score: scoreProduct(product, weights) }))
+      .map((product) => ({
+        product,
+        score: scoreProduct(product, weights)
+      }))
       .sort((a, b) => {
         if (b.score !== a.score) return b.score - a.score;
         if (b.product.rating !== a.product.rating) return b.product.rating - a.product.rating;
@@ -559,25 +555,23 @@ export default function RecipientAwareCommerce() {
     setMissionText(next.mission);
     setWeights({ ...next.weights });
     setBudget(next.budget);
-    setClarification(null);
-    setRecipientMenuOpen(false);
-  };
-
-  const search = (event?: FormEvent) => {
-    event?.preventDefault();
-    const parsed = parseMission(missionText, profile);
-    setWeights(parsed.weights);
-    setBudget(parsed.budget);
-    setView("results");
+    setRecipientPickerOpen(false);
   };
 
   const applyMission = () => {
     const parsed = parseMission(missionText, profile);
     setWeights(parsed.weights);
     setBudget(parsed.budget);
+    setLensEditorOpen(false);
   };
 
-  const addToCart = (productId: string) => {
+  const openBoard = (event?: FormEvent) => {
+    event?.preventDefault();
+    applyMission();
+    setScreen("board");
+  };
+
+  const addToTray = (productId: string) => {
     setCart((current) => [...current, { productId, recipientId }]);
   };
 
@@ -590,309 +584,282 @@ export default function RecipientAwareCommerce() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f4f5f3] text-[#17211f]">
-      <CommerceHeader
-        query={query}
-        setQuery={setQuery}
-        onSearch={search}
-        onNavigate={setView}
+    <main className="min-h-screen bg-[#F3F1EA] text-[#171816]">
+      <VelaHeader
+        screen={screen}
+        setScreen={setScreen}
+        profile={profile}
         recipientId={recipientId}
+        pickerOpen={recipientPickerOpen}
+        setPickerOpen={setRecipientPickerOpen}
         onRecipientChange={changeRecipient}
-        recipientMenuOpen={recipientMenuOpen}
-        setRecipientMenuOpen={setRecipientMenuOpen}
-        cartCount={cart.length}
-        onCart={() => setCartOpen(true)}
+        trayCount={cart.length}
+        onTray={() => setTrayOpen(true)}
       />
 
-      {view === "home" ? (
-        <HomeView
+      <LensBar
+        profile={profile}
+        budget={budget}
+        weights={weights}
+        onEdit={() => setLensEditorOpen(true)}
+        onChangeRecipient={() => setRecipientPickerOpen(true)}
+      />
+
+      {screen === "home" ? (
+        <Home
+          profile={profile}
           recipientId={recipientId}
           ranked={ranked}
-          onSearch={() => setView("results")}
-          onRecipientChange={changeRecipient}
-          onOpenProduct={setSelectedProduct}
-          onAdd={addToCart}
-          saved={saved}
-          onToggleSaved={toggleSaved}
-        />
-      ) : null}
-
-      {view === "results" ? (
-        <ResultsView
-          recipientId={recipientId}
-          query={query}
           missionText={missionText}
           setMissionText={setMissionText}
-          weights={weights}
-          budget={budget}
-          ranked={ranked}
-          missionOpen={missionOpen}
-          setMissionOpen={setMissionOpen}
-          onApplyMission={applyMission}
-          clarification={clarification}
-          setClarification={setClarification}
-          onOpenProduct={setSelectedProduct}
-          onAdd={addToCart}
+          onOpenBoard={openBoard}
+          onRecipientChange={changeRecipient}
+          onProduct={setSelectedProduct}
           saved={saved}
-          onToggleSaved={toggleSaved}
+          onSave={toggleSaved}
+          onAdd={addToTray}
         />
       ) : null}
 
-      {view === "people" ? (
-        <PeopleView
+      {screen === "board" ? (
+        <DecisionBoard
+          profile={profile}
+          recipientId={recipientId}
+          ranked={ranked}
+          weights={weights}
+          budget={budget}
+          onEditLens={() => setLensEditorOpen(true)}
+          onRecipientChange={changeRecipient}
+          onProduct={setSelectedProduct}
+          saved={saved}
+          onSave={toggleSaved}
+          onAdd={addToTray}
+        />
+      ) : null}
+
+      {screen === "library" ? (
+        <LensLibrary
           recipientId={recipientId}
           onRecipientChange={changeRecipient}
           memoryModes={memoryModes}
           onMemoryMode={(id, mode) =>
             setMemoryModes((current) => ({ ...current, [id]: mode }))
           }
-          onShop={() => setView("results")}
+          onOpenBoard={() => setScreen("board")}
+        />
+      ) : null}
+
+      {lensEditorOpen ? (
+        <LensEditor
+          profile={profile}
+          missionText={missionText}
+          setMissionText={setMissionText}
+          budget={budget}
+          weights={weights}
+          onApply={applyMission}
+          onClose={() => setLensEditorOpen(false)}
         />
       ) : null}
 
       {selectedProduct ? (
-        <ProductDetail
+        <ProductView
           product={selectedProduct}
           recipientId={recipientId}
           weights={weights}
-          budget={budget}
           memoryMode={memoryModes[recipientId]}
           onClose={() => setSelectedProduct(null)}
           onAdd={() => {
-            addToCart(selectedProduct.id);
+            addToTray(selectedProduct.id);
             setSelectedProduct(null);
-            setCartOpen(true);
+            setTrayOpen(true);
           }}
         />
       ) : null}
 
-      {cartOpen ? (
-        <CartDrawer
-          cart={cart}
+      {trayOpen ? (
+        <DecisionTray
+          items={cart}
           memoryModes={memoryModes}
-          onClose={() => setCartOpen(false)}
+          onClose={() => setTrayOpen(false)}
           onRemove={(index) =>
             setCart((current) => current.filter((_, itemIndex) => itemIndex !== index))
           }
-          onReassign={(index, nextId) =>
+          onReassign={(index, id) =>
             setCart((current) =>
               current.map((item, itemIndex) =>
-                itemIndex === index ? { ...item, recipientId: nextId } : item
+                itemIndex === index ? { ...item, recipientId: id } : item
               )
             )
           }
-          onCheckout={() => {
-            setCartOpen(false);
+          onFinish={() => {
+            setTrayOpen(false);
             setFeedbackOpen(true);
           }}
         />
       ) : null}
 
       {feedbackOpen ? (
-        <FeedbackModal cart={cart} onClose={() => setFeedbackOpen(false)} />
+        <OutcomeLoop
+          items={cart}
+          onClose={() => setFeedbackOpen(false)}
+        />
       ) : null}
     </main>
   );
 }
 
-function CommerceHeader({
-  query,
-  setQuery,
-  onSearch,
-  onNavigate,
+function VelaHeader({
+  screen,
+  setScreen,
+  profile,
   recipientId,
+  pickerOpen,
+  setPickerOpen,
   onRecipientChange,
-  recipientMenuOpen,
-  setRecipientMenuOpen,
-  cartCount,
-  onCart
+  trayCount,
+  onTray
 }: {
-  query: string;
-  setQuery: (value: string) => void;
-  onSearch: (event?: FormEvent) => void;
-  onNavigate: (view: View) => void;
+  screen: Screen;
+  setScreen: (screen: Screen) => void;
+  profile: Profile;
   recipientId: RecipientId;
+  pickerOpen: boolean;
+  setPickerOpen: (value: boolean) => void;
   onRecipientChange: (id: RecipientId) => void;
-  recipientMenuOpen: boolean;
-  setRecipientMenuOpen: (value: boolean) => void;
-  cartCount: number;
-  onCart: () => void;
+  trayCount: number;
+  onTray: () => void;
 }) {
-  const profile = profiles[recipientId];
-
   return (
-    <>
-      <header className="bg-[#112521] text-white">
-        <div className="mx-auto flex max-w-[1500px] items-center gap-3 px-4 py-3 sm:px-6">
-          <button className="md:hidden" aria-label="Menu">
-            <Menu className="h-5 w-5" />
-          </button>
-
-          <button
-            onClick={() => onNavigate("home")}
-            className="flex shrink-0 items-center gap-2 text-left"
-          >
-            <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#f3d46b] text-sm font-black text-[#112521]">
-              A
-            </span>
-            <span className="hidden sm:block">
-              <span className="block text-sm font-bold leading-none">Arc Market</span>
-              <span className="mt-1 block text-[9px] text-white/55">prototype store</span>
-            </span>
-          </button>
-
-          <div className="hidden items-center gap-1.5 px-2 text-[10px] text-white/70 lg:flex">
-            <MapPin className="h-3.5 w-3.5" />
-            Deliver to Ahmedabad
-          </div>
-
-          <form
-            onSubmit={(event) => onSearch(event)}
-            className="flex min-w-0 flex-1 overflow-hidden rounded-lg bg-white"
-          >
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              className="min-w-0 flex-1 px-3 py-2.5 text-sm text-slate-800 outline-none"
-              placeholder="Search products"
-            />
-            <button
-              type="submit"
-              className="grid w-11 place-items-center bg-[#f3d46b] text-[#112521]"
-              aria-label="Search"
-            >
-              <Search className="h-4 w-4" />
-            </button>
-          </form>
-
-          <div className="relative">
-            <button
-              onClick={() => setRecipientMenuOpen(!recipientMenuOpen)}
-              className="flex items-center gap-2 rounded-lg border border-white/15 px-2.5 py-2 hover:bg-white/5"
-            >
-              <span className={"grid h-7 w-7 place-items-center rounded-full text-[10px] font-bold " + profile.color}>
-                {profile.initials}
-              </span>
-              <span className="hidden text-left md:block">
-                <span className="block text-[9px] text-white/55">Shopping for</span>
-                <span className="block text-xs font-semibold">{profile.label}</span>
-              </span>
-              <ChevronDown className="hidden h-3.5 w-3.5 text-white/60 md:block" />
-            </button>
-
-            {recipientMenuOpen ? (
-              <RecipientMenu
-                recipientId={recipientId}
-                onRecipientChange={onRecipientChange}
-              />
-            ) : null}
-          </div>
-
-          <button
-            onClick={() => onNavigate("people")}
-            className="hidden px-2 text-left text-xs font-semibold lg:block"
-          >
-            <span className="block text-[9px] font-normal text-white/55">Profiles &</span>
-            memory
-          </button>
-
-          <button onClick={onCart} className="relative flex items-end gap-1 px-1">
-            <ShoppingCart className="h-6 w-6" />
-            <span className="hidden text-xs font-bold md:inline">Cart</span>
-            {cartCount ? (
-              <span className="absolute -right-1 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-[#f3d46b] px-1 text-[9px] font-black text-[#112521]">
-                {cartCount}
-              </span>
-            ) : null}
-          </button>
-        </div>
-      </header>
-
-      <nav className="border-b border-[#244038] bg-[#18352f] text-white">
-        <div className="mx-auto flex max-w-[1500px] items-center gap-5 overflow-x-auto px-4 py-2 text-[11px] font-medium sm:px-6">
-          {["Mobiles", "Electronics", "Fashion", "Home", "Beauty", "Appliances", "Grocery", "Pet care", "Deals"].map(
-            (category) => (
-              <button
-                key={category}
-                onClick={() => category === "Mobiles" && onNavigate("results")}
-                className="whitespace-nowrap text-white/85 hover:text-white"
-              >
-                {category}
-              </button>
-            )
-          )}
-          <span className="ml-auto hidden whitespace-nowrap text-[#f3d46b] lg:block">
-            Context-aware shopping demo
+    <header className="border-b border-black/10 bg-[#F3F1EA]/95 backdrop-blur">
+      <div className="mx-auto flex max-w-[1440px] items-center gap-5 px-4 py-4 sm:px-6 lg:px-8">
+        <button
+          onClick={() => setScreen("home")}
+          className="flex shrink-0 items-center gap-2"
+        >
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-[#171816] text-xs font-black text-[#DFFD67]">
+            V
           </span>
-        </div>
-      </nav>
+          <span className="text-sm font-black tracking-[0.15em]">VELA</span>
+        </button>
 
-      <div className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-[1500px] items-center gap-2 px-4 py-2 sm:px-6">
-          <span className="text-[10px] font-semibold text-slate-400">Shopping context:</span>
+        <nav className="hidden items-center gap-2 rounded-full bg-white/60 p-1 text-xs font-semibold md:flex">
+          <NavPill active={screen === "home"} onClick={() => setScreen("home")}>
+            Discover
+          </NavPill>
+          <NavPill active={screen === "board"} onClick={() => setScreen("board")}>
+            Decision board
+          </NavPill>
+          <NavPill active={screen === "library"} onClick={() => setScreen("library")}>
+            Lens library
+          </NavPill>
+        </nav>
+
+        <div className="relative ml-auto">
           <button
-            onClick={() => setRecipientMenuOpen(!recipientMenuOpen)}
-            className="flex items-center gap-2 rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold"
+            onClick={() => setPickerOpen(!pickerOpen)}
+            className="flex items-center gap-2 rounded-full border border-black/10 bg-white px-2 py-1.5"
           >
-            <span className={"grid h-5 w-5 place-items-center rounded-full text-[8px] " + profile.color}>
+            <span className={"grid h-8 w-8 place-items-center rounded-full text-[10px] font-bold " + profile.avatarStyle}>
               {profile.initials}
             </span>
-            {profile.label}
+            <span className="hidden text-left sm:block">
+              <span className="block text-[9px] uppercase tracking-[0.12em] text-black/40">
+                Shopping for
+              </span>
+              <span className="block text-xs font-bold">{profile.label}</span>
+            </span>
+            <ChevronDown className="h-3.5 w-3.5 text-black/40" />
           </button>
-          <span className="text-[10px] text-slate-400">·</span>
-          <span className="truncate text-[10px] text-slate-500">
-            {profile.temporary
-              ? "temporary recipient · nothing remembered after this purchase"
-              : profile.saved.slice(0, 3).join(" · ")}
-          </span>
+
+          {pickerOpen ? (
+            <RecipientPicker
+              recipientId={recipientId}
+              onSelect={onRecipientChange}
+            />
+          ) : null}
         </div>
+
+        <button
+          onClick={onTray}
+          className="relative grid h-11 w-11 place-items-center rounded-full bg-[#171816] text-white"
+          aria-label="Open decision tray"
+        >
+          <ShoppingBag className="h-4 w-4" />
+          {trayCount ? (
+            <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-[#DFFD67] px-1 text-[9px] font-black text-[#171816]">
+              {trayCount}
+            </span>
+          ) : null}
+        </button>
       </div>
-    </>
+    </header>
   );
 }
 
-function RecipientMenu({
-  recipientId,
-  onRecipientChange
+function NavPill({
+  active,
+  onClick,
+  children
 }: {
-  recipientId: RecipientId;
-  onRecipientChange: (id: RecipientId) => void;
+  active: boolean;
+  onClick: () => void;
+  children: ReactNode;
 }) {
   return (
-    <div className="absolute right-0 top-[52px] z-50 w-[310px] overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-900 shadow-2xl">
-      <div className="border-b border-slate-100 px-4 py-3">
-        <div className="text-xs font-bold">Who are you shopping for?</div>
-        <p className="mt-1 text-[10px] leading-4 text-slate-500">
-          This changes recommendations without changing the account.
+    <button
+      onClick={onClick}
+      className={
+        "rounded-full px-3 py-2 transition " +
+        (active ? "bg-[#171816] text-white" : "text-black/50 hover:text-black")
+      }
+    >
+      {children}
+    </button>
+  );
+}
+
+function RecipientPicker({
+  recipientId,
+  onSelect
+}: {
+  recipientId: RecipientId;
+  onSelect: (id: RecipientId) => void;
+}) {
+  return (
+    <div className="absolute right-0 top-[56px] z-50 w-[320px] rounded-[24px] border border-black/10 bg-[#FBFAF6] p-3 shadow-2xl">
+      <div className="px-2 pb-2">
+        <div className="text-xs font-black">Switch shopping lens</div>
+        <p className="mt-1 text-[10px] leading-4 text-black/45">
+          Same account. Different person, mission and memory.
         </p>
       </div>
-      <div className="p-2">
+      <div className="space-y-1">
         {(Object.keys(profiles) as RecipientId[]).map((id) => {
           const item = profiles[id];
           return (
             <button
               key={id}
-              onClick={() => onRecipientChange(id)}
+              onClick={() => onSelect(id)}
               className={
-                "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left hover:bg-slate-50 " +
-                (id === recipientId ? "bg-emerald-50" : "")
+                "flex w-full items-center gap-3 rounded-[18px] px-3 py-3 text-left transition hover:bg-black/[0.04] " +
+                (id === recipientId ? "bg-[#E8E6DE]" : "")
               }
             >
-              <span className={"grid h-8 w-8 shrink-0 place-items-center rounded-full text-[10px] font-bold " + item.color}>
+              <span className={"grid h-9 w-9 shrink-0 place-items-center rounded-full text-[10px] font-bold " + item.avatarStyle}>
                 {item.initials}
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block text-xs font-semibold">{item.label}</span>
-                <span className="block truncate text-[10px] text-slate-400">
-                  {item.temporary ? "Temporary recipient" : item.saved.join(" · ")}
+                <span className="block text-xs font-bold">{item.label}</span>
+                <span className="block truncate text-[10px] text-black/40">
+                  {item.temporary ? "Disposable lens" : item.saved.join(" · ")}
                 </span>
               </span>
-              {id === recipientId ? <Check className="h-4 w-4 text-emerald-700" /> : null}
+              {id === recipientId ? <Check className="h-4 w-4" /> : null}
             </button>
           );
         })}
       </div>
-      <button className="flex w-full items-center gap-2 border-t border-slate-100 px-4 py-3 text-xs font-semibold text-emerald-800">
+      <button className="mt-2 flex w-full items-center gap-2 rounded-[18px] border border-dashed border-black/15 px-3 py-3 text-xs font-bold">
         <Users className="h-4 w-4" />
         Add person or pet
       </button>
@@ -900,420 +867,591 @@ function RecipientMenu({
   );
 }
 
-function HomeView({
-  recipientId,
-  ranked,
-  onSearch,
-  onRecipientChange,
-  onOpenProduct,
-  onAdd,
-  saved,
-  onToggleSaved
+function LensBar({
+  profile,
+  budget,
+  weights,
+  onEdit,
+  onChangeRecipient
 }: {
-  recipientId: RecipientId;
-  ranked: Array<{ product: Product; score: number }>;
-  onSearch: () => void;
-  onRecipientChange: (id: RecipientId) => void;
-  onOpenProduct: (product: Product) => void;
-  onAdd: (id: string) => void;
-  saved: string[];
-  onToggleSaved: (id: string) => void;
+  profile: Profile;
+  budget: number;
+  weights: PriorityWeights;
+  onEdit: () => void;
+  onChangeRecipient: () => void;
 }) {
-  const profile = profiles[recipientId];
-  const top = ranked[0]?.product;
+  const priorities = (Object.entries(weights) as Array<[PriorityKey, number]>)
+    .filter(([, weight]) => weight >= 4)
+    .slice(0, 4);
 
   return (
-    <div className="mx-auto max-w-[1500px] px-4 py-5 sm:px-6">
-      <section className="grid overflow-hidden rounded-2xl bg-[#dfeae4] lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="p-6 sm:p-8 lg:p-10">
-          <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.15em] text-emerald-800">
-            <Sparkles className="h-4 w-4" />
-            Shopping for {profile.label}
+    <div className="border-b border-black/10 bg-[#FBFAF6]">
+      <div className="mx-auto flex max-w-[1440px] items-center gap-2 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
+        <span className="shrink-0 text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
+          Active lens
+        </span>
+        <button
+          onClick={onChangeRecipient}
+          className="flex shrink-0 items-center gap-2 rounded-full bg-[#171816] px-3 py-2 text-[10px] font-bold text-white"
+        >
+          <span className={"grid h-5 w-5 place-items-center rounded-full text-[8px] " + profile.avatarStyle}>
+            {profile.initials}
+          </span>
+          {profile.label}
+        </button>
+        <LensToken>Smartphone</LensToken>
+        <LensToken>Under {money(budget)}</LensToken>
+        {priorities.map(([key]) => (
+          <LensToken key={key}>{priorityLabels[key]}</LensToken>
+        ))}
+        <button
+          onClick={onEdit}
+          className="ml-auto shrink-0 rounded-full border border-black/15 px-3 py-2 text-[10px] font-bold"
+        >
+          Edit lens
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function LensToken({ children }: { children: ReactNode }) {
+  return (
+    <span className="shrink-0 rounded-full border border-black/10 bg-white px-3 py-2 text-[10px] font-semibold text-black/65">
+      {children}
+    </span>
+  );
+}
+
+function Home({
+  profile,
+  recipientId,
+  ranked,
+  missionText,
+  setMissionText,
+  onOpenBoard,
+  onRecipientChange,
+  onProduct,
+  saved,
+  onSave,
+  onAdd
+}: {
+  profile: Profile;
+  recipientId: RecipientId;
+  ranked: Array<{ product: Product; score: number }>;
+  missionText: string;
+  setMissionText: (value: string) => void;
+  onOpenBoard: (event?: FormEvent) => void;
+  onRecipientChange: (id: RecipientId) => void;
+  onProduct: (product: Product) => void;
+  saved: string[];
+  onSave: (id: string) => void;
+  onAdd: (id: string) => void;
+}) {
+  const top = ranked[0];
+  const alternateIds: RecipientId[] = ["dad", "myself", "riya", "gift"];
+
+  return (
+    <div className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
+      <section className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-[36px] bg-[#171816] p-6 text-white sm:p-8 lg:p-10">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold">
+            <Sparkles className="h-3.5 w-3.5 text-[#DFFD67]" />
+            Context-first commerce
           </div>
-          <h1 className="mt-3 max-w-xl text-3xl font-bold tracking-[-0.04em] sm:text-4xl">
-            {recipientId === "dad"
-              ? "A phone that fits Dad, not just your account history."
-              : recipientId === "myself"
-                ? "Your phone recommendations, using your own priorities."
-                : recipientId === "gift"
-                  ? "Find the gift. Keep it out of your long-term profile."
-                  : "Recommendations built around " + profile.label + "'s needs."}
+
+          <h1 className="mt-5 max-w-3xl text-4xl font-black leading-[0.98] tracking-[-0.055em] sm:text-5xl lg:text-6xl">
+            Shopping should know who the decision is for.
           </h1>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">
-            {profile.mission}
+
+          <p className="mt-5 max-w-2xl text-sm leading-6 text-white/60">
+            Vela does not start with your account history. It starts with a Shopping Lens:
+            who this is for, what they need now, what is non-negotiable and what should be remembered later.
           </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {profile.saved.slice(0, 4).map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-emerald-900/10 bg-white/70 px-3 py-1.5 text-[10px] font-semibold text-slate-700"
+
+          <form onSubmit={onOpenBoard} className="mt-8 rounded-[28px] bg-[#F7F5EE] p-3 text-[#171816]">
+            <div className="flex items-center gap-3 px-2 pt-1">
+              <span className={"grid h-10 w-10 shrink-0 place-items-center rounded-full text-xs font-bold " + profile.avatarStyle}>
+                {profile.initials}
+              </span>
+              <div>
+                <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
+                  Current mission for {profile.label}
+                </div>
+                <div className="text-xs font-bold">Say what matters. Not how to filter it.</div>
+              </div>
+            </div>
+
+            <textarea
+              value={missionText}
+              onChange={(event) => setMissionText(event.target.value)}
+              rows={4}
+              className="mt-3 w-full resize-none rounded-[20px] border border-black/10 bg-white p-4 text-sm leading-6 outline-none focus:border-black/30"
+            />
+
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+              <button
+                type="submit"
+                className="flex flex-1 items-center justify-center gap-2 rounded-[18px] bg-[#DFFD67] px-4 py-3 text-xs font-black text-[#171816]"
               >
-                {item}
-              </span>
-            ))}
-            {profile.temporary ? (
-              <span className="rounded-full bg-amber-100 px-3 py-1.5 text-[10px] font-semibold text-amber-900">
-                Do not learn from this purchase
-              </span>
-            ) : null}
-          </div>
-          <button
-            onClick={onSearch}
-            className="mt-6 rounded-lg bg-[#112521] px-5 py-3 text-sm font-semibold text-white"
-          >
-            Shop smartphones for {profile.label}
-          </button>
+                Open decision board
+                <ArrowRight className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => onRecipientChange("gift")}
+                className="rounded-[18px] border border-black/10 px-4 py-3 text-xs font-bold"
+              >
+                Start a one-time gift lens
+              </button>
+            </div>
+          </form>
         </div>
 
-        <div className="relative min-h-[340px] bg-gradient-to-br from-white/40 to-emerald-900/10">
+        <div className="relative overflow-hidden rounded-[36px] bg-[#DFFD67] p-6 sm:p-8">
+          <div className="absolute right-5 top-5 rounded-full bg-[#171816] px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.14em] text-white">
+            Live lens
+          </div>
+
+          <div className="max-w-sm">
+            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/45">
+              What Vela sees right now
+            </div>
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em]">
+              {profile.label} + this mission, not one blended profile.
+            </h2>
+          </div>
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <ContextTile label="Person" value={profile.label} />
+            <ContextTile label="Mode" value={profile.temporary ? "Disposable" : "Rememberable"} />
+            <ContextTile label="Budget" value="Under ₹20K" />
+            <ContextTile label="Goal" value="Choose well, not click fast" />
+          </div>
+
           {top ? (
-            <img
-              src={top.image}
-              alt={top.brand + " " + top.name}
-              className="absolute inset-0 h-full w-full object-contain p-4"
-            />
+            <button
+              onClick={() => onProduct(top.product)}
+              className="mt-6 grid w-full grid-cols-[120px_1fr] items-center gap-4 rounded-[28px] bg-[#F7F5EE] p-3 text-left"
+            >
+              <img
+                src={top.product.image}
+                alt={top.product.brand + " " + top.product.name}
+                className="aspect-square w-full rounded-[20px] object-contain"
+              />
+              <div>
+                <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
+                  Leading option
+                </div>
+                <div className="mt-1 text-lg font-black">
+                  {top.product.brand} {top.product.name}
+                </div>
+                <div className="mt-2 text-xs text-black/55">
+                  {top.score}% fit to this lens
+                </div>
+              </div>
+            </button>
           ) : null}
         </div>
       </section>
 
-      <section className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <section className="mt-8">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <div className="text-sm font-bold">Shopping profiles</div>
-            <p className="mt-1 text-xs text-slate-500">
-              Switch context before you shop. The account, payment and delivery stay the same.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {(Object.keys(profiles) as RecipientId[]).map((id) => {
-              const item = profiles[id];
-              return (
-                <button
-                  key={id}
-                  onClick={() => onRecipientChange(id)}
-                  className={
-                    "flex items-center gap-2 rounded-full border px-3 py-2 text-[10px] font-semibold " +
-                    (id === recipientId
-                      ? "border-emerald-700 bg-emerald-50 text-emerald-900"
-                      : "border-slate-200 bg-white text-slate-600")
-                  }
-                >
-                  <span className={"grid h-6 w-6 place-items-center rounded-full text-[8px] " + item.color}>
-                    {item.initials}
-                  </span>
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-7">
-        <div className="flex items-end justify-between gap-3">
-          <div>
-            <h2 className="text-xl font-bold tracking-[-0.03em]">
-              Recommended for {profile.label}
+            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+              Same catalogue, different lens
+            </div>
+            <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
+              Switching the person changes the decision, not the account.
             </h2>
-            <p className="mt-1 text-xs text-slate-500">
-              Ranked using the current recipient context, not the account as one blended identity.
-            </p>
           </div>
-          <button onClick={onSearch} className="text-xs font-semibold text-emerald-800">
-            See all <ChevronRight className="inline h-3.5 w-3.5" />
+          <button
+            onClick={() => onOpenBoard()}
+            className="text-xs font-black underline underline-offset-4"
+          >
+            Open full board
           </button>
         </div>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {ranked.slice(0, 4).map(({ product, score }, index) => (
-            <StoreProductCard
-              key={product.id}
-              product={product}
-              score={score}
-              rank={index + 1}
-              recipientId={recipientId}
-              onOpen={() => onOpenProduct(product)}
-              onAdd={() => onAdd(product.id)}
-              saved={saved.includes(product.id)}
-              onSave={() => onToggleSaved(product.id)}
+        <div className="mt-4 grid gap-3 lg:grid-cols-4">
+          {alternateIds.map((id) => (
+            <LensPreview
+              key={id}
+              id={id}
+              active={id === recipientId}
+              onSelect={() => onRecipientChange(id)}
             />
           ))}
         </div>
       </section>
 
-      <section className="mt-8 grid gap-4 lg:grid-cols-3">
-        <ContextCard
-          icon={<User className="h-4 w-4" />}
-          title="Recipient profile"
-          text="Stable context that may still matter next time, such as device ecosystem, size preferences or recurring needs."
+      <section className="mt-10">
+        <div className="flex items-end justify-between">
+          <div>
+            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+              Shortlist for {profile.label}
+            </div>
+            <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
+              A few options worth looking at
+            </h2>
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {ranked.slice(0, 4).map(({ product, score }, index) => (
+            <EditorialProductCard
+              key={product.id}
+              product={product}
+              score={score}
+              rank={index + 1}
+              profile={profile}
+              weights={profile.weights}
+              onOpen={() => onProduct(product)}
+              onAdd={() => onAdd(product.id)}
+              saved={saved.includes(product.id)}
+              onSave={() => onSave(product.id)}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-10 grid gap-3 md:grid-cols-3">
+        <PrincipleCard
+          number="01"
+          title="Profile"
+          text="What may remain useful across purchases."
         />
-        <ContextCard
-          icon={<Search className="h-4 w-4" />}
-          title="Current shopping mission"
-          text="Temporary context for this decision, such as category, budget, occasion and current priorities."
+        <PrincipleCard
+          number="02"
+          title="Mission"
+          text="What matters for this decision right now."
         />
-        <ContextCard
-          icon={<ShieldCheck className="h-4 w-4" />}
-          title="Memory control"
-          text="The shopper decides whether an outcome becomes future memory, stays session-only or is forgotten."
+        <PrincipleCard
+          number="03"
+          title="Outcome"
+          text="What actually worked after the purchase."
         />
       </section>
     </div>
   );
 }
 
-function ContextCard({
-  icon,
+function ContextTile({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-[20px] bg-white/60 p-4">
+      <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/35">
+        {label}
+      </div>
+      <div className="mt-1 text-sm font-black">{value}</div>
+    </div>
+  );
+}
+
+function LensPreview({
+  id,
+  active,
+  onSelect
+}: {
+  id: RecipientId;
+  active: boolean;
+  onSelect: () => void;
+}) {
+  const profile = profiles[id];
+  const top = products
+    .filter((product) => product.price <= profile.budget)
+    .map((product) => ({ product, score: scoreProduct(product, profile.weights) }))
+    .sort((a, b) => b.score - a.score)[0];
+
+  return (
+    <button
+      onClick={onSelect}
+      className={
+        "rounded-[28px] border p-4 text-left transition " +
+        (active
+          ? "border-[#171816] bg-[#171816] text-white"
+          : "border-black/10 bg-[#FBFAF6] hover:-translate-y-0.5")
+      }
+    >
+      <div className="flex items-center gap-3">
+        <span className={"grid h-10 w-10 place-items-center rounded-full text-xs font-bold " + profile.avatarStyle}>
+          {profile.initials}
+        </span>
+        <div>
+          <div className="text-sm font-black">{profile.label}</div>
+          <div className={active ? "text-[10px] text-white/45" : "text-[10px] text-black/35"}>
+            {profile.relation}
+          </div>
+        </div>
+      </div>
+
+      {top ? (
+        <div className={"mt-4 rounded-[20px] p-3 " + (active ? "bg-white/10" : "bg-white")}>
+          <div className="flex items-center gap-3">
+            <img
+              src={top.product.image}
+              alt=""
+              className="h-16 w-16 rounded-[14px] object-contain"
+            />
+            <div>
+              <div className="text-[9px] font-black uppercase tracking-[0.12em] opacity-45">
+                Top changes to
+              </div>
+              <div className="mt-1 text-xs font-black">
+                {top.product.brand} {top.product.name}
+              </div>
+              <div className="mt-1 text-[10px] opacity-55">
+                {top.score}% fit
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </button>
+  );
+}
+
+function PrincipleCard({
+  number,
   title,
   text
 }: {
-  icon: React.ReactNode;
+  number: string;
   title: string;
   text: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
-      <div className="flex items-center gap-2 text-sm font-bold">
-        {icon}
-        {title}
-      </div>
-      <p className="mt-2 text-xs leading-5 text-slate-500">{text}</p>
+    <div className="rounded-[28px] border border-black/10 bg-[#FBFAF6] p-5">
+      <div className="text-[10px] font-black text-black/25">{number}</div>
+      <div className="mt-8 text-xl font-black">{title}</div>
+      <p className="mt-2 text-xs leading-5 text-black/45">{text}</p>
     </div>
   );
 }
 
-function ResultsView({
+function DecisionBoard({
+  profile,
   recipientId,
-  query,
-  missionText,
-  setMissionText,
+  ranked,
   weights,
   budget,
-  ranked,
-  missionOpen,
-  setMissionOpen,
-  onApplyMission,
-  clarification,
-  setClarification,
-  onOpenProduct,
-  onAdd,
+  onEditLens,
+  onRecipientChange,
+  onProduct,
   saved,
-  onToggleSaved
+  onSave,
+  onAdd
 }: {
+  profile: Profile;
   recipientId: RecipientId;
-  query: string;
-  missionText: string;
-  setMissionText: (value: string) => void;
+  ranked: Array<{ product: Product; score: number }>;
   weights: PriorityWeights;
   budget: number;
-  ranked: Array<{ product: Product; score: number }>;
-  missionOpen: boolean;
-  setMissionOpen: (value: boolean) => void;
-  onApplyMission: () => void;
-  clarification: string | null;
-  setClarification: (value: string | null) => void;
-  onOpenProduct: (product: Product) => void;
-  onAdd: (id: string) => void;
+  onEditLens: () => void;
+  onRecipientChange: (id: RecipientId) => void;
+  onProduct: (product: Product) => void;
   saved: string[];
-  onToggleSaved: (id: string) => void;
+  onSave: (id: string) => void;
+  onAdd: (id: string) => void;
 }) {
-  const profile = profiles[recipientId];
-  const top = ranked[0]?.product;
-  const hardExcluded = products.length - ranked.length;
+  const strong = ranked.slice(0, 2);
+  const tradeoffs = ranked.slice(2, 5);
+  const alternatives = ranked.slice(5);
+  const excluded = products.length - ranked.length;
 
   return (
-    <div className="mx-auto max-w-[1500px] px-4 py-4 sm:px-6">
-      <div className="text-[10px] text-slate-500">
-        Home <span className="mx-1">›</span> Mobiles <span className="mx-1">›</span> Smartphones
-      </div>
-
-      <div className="mt-3 grid gap-5 xl:grid-cols-[250px_minmax(0,1fr)]">
-        <aside className="hidden self-start border border-slate-200 bg-white xl:block">
-          <div className="border-b border-slate-200 p-4">
-            <div className="flex items-center gap-2 text-sm font-bold">
-              <SlidersHorizontal className="h-4 w-4" />
-              Filters
+    <div className="mx-auto max-w-[1440px] px-4 py-7 sm:px-6 lg:px-8">
+      <section className="rounded-[32px] border border-black/10 bg-[#FBFAF6] p-5 sm:p-6">
+        <div className="grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
+          <div>
+            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+              Decision board
             </div>
-          </div>
-          <FilterGroup title="Price">
-            <FilterCheck checked label={"Under " + money(budget)} />
-            <FilterCheck label="₹10,000 – ₹15,000" />
-            <FilterCheck label="₹15,000 – ₹20,000" />
-          </FilterGroup>
-          <FilterGroup title="Customer rating">
-            <FilterCheck label="4★ & above" />
-            <FilterCheck label="4.5★ & above" />
-          </FilterGroup>
-          <FilterGroup title="Features">
-            <FilterCheck checked={weights.battery >= 4} label="Strong battery" />
-            <FilterCheck checked={weights.display >= 4} label="Large display" />
-            <FilterCheck checked={weights.camera >= 4} label="Camera" />
-            <FilterCheck checked={weights.charging >= 4} label="Fast charging" />
-          </FilterGroup>
-          <FilterGroup title={"Saved for " + profile.label}>
-            {profile.saved.slice(0, 4).map((item) => (
-              <FilterCheck key={item} checked label={item} />
-            ))}
-          </FilterGroup>
-        </aside>
-
-        <section className="min-w-0">
-          <div className="border border-slate-200 bg-white">
-            <div className="border-b border-slate-100 p-4 sm:p-5">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                <div>
-                  <h1 className="text-xl font-bold tracking-[-0.03em] sm:text-2xl">
-                    Smartphones under {money(budget)}
-                  </h1>
-                  <p className="mt-1 text-xs text-slate-500">
-                    {ranked.length} results for “{query}” · ranked for <strong>{profile.label}</strong>
-                  </p>
-                </div>
-                <select className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold">
-                  <option>Best fit for {profile.label}</option>
-                  <option>Price: Low to High</option>
-                  <option>Rating</option>
-                </select>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setMissionOpen(!missionOpen)}
-              className="flex w-full items-center justify-between gap-4 border-b border-slate-200 bg-[#f8fbf9] p-4 text-left"
-            >
-              <span>
-                <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-800">
-                  Shopping mission · {profile.label}
-                </span>
-                <span className="mt-1 block text-xs text-slate-600">
-                  {missionText}
-                </span>
-              </span>
-              <ChevronDown className={"h-4 w-4 shrink-0 text-slate-400 transition " + (missionOpen ? "rotate-180" : "")} />
-            </button>
-
-            {missionOpen ? (
-              <div className="border-b border-slate-200 p-4 sm:p-5">
-                <div className="grid gap-4 lg:grid-cols-[1fr_330px]">
-                  <div>
-                    <label className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Tell us what matters for this purchase
-                    </label>
-                    <textarea
-                      rows={4}
-                      value={missionText}
-                      onChange={(event) => setMissionText(event.target.value)}
-                      className="mt-2 w-full resize-none rounded-lg border border-slate-200 p-3 text-sm leading-6 outline-none focus:border-emerald-500"
-                    />
-                    <button
-                      onClick={onApplyMission}
-                      className="mt-2 rounded-lg bg-[#112521] px-4 py-2.5 text-xs font-semibold text-white"
-                    >
-                      Update recommendations
-                    </button>
-                  </div>
-
-                  <div>
-                    <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                      Interpreted context
-                    </div>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {(Object.entries(weights) as Array<[PriorityKey, number]>)
-                        .filter(([, weight]) => weight >= 4)
-                        .map(([key, weight]) => (
-                          <span
-                            key={key}
-                            className="rounded-full bg-emerald-50 px-2.5 py-1.5 text-[10px] font-semibold text-emerald-800"
-                          >
-                            {priorityLabels[key]} · {weight === 5 ? "high" : "medium"}
-                          </span>
-                        ))}
-                      <span className="rounded-full bg-slate-100 px-2.5 py-1.5 text-[10px] font-semibold text-slate-600">
-                        Budget {money(budget)}
-                      </span>
-                    </div>
-                    <p className="mt-3 text-[10px] leading-4 text-slate-400">
-                      Profile and current mission stay separate. A one-time budget does not become a permanent preference.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : null}
+            <h1 className="mt-2 max-w-3xl text-3xl font-black tracking-[-0.045em] sm:text-4xl">
+              Not a results page. A view of the decision.
+            </h1>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-black/45">
+              First remove what clearly fails the lens. Then surface the strongest fits,
+              useful trade-offs and remaining alternatives. The catalogue stays the same;
+              the decision context changes.
+            </p>
           </div>
 
-          <div className="mt-3 border border-slate-200 bg-white p-4">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <div className="text-xs font-bold">One detail is still ambiguous</div>
-                <p className="mt-1 text-[11px] text-slate-500">
-                  “Easy to use” can mean different things. Asking is more reliable than silently guessing.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {["Clean interface", "Larger controls", "Simple setup"].map((choice) => (
-                  <button
-                    key={choice}
-                    onClick={() => setClarification(choice)}
-                    className={
-                      "rounded-full border px-3 py-1.5 text-[10px] font-semibold " +
-                      (clarification === choice
-                        ? "border-emerald-700 bg-emerald-50 text-emerald-900"
-                        : "border-slate-200 text-slate-600")
-                    }
-                  >
-                    {choice}
-                  </button>
+          <div className="rounded-[24px] bg-[#171816] p-4 text-white">
+            <div className="text-[9px] font-black uppercase tracking-[0.14em] text-white/35">
+              Lens summary
+            </div>
+            <div className="mt-2 text-sm font-black">{profile.label}</div>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <TinyToken>{money(budget)} max</TinyToken>
+              {(Object.entries(weights) as Array<[PriorityKey, number]>)
+                .filter(([, weight]) => weight >= 4)
+                .slice(0, 4)
+                .map(([key]) => (
+                  <TinyToken key={key}>{priorityLabels[key]}</TinyToken>
                 ))}
-              </div>
             </div>
+            <button
+              onClick={onEditLens}
+              className="mt-4 w-full rounded-[16px] bg-[#DFFD67] px-3 py-2.5 text-xs font-black text-[#171816]"
+            >
+              Refine lens
+            </button>
           </div>
+        </div>
 
-          <div className="mt-3 border border-slate-200 bg-white">
-            <div className="flex flex-col gap-2 border-b border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <div className="text-sm font-bold">
-                  Results ordered for {profile.label}
-                </div>
-                <div className="mt-1 text-[10px] text-slate-500">
-                  Hard requirement first: {hardExcluded} product{hardExcluded === 1 ? "" : "s"} excluded above budget.
-                  Then mission fit, saved recipient preferences, quality, price and availability.
-                </div>
-              </div>
-              {top ? (
-                <div className="rounded-full bg-emerald-50 px-3 py-1.5 text-[10px] font-semibold text-emerald-800">
-                  #1 now: {top.brand} {top.name}
-                </div>
-              ) : null}
-            </div>
+        <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-black/10 pt-4">
+          <span className="mr-1 text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+            Compare lens
+          </span>
+          {(Object.keys(profiles) as RecipientId[]).map((id) => {
+            const item = profiles[id];
+            return (
+              <button
+                key={id}
+                onClick={() => onRecipientChange(id)}
+                className={
+                  "flex items-center gap-2 rounded-full border px-3 py-2 text-[10px] font-bold " +
+                  (id === recipientId
+                    ? "border-[#171816] bg-[#171816] text-white"
+                    : "border-black/10 bg-white")
+                }
+              >
+                <span className={"grid h-5 w-5 place-items-center rounded-full text-[8px] " + item.avatarStyle}>
+                  {item.initials}
+                </span>
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
+      </section>
 
-            <div className="divide-y divide-slate-100">
-              {ranked.map(({ product, score }, index) => (
-                <SearchResultCard
-                  key={product.id}
-                  product={product}
-                  score={score}
-                  rank={index + 1}
-                  recipientId={recipientId}
-                  weights={weights}
-                  onOpen={() => onOpenProduct(product)}
-                  onAdd={() => onAdd(product.id)}
-                  saved={saved.includes(product.id)}
-                  onSave={() => onToggleSaved(product.id)}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
+      <div className="mt-5 flex items-center gap-2 rounded-[20px] bg-[#E8E6DE] px-4 py-3 text-[11px] text-black/55">
+        <ShieldCheck className="h-4 w-4" />
+        {excluded} product{excluded === 1 ? "" : "s"} excluded before ranking because they fail the hard budget.
       </div>
+
+      <BoardLane
+        index="A"
+        eyebrow="Strongest fits"
+        title="These satisfy the lens with the fewest compromises."
+        products={strong}
+        profile={profile}
+        weights={weights}
+        onProduct={onProduct}
+        saved={saved}
+        onSave={onSave}
+        onAdd={onAdd}
+        accent="bg-[#DFFD67]"
+      />
+
+      <BoardLane
+        index="B"
+        eyebrow="Trade-offs worth considering"
+        title="Not perfect fits, but the compromise may be worth it."
+        products={tradeoffs}
+        profile={profile}
+        weights={weights}
+        onProduct={onProduct}
+        saved={saved}
+        onSave={onSave}
+        onAdd={onAdd}
+        accent="bg-[#D8D1FF]"
+      />
+
+      {alternatives.length ? (
+        <BoardLane
+          index="C"
+          eyebrow="Still valid"
+          title="Useful alternatives once the main trade-offs are understood."
+          products={alternatives}
+          profile={profile}
+          weights={weights}
+          onProduct={onProduct}
+          saved={saved}
+          onSave={onSave}
+          onAdd={onAdd}
+          accent="bg-[#FFD8D2]"
+        />
+      ) : null}
     </div>
   );
 }
 
-function SearchResultCard({
+function TinyToken({ children }: { children: ReactNode }) {
+  return (
+    <span className="rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold text-white/70">
+      {children}
+    </span>
+  );
+}
+
+function BoardLane({
+  index,
+  eyebrow,
+  title,
+  products: laneProducts,
+  profile,
+  weights,
+  onProduct,
+  saved,
+  onSave,
+  onAdd,
+  accent
+}: {
+  index: string;
+  eyebrow: string;
+  title: string;
+  products: Array<{ product: Product; score: number }>;
+  profile: Profile;
+  weights: PriorityWeights;
+  onProduct: (product: Product) => void;
+  saved: string[];
+  onSave: (id: string) => void;
+  onAdd: (id: string) => void;
+  accent: string;
+}) {
+  return (
+    <section className="mt-10">
+      <div className="grid gap-4 lg:grid-cols-[260px_1fr]">
+        <div className="lg:sticky lg:top-6 lg:self-start">
+          <span className={"grid h-10 w-10 place-items-center rounded-full text-xs font-black " + accent}>
+            {index}
+          </span>
+          <div className="mt-4 text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+            {eyebrow}
+          </div>
+          <h2 className="mt-2 text-2xl font-black tracking-[-0.04em]">
+            {title}
+          </h2>
+        </div>
+
+        <div className="space-y-4">
+          {laneProducts.map(({ product, score }, indexWithinLane) => (
+            <DecisionCard
+              key={product.id}
+              product={product}
+              score={score}
+              order={indexWithinLane + 1}
+              profile={profile}
+              weights={weights}
+              onOpen={() => onProduct(product)}
+              onAdd={() => onAdd(product.id)}
+              saved={saved.includes(product.id)}
+              onSave={() => onSave(product.id)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DecisionCard({
   product,
   score,
-  rank,
-  recipientId,
+  order,
+  profile,
   weights,
   onOpen,
   onAdd,
@@ -1322,115 +1460,121 @@ function SearchResultCard({
 }: {
   product: Product;
   score: number;
-  rank: number;
-  recipientId: RecipientId;
+  order: number;
+  profile: Profile;
   weights: PriorityWeights;
   onOpen: () => void;
   onAdd: () => void;
   saved: boolean;
   onSave: () => void;
 }) {
-  const profile = profiles[recipientId];
   const fit = fitDetails(product, weights);
+  const topMatches = fit.matches.slice(0, 3);
+  const topMiss = fit.misses[0];
 
   return (
-    <article className="grid gap-4 p-4 sm:grid-cols-[220px_minmax(0,1fr)] sm:p-5">
-      <button onClick={onOpen} className="relative overflow-hidden rounded-lg bg-slate-50">
+    <article className="grid overflow-hidden rounded-[30px] border border-black/10 bg-[#FBFAF6] lg:grid-cols-[260px_minmax(0,1fr)_230px]">
+      <button
+        onClick={onOpen}
+        className="relative bg-[#EEECE5] p-4"
+      >
+        <span className="absolute left-4 top-4 rounded-full bg-[#171816] px-2.5 py-1 text-[9px] font-black text-white">
+          {order}
+        </span>
         <img
           src={product.image}
           alt={product.brand + " " + product.name}
-          className="aspect-square h-full w-full object-contain"
+          className="aspect-square w-full object-contain"
         />
-        {product.badge ? (
-          <span className="absolute left-2 top-2 rounded bg-white/95 px-2 py-1 text-[9px] font-bold shadow">
-            {product.badge}
-          </span>
-        ) : null}
       </button>
 
-      <div className="min-w-0">
+      <div className="p-5 sm:p-6">
         <div className="flex items-start gap-3">
-          <button onClick={onOpen} className="min-w-0 flex-1 text-left">
-            <div className="text-[10px] uppercase tracking-[0.12em] text-slate-400">{product.brand}</div>
-            <h2 className="mt-1 text-lg font-semibold leading-6 hover:text-emerald-800">
-              {product.name} 5G Smartphone, {product.displayText}, {product.batteryText}
-            </h2>
-          </button>
-          <button onClick={onSave} className="p-1.5 text-slate-400" aria-label="Save product">
-            <Heart className={"h-5 w-5 " + (saved ? "fill-rose-500 text-rose-500" : "")} />
-          </button>
-        </div>
-
-        <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
-          <span className="rounded bg-emerald-700 px-1.5 py-0.5 font-bold text-white">{product.rating} ★</span>
-          <span>{product.reviews.toLocaleString("en-IN")} ratings</span>
-          <span>·</span>
-          <span>{product.deliveryDays === 1 ? "Delivery tomorrow" : "Delivery in " + product.deliveryDays + " days"}</span>
-        </div>
-
-        <div className="mt-3 flex flex-wrap items-baseline gap-2">
-          <span className="text-2xl font-bold">{money(product.price)}</span>
-          <span className="text-xs text-slate-400 line-through">{money(product.mrp)}</span>
-          <span className="text-xs font-semibold text-emerald-700">
-            {Math.round((1 - product.price / product.mrp) * 100)}% off
-          </span>
-        </div>
-
-        <div className="mt-3 grid gap-3 lg:grid-cols-[1fr_320px]">
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-slate-600">
-            <SpecLine label="Battery" value={product.batteryText} />
-            <SpecLine label="Display" value={product.displayText} />
-            <SpecLine label="Camera" value={product.cameraText} />
-            <SpecLine label="Processor" value={product.processorText} />
-            <SpecLine label="Updates" value={product.supportText} />
-            <SpecLine label="Charging" value={product.chargingText} />
-          </div>
-
-          <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-3">
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-xs font-bold text-emerald-900">
-                {rank === 1 ? "Best fit for " + profile.label : "Fit for " + profile.label}
-              </span>
-              <span className="text-[10px] font-bold text-emerald-700">{score}%</span>
-            </div>
-            <div className="mt-2 space-y-1">
-              {fit.matches.slice(0, 3).map(([key]) => (
-                <div key={key} className="flex items-center gap-1.5 text-[10px] text-emerald-800">
-                  <Check className="h-3 w-3" />
-                  {priorityLabels[key]}
-                </div>
-              ))}
-              {fit.misses.slice(0, 1).map(([key]) => (
-                <div key={key} className="flex items-center gap-1.5 text-[10px] text-amber-800">
-                  <Info className="h-3 w-3" />
-                  Weaker on {priorityLabels[key].toLowerCase()}
-                </div>
-              ))}
-              {product.unknown ? (
-                <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
-                  <span className="font-bold">?</span>
-                  Unknown: {product.unknown}
-                </div>
-              ) : null}
+          <div className="min-w-0 flex-1">
+            <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/30">
+              {product.brand}
             </div>
             <button
               onClick={onOpen}
-              className="mt-2 text-[10px] font-bold text-emerald-900 underline underline-offset-2"
+              className="mt-1 text-left text-xl font-black tracking-[-0.03em]"
             >
-              Why this fits
+              {product.name}
             </button>
           </div>
+          <button
+            onClick={onSave}
+            className="grid h-9 w-9 place-items-center rounded-full border border-black/10 bg-white"
+            aria-label="Save"
+          >
+            <Heart className={"h-4 w-4 " + (saved ? "fill-rose-500 text-rose-500" : "text-black/35")} />
+          </button>
+        </div>
+
+        <div className="mt-2 flex flex-wrap items-center gap-2 text-[10px] text-black/45">
+          <span className="flex items-center gap-1 font-black text-black/70">
+            <Star className="h-3.5 w-3.5 fill-black text-black" />
+            {product.rating}
+          </span>
+          <span>{product.reviews.toLocaleString("en-IN")} reviews</span>
+          <span>·</span>
+          <span>{product.deliveryDays === 1 ? "tomorrow" : product.deliveryDays + " days"}</span>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
+          {topMatches.map(([key]) => (
+            <span
+              key={key}
+              className="rounded-full bg-[#E4F4C8] px-2.5 py-1.5 text-[10px] font-bold text-[#2B4A1F]"
+            >
+              ✓ {priorityLabels[key]}
+            </span>
+          ))}
+          {topMiss ? (
+            <span className="rounded-full bg-[#FFE7A3] px-2.5 py-1.5 text-[10px] font-bold text-[#6A4B00]">
+              Trade-off · {priorityLabels[topMiss[0]]}
+            </span>
+          ) : null}
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-black/45 sm:grid-cols-3">
+          <MiniSpec label="Battery" value={product.batteryText} />
+          <MiniSpec label="Display" value={product.displayText} />
+          <MiniSpec label="Camera" value={product.cameraText} />
+          <MiniSpec label="Support" value={product.supportText} />
+          <MiniSpec label="Processor" value={product.processorText} />
+          <MiniSpec label="Charging" value={product.chargingText} />
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-between border-t border-black/10 bg-white p-5 lg:border-l lg:border-t-0">
+        <div>
+          <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/30">
+            Fit to {profile.label}
+          </div>
+          <div className="mt-1 text-4xl font-black tracking-[-0.06em]">{score}%</div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-xl font-black">{money(product.price)}</span>
+            <span className="text-[10px] text-black/30 line-through">{money(product.mrp)}</span>
+          </div>
+          {product.unknown ? (
+            <div className="mt-4 rounded-[16px] bg-[#EEECE5] p-3 text-[10px] leading-4 text-black/50">
+              <strong className="text-black/75">Unknown:</strong> {product.unknown}
+            </div>
+          ) : null}
+        </div>
+
+        <div className="mt-5 grid gap-2">
+          <button
+            onClick={onOpen}
+            className="rounded-[16px] border border-black/15 px-3 py-2.5 text-xs font-black"
+          >
+            Open decision view
+          </button>
           <button
             onClick={onAdd}
-            className="rounded-lg bg-[#ffd814] px-4 py-2 text-xs font-semibold text-slate-900 shadow-sm hover:bg-[#f7ca00]"
+            className="rounded-[16px] bg-[#171816] px-3 py-2.5 text-xs font-black text-white"
           >
-            Add to cart · for {profile.label}
-          </button>
-          <button onClick={onOpen} className="rounded-lg border border-slate-300 px-4 py-2 text-xs font-semibold">
-            View details
+            Add to tray · for {profile.label}
           </button>
         </div>
       </div>
@@ -1438,11 +1582,23 @@ function SearchResultCard({
   );
 }
 
-function StoreProductCard({
+function MiniSpec({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <span className="block text-[8px] font-black uppercase tracking-[0.1em] text-black/25">
+        {label}
+      </span>
+      <span className="mt-0.5 block font-bold text-black/60">{value}</span>
+    </div>
+  );
+}
+
+function EditorialProductCard({
   product,
   score,
   rank,
-  recipientId,
+  profile,
+  weights,
   onOpen,
   onAdd,
   saved,
@@ -1451,57 +1607,58 @@ function StoreProductCard({
   product: Product;
   score: number;
   rank: number;
-  recipientId: RecipientId;
+  profile: Profile;
+  weights: PriorityWeights;
   onOpen: () => void;
   onAdd: () => void;
   saved: boolean;
   onSave: () => void;
 }) {
-  const profile = profiles[recipientId];
+  const fit = fitDetails(product, weights);
 
   return (
-    <article className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-      <div className="relative bg-slate-50">
-        <button onClick={onOpen} className="block w-full">
+    <article className="overflow-hidden rounded-[28px] border border-black/10 bg-[#FBFAF6]">
+      <div className="relative bg-[#EEECE5]">
+        <button onClick={onOpen} className="block w-full p-3">
           <img
             src={product.image}
             alt={product.brand + " " + product.name}
             className="aspect-square w-full object-contain"
           />
-          <span className="absolute left-2 top-2 rounded bg-white/95 px-2 py-1 text-[9px] font-bold shadow">
-            #{rank} for {profile.label}
-          </span>
         </button>
+        <span className="absolute left-3 top-3 rounded-full bg-[#171816] px-2.5 py-1 text-[9px] font-black text-white">
+          #{rank}
+        </span>
         <button
           onClick={onSave}
-          className="absolute right-2 top-2 grid h-8 w-8 place-items-center rounded-full bg-white shadow"
+          className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-white"
           aria-label="Save"
         >
-          <Heart className={"h-4 w-4 " + (saved ? "fill-rose-500 text-rose-500" : "text-slate-400")} />
+          <Heart className={"h-4 w-4 " + (saved ? "fill-rose-500 text-rose-500" : "text-black/35")} />
         </button>
       </div>
-      <div className="p-3.5">
-        <div className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">{product.brand}</div>
-        <button onClick={onOpen} className="mt-1 text-left text-sm font-semibold hover:text-emerald-800">
+
+      <div className="p-4">
+        <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+          {product.brand}
+        </div>
+        <button onClick={onOpen} className="mt-1 text-left text-lg font-black">
           {product.name}
         </button>
-        <div className="mt-1 flex items-center gap-2 text-[10px] text-slate-500">
-          <span className="rounded bg-emerald-700 px-1.5 py-0.5 font-bold text-white">{product.rating} ★</span>
-          {product.reviews.toLocaleString("en-IN")}
+        <div className="mt-2 flex items-center justify-between">
+          <span className="text-base font-black">{money(product.price)}</span>
+          <span className="text-[10px] font-black">{score}% fit</span>
         </div>
-        <div className="mt-2">
-          <span className="text-lg font-bold">{money(product.price)}</span>
-          <span className="ml-2 text-[10px] text-slate-400 line-through">{money(product.mrp)}</span>
-        </div>
-        <div className="mt-3 rounded-lg bg-emerald-50 p-2.5">
-          <div className="flex items-center justify-between text-[10px] font-bold text-emerald-900">
-            <span>{rank === 1 ? "Best fit for " + profile.label : "Fit for " + profile.label}</span>
-            <span>{score}%</span>
-          </div>
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {fit.matches.slice(0, 2).map(([key]) => (
+            <span key={key} className="rounded-full bg-[#E4F4C8] px-2 py-1 text-[9px] font-bold">
+              {priorityLabels[key]}
+            </span>
+          ))}
         </div>
         <button
           onClick={onAdd}
-          className="mt-3 w-full rounded-lg bg-[#ffd814] py-2 text-xs font-semibold text-slate-900"
+          className="mt-4 w-full rounded-[16px] bg-[#171816] py-2.5 text-xs font-black text-white"
         >
           Add for {profile.label}
         </button>
@@ -1510,11 +1667,124 @@ function StoreProductCard({
   );
 }
 
-function ProductDetail({
+function LensEditor({
+  profile,
+  missionText,
+  setMissionText,
+  budget,
+  weights,
+  onApply,
+  onClose
+}: {
+  profile: Profile;
+  missionText: string;
+  setMissionText: (value: string) => void;
+  budget: number;
+  weights: PriorityWeights;
+  onApply: () => void;
+  onClose: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 z-[80] grid place-items-center bg-[#171816]/55 p-4 backdrop-blur-sm" onMouseDown={onClose}>
+      <div
+        className="w-full max-w-3xl rounded-[34px] bg-[#F7F5EE] p-5 shadow-2xl sm:p-6"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+              Edit shopping lens
+            </div>
+            <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
+              What matters for {profile.label} today?
+            </h2>
+          </div>
+          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_300px]">
+          <div>
+            <textarea
+              value={missionText}
+              onChange={(event) => setMissionText(event.target.value)}
+              rows={7}
+              className="w-full resize-none rounded-[24px] border border-black/10 bg-white p-4 text-sm leading-6 outline-none focus:border-black/30"
+            />
+
+            <div className="mt-3 rounded-[22px] bg-[#FFE7A3] p-4">
+              <div className="flex items-start gap-3">
+                <CircleHelp className="mt-0.5 h-4 w-4 shrink-0" />
+                <div>
+                  <div className="text-xs font-black">One thing may still need clarification</div>
+                  <p className="mt-1 text-[10px] leading-4 text-black/55">
+                    “Easy to use” could mean a cleaner interface, larger controls or simpler setup.
+                    A real system should ask when the answer can change the recommendation.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {["Clean interface", "Larger controls", "Simple setup"].map((option) => (
+                      <button
+                        key={option}
+                        className="rounded-full bg-white/70 px-3 py-1.5 text-[10px] font-bold"
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[24px] bg-[#171816] p-4 text-white">
+            <div className="text-[9px] font-black uppercase tracking-[0.14em] text-white/35">
+              Interpreted lens
+            </div>
+            <div className="mt-3 space-y-2">
+              <LensFact label="Person" value={profile.label} />
+              <LensFact label="Category" value="Smartphone" />
+              <LensFact label="Budget" value={"Under " + money(budget)} />
+            </div>
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {(Object.entries(weights) as Array<[PriorityKey, number]>)
+                .filter(([, weight]) => weight >= 4)
+                .map(([key]) => (
+                  <span key={key} className="rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold text-white/70">
+                    {priorityLabels[key]}
+                  </span>
+                ))}
+            </div>
+            <div className="mt-5 rounded-[18px] bg-white/10 p-3 text-[10px] leading-4 text-white/55">
+              Profile ≠ mission. This budget and category belong to this decision, not permanently to {profile.label}.
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={onApply}
+          className="mt-5 w-full rounded-[18px] bg-[#DFFD67] py-3 text-sm font-black"
+        >
+          Apply lens
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function LensFact({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-2 text-xs">
+      <span className="text-white/35">{label}</span>
+      <span className="font-black">{value}</span>
+    </div>
+  );
+}
+
+function ProductView({
   product,
   recipientId,
   weights,
-  budget,
   memoryMode,
   onClose,
   onAdd
@@ -1522,7 +1792,6 @@ function ProductDetail({
   product: Product;
   recipientId: RecipientId;
   weights: PriorityWeights;
-  budget: number;
   memoryMode: MemoryMode;
   onClose: () => void;
   onAdd: () => void;
@@ -1531,133 +1800,155 @@ function ProductDetail({
   const fit = fitDetails(product, weights);
   const score = scoreProduct(product, weights);
 
+  const compareIds: RecipientId[] = ["myself", "dad", "riya", "gift"];
+
   return (
-    <div className="fixed inset-0 z-[80] overflow-y-auto bg-white">
-      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 sm:px-6">
-        <div className="text-sm font-bold">Product details</div>
-        <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-slate-100" aria-label="Close">
-          <X className="h-4 w-4" />
-        </button>
+    <div className="fixed inset-0 z-[90] overflow-y-auto bg-[#F3F1EA]">
+      <div className="sticky top-0 z-20 border-b border-black/10 bg-[#F3F1EA]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-4 sm:px-6">
+          <button onClick={onClose} className="flex items-center gap-2 text-xs font-black">
+            <ChevronLeft className="h-4 w-4" />
+            Back to board
+          </button>
+          <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+            Decision view
+          </div>
+          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
+            <X className="h-4 w-4" />
+          </button>
+        </div>
       </div>
 
-      <div className="mx-auto max-w-[1350px] px-4 py-6 sm:px-6">
-        <div className="text-[10px] text-slate-500">
-          Mobiles › Smartphones › {product.brand} › {product.name}
-        </div>
-
-        <div className="mt-4 grid gap-7 lg:grid-cols-[520px_minmax(0,1fr)]">
-          <div className="self-start lg:sticky lg:top-20">
-            <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-              <img src={product.image} alt={product.brand + " " + product.name} className="aspect-square w-full object-contain" />
-            </div>
-            <div className="mt-3 grid grid-cols-4 gap-2">
-              {[0, 1, 2, 3].map((index) => (
-                <div key={index} className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-                  <img src={product.image} alt="" className="aspect-square w-full object-contain" />
-                </div>
-              ))}
-            </div>
+      <div className="mx-auto max-w-[1400px] px-4 py-7 sm:px-6">
+        <div className="grid gap-5 lg:grid-cols-[560px_minmax(0,1fr)]">
+          <div className="rounded-[36px] bg-[#EEECE5] p-5 lg:sticky lg:top-24 lg:self-start">
+            <img
+              src={product.image}
+              alt={product.brand + " " + product.name}
+              className="aspect-square w-full object-contain"
+            />
           </div>
 
           <div>
-            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{product.brand}</div>
-            <h1 className="mt-1 text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
-              {product.name} 5G Smartphone
+            <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+              {product.brand}
+            </div>
+            <h1 className="mt-1 text-4xl font-black tracking-[-0.055em]">
+              {product.name}
             </h1>
-            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-500">
-              <span className="rounded bg-emerald-700 px-2 py-1 font-bold text-white">{product.rating} ★</span>
-              <span>{product.reviews.toLocaleString("en-IN")} ratings</span>
+
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-black/45">
+              <span className="flex items-center gap-1 font-black text-black">
+                <Star className="h-4 w-4 fill-black" />
+                {product.rating}
+              </span>
+              <span>{product.reviews.toLocaleString("en-IN")} reviews</span>
               <span>·</span>
-              <span>Free delivery</span>
+              <span>{product.deliveryDays === 1 ? "arrives tomorrow" : "arrives in " + product.deliveryDays + " days"}</span>
             </div>
 
-            <div className="mt-4 border-y border-slate-200 py-4">
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold">{money(product.price)}</span>
-                <span className="text-sm text-slate-400 line-through">{money(product.mrp)}</span>
-                <span className="text-sm font-semibold text-emerald-700">
-                  {Math.round((1 - product.price / product.mrp) * 100)}% off
-                </span>
-              </div>
-              <p className="mt-1 text-xs text-slate-500">Inclusive of all taxes</p>
+            <div className="mt-5 flex items-baseline gap-3">
+              <span className="text-3xl font-black">{money(product.price)}</span>
+              <span className="text-sm text-black/30 line-through">{money(product.mrp)}</span>
             </div>
 
-            <section className="mt-5 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-4 sm:p-5">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <section className="mt-6 rounded-[30px] bg-[#171816] p-5 text-white sm:p-6">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-emerald-800">
-                    <Sparkles className="h-4 w-4" />
-                    Fit for {profile.label}
+                  <div className="text-[9px] font-black uppercase tracking-[0.14em] text-[#DFFD67]">
+                    Why it fits this lens
                   </div>
-                  <h2 className="mt-1 text-lg font-bold text-emerald-950">
-                    {score}% match to this shopping mission
-                  </h2>
+                  <div className="mt-1 text-3xl font-black">{score}% fit for {profile.label}</div>
                 </div>
-                <span className="rounded-full bg-white px-3 py-1.5 text-[10px] font-semibold text-emerald-900">
-                  Shopping for {profile.label}
+                <span className="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-bold text-white/65">
+                  {profile.temporary ? "Disposable lens" : "Rememberable lens"}
                 </span>
               </div>
 
-              <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                {fit.matches.map(([key]) => (
-                  <div key={key} className="flex items-center gap-2 rounded-lg bg-white p-3 text-xs text-emerald-900">
-                    <Check className="h-4 w-4" />
-                    <span className="flex-1">{priorityLabels[key]}</span>
-                    <strong>{product.scores[key]}/5</strong>
-                  </div>
-                ))}
-                {fit.misses.map(([key]) => (
-                  <div key={key} className="flex items-center gap-2 rounded-lg bg-amber-50 p-3 text-xs text-amber-900">
-                    <Info className="h-4 w-4" />
-                    <span className="flex-1">{priorityLabels[key]}</span>
-                    <strong>{product.scores[key]}/5</strong>
-                  </div>
-                ))}
-              </div>
-
-              {product.unknown ? (
-                <div className="mt-3 rounded-lg border border-slate-200 bg-white p-3 text-xs text-slate-600">
-                  <strong className="text-slate-900">Unknown:</strong> {product.unknown}. This should remain unknown rather than be inferred as fact.
-                </div>
-              ) : null}
-            </section>
-
-            <section className="mt-5">
-              <h2 className="text-base font-bold">Key specifications</h2>
-              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                <PdpSpec icon={<Battery className="h-4 w-4" />} label="Battery" value={product.batteryText} />
-                <PdpSpec icon={<SmartphoneIcon />} label="Display" value={product.displayText} />
-                <PdpSpec icon={<PackageCheck className="h-4 w-4" />} label="Updates" value={product.supportText} />
-                <PdpSpec icon={<Sparkles className="h-4 w-4" />} label="Camera" value={product.cameraText} />
-                <PdpSpec icon={<SlidersHorizontal className="h-4 w-4" />} label="Processor" value={product.processorText} />
-                <PdpSpec icon={<Battery className="h-4 w-4" />} label="Charging" value={product.chargingText} />
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                <FitColumn
+                  title="Matches"
+                  tone="bg-[#DFFD67] text-[#171816]"
+                  items={fit.matches.map(([key]) => priorityLabels[key])}
+                />
+                <FitColumn
+                  title="Trade-offs"
+                  tone="bg-[#FFE7A3] text-[#171816]"
+                  items={fit.misses.map(([key]) => priorityLabels[key])}
+                />
+                <FitColumn
+                  title="Unknown"
+                  tone="bg-white/10 text-white"
+                  items={[product.unknown || "No material unknown flagged"]}
+                />
               </div>
             </section>
 
-            <section className="mt-5 border-t border-slate-200 pt-5">
-              <div className="grid gap-3 sm:grid-cols-[1fr_220px]">
-                <div className="rounded-xl bg-slate-50 p-4">
-                  <div className="text-xs font-bold">This purchase will be attributed to {profile.label}</div>
-                  <p className="mt-1 text-[11px] leading-5 text-slate-500">
-                    Product views, cart, purchase and outcome can stay attached to the recipient context instead of automatically becoming your own preference history.
-                  </p>
-                  <div className="mt-2 inline-flex rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold text-slate-600">
-                    {memoryMode === "remember"
-                      ? "Remember outcomes for " + profile.label
-                      : memoryMode === "session"
-                        ? "Use only for this purchase"
-                        : "Do not learn from this purchase"}
-                  </div>
-                </div>
-                <button
-                  onClick={onAdd}
-                  disabled={product.price > budget}
-                  className="rounded-xl bg-[#ffd814] px-5 py-4 text-sm font-bold text-slate-900 disabled:opacity-50"
-                >
-                  Add to cart
-                  <span className="mt-1 block text-[10px] font-medium">for {profile.label}</span>
-                </button>
+            <section className="mt-5 rounded-[30px] border border-black/10 bg-[#FBFAF6] p-5">
+              <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+                Same phone, different person
               </div>
+              <div className="mt-3 grid gap-2 sm:grid-cols-4">
+                {compareIds.map((id) => {
+                  const person = profiles[id];
+                  const compareScore = scoreProduct(product, person.weights);
+                  return (
+                    <div
+                      key={id}
+                      className={
+                        "rounded-[20px] border p-3 " +
+                        (id === recipientId ? "border-black bg-[#171816] text-white" : "border-black/10 bg-white")
+                      }
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className={"grid h-6 w-6 place-items-center rounded-full text-[8px] font-bold " + person.avatarStyle}>
+                          {person.initials}
+                        </span>
+                        <span className="text-[10px] font-black">{person.label}</span>
+                      </div>
+                      <div className="mt-3 text-2xl font-black">{compareScore}%</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <SpecBlock label="Battery" value={product.batteryText} />
+              <SpecBlock label="Display" value={product.displayText} />
+              <SpecBlock label="Camera" value={product.cameraText} />
+              <SpecBlock label="Processor" value={product.processorText} />
+              <SpecBlock label="Support" value={product.supportText} />
+              <SpecBlock label="Charging" value={product.chargingText} />
+            </section>
+
+            <section className="mt-5 grid gap-3 sm:grid-cols-[1fr_230px]">
+              <div className="rounded-[26px] border border-black/10 bg-[#FBFAF6] p-4">
+                <div className="flex items-center gap-2 text-xs font-black">
+                  <ShieldCheck className="h-4 w-4" />
+                  What happens to the signal?
+                </div>
+                <p className="mt-2 text-[11px] leading-5 text-black/45">
+                  Views, cart and purchase stay attached to {profile.label}'s lens rather than automatically becoming your own preference history.
+                </p>
+                <div className="mt-3 inline-flex rounded-full bg-[#EEECE5] px-3 py-1.5 text-[10px] font-bold">
+                  {memoryMode === "remember"
+                    ? "Can improve future shopping for " + profile.label
+                    : memoryMode === "session"
+                      ? "Use only for this decision"
+                      : "Do not learn from this purchase"}
+                </div>
+              </div>
+
+              <button
+                onClick={onAdd}
+                className="rounded-[26px] bg-[#DFFD67] px-5 py-5 text-sm font-black"
+              >
+                Add to decision tray
+                <span className="mt-1 block text-[10px] font-semibold opacity-55">
+                  for {profile.label}
+                </span>
+              </button>
             </section>
           </div>
         </div>
@@ -1666,103 +1957,157 @@ function ProductDetail({
   );
 }
 
-function PeopleView({
+function FitColumn({
+  title,
+  tone,
+  items
+}: {
+  title: string;
+  tone: string;
+  items: string[];
+}) {
+  return (
+    <div className="rounded-[22px] bg-white/5 p-3">
+      <div className={"inline-flex rounded-full px-2.5 py-1 text-[9px] font-black " + tone}>
+        {title}
+      </div>
+      <div className="mt-3 space-y-2">
+        {items.length ? (
+          items.map((item) => (
+            <div key={item} className="text-[11px] leading-4 text-white/70">
+              {item}
+            </div>
+          ))
+        ) : (
+          <div className="text-[11px] text-white/35">None flagged</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function SpecBlock({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-[22px] border border-black/10 bg-[#FBFAF6] p-4">
+      <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+        {label}
+      </div>
+      <div className="mt-1 text-sm font-black">{value}</div>
+    </div>
+  );
+}
+
+function LensLibrary({
   recipientId,
   onRecipientChange,
   memoryModes,
   onMemoryMode,
-  onShop
+  onOpenBoard
 }: {
   recipientId: RecipientId;
   onRecipientChange: (id: RecipientId) => void;
   memoryModes: Record<RecipientId, MemoryMode>;
   onMemoryMode: (id: RecipientId, mode: MemoryMode) => void;
-  onShop: () => void;
+  onOpenBoard: () => void;
 }) {
   return (
-    <div className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-800">
-            Profiles & memory
-          </div>
-          <h1 className="mt-1 text-3xl font-bold tracking-[-0.04em]">People you shop for</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-            See what the platform remembers, who each preference belongs to and whether future purchases can update that context.
-          </p>
+    <div className="mx-auto max-w-[1200px] px-4 py-8 sm:px-6">
+      <div className="max-w-3xl">
+        <div className="text-[10px] font-black uppercase tracking-[0.14em] text-black/35">
+          Lens library
         </div>
-        <button className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-xs font-semibold">
-          + Add person or pet
-        </button>
+        <h1 className="mt-2 text-4xl font-black tracking-[-0.05em]">
+          Memory you can see, correct and turn off.
+        </h1>
+        <p className="mt-3 text-sm leading-6 text-black/45">
+          A recipient profile is not a hidden shadow profile. It is a shopper-controlled memory layer that can be edited, made temporary or disabled.
+        </p>
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
+      <div className="mt-7 grid gap-4 md:grid-cols-2">
         {(Object.keys(profiles) as RecipientId[]).map((id) => {
           const profile = profiles[id];
+          const active = id === recipientId;
+
           return (
             <section
               key={id}
               className={
-                "rounded-2xl border bg-white p-5 " +
-                (id === recipientId ? "border-emerald-500 ring-2 ring-emerald-100" : "border-slate-200")
+                "rounded-[30px] border p-5 " +
+                (active
+                  ? "border-[#171816] bg-[#171816] text-white"
+                  : "border-black/10 bg-[#FBFAF6]")
               }
             >
               <div className="flex items-center gap-3">
-                <span className={"grid h-11 w-11 place-items-center rounded-full text-sm font-bold " + profile.color}>
+                <span className={"grid h-11 w-11 place-items-center rounded-full text-xs font-black " + profile.avatarStyle}>
                   {profile.initials}
                 </span>
-                <div className="flex-1">
-                  <div className="text-base font-bold">{profile.label}</div>
-                  <div className="text-[10px] text-slate-400">{profile.relation}</div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-lg font-black">{profile.label}</div>
+                  <div className={active ? "text-[10px] text-white/35" : "text-[10px] text-black/35"}>
+                    {profile.relation}
+                  </div>
                 </div>
-                {profile.temporary ? <Gift className="h-5 w-5 text-amber-600" /> : <User className="h-5 w-5 text-slate-300" />}
+                {profile.temporary ? <Gift className="h-5 w-5 opacity-40" /> : <User className="h-5 w-5 opacity-30" />}
               </div>
 
               {profile.saved.length ? (
-                <>
-                  <div className="mt-4 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                    Remembered preferences
+                <div className="mt-5">
+                  <div className={active ? "text-[9px] font-black uppercase tracking-[0.12em] text-white/30" : "text-[9px] font-black uppercase tracking-[0.12em] text-black/30"}>
+                    Remembered
                   </div>
-                  <div className="mt-2 flex flex-wrap gap-2">
+                  <div className="mt-2 flex flex-wrap gap-1.5">
                     {profile.saved.map((item) => (
-                      <span key={item} className="rounded-full bg-slate-100 px-2.5 py-1.5 text-[10px] font-semibold text-slate-600">
+                      <span
+                        key={item}
+                        className={active ? "rounded-full bg-white/10 px-2.5 py-1 text-[9px] font-bold text-white/65" : "rounded-full bg-[#EEECE5] px-2.5 py-1 text-[9px] font-bold text-black/55"}
+                      >
                         {item}
                       </span>
                     ))}
                   </div>
-                </>
+                </div>
               ) : (
-                <div className="mt-4 rounded-lg bg-amber-50 p-3 text-[11px] leading-5 text-amber-900">
-                  Temporary shopping context. Nothing needs to be permanently stored.
+                <div className={active ? "mt-5 rounded-[18px] bg-white/10 p-3 text-[10px] leading-4 text-white/55" : "mt-5 rounded-[18px] bg-[#FFE7A3] p-3 text-[10px] leading-4 text-[#6A4B00]"}>
+                  No permanent recipient memory. This lens disappears after the decision.
                 </div>
               )}
 
-              <div className="mt-4 rounded-lg border border-slate-200 p-3">
-                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                  Learning control
+              <div className={active ? "mt-5 rounded-[18px] bg-white/10 p-3" : "mt-5 rounded-[18px] border border-black/10 p-3"}>
+                <div className={active ? "text-[9px] font-black uppercase tracking-[0.12em] text-white/30" : "text-[9px] font-black uppercase tracking-[0.12em] text-black/30"}>
+                  Outcome learning
                 </div>
                 <select
                   value={memoryModes[id]}
                   onChange={(event) => onMemoryMode(id, event.target.value as MemoryMode)}
-                  className="mt-2 w-full bg-transparent text-xs font-semibold outline-none"
+                  className={active ? "mt-2 w-full bg-transparent text-xs font-black text-white outline-none" : "mt-2 w-full bg-transparent text-xs font-black outline-none"}
                 >
-                  <option value="remember">Remember useful outcomes</option>
-                  <option value="session">Use only for current purchase</option>
-                  <option value="none">Do not learn from purchases</option>
+                  <option className="text-black" value="remember">Remember useful outcomes</option>
+                  <option className="text-black" value="session">Use only for current decision</option>
+                  <option className="text-black" value="none">Do not learn from purchases</option>
                 </select>
               </div>
 
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">
                 <button
                   onClick={() => {
                     onRecipientChange(id);
-                    onShop();
+                    onOpenBoard();
                   }}
-                  className="flex-1 rounded-lg bg-[#112521] px-3 py-2.5 text-xs font-semibold text-white"
+                  className={
+                    "rounded-[16px] px-3 py-2.5 text-xs font-black " +
+                    (active ? "bg-[#DFFD67] text-[#171816]" : "bg-[#171816] text-white")
+                  }
                 >
-                  Shop for {profile.label}
+                  Open lens
                 </button>
-                <button className="rounded-lg border border-slate-300 px-3 py-2.5 text-xs font-semibold">
+                <button
+                  className={
+                    "rounded-[16px] border px-3 py-2.5 text-xs font-black " +
+                    (active ? "border-white/15" : "border-black/15")
+                  }
+                >
                   Edit
                 </button>
               </div>
@@ -1771,110 +2116,131 @@ function PeopleView({
         })}
       </div>
 
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
-        <div className="flex items-center gap-2 text-sm font-bold">
-          <ShieldCheck className="h-4 w-4" />
-          What this avoids
-        </div>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          <MemoryPrinciple
-            title="Gift ≠ preference"
-            text="A one-time gift can disappear from personalization after the purchase."
-          />
-          <MemoryPrinciple
-            title="Mission ≠ profile"
-            text="A ₹20,000 budget for one phone does not become a permanent assumption about Dad."
-          />
-          <MemoryPrinciple
-            title="Purchase ≠ satisfaction"
-            text="Outcome feedback can update the correct recipient instead of treating every purchase as a preference."
-          />
-        </div>
-      </div>
+      <section className="mt-7 grid gap-3 md:grid-cols-3">
+        <PrincipleCard
+          number="A"
+          title="Gift ≠ preference"
+          text="A one-time gift should not permanently change your profile."
+        />
+        <PrincipleCard
+          number="B"
+          title="Mission ≠ profile"
+          text="One budget or one category should not become a permanent assumption."
+        />
+        <PrincipleCard
+          number="C"
+          title="Purchase ≠ success"
+          text="Outcome feedback is a better learning signal than the purchase alone."
+        />
+      </section>
     </div>
   );
 }
 
-function CartDrawer({
-  cart,
+function DecisionTray({
+  items,
   memoryModes,
   onClose,
   onRemove,
   onReassign,
-  onCheckout
+  onFinish
 }: {
-  cart: CartItem[];
+  items: CartItem[];
   memoryModes: Record<RecipientId, MemoryMode>;
   onClose: () => void;
   onRemove: (index: number) => void;
   onReassign: (index: number, id: RecipientId) => void;
-  onCheckout: () => void;
+  onFinish: () => void;
 }) {
-  const subtotal = cart.reduce((sum, item) => sum + (productById(item.productId)?.price ?? 0), 0);
+  const subtotal = items.reduce(
+    (sum, item) => sum + (productById(item.productId)?.price ?? 0),
+    0
+  );
 
   return (
-    <div className="fixed inset-0 z-[90] flex justify-end bg-black/45" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-[100] flex justify-end bg-[#171816]/50 backdrop-blur-sm" onMouseDown={onClose}>
       <aside
-        className="h-full w-full max-w-md overflow-y-auto bg-white shadow-2xl"
+        className="h-full w-full max-w-lg overflow-y-auto bg-[#F3F1EA] shadow-2xl"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white p-4">
-          <div>
-            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-800">
-              Cart
+        <div className="sticky top-0 z-10 border-b border-black/10 bg-[#F3F1EA]/95 p-5 backdrop-blur">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
+                Decision tray
+              </div>
+              <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
+                {items.length} option{items.length === 1 ? "" : "s"}
+              </h2>
             </div>
-            <h2 className="text-lg font-bold">{cart.length} item{cart.length === 1 ? "" : "s"}</h2>
+            <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
+              <X className="h-4 w-4" />
+            </button>
           </div>
-          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-slate-100" aria-label="Close">
-            <X className="h-4 w-4" />
-          </button>
+          <p className="mt-2 text-xs leading-5 text-black/45">
+            The tray keeps the recipient context attached to each product before purchase.
+          </p>
         </div>
 
-        {cart.length ? (
-          <div className="p-4">
+        {items.length ? (
+          <div className="p-5">
             <div className="space-y-4">
-              {cart.map((item, index) => {
+              {items.map((item, index) => {
                 const product = productById(item.productId);
                 if (!product) return null;
                 const recipient = profiles[item.recipientId];
                 const memoryMode = memoryModes[item.recipientId];
 
                 return (
-                  <div key={item.productId + "-" + index} className="rounded-xl border border-slate-200 p-3">
+                  <div key={item.productId + "-" + index} className="rounded-[28px] border border-black/10 bg-[#FBFAF6] p-4">
                     <div className="flex gap-3">
-                      <img src={product.image} alt="" className="h-24 w-24 rounded-lg bg-slate-50 object-contain" />
+                      <img
+                        src={product.image}
+                        alt=""
+                        className="h-24 w-24 rounded-[18px] bg-[#EEECE5] object-contain"
+                      />
                       <div className="min-w-0 flex-1">
-                        <div className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">{product.brand}</div>
-                        <div className="text-sm font-semibold">{product.name}</div>
-                        <div className="mt-1 text-sm font-bold">{money(product.price)}</div>
-                        <button onClick={() => onRemove(index)} className="mt-2 text-[10px] font-semibold text-rose-600">
+                        <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+                          {product.brand}
+                        </div>
+                        <div className="text-base font-black">{product.name}</div>
+                        <div className="mt-1 text-sm font-black">{money(product.price)}</div>
+                        <button
+                          onClick={() => onRemove(index)}
+                          className="mt-2 text-[10px] font-black text-rose-600"
+                        >
                           Remove
                         </button>
                       </div>
                     </div>
 
-                    <div className="mt-3 grid gap-2 rounded-lg bg-slate-50 p-3">
-                      <label className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-400">
-                        Who is this for?
-                      </label>
-                      <select
-                        value={item.recipientId}
-                        onChange={(event) => onReassign(index, event.target.value as RecipientId)}
-                        className="bg-transparent text-xs font-semibold outline-none"
-                      >
-                        {(Object.keys(profiles) as RecipientId[]).map((id) => (
-                          <option key={id} value={id}>
-                            {profiles[id].label}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="mt-1 flex items-center gap-2 text-[10px] text-slate-500">
-                        <ShieldCheck className="h-3 w-3" />
+                    <div className="mt-4 rounded-[20px] bg-[#EEECE5] p-3">
+                      <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+                        Lens attached to this item
+                      </div>
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className={"grid h-7 w-7 place-items-center rounded-full text-[9px] font-bold " + recipient.avatarStyle}>
+                          {recipient.initials}
+                        </span>
+                        <select
+                          value={item.recipientId}
+                          onChange={(event) => onReassign(index, event.target.value as RecipientId)}
+                          className="min-w-0 flex-1 bg-transparent text-xs font-black outline-none"
+                        >
+                          {(Object.keys(profiles) as RecipientId[]).map((id) => (
+                            <option key={id} value={id}>
+                              {profiles[id].label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="mt-2 flex items-center gap-2 text-[10px] text-black/45">
+                        <ShieldCheck className="h-3.5 w-3.5" />
                         {memoryMode === "remember"
-                          ? "Outcome can update " + recipient.label + "'s profile"
+                          ? "Outcome can update " + recipient.label + "'s lens"
                           : memoryMode === "session"
-                            ? "Use only for this purchase"
-                            : "Do not learn from this item"}
+                            ? "Use only for this decision"
+                            : "Do not learn from this purchase"}
                       </div>
                     </div>
                   </div>
@@ -1882,28 +2248,30 @@ function CartDrawer({
               })}
             </div>
 
-            <div className="mt-5 border-t border-slate-200 pt-4">
-              <div className="flex items-center justify-between text-sm">
-                <span>Subtotal</span>
-                <strong className="text-lg">{money(subtotal)}</strong>
+            <div className="mt-6 rounded-[28px] bg-[#171816] p-5 text-white">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-white/50">Subtotal</span>
+                <strong className="text-2xl">{money(subtotal)}</strong>
               </div>
               <button
-                onClick={onCheckout}
-                className="mt-4 w-full rounded-lg bg-[#ffd814] py-3 text-sm font-bold text-slate-900"
+                onClick={onFinish}
+                className="mt-4 w-full rounded-[18px] bg-[#DFFD67] py-3 text-sm font-black text-[#171816]"
               >
-                Proceed to simulated checkout
+                Simulate purchase
               </button>
-              <p className="mt-2 text-center text-[10px] leading-4 text-slate-400">
-                Payment is skipped. The demo continues to post-purchase outcome learning.
+              <p className="mt-2 text-center text-[10px] leading-4 text-white/35">
+                Payment is skipped. The prototype jumps to the outcome loop.
               </p>
             </div>
           </div>
         ) : (
           <div className="grid min-h-[70vh] place-items-center p-6 text-center">
             <div>
-              <ShoppingCart className="mx-auto h-9 w-9 text-slate-300" />
-              <h3 className="mt-3 text-base font-bold">Your cart is empty</h3>
-              <p className="mt-1 text-xs text-slate-500">Add a phone to see recipient attribution continue into cart.</p>
+              <ShoppingBag className="mx-auto h-8 w-8 text-black/20" />
+              <div className="mt-3 text-lg font-black">Your tray is empty</div>
+              <p className="mt-1 text-xs text-black/40">
+                Add a product from the decision board to carry its lens into the next step.
+              </p>
             </div>
           </div>
         )}
@@ -1912,152 +2280,96 @@ function CartDrawer({
   );
 }
 
-function FeedbackModal({
-  cart,
+function OutcomeLoop({
+  items,
   onClose
 }: {
-  cart: CartItem[];
+  items: CartItem[];
   onClose: () => void;
 }) {
-  const [done, setDone] = useState(false);
-  const item = cart[0];
+  const [state, setState] = useState<"ask" | "saved">("ask");
+  const item = items[0];
   const product = item ? productById(item.productId) : undefined;
   const recipient = item ? profiles[item.recipientId] : undefined;
 
   return (
-    <div className="fixed inset-0 z-[100] grid place-items-center bg-black/50 p-4" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-[110] grid place-items-center bg-[#171816]/55 p-4 backdrop-blur-sm" onMouseDown={onClose}>
       <div
-        className="w-full max-w-lg rounded-2xl bg-white p-5 shadow-2xl"
+        className="w-full max-w-xl rounded-[34px] bg-[#F7F5EE] p-5 shadow-2xl sm:p-6"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start justify-between">
           <div>
-            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-800">
-              After delivery
+            <div className="text-[9px] font-black uppercase tracking-[0.14em] text-black/35">
+              Outcome loop
             </div>
-            <h2 className="mt-1 text-xl font-bold">
-              Did this work for {recipient?.label ?? "the recipient"}?
+            <h2 className="mt-1 text-2xl font-black tracking-[-0.04em]">
+              Did this actually work for {recipient?.label ?? "the recipient"}?
             </h2>
           </div>
-          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-slate-100" aria-label="Close">
+          <button onClick={onClose} className="grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
             <X className="h-4 w-4" />
           </button>
         </div>
 
         {product ? (
-          <div className="mt-4 flex items-center gap-3 rounded-xl border border-slate-200 p-3">
-            <img src={product.image} alt="" className="h-20 w-20 rounded-lg bg-slate-50 object-contain" />
+          <div className="mt-5 flex items-center gap-3 rounded-[22px] border border-black/10 bg-white p-3">
+            <img
+              src={product.image}
+              alt=""
+              className="h-20 w-20 rounded-[16px] bg-[#EEECE5] object-contain"
+            />
             <div>
-              <div className="text-[9px] font-bold uppercase text-slate-400">{product.brand}</div>
-              <div className="text-sm font-semibold">{product.name}</div>
-              <div className="mt-1 text-[10px] text-slate-500">
+              <div className="text-[9px] font-black uppercase tracking-[0.12em] text-black/30">
+                {product.brand}
+              </div>
+              <div className="text-sm font-black">{product.name}</div>
+              <div className="mt-1 text-[10px] text-black/40">
                 Purchased for {recipient?.label}
               </div>
             </div>
           </div>
         ) : null}
 
-        {!done ? (
+        {state === "ask" ? (
           <>
-            <p className="mt-4 text-xs leading-5 text-slate-500">
-              Purchase tells the platform what was chosen. Outcome feedback tells it whether the decision actually worked.
+            <p className="mt-5 text-xs leading-5 text-black/45">
+              Purchase only tells the system what was chosen. Outcome tells it whether the decision was actually good.
             </p>
             <div className="mt-4 grid grid-cols-2 gap-2">
-              <button onClick={() => setDone(true)} className="rounded-lg border border-emerald-300 bg-emerald-50 py-3 text-xs font-semibold text-emerald-900">
+              <button
+                onClick={() => setState("saved")}
+                className="rounded-[18px] bg-[#DFFD67] py-3 text-xs font-black"
+              >
                 Worked well
               </button>
-              <button onClick={() => setDone(true)} className="rounded-lg border border-slate-200 py-3 text-xs font-semibold">
-                Some issues
+              <button
+                onClick={() => setState("saved")}
+                className="rounded-[18px] border border-black/15 py-3 text-xs font-black"
+              >
+                Some trade-offs
               </button>
             </div>
           </>
         ) : (
-          <div className="mt-4 rounded-xl bg-emerald-50 p-4">
-            <div className="flex items-center gap-2 text-sm font-bold text-emerald-900">
+          <div className="mt-5 rounded-[24px] bg-[#E4F4C8] p-4">
+            <div className="flex items-center gap-2 text-sm font-black">
               <Check className="h-4 w-4" />
-              Outcome attached to {recipient?.label}
+              Outcome stored in the right place
             </div>
-            <p className="mt-2 text-xs leading-5 text-emerald-800">
-              This signal can improve future shopping for {recipient?.label} without automatically changing the account holder's own preferences.
+            <p className="mt-2 text-xs leading-5 text-black/55">
+              The signal belongs to {recipient?.label}'s lens, not automatically to the account holder's own profile.
             </p>
           </div>
         )}
 
-        <button onClick={onClose} className="mt-5 w-full rounded-lg bg-[#112521] py-3 text-sm font-semibold text-white">
-          Close
+        <button
+          onClick={onClose}
+          className="mt-5 w-full rounded-[18px] bg-[#171816] py-3 text-sm font-black text-white"
+        >
+          Finish
         </button>
       </div>
     </div>
-  );
-}
-
-function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="border-b border-slate-100 p-4">
-      <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">{title}</div>
-      <div className="mt-2 space-y-2">{children}</div>
-    </div>
-  );
-}
-
-function FilterCheck({
-  label,
-  checked = false
-}: {
-  label: string;
-  checked?: boolean;
-}) {
-  return (
-    <label className="flex items-center gap-2 text-xs text-slate-600">
-      <input type="checkbox" checked={checked} readOnly className="h-3.5 w-3.5 accent-emerald-700" />
-      {label}
-    </label>
-  );
-}
-
-function SpecLine({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <span className="text-slate-400">{label}: </span>
-      <span className="font-medium text-slate-700">{value}</span>
-    </div>
-  );
-}
-
-function PdpSpec({
-  icon,
-  label,
-  value
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="rounded-xl border border-slate-200 p-3">
-      <div className="flex items-center gap-2 text-slate-400">
-        {icon}
-        <span className="text-[9px] font-bold uppercase tracking-[0.1em]">{label}</span>
-      </div>
-      <div className="mt-2 text-sm font-semibold">{value}</div>
-    </div>
-  );
-}
-
-function MemoryPrinciple({ title, text }: { title: string; text: string }) {
-  return (
-    <div className="rounded-xl bg-slate-50 p-4">
-      <div className="text-xs font-bold">{title}</div>
-      <p className="mt-2 text-[11px] leading-5 text-slate-500">{text}</p>
-    </div>
-  );
-}
-
-function SmartphoneIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="5" y="2" width="14" height="20" rx="2" />
-      <path d="M12 18h.01" />
-    </svg>
   );
 }
