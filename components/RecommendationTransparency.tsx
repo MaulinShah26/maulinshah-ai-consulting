@@ -500,51 +500,51 @@ function WhyPanel({ product, preferences, onClose, onAdd }: { product: Product; 
   const fit = getFit(product, preferences);
   const logic = product.badge ? labelLogic[product.badge] : null;
   return (
-    <Modal onClose={onClose} maxWidth="max-w-lg">
-      <div className="flex items-start justify-between gap-4 border-b border-slate-200 p-4 sm:p-5">
-        <div><div className="text-[9px] font-bold uppercase tracking-[0.15em] text-violet-700">Recommendation details</div><h2 className="mt-1 text-lg font-semibold tracking-[-0.03em]">Why {product.name} appears here</h2><p className="mt-1 text-[11px] text-slate-500">Placement, label and fit are different signals.</p></div>
+    <Modal onClose={onClose} maxWidth="max-w-md">
+      <div className="flex items-start justify-between gap-4 border-b border-slate-200 p-3.5 sm:p-4">
+        <div><div className="text-[8px] font-bold uppercase tracking-[0.15em] text-violet-700">Recommendation details</div><h2 className="mt-1 text-base font-semibold tracking-[-0.03em]">Why {product.name} appears here</h2><p className="mt-0.5 text-[10px] text-slate-500">Placement, label and fit are separate signals.</p></div>
         <CloseButton onClick={onClose} />
       </div>
-      <div className="max-h-[68vh] overflow-y-auto p-4 sm:p-5">
-        <div className="grid grid-cols-3 gap-2">
-          <div className="rounded-xl bg-slate-50 px-3 py-2"><div className="text-[8px] font-bold uppercase tracking-[0.1em] text-slate-400">Label</div><div className="mt-0.5 truncate text-[11px] font-semibold">{product.badge ?? "No label"}</div></div>
-          <div className={`rounded-xl px-3 py-2 ${product.sponsored ? "bg-amber-50 text-amber-900" : "bg-emerald-50 text-emerald-900"}`}><div className="text-[8px] font-bold uppercase tracking-[0.1em] opacity-60">Placement</div><div className="mt-0.5 text-[11px] font-semibold">{product.sponsored ? "Sponsored" : "Organic"}</div></div>
-          <div className="rounded-xl bg-violet-50 px-3 py-2 text-violet-900"><div className="text-[8px] font-bold uppercase tracking-[0.1em] opacity-60">Your fit</div><div className="mt-0.5 text-[11px] font-semibold">{fit.checks.length ? `${fit.matches.length}/${fit.checks.length} needs` : "Not set"}</div></div>
+      <div className="max-h-[62vh] overflow-y-auto p-3.5 sm:p-4">
+        <div className="grid grid-cols-3 gap-1.5">
+          <div className="rounded-lg bg-slate-50 px-2.5 py-1.5"><div className="text-[7px] font-bold uppercase tracking-[0.1em] text-slate-400">Label</div><div className="mt-0.5 truncate text-[10px] font-semibold">{product.badge ?? "No label"}</div></div>
+          <div className={`rounded-lg px-2.5 py-1.5 ${product.sponsored ? "bg-amber-50 text-amber-900" : "bg-emerald-50 text-emerald-900"}`}><div className="text-[7px] font-bold uppercase tracking-[0.1em] opacity-60">Placement</div><div className="mt-0.5 text-[10px] font-semibold">{product.sponsored ? "Sponsored" : "Organic"}</div></div>
+          <div className="rounded-lg bg-violet-50 px-2.5 py-1.5 text-violet-900"><div className="text-[7px] font-bold uppercase tracking-[0.1em] opacity-60">Your fit</div><div className="mt-0.5 text-[10px] font-semibold">{fit.checks.length ? `${fit.matches.length}/${fit.checks.length} needs` : "Not set"}</div></div>
         </div>
 
         {logic && product.badge ? (
-          <section className="mt-3 rounded-xl border border-slate-200 p-3.5">
-            <div className="flex items-center gap-2"><span className={`rounded-full border px-2 py-1 text-[8px] font-bold ${badgeStyle(product.badge)}`}>{product.badge}</span><h3 className="text-xs font-semibold">What the label means</h3></div>
-            <p className="mt-2 text-[11px] leading-5 text-slate-600">{logic.means}</p>
-            <dl className="mt-3 divide-y divide-slate-100 rounded-lg bg-slate-50 px-3 text-[10px] leading-4 text-slate-600">
-              <div className="grid grid-cols-[88px_1fr] gap-2 py-2"><dt className="font-semibold text-slate-900">Optimized for</dt><dd>{logic.optimizedFor}</dd></div>
-              <div className="grid grid-cols-[88px_1fr] gap-2 py-2"><dt className="font-semibold text-slate-900">Shaped by</dt><dd>{logic.canBeDistortedBy}</dd></div>
-              <div className="grid grid-cols-[88px_1fr] gap-2 py-2"><dt className="font-semibold text-slate-900">Does not mean</dt><dd>{logic.doesNotMean}</dd></div>
+          <section className="mt-2 rounded-xl border border-slate-200 p-3">
+            <div className="flex items-center gap-2"><span className={`rounded-full border px-2 py-0.5 text-[7px] font-bold ${badgeStyle(product.badge)}`}>{product.badge}</span><h3 className="text-[11px] font-semibold">What the label means</h3></div>
+            <p className="mt-1.5 text-[10px] leading-4 text-slate-600">{logic.means}</p>
+            <dl className="mt-2 divide-y divide-slate-100 rounded-lg bg-slate-50 px-2.5 text-[9px] leading-3.5 text-slate-600">
+              <div className="grid grid-cols-[74px_1fr] gap-2 py-1.5"><dt className="font-semibold text-slate-900">Optimized for</dt><dd>{logic.optimizedFor}</dd></div>
+              <div className="grid grid-cols-[74px_1fr] gap-2 py-1.5"><dt className="font-semibold text-slate-900">Shaped by</dt><dd>{logic.canBeDistortedBy}</dd></div>
+              <div className="grid grid-cols-[74px_1fr] gap-2 py-1.5"><dt className="font-semibold text-slate-900">Does not mean</dt><dd>{logic.doesNotMean}</dd></div>
             </dl>
           </section>
         ) : (
-          <section className="mt-3 rounded-xl border border-slate-200 p-3.5">
-            <h3 className="text-xs font-semibold">Why there is no label</h3>
-            <p className="mt-1.5 text-[11px] leading-5 text-slate-600">This is a regular catalogue result. It has no marketplace claim attached, but its position is still shaped by the selected ranking mode.</p>
+          <section className="mt-2 rounded-xl border border-slate-200 p-3">
+            <h3 className="text-[11px] font-semibold">Why there is no label</h3>
+            <p className="mt-1 text-[10px] leading-4 text-slate-600">This is a regular catalogue result. It has no marketplace claim attached, but its position is still shaped by the selected ranking mode.</p>
           </section>
         )}
 
-        <section className="mt-3 rounded-xl border border-slate-200 p-3.5">
-          <div className="flex items-center justify-between gap-3"><h3 className="text-xs font-semibold">Fit with your needs</h3><span className="text-[10px] font-bold text-emerald-700">{fit.score}% fit</span></div>
-          <div className="mt-2.5 flex flex-wrap gap-1.5">
-            {fit.matches.map((item) => <span key={item.label} className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[9px] font-medium text-emerald-800"><Check className="h-3 w-3" />{item.label}</span>)}
-            {fit.misses.map((item) => <span key={item.label} className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 text-[9px] font-medium text-amber-900"><AlertTriangle className="h-3 w-3" />{item.label}</span>)}
+        <section className="mt-2 rounded-xl border border-slate-200 p-3">
+          <div className="flex items-center justify-between gap-3"><h3 className="text-[11px] font-semibold">Fit with your needs</h3><span className="text-[9px] font-bold text-emerald-700">{fit.score}% fit</span></div>
+          <div className="mt-1.5 flex flex-wrap gap-1">
+            {fit.matches.map((item) => <span key={item.label} className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[8px] font-medium text-emerald-800"><Check className="h-2.5 w-2.5" />{item.label}</span>)}
+            {fit.misses.map((item) => <span key={item.label} className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[8px] font-medium text-amber-900"><AlertTriangle className="h-2.5 w-2.5" />{item.label}</span>)}
             {!fit.checks.length ? <span className="text-[10px] text-slate-500">Add your needs to see a product-level fit comparison.</span> : null}
           </div>
         </section>
 
-        <section className={`mt-3 rounded-xl border p-3.5 ${product.sponsored ? "border-amber-200 bg-amber-50/70" : "border-emerald-200 bg-emerald-50/70"}`}>
-          <h3 className="text-xs font-semibold">Why it was placed here</h3>
-          <p className="mt-1.5 text-[10px] leading-4 text-slate-700">{product.sponsored ? "The seller paid for visibility. Payment helped it enter a prominent slot, but does not make it your best match." : "No payment influenced its position. The selected ranking mode and the product data determined where it appeared."}</p>
-          <div className="mt-2.5 space-y-1.5">{product.recommendationMix.map((item) => <div key={item} className="flex items-start gap-2 text-[10px] leading-4 text-slate-600"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />{item}</div>)}</div>
+        <section className={`mt-2 rounded-xl border p-3 ${product.sponsored ? "border-amber-200 bg-amber-50/70" : "border-emerald-200 bg-emerald-50/70"}`}>
+          <h3 className="text-[11px] font-semibold">Why it was placed here</h3>
+          <p className="mt-1 text-[9px] leading-3.5 text-slate-700">{product.sponsored ? "The seller paid for visibility. Payment helped it enter a prominent slot, but does not make it your best match." : "No payment influenced its position. The selected ranking mode and product data determined where it appeared."}</p>
+          <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">{product.recommendationMix.map((item) => <div key={item} className="flex items-center gap-1.5 text-[8px] leading-3.5 text-slate-600"><span className="h-1 w-1 shrink-0 rounded-full bg-slate-400" />{item}</div>)}</div>
         </section>
       </div>
-      <div className="flex gap-2 border-t border-slate-200 p-3.5 sm:justify-end"><button onClick={onClose} className="flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-[11px] font-semibold sm:flex-none">Keep browsing</button><button onClick={onAdd} className="flex-1 rounded-xl bg-[#17211f] px-4 py-2.5 text-[11px] font-semibold text-white sm:flex-none">Add to bag · {money(product.price)}</button></div>
+      <div className="flex gap-2 border-t border-slate-200 p-3 sm:justify-end"><button onClick={onClose} className="flex-1 rounded-lg border border-slate-200 px-3.5 py-2 text-[10px] font-semibold sm:flex-none">Keep browsing</button><button onClick={onAdd} className="flex-1 rounded-lg bg-[#17211f] px-3.5 py-2 text-[10px] font-semibold text-white sm:flex-none">Add to bag · {money(product.price)}</button></div>
     </Modal>
   );
 }
