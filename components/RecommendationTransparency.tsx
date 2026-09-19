@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   AlertTriangle,
   Check,
+  ChevronDown,
   Heart,
   Minus,
   Plus,
@@ -227,6 +228,7 @@ export default function RecommendationTransparency() {
   const [saved, setSaved] = useState<string[]>([]);
   const [savedOnly, setSavedOnly] = useState(false);
   const [bag, setBag] = useState<string[]>([]);
+  const [expandedReasonId, setExpandedReasonId] = useState<string | null>(null);
   const [reasonId, setReasonId] = useState<string | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
   const [showNeeds, setShowNeeds] = useState(false);
@@ -398,10 +400,10 @@ export default function RecommendationTransparency() {
           </div>
 
           {visibleProducts.length > 0 ? (
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" data-testid="product-grid">
+            <div className="grid items-start gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" data-testid="product-grid">
               {visibleProducts.map((product, index) => {
                 const fit = getFit(product, preferences);
-                return <ProductCard key={product.id} product={product} index={index} fit={fit} saved={saved.includes(product.id)} onSave={() => toggleSaved(product.id)} onWhy={() => setReasonId(product.id)} onDetails={() => setDetailId(product.id)} onAdd={() => addToBag(product)} />;
+                return <ProductCard key={product.id} product={product} index={index} fit={fit} saved={saved.includes(product.id)} expanded={expandedReasonId === product.id} onSave={() => toggleSaved(product.id)} onToggleWhy={() => setExpandedReasonId((current) => current === product.id ? null : product.id)} onMore={() => setReasonId(product.id)} onDetails={() => setDetailId(product.id)} onAdd={() => addToBag(product)} />;
               })}
             </div>
           ) : (
@@ -436,10 +438,13 @@ export default function RecommendationTransparency() {
   );
 }
 
-function ProductCard({ product, index, fit, saved, onSave, onWhy, onDetails, onAdd }: { product: Product; index: number; fit: ReturnType<typeof getFit>; saved: boolean; onSave: () => void; onWhy: () => void; onDetails: () => void; onAdd: () => void }) {
+function ProductCard({ product, index, fit, saved, expanded, onSave, onToggleWhy, onMore, onDetails, onAdd }: { product: Product; index: number; fit: ReturnType<typeof getFit>; saved: boolean; expanded: boolean; onSave: () => void; onToggleWhy: () => void; onMore: () => void; onDetails: () => void; onAdd: () => void }) {
   const discount = Math.round((1 - product.price / product.mrp) * 100);
+  const matchSummary = fit.checks.length ? (fit.matches.length ? fit.matches.slice(0, 3).map((item) => item.label).join(", ") : "None of your current needs") : "No needs set";
+  const missSummary = fit.checks.length ? (fit.misses.length ? fit.misses.slice(0, 2).map((item) => item.label).join(", ") : "No declared needs missed") : "Add needs to compare product fit";
+  const mainReason = product.sponsored ? "Promoted placement that passed a relevance check" : product.recommendationMix[0];
   return (
-    <article className="group flex min-h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_16px_40px_rgba(23,33,31,0.08)]">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_16px_40px_rgba(23,33,31,0.08)]">
       <div className="relative aspect-square overflow-hidden bg-slate-100">
         <CatalogueProductImage product={product} priority={index < 4} />
         {product.badge ? <span className={`absolute left-3 top-3 rounded-full border px-2.5 py-1.5 text-[9px] font-bold shadow-sm ${badgeStyle(product.badge)}`}>{product.badge}</span> : null}
@@ -453,11 +458,25 @@ function ProductCard({ product, index, fit, saved, onSave, onWhy, onDetails, onA
         <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="text-lg font-bold tracking-[-0.03em]">{money(product.price)}</span><span className="text-[10px] text-slate-400 line-through">{money(product.mrp)}</span><span className="text-[10px] font-semibold text-emerald-700">{discount}% off</span></div>
         <div className="mt-1 text-[10px] text-slate-500">Free delivery · {product.delivery}</div>
         <div className="mt-3 flex flex-wrap gap-1.5 text-[9px] text-slate-600"><Feature>{product.battery}h battery</Feature>{product.ancScore >= 4 ? <Feature>Strong ANC</Feature> : null}{product.multipoint ? <Feature>Multipoint</Feature> : null}{product.lowLatency ? <Feature>Low latency</Feature> : null}</div>
-        <button onClick={onWhy} aria-label={product.badge ? `Explain ${product.badge} label for ${product.name}` : `Explain why ${product.name} appears`} className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-violet-200 bg-violet-50 px-3 py-2.5 text-left transition hover:border-violet-400 hover:bg-violet-100">
-          <span><span className="block text-[10px] font-bold text-violet-900">{product.badge ? `Explain ${product.badge}` : "Why this result?"}</span><span className="mt-0.5 block text-[9px] text-violet-700">{product.sponsored ? "Paid placement" : "Organic result"} · {fit.checks.length ? `${fit.matches.length}/${fit.checks.length} needs matched` : "No needs set"}</span></span>
-          <span className="text-sm text-violet-700" aria-hidden="true">→</span>
-        </button>
-        <div className="mt-auto grid grid-cols-2 gap-2 pt-4"><button onClick={onDetails} className="rounded-xl border border-slate-200 py-2.5 text-[10px] font-semibold text-slate-700 transition hover:border-slate-400">View details</button><button onClick={onAdd} className="rounded-xl bg-[#17211f] py-2.5 text-[10px] font-semibold text-white transition hover:bg-violet-800">Add to bag</button></div>
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <button onClick={onAdd} className="rounded-xl bg-[#17211f] py-2.5 text-[10px] font-semibold text-white transition hover:bg-violet-800">Add to bag</button>
+          <button onClick={onToggleWhy} aria-expanded={expanded} aria-controls={`why-summary-${product.id}`} className={`flex items-center justify-center gap-1.5 rounded-xl border py-2.5 text-[10px] font-semibold transition ${expanded ? "border-violet-300 bg-violet-50 text-violet-800" : "border-slate-200 text-slate-700 hover:border-violet-300 hover:text-violet-800"}`}>Why this?<ChevronDown className={`h-3.5 w-3.5 transition ${expanded ? "rotate-180" : ""}`} /></button>
+        </div>
+
+        {expanded ? (
+          <div id={`why-summary-${product.id}`} className={`mt-2 rounded-xl border p-3 ${product.sponsored ? "border-amber-200 bg-amber-50/80" : "border-emerald-200 bg-emerald-50/70"}`}>
+            <div className="flex items-center justify-between gap-3"><div className="text-[10px] font-bold text-slate-900">Why this result?</div><div className="text-[9px] font-semibold text-slate-500">{fit.score}% fit</div></div>
+            <div className="mt-2 divide-y divide-slate-200/80 text-[10px] leading-4 text-slate-700">
+              <div className="flex gap-2 py-1.5"><span className={`mt-1 h-2 w-2 shrink-0 rounded-full ${product.sponsored ? "bg-amber-500" : "bg-emerald-500"}`} /><span><strong className="text-slate-900">Placement:</strong> {product.sponsored ? "Sponsored" : "Organic"}</span></div>
+              <div className="flex gap-2 py-1.5"><Star className="mt-0.5 h-3 w-3 shrink-0 fill-violet-500 text-violet-500" /><span><strong className="text-slate-900">Main reason:</strong> {mainReason}</span></div>
+              <div className="flex gap-2 py-1.5"><Check className="mt-0.5 h-3 w-3 shrink-0 text-emerald-600" /><span><strong className="text-slate-900">Matches:</strong> {matchSummary}</span></div>
+              <div className="flex gap-2 py-1.5"><AlertTriangle className="mt-0.5 h-3 w-3 shrink-0 text-amber-600" /><span><strong className="text-slate-900">Does not match:</strong> {missSummary}</span></div>
+            </div>
+            <button onClick={onMore} className="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-violet-700 hover:text-violet-900">Check for more <span aria-hidden="true">→</span></button>
+          </div>
+        ) : null}
+
+        <button onClick={onDetails} className="mt-2 w-full py-1 text-[9px] font-semibold text-slate-500 transition hover:text-slate-900">View product details</button>
       </div>
     </article>
   );
@@ -481,56 +500,51 @@ function WhyPanel({ product, preferences, onClose, onAdd }: { product: Product; 
   const fit = getFit(product, preferences);
   const logic = product.badge ? labelLogic[product.badge] : null;
   return (
-    <Modal onClose={onClose} maxWidth="max-w-3xl">
-      <div className="flex items-start justify-between gap-4 border-b border-slate-200 p-5 sm:p-6">
-        <div><div className="text-[10px] font-bold uppercase tracking-[0.15em] text-violet-700">Why you are seeing this</div><h2 className="mt-1 text-xl font-semibold tracking-[-0.03em] sm:text-2xl">{product.brand} {product.name}</h2><p className="mt-1 text-xs text-slate-500">The badge, placement and fit are separate signals. A product may appear without a badge.</p></div>
+    <Modal onClose={onClose} maxWidth="max-w-md">
+      <div className="flex items-start justify-between gap-4 border-b border-slate-200 p-3.5 sm:p-4">
+        <div><div className="text-[8px] font-bold uppercase tracking-[0.15em] text-violet-700">Recommendation details</div><h2 className="mt-1 text-base font-semibold tracking-[-0.03em]">Why {product.name} appears here</h2><p className="mt-0.5 text-[10px] text-slate-500">Placement, label and fit are separate signals.</p></div>
         <CloseButton onClick={onClose} />
       </div>
-      <div className="max-h-[78vh] overflow-y-auto p-5 sm:p-6">
-        <div className="grid gap-3 sm:grid-cols-3">
-          <SignalCard label="Badge" value={product.badge ?? "No badge"} tone={product.sponsored ? "amber" : product.badge ? "violet" : "slate"} />
-          <SignalCard label="Placement" value={product.sponsored ? "Paid" : "Organic"} tone={product.sponsored ? "amber" : "green"} />
-          <SignalCard label="Your fit" value={`${fit.matches.length} of ${fit.checks.length} needs`} tone={fit.misses.length <= 1 ? "green" : "slate"} />
+      <div className="max-h-[62vh] overflow-y-auto p-3.5 sm:p-4">
+        <div className="grid grid-cols-3 gap-1.5">
+          <div className="rounded-lg bg-slate-50 px-2.5 py-1.5"><div className="text-[7px] font-bold uppercase tracking-[0.1em] text-slate-400">Label</div><div className="mt-0.5 truncate text-[10px] font-semibold">{product.badge ?? "No label"}</div></div>
+          <div className={`rounded-lg px-2.5 py-1.5 ${product.sponsored ? "bg-amber-50 text-amber-900" : "bg-emerald-50 text-emerald-900"}`}><div className="text-[7px] font-bold uppercase tracking-[0.1em] opacity-60">Placement</div><div className="mt-0.5 text-[10px] font-semibold">{product.sponsored ? "Sponsored" : "Organic"}</div></div>
+          <div className="rounded-lg bg-violet-50 px-2.5 py-1.5 text-violet-900"><div className="text-[7px] font-bold uppercase tracking-[0.1em] opacity-60">Your fit</div><div className="mt-0.5 text-[10px] font-semibold">{fit.checks.length ? `${fit.matches.length}/${fit.checks.length} needs` : "Not set"}</div></div>
         </div>
 
         {logic && product.badge ? (
-          <section className="mt-5 rounded-2xl border border-slate-200 p-4">
-            <div className="flex items-center gap-2"><span className={`rounded-full border px-2.5 py-1 text-[9px] font-bold ${badgeStyle(product.badge)}`}>{product.badge}</span><h3 className="text-sm font-semibold">What this badge actually means</h3></div>
-            <p className="mt-3 text-sm leading-6 text-slate-600">{logic.means}</p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <ExplanationBlock label="Optimized for" text={logic.optimizedFor} />
-              <ExplanationBlock label="What can shape it" text={logic.canBeDistortedBy} warning />
-            </div>
-            <div className="mt-3 rounded-xl bg-slate-100 px-3 py-2.5 text-[11px] text-slate-600"><strong className="text-slate-900">It does not mean:</strong> {logic.doesNotMean}</div>
+          <section className="mt-2 rounded-xl border border-slate-200 p-3">
+            <div className="flex items-center gap-2"><span className={`rounded-full border px-2 py-0.5 text-[7px] font-bold ${badgeStyle(product.badge)}`}>{product.badge}</span><h3 className="text-[11px] font-semibold">What the label means</h3></div>
+            <p className="mt-1.5 text-[10px] leading-4 text-slate-600">{logic.means}</p>
+            <dl className="mt-2 divide-y divide-slate-100 rounded-lg bg-slate-50 px-2.5 text-[9px] leading-3.5 text-slate-600">
+              <div className="grid grid-cols-[74px_1fr] gap-2 py-1.5"><dt className="font-semibold text-slate-900">Optimized for</dt><dd>{logic.optimizedFor}</dd></div>
+              <div className="grid grid-cols-[74px_1fr] gap-2 py-1.5"><dt className="font-semibold text-slate-900">Shaped by</dt><dd>{logic.canBeDistortedBy}</dd></div>
+              <div className="grid grid-cols-[74px_1fr] gap-2 py-1.5"><dt className="font-semibold text-slate-900">Does not mean</dt><dd>{logic.doesNotMean}</dd></div>
+            </dl>
           </section>
         ) : (
-          <section className="mt-5 rounded-2xl border border-slate-200 p-4">
-            <h3 className="text-sm font-semibold">Why there is no badge</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-600">This is a regular catalogue result. It has no “Best Seller,” “Top Rated” or other marketplace claim attached to it, but its position is still shaped by the ranking mode you selected.</p>
+          <section className="mt-2 rounded-xl border border-slate-200 p-3">
+            <h3 className="text-[11px] font-semibold">Why there is no label</h3>
+            <p className="mt-1 text-[10px] leading-4 text-slate-600">This is a regular catalogue result. It has no marketplace claim attached, but its position is still shaped by the selected ranking mode.</p>
           </section>
         )}
 
-        <section className="mt-4 rounded-2xl border border-slate-200 p-4">
-          <div className="flex items-center justify-between gap-3"><h3 className="text-sm font-semibold">How it fits your needs</h3><span className="text-xs font-bold text-emerald-700">{fit.score}% fit score</span></div>
-          <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-emerald-500" style={{ width: `${fit.score}%` }} /></div>
-          <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            {fit.matches.map((item) => <div key={item.label} className="flex items-center gap-2 rounded-xl bg-emerald-50 px-3 py-2 text-[11px] font-medium text-emerald-800"><Check className="h-3.5 w-3.5" /> {item.label}</div>)}
-            {fit.misses.map((item) => <div key={item.label} className="flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-[11px] font-medium text-amber-900"><AlertTriangle className="h-3.5 w-3.5" /> Misses {item.label.toLowerCase()}</div>)}
+        <section className="mt-2 rounded-xl border border-slate-200 p-3">
+          <div className="flex items-center justify-between gap-3"><h3 className="text-[11px] font-semibold">Fit with your needs</h3><span className="text-[9px] font-bold text-emerald-700">{fit.score}% fit</span></div>
+          <div className="mt-1.5 flex flex-wrap gap-1">
+            {fit.matches.map((item) => <span key={item.label} className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[8px] font-medium text-emerald-800"><Check className="h-2.5 w-2.5" />{item.label}</span>)}
+            {fit.misses.map((item) => <span key={item.label} className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[8px] font-medium text-amber-900"><AlertTriangle className="h-2.5 w-2.5" />{item.label}</span>)}
+            {!fit.checks.length ? <span className="text-[10px] text-slate-500">Add your needs to see a product-level fit comparison.</span> : null}
           </div>
         </section>
 
-        <section className={`mt-4 rounded-2xl border p-4 ${product.sponsored ? "border-amber-200 bg-amber-50" : "border-emerald-200 bg-emerald-50"}`}>
-          <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">Placement disclosure</div>
-          <p className="mt-1.5 text-sm leading-6 text-slate-700">{product.sponsored ? "The seller paid for promotional visibility. Payment helped this product enter a prominent slot; it did not make the product your best match." : "No payment influenced this product's position. Its place comes from the ranking mode you selected and the product data shown here."}</p>
+        <section className={`mt-2 rounded-xl border p-3 ${product.sponsored ? "border-amber-200 bg-amber-50/70" : "border-emerald-200 bg-emerald-50/70"}`}>
+          <h3 className="text-[11px] font-semibold">Why it was placed here</h3>
+          <p className="mt-1 text-[9px] leading-3.5 text-slate-700">{product.sponsored ? "The seller paid for visibility. Payment helped it enter a prominent slot, but does not make it your best match." : "No payment influenced its position. The selected ranking mode and product data determined where it appeared."}</p>
+          <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">{product.recommendationMix.map((item) => <div key={item} className="flex items-center gap-1.5 text-[8px] leading-3.5 text-slate-600"><span className="h-1 w-1 shrink-0 rounded-full bg-slate-400" />{item}</div>)}</div>
         </section>
-
-        <section className="mt-4">
-          <h3 className="text-sm font-semibold">Signals used for this product</h3>
-          <div className="mt-2 space-y-2">{product.recommendationMix.map((item, index) => <div key={item} className="flex items-center gap-3 rounded-xl border border-slate-200 px-3 py-2.5 text-[11px] text-slate-600"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-slate-100 text-[9px] font-bold text-slate-700">{index + 1}</span>{item}</div>)}</div>
-        </section>
-
-        <div className="mt-6 flex flex-col-reverse gap-2 border-t border-slate-200 pt-5 sm:flex-row sm:justify-end"><button onClick={onClose} className="rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-semibold">Keep browsing</button><button onClick={onAdd} className="rounded-xl bg-[#17211f] px-4 py-2.5 text-xs font-semibold text-white">Add to bag · {money(product.price)}</button></div>
       </div>
+      <div className="flex gap-2 border-t border-slate-200 p-3 sm:justify-end"><button onClick={onClose} className="flex-1 rounded-lg border border-slate-200 px-3.5 py-2 text-[10px] font-semibold sm:flex-none">Keep browsing</button><button onClick={onAdd} className="flex-1 rounded-lg bg-[#17211f] px-3.5 py-2 text-[10px] font-semibold text-white sm:flex-none">Add to bag · {money(product.price)}</button></div>
     </Modal>
   );
 }
@@ -547,7 +561,7 @@ function ProductDetails({ product, preferences, saved, onClose, onSave, onWhy, o
           <div className="mt-3 flex items-center gap-2 text-xs text-slate-500"><span className="flex items-center gap-1 font-semibold text-slate-900"><Star className="h-4 w-4 fill-amber-400 text-amber-400" /> {product.rating}</span><span>{product.reviews.toLocaleString("en-IN")} reviews</span><span>·</span><span>{product.sold.toLocaleString("en-IN")} bought</span></div>
           <div className="mt-3 flex items-baseline gap-2"><span className="text-2xl font-bold">{money(product.price)}</span><span className="text-sm text-slate-400 line-through">{money(product.mrp)}</span></div>
           <p className="mt-1 text-xs text-slate-500">Free delivery · {product.delivery} · 7-day returns</p>
-          <button onClick={onWhy} className="mt-5 w-full rounded-2xl border border-violet-200 bg-violet-50 p-4 text-left hover:border-violet-400"><div className="flex items-center justify-between"><span className="text-xs font-bold text-violet-900">{product.badge ? `Explain ${product.badge}` : "Why this product appears here"}</span><span className="text-violet-700">→</span></div><div className="mt-1 text-[11px] leading-5 text-violet-700">{product.sponsored ? "Paid placement with a relevance check." : "Organic placement based on the selected ranking."} Matches {fit.matches.length} of {fit.checks.length} of your needs.</div></button>
+          <button onClick={onWhy} className="mt-5 w-full rounded-xl border border-violet-200 bg-violet-50 p-3 text-left hover:border-violet-400"><div className="flex items-center justify-between"><span className="text-[11px] font-bold text-violet-900">Why this?</span><span className="text-violet-700">→</span></div><div className="mt-1 text-[10px] leading-4 text-violet-700">{product.sponsored ? "Sponsored placement" : "Organic placement"} · {fit.checks.length ? `${fit.matches.length}/${fit.checks.length} needs matched` : "No needs set"}</div></button>
           <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3"><Spec label="Call quality" value={`${product.callScore}/5`} /><Spec label="Noise cancelling" value={`${product.ancScore}/5`} /><Spec label="Battery" value={`${product.battery} hours`} /><Spec label="Multipoint" value={product.multipoint ? "Yes" : "No"} /><Spec label="Low latency" value={product.lowLatency ? "Yes" : "No"} /><Spec label="Water resistance" value={product.waterResistance} /></div>
           <div className="mt-5 rounded-2xl bg-slate-50 p-4"><div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Other marketplace signals</div><div className="mt-3 grid grid-cols-2 gap-3 text-xs"><div><div className="text-slate-400">Return rate</div><div className="mt-1 font-semibold">{product.returnRate}%</div></div><div><div className="text-slate-400">Seller score</div><div className="mt-1 font-semibold">{product.sellerScore}/100</div></div></div></div>
           <div className="mt-6 grid grid-cols-[auto_1fr] gap-2"><button onClick={onSave} aria-label={saved ? "Remove from saved" : "Save product"} className={`grid h-12 w-12 place-items-center rounded-xl border ${saved ? "border-rose-200 bg-rose-50 text-rose-600" : "border-slate-200"}`}><Heart className={`h-5 w-5 ${saved ? "fill-current" : ""}`} /></button><button onClick={onAdd} className="rounded-xl bg-[#17211f] text-sm font-semibold text-white">Add to bag</button></div>
@@ -662,15 +676,6 @@ function PriorityChip({ children, onRemove, removeLabel }: { children: React.Rea
 
 function Feature({ children }: { children: React.ReactNode }) {
   return <span className="rounded-full bg-slate-100 px-2 py-1">{children}</span>;
-}
-
-function SignalCard({ label, value, tone }: { label: string; value: string; tone: "amber" | "violet" | "green" | "slate" }) {
-  const styles = { amber: "border-amber-200 bg-amber-50 text-amber-900", violet: "border-violet-200 bg-violet-50 text-violet-900", green: "border-emerald-200 bg-emerald-50 text-emerald-900", slate: "border-slate-200 bg-slate-50 text-slate-900" };
-  return <div className={`rounded-2xl border p-3 ${styles[tone]}`}><div className="text-[9px] font-bold uppercase tracking-[0.12em] opacity-60">{label}</div><div className="mt-1 text-sm font-semibold">{value}</div></div>;
-}
-
-function ExplanationBlock({ label, text, warning = false }: { label: string; text: string; warning?: boolean }) {
-  return <div className={`rounded-xl p-3 ${warning ? "bg-amber-50" : "bg-slate-50"}`}><div className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">{warning ? <AlertTriangle className="h-3 w-3 text-amber-600" /> : null}{label}</div><p className="mt-1.5 text-[11px] leading-5 text-slate-700">{text}</p></div>;
 }
 
 function Spec({ label, value }: { label: string; value: string }) {
