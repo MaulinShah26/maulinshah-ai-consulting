@@ -954,7 +954,7 @@ function HomeView({
             onClick={onSearch}
             className="mt-6 rounded-2xl bg-[#20211F] px-5 py-3 text-sm font-bold text-white"
           >
-            Shop smartphones for {profile.label}
+            Shop smartphones
           </button>
         </div>
 
@@ -1420,7 +1420,7 @@ function SearchResultCard({
             onClick={onAdd}
             className="rounded-2xl bg-[#20211F] px-4 py-2 text-xs font-semibold text-[#20211F] shadow-sm hover:bg-black"
           >
-            Add to cart · for {profile.label}
+            Add to cart
           </button>
           <button onClick={onOpen} className="rounded-2xl border border-black/[0.1] px-4 py-2 text-xs font-semibold">
             View details
@@ -1496,7 +1496,7 @@ function StoreProductCard({
           onClick={onAdd}
           className="mt-3 w-full rounded-2xl bg-[#20211F] py-2 text-xs font-semibold text-[#20211F]"
         >
-          Add for {profile.label}
+          Add to cart
         </button>
       </div>
     </article>
