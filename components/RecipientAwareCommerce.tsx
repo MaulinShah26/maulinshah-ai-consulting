@@ -455,6 +455,12 @@ function money(value: number) {
   return "₹" + value.toLocaleString("en-IN");
 }
 
+function addForLabel(id: RecipientId) {
+  if (id === "myself") return "Add for Me";
+  if (id === "gift") return "Add for Gift";
+  return "Add for " + profiles[id].label;
+}
+
 function scoreProduct(product: Product, weights: PriorityWeights) {
   const entries = Object.entries(weights) as Array<[PriorityKey, number]>;
   let earned = 0;
@@ -1418,9 +1424,9 @@ function SearchResultCard({
         <div className="mt-4 flex flex-wrap gap-2">
           <button
             onClick={onAdd}
-            className="rounded-2xl bg-[#20211F] px-4 py-2 text-xs font-semibold text-[#20211F] shadow-sm hover:bg-black"
+            className="rounded-2xl bg-[#20211F] px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-black"
           >
-            Add to cart
+            {addForLabel(recipientId)}
           </button>
           <button onClick={onOpen} className="rounded-2xl border border-black/[0.1] px-4 py-2 text-xs font-semibold">
             View details
@@ -1494,9 +1500,9 @@ function StoreProductCard({
         </div>
         <button
           onClick={onAdd}
-          className="mt-3 w-full rounded-2xl bg-[#20211F] py-2 text-xs font-semibold text-[#20211F]"
+          className="mt-3 w-full rounded-2xl bg-[#20211F] py-2 text-xs font-semibold text-white"
         >
-          Add to cart
+          {addForLabel(recipientId)}
         </button>
       </div>
     </article>
@@ -1645,10 +1651,9 @@ function ProductDetail({
                 <button
                   onClick={onAdd}
                   disabled={product.price > budget}
-                  className="rounded-xl bg-[#20211F] px-5 py-4 text-sm font-bold text-[#20211F] disabled:opacity-50"
+                  className="rounded-2xl bg-[#20211F] px-5 py-4 text-sm font-bold text-white disabled:opacity-50"
                 >
-                  Add to cart
-                  <span className="mt-1 block text-[10px] font-medium">for {profile.label}</span>
+                  {addForLabel(recipientId)}
                 </button>
               </div>
             </section>
