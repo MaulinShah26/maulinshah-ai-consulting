@@ -68,8 +68,8 @@ const chapters = [
     ghost: "Work",
     eyebrow: "Ways I can help",
     href: "/services",
-    statement: "Start with a short audit, one focused build or ongoing Data and AI leadership.",
-    tags: ["Audit", "Build", "Fractional lead"],
+    statement: "Start with a decision diagnostic, one focused build or ongoing Data and AI leadership.",
+    tags: ["Diagnostic", "Build", "Fractional lead"],
     cardClass: portalStyles.portalServices,
   },
   {
@@ -103,7 +103,7 @@ export function HomeMinimal() {
             <div>
               <div className={`${styles.kicker} ${identityStyles.heroKicker}`}>
                 <span className={styles.kickerDot} aria-hidden />
-                Fractional Head of Data & AI
+                Fractional Data & AI Lead
               </div>
 
               <h1 className={styles.headline}>
@@ -113,7 +113,7 @@ export function HomeMinimal() {
               </h1>
 
               <p className={styles.subhead}>
-                I work with growing companies when important business decisions need stronger data, smarter systems or applied AI.
+                I help growing companies identify decisions that are slow, inconsistent or poorly informed, then build the data and AI systems that make them repeatable, measurable and scalable.
               </p>
 
               <div className={styles.actions}>
@@ -192,9 +192,9 @@ export function HomeMinimal() {
         </div>
       </section>
 
-      <HomeWorkRail />
-
       <HomeDecisionFriction />
+
+      <HomeWorkRail />
 
       <TestimonialsCarousel />
 

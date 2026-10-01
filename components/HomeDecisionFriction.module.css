@@ -1,42 +1,62 @@
 .section {
   position: relative;
-  padding: 44px 24px 68px;
+  padding: 58px 24px 68px;
 }
 
 .inner {
-  width: min(1180px, 100%);
+  width: min(1440px, 100%);
   margin: 0 auto;
-  padding-top: 38px;
+  padding-top: 28px;
   border-top: 1px solid rgb(var(--ink-200));
 }
 
-.intro {
-  display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
-  gap: 34px;
-  align-items: start;
-  margin-bottom: 32px;
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  color: rgb(var(--accent));
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-.eyebrow {
-  padding-top: 10px;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 11px;
-  line-height: 1.25;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgb(var(--accent));
+.sectionLabel i {
+  height: 1px;
+  flex: 1;
+  background: rgb(var(--ink-200));
+}
+
+.intro {
+  margin-bottom: 26px;
 }
 
 .intro h2 {
-  max-width: 1040px;
+  max-width: none;
   margin: 0;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(36px, 4.1vw, 56px);
-  font-weight: 500;
-  line-height: 1.01;
-  letter-spacing: -0.04em;
   color: rgb(var(--ink));
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(42px, 4.6vw, 66px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.048em;
+  white-space: nowrap;
+}
+
+.intro h2 em {
+  color: rgb(var(--accent));
+  font-style: italic;
+  font-weight: 500;
+}
+
+.intro > p {
+  max-width: 720px;
+  margin: 14px 0 0;
+  color: rgb(var(--ink-600));
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.5;
 }
 
 .diagram {
@@ -45,9 +65,9 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 34px 36px 24px;
+  padding: 24px 34px;
   border: 1px solid rgb(var(--diagram-violet) / 0.34);
-  border-radius: 30px;
+  border-radius: 26px;
   background:
     radial-gradient(circle at 10% 10%, rgb(var(--diagram-mint) / 0.17), transparent 31%),
     radial-gradient(circle at 90% 74%, rgb(var(--diagram-violet) / 0.23), transparent 35%),
@@ -61,11 +81,123 @@
   width: 520px;
   height: 520px;
   left: 50%;
-  top: 48%;
+  top: 61%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: radial-gradient(circle, rgb(var(--diagram-violet) / 0.12), transparent 66%);
   pointer-events: none;
+}
+
+.scalePrelude {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgb(255 255 255 / 0.13);
+}
+
+.preludeHeading,
+.diagramIntro {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.preludeHeading > span,
+.diagramIntro > span {
+  color: rgb(var(--diagram-mint));
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.preludeHeading p,
+.diagramIntro p {
+  margin: 0;
+  color: rgb(255 255 255 / 0.6);
+  font-size: 11.5px;
+}
+
+.scaleTrack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.scaleStage {
+  display: grid;
+  align-content: start;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 5px 12px;
+  min-height: 72px;
+  padding: 0 26px;
+  border-left: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.scaleStage:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.scaleStage:last-child {
+  padding-right: 0;
+}
+
+.scaleStage small {
+  grid-column: 1 / -1;
+  color: rgb(var(--diagram-mint));
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stageVolume {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.stageVolume strong {
+  color: #fff;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(24px, 2.2vw, 31px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.stageVolume span {
+  color: rgb(255 255 255 / 0.52);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.scaleStage > p {
+  align-self: center;
+  margin: 0;
+  color: rgb(255 255 255 / 0.7);
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.scaleStageCritical small {
+  color: rgb(190 169 255);
+}
+
+.diagramIntro {
+  position: relative;
+  z-index: 2;
+  padding: 18px 0 13px;
+}
+
+.diagramIntro > span {
+  color: rgb(190 169 255);
 }
 
 .diagramBody {
@@ -90,12 +222,12 @@
   height: 36px;
   display: flex;
   align-items: flex-start;
+  color: rgb(255 255 255 / 0.7);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   line-height: 1.2;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 0.7);
 }
 
 .teamStack,
@@ -166,26 +298,26 @@
 }
 
 .teamTopline strong {
+  color: #fff;
   font-family: var(--font-serif), Georgia, serif;
   font-size: 18px;
-  line-height: 1.05;
   font-weight: 600;
-  color: #ffffff;
+  line-height: 1.05;
 }
 
 .teamTopline span {
-  font-size: 11.5px;
-  line-height: 1.25;
-  font-weight: 700;
   color: rgb(var(--diagram-mint) / 0.96);
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.25;
 }
 
 .teamNode p {
   margin: 5px 0 0;
-  font-size: 12px;
-  line-height: 1.35;
-  font-weight: 500;
   color: rgb(255 255 255 / 0.72);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
 }
 
 .leftRail,
@@ -201,25 +333,11 @@
   bottom: 38px;
   left: 50%;
   width: 1px;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgb(var(--diagram-mint) / 0.32) 12%,
-    rgb(var(--diagram-violet) / 0.38) 50%,
-    rgb(var(--diagram-mint) / 0.32) 88%,
-    transparent
-  );
+  background: linear-gradient(to bottom, transparent, rgb(var(--diagram-mint) / 0.32) 12%, rgb(var(--diagram-violet) / 0.38) 50%, rgb(var(--diagram-mint) / 0.32) 88%, transparent);
 }
 
 .rightRail::before {
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgb(var(--diagram-violet) / 0.4) 12%,
-    rgb(var(--diagram-violet) / 0.5) 50%,
-    rgb(var(--diagram-violet) / 0.4) 88%,
-    transparent
-  );
+  background: linear-gradient(to bottom, transparent, rgb(var(--diagram-violet) / 0.4) 12%, rgb(var(--diagram-violet) / 0.5) 50%, rgb(var(--diagram-violet) / 0.4) 88%, transparent);
 }
 
 .hubColumn {
@@ -286,15 +404,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   border: 1px solid rgb(var(--diagram-violet) / 0.76);
   border-radius: 34px;
-  background:
-    radial-gradient(circle at 34% 22%, rgb(var(--diagram-mint) / 0.15), transparent 40%),
-    linear-gradient(145deg, rgb(255 255 255 / 0.09), rgb(var(--diagram-violet) / 0.12));
-  box-shadow:
-    0 0 0 10px rgb(var(--diagram-violet) / 0.035),
-    0 0 50px rgb(var(--diagram-violet) / 0.19);
+  color: #fff;
+  text-align: center;
+  background: radial-gradient(circle at 34% 22%, rgb(var(--diagram-mint) / 0.15), transparent 40%), linear-gradient(145deg, rgb(255 255 255 / 0.09), rgb(var(--diagram-violet) / 0.12));
+  box-shadow: 0 0 0 10px rgb(var(--diagram-violet) / 0.035), 0 0 50px rgb(var(--diagram-violet) / 0.19);
   backdrop-filter: blur(12px);
 }
 
@@ -311,21 +426,21 @@
 
 .hubKicker {
   margin-bottom: 7px;
+  color: rgb(255 255 255 / 0.62);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 9px;
   line-height: 1.2;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 0.62);
 }
 
-.hub strong {
+.hub > strong {
   max-width: 205px;
+  color: #fff;
   font-family: var(--font-serif), Georgia, serif;
   font-size: 25px;
-  line-height: 1.03;
   font-weight: 600;
-  color: #ffffff;
+  line-height: 1.03;
 }
 
 .hubCapabilities {
@@ -340,19 +455,19 @@
   padding: 5px 8px;
   border: 1px solid rgb(255 255 255 / 0.13);
   border-radius: 999px;
-  font-size: 9.5px;
-  line-height: 1.2;
-  font-weight: 600;
   color: rgb(255 255 255 / 0.82);
   background: rgb(255 255 255 / 0.045);
+  font-size: 9.5px;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 .hub p {
   max-width: 205px;
   margin: 0;
+  color: rgb(255 255 255 / 0.72);
   font-size: 11.5px;
   line-height: 1.45;
-  color: rgb(255 255 255 / 0.72);
 }
 
 .questionStack {
@@ -411,22 +526,22 @@
 .questionNode span:not(.questionIcon) {
   display: block;
   margin-bottom: 5px;
-  font-size: 10.5px;
-  line-height: 1.2;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
   color: rgb(163 126 255);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .questionNode strong {
   display: block;
   max-width: 365px;
+  color: #fff;
   font-family: var(--font-serif), Georgia, serif;
   font-size: clamp(16px, 1.22vw, 18.5px);
-  line-height: 1.12;
   font-weight: 600;
-  color: #ffffff;
+  line-height: 1.12;
 }
 
 .diagramFooter {
@@ -444,25 +559,25 @@
 .diagramFooter p {
   max-width: none;
   margin: 0;
-  white-space: nowrap;
+  color: rgb(255 255 255 / 0.9);
   font-family: var(--font-serif), Georgia, serif;
   font-size: clamp(15px, 1.3vw, 18px);
   line-height: 1.25;
-  color: rgb(255 255 255 / 0.9);
+  white-space: nowrap;
 }
 
 .servicesLink {
   flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 16px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 44px;
-  padding: 0 16px;
   border: 1px solid rgb(255 255 255 / 0.27);
   border-radius: 999px;
+  color: #fff;
   font-size: 12px;
   font-weight: 600;
-  color: #ffffff;
   transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
 }
 
@@ -473,9 +588,12 @@
 }
 
 @media (max-width: 1080px) {
+  .intro h2 {
+    font-size: clamp(42px, 5.2vw, 58px);
+  }
+
   .diagram {
-    padding-left: 26px;
-    padding-right: 26px;
+    padding-inline: 26px;
   }
 
   .diagramBody {
@@ -506,13 +624,12 @@
 }
 
 @media (max-width: 1020px) {
-  .intro {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  .intro h2 {
+    white-space: normal;
   }
 
-  .eyebrow {
-    padding-top: 0;
+  .scaleStage {
+    padding-inline: 18px;
   }
 
   .diagram {
@@ -567,28 +684,78 @@
   .questionStack {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .diagramFooter p {
-    white-space: normal;
-  }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 650px) {
   .section {
-    padding: 30px 18px 48px;
+    padding: 40px 18px 52px;
   }
 
-  .inner {
-    padding-top: 30px;
+  .sectionLabel {
+    margin-bottom: 22px;
   }
 
   .intro {
-    margin-bottom: 26px;
+    margin-bottom: 22px;
+  }
+
+  .intro h2 {
+    font-size: clamp(38px, 12vw, 52px);
+  }
+
+  .intro > p {
+    margin-top: 11px;
+    font-size: 16px;
   }
 
   .diagram {
-    padding: 22px 16px;
+    padding: 20px 16px;
     border-radius: 22px;
+  }
+
+  .preludeHeading,
+  .diagramIntro {
+    display: grid;
+    gap: 6px;
+  }
+
+  .scaleTrack {
+    grid-template-columns: 1fr;
+    margin-top: 10px;
+  }
+
+  .scaleStage {
+    grid-template-columns: 66px minmax(0, 1fr) minmax(112px, 0.9fr);
+    gap: 8px 12px;
+    align-items: center;
+    min-height: 62px;
+    padding: 9px 0;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    border-left: 0;
+  }
+
+  .scaleStage:first-child {
+    border-top: 0;
+  }
+
+  .scaleStage small {
+    grid-column: 1;
+  }
+
+  .stageVolume {
+    grid-column: 2;
+  }
+
+  .stageVolume strong {
+    font-size: 24px;
+  }
+
+  .scaleStage > p {
+    grid-column: 3;
+  }
+
+  .diagramIntro {
+    padding-top: 16px;
   }
 
   .teamStack,
@@ -613,5 +780,23 @@
   .diagramFooter {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 430px) {
+  .scaleStage {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 4px 10px;
+  }
+
+  .scaleStage > p {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .servicesLink {
+    transition: none;
   }
 }

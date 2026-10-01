@@ -1,15 +1,14 @@
 // All site content lives here so you can edit copy without touching components.
 
-// Single source for the headline title. Bump to "Fractional Chief Data & AI
-// Officer" later for larger growth-stage clients without touching every section.
-export const role = "Fractional Head of Data & AI";
+// Single source for the market-facing role used across the site.
+export const role = "Fractional Data & AI Lead";
 
 export const meta = {
   siteUrl: "https://maulinshah.vercel.app",
   siteName: `Maulin Shah, ${role}`,
   defaultTitle: `Maulin Shah · ${role}`,
   defaultDescription:
-    "Fractional Head of Data & AI for founder-led startups. I join your leadership team to build and run your data and AI function, until your team can run it without me.",
+    "I help growing companies identify decisions that are slow, inconsistent or poorly informed, then build the data and AI systems that improve them.",
   author: "Maulin Shah",
   location: "Ahmedabad, India",
 };
@@ -190,7 +189,7 @@ export const engagements = {
     },
     {
       quote: "I want to know where my data and AI actually stand before going deeper.",
-      title: "Data & AI Opportunity Audit",
+      title: "Decision Systems Diagnostic",
       meta: "~10-12 hrs/week - 2-3 weeks - Fixed scope",
       tagline: "An honest check on your data and AI, with a written report at the end.",
       walkaway: "a written report on the 2–3 most useful things to do next, plus one 90-minute call with leadership.",
@@ -237,7 +236,7 @@ export const faq = {
     {
       question: "What happens after the first call?",
       answer:
-        "We decide together whether the right next step is a short audit, a scoped build, an embedded engagement, or nothing at all. If it’s nothing, I’ll say so.",
+        "We decide together whether the right next step is a short diagnostic, a scoped build, an embedded engagement, or nothing at all. If it’s nothing, I’ll say so.",
     },
   ],
 };
@@ -624,12 +623,23 @@ export const notebook = {
 };
 
 export const operatingModel = {
-  sectionLabel: "How I work inside the business",
+  sectionLabel: "How I turn a problem into an operating capability",
   steps: [
-    { n: "01", title: "Diagnose", body: "Find what’s moving growth, and what’s quietly leaking." },
-    { n: "02", title: "Prioritize", body: "Decide which bets and which AI earn the work, in what order." },
-    { n: "03", title: "Build", body: "Ship the systems and decision logic the team runs on." },
-    { n: "04", title: "Transfer", body: "Hand it over so the team runs it without me." },
+    {
+      n: "01",
+      title: "Diagnose",
+      body: "Define the decision, workflow, economics, data quality, constraints and failure modes.",
+    },
+    {
+      n: "02",
+      title: "Roadmap",
+      body: "Choose the right mix of rules, software, data, ML, AI, automation and human judgement.",
+    },
+    {
+      n: "03",
+      title: "Operate",
+      body: "Build, measure decision quality, learn from exceptions and transfer ownership to the team.",
+    },
   ],
 };
 
@@ -647,12 +657,12 @@ export const services = {
       href: "#contact",
     },
     {
-      title: "Data & AI Opportunity Audit",
-      bestFor: "For founders who want to know where they actually stand first.",
-      outcome: "Two to four weeks to know what to fix, build, automate, or ignore.",
+      title: "Decision Systems Diagnostic",
+      bestFor: "For founders who need to know which decisions are holding the business back.",
+      outcome: "Two to four weeks to know what to fix now, build next, experiment with, wait on, or not build.",
       commitment: "~10-12 hrs/week · 2-4 weeks · fixed scope",
-      whatThisIs: "An honest check on your data and AI, with a written report at the end.",
-      walkAway: "A written report on the 2-3 most useful things to do next, plus one 90-minute call with leadership.",
+      whatThisIs: "A decision-first review of the workflow, data, economics and operating constraints behind the problem.",
+      walkAway: "A ranked decision roadmap, explicit build/no-build choices, and one 90-minute leadership working session.",
       pageHref: "/services/opportunity-audit",
       href: "#contact",
     },
@@ -703,42 +713,42 @@ export const proof = {
 export const servicePages = [
   {
     slug: "opportunity-audit",
-    eyebrow: "Data & AI Opportunity Audit",
+    eyebrow: "Decision Systems Diagnostic",
     heroTitle:
-      "Know exactly what to fix, build, automate, or ignore. In two to four weeks.",
+      "Find the decisions slowing the business down—and what to do about them.",
     heroSub:
-      "For founders who know their data and AI are getting messy but can’t yet see where it’s costing them. A short, focused review that ends with a clear, ranked plan, not a longer to-do list.",
+      "A two-to-four-week review of one important decision area: how the decision works today, where it breaks, what it costs, and which combination of workflow, data, software, AI or human judgement should improve it.",
     meta: ["~10-12 hrs/week", "2-4 weeks", "Fixed scope"],
     problem:
-      "The data exists, but no two teams agree on the numbers. There’s a list of AI ideas and no clear way to rank them. And the biggest call, what to build first, keeps getting made on gut feel. You don’t need more tools. You need to know which two or three moves actually matter.",
+      "An important decision is taking too long, producing inconsistent answers or depending on one person’s judgement. Dashboards may exist and AI ideas may be plentiful, but the workflow, ownership, economics and failure modes have never been defined together. The business does not need another tool yet. It needs a clear diagnosis of the decision itself.",
     visual: "audit" as const,
     whatLabel: "What I do in those weeks",
     whatIDo: [
-      "Short interviews with the people who own growth, product, and the data.",
-      "A scan of your actual data, metrics, and definitions, where they agree and where they don’t.",
-      "List every AI and data idea, then rank each one by value and readiness.",
-      "Write up the ranked plan and walk your leadership team through it.",
+      "Define the decision, who makes it, how often it occurs and what a better outcome is worth.",
+      "Trace the real workflow, including handoffs, delays, data quality, exceptions and key-person dependencies.",
+      "Test solution options across rules, workflow, software, data, ML, AI, automation and human judgement.",
+      "Assess readiness, operating risk and economics before recommending any build.",
     ],
     walkAway: [
-      "A written report on the two or three most useful things to do next.",
-      "Your AI ideas sorted on the priority matrix.",
-      "An honest read on where your numbers stop being trustworthy.",
-      "One 90-minute session with your leadership team to agree on the plan.",
+      "A decision map showing where the current process breaks and why.",
+      "A ranked roadmap labelled: Fix now, Build next, Experiment, Wait or Do not build.",
+      "Explicit AI operating boundaries: acts, recommends, requires human review or is not allowed.",
+      "One 90-minute leadership session to agree on ownership and the next move.",
     ],
     notThis: [
       "Not a dashboard build or a tooling project.",
       "Not a fifty-page deck you’ll never reread.",
-      "Not a vendor or model recommendation in disguise.",
+      "Not an AI recommendation in search of a business problem.",
     ],
     useCases: [
-      "We have a dozen AI ideas and no idea which one to build.",
-      "Every team reports a different number and I can’t tell who’s right.",
-      "We’re about to hire a data lead and want to scope the role first.",
+      "This decision still waits for one person to interpret everything.",
+      "We have dashboards, but teams still disagree on what action to take.",
+      "The AI prototype worked, but we do not know if it can operate reliably.",
     ],
-    ctaLabel: "Request an audit",
-    ctaTitle: "Want this for your company?",
+    ctaLabel: "Request a diagnostic",
+    ctaTitle: "Have an important decision that is not scaling?",
     ctaSub:
-      "A 30-minute call to see if an audit is the right first step. If it isn’t, I’ll tell you what is.",
+      "A 30-minute call to see if a diagnostic is the right first step. If the right answer is to wait or not build, I’ll say so.",
   },
   {
     slug: "fractional-head",
@@ -746,17 +756,17 @@ export const servicePages = [
     heroTitle:
       "A senior data and AI lead on your team, before you’re ready to hire one full-time.",
     heroSub:
-      "For founders whose data and AI matter to the business but don’t yet justify a full-time executive. I join your leadership team, own the function, and run it from inside until your team can.",
+      "For founders whose critical decisions increasingly depend on data and AI but do not yet justify a full-time executive. I join the leadership team, own the roadmap and operating systems, and transfer capability as the team matures.",
     meta: ["~10 hrs/week", "3 months minimum", "Monthly retainer"],
     problem:
       "Your data and AI are now too important to leave to whoever has time, but a full-time head is too early or too expensive. So decisions slip, the roadmap drifts, and good people work on the wrong things. You need someone senior owning this now, not a job posting that takes six months to fill.",
     visual: "rail" as const,
     whatLabel: "What I do inside the business",
     whatIDo: [
-      "Sit in your leadership team and own the data and AI function.",
-      "Set the roadmap: what to build, what to fix, what to leave alone.",
-      "Build the systems and decision logic your team runs on.",
-      "Set up the rituals and coach or hire the people who take it over.",
+      "Own the cross-functional decisions that need stronger data, systems or applied AI.",
+      "Set the roadmap: what to fix now, build next, experiment with, wait on or not build.",
+      "Turn prototypes into reliable operating systems with clear boundaries and ownership.",
+      "Set up the rituals and coach or hire the people who take the capability over.",
     ],
     walkAway: [
       "A clear roadmap your team actually follows.",
@@ -784,10 +794,10 @@ export const servicePages = [
     eyebrow: "Decision System Build",
     heroTitle: "One high-impact system, designed, built, and handed over.",
     heroSub:
-      "For founders who already know the bet and want someone senior to own the build end to end. A retention score, a replenishment engine, customer intelligence, whatever the one system is that moves the business.",
+      "For founders who know which decision needs to improve and want one senior owner from framing through operation. The build may use rules, data, software, ML or AI—the decision and its business outcome determine the architecture.",
     meta: ["~15-25 hrs/week", "Timeline shaped to scope", "Fixed outcome"],
     problem:
-      "You know what you want built. What you don’t have is someone senior who can design it properly, build it, and leave your team able to run it. Hand it to a junior and you get something fragile no one trusts. Hand it to an agency and you get a black box. You need one owner from design to live.",
+      "You know the decision that needs to improve, but a prototype or isolated model is not an operating capability. It needs reliable data, exception handling, human override, workflow integration, ownership, monitoring, viable economics and a feedback loop. You need one owner from decision design to live operation and transfer.",
     visual: "timeline" as const,
     whatLabel: "What I do",
     whatIDo: [
@@ -799,8 +809,8 @@ export const servicePages = [
     walkAway: [
       "The system you wanted, built and live.",
       "Decision logic your team understands, not a black box.",
+      "Clear boundaries for what the system acts on, recommends, escalates or refuses.",
       "Your people trained to run and extend it.",
-      "A pattern you can reuse for the next system.",
     ],
     notThis: [
       "Not a proof of concept that dies in a notebook.",
@@ -813,10 +823,10 @@ export const servicePages = [
       "We have the model idea but no one to ship it right.",
     ],
     phases: [
-      { label: "Frame", body: "Pin the decision, the data, and the owner." },
-      { label: "Design", body: "Shape the logic and the outputs." },
-      { label: "Build", body: "Build, test against real cases, ship." },
-      { label: "Transfer", body: "Document and train your team to run it." },
+      { label: "Frame", body: "Pin the decision, outcome, economics, constraints and owner." },
+      { label: "Design", body: "Shape the workflow, logic, boundaries, exceptions and feedback loop." },
+      { label: "Operate", body: "Build into the real workflow, monitor and test against live cases." },
+      { label: "Transfer", body: "Document, train and hand ownership to the team." },
     ],
     ctaLabel: "Explore a build",
     ctaTitle: "Have a system in mind?",

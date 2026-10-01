@@ -3,9 +3,9 @@ import { getServicePage } from "@/lib/data";
 import { ServicePage } from "@/components/ServicePage";
 
 export const metadata = {
-  title: "Data & AI Opportunity Audit · Maulin Shah",
+  title: "Decision Systems Diagnostic · Maulin Shah",
   description:
-    "A two-to-four-week audit that ends with a ranked plan: what to fix, build, automate, or ignore.",
+    "A two-to-four-week diagnostic of the decisions, workflows, data and economics holding a growing business back.",
 };
 
 export default function Page() {
